@@ -7,8 +7,9 @@
 typedef enum {
     IDENTIFIER, KEYWORD, RESERVED_WORD, CONSTANT, NOISE_WORD, COMMENT, 
     ARITHMETIC_OPE, ASSIGNMENT_OPE, LOGICAL_OPE, UNARY_OPE, RELATIONAL_OPE, 
-    DELIMITER, INVALID
+    DELIMITER, INVALID, INT_CONSTANT, FLOAT_CONSTANT, STRING_CONSTANT
 } TokenType;
+
 
 typedef struct {
     TokenType type;
@@ -184,22 +185,26 @@ int checkRelational(const char *token) {
 }
 
 char *typeToString(TokenType type) {
-     switch (type) {
-        case 0: return "Identifier";
-        case 1: return "Keyword";
-        case 2: return "Reserved Word";
-        case 3: return "Constant";
-        case 4: return "Noise Word";
-        case 5: return "Comment";
-        case 6: return "Arithmetic Operator";
-        case 7: return "Assignment Operator";
-        case 8: return "Logical Operator (Boolean)";
-        case 9: return "Unary Operator";
-        case 10: return "Relational Operator (Boolean)";
-        case 11: return "Delimiter";
-        case 12: return "Invalid";
+    switch (type) {
+        case IDENTIFIER: return "Identifier";
+        case KEYWORD: return "Keyword";
+        case RESERVED_WORD: return "Reserved Word";
+        case CONSTANT: return "Constant";
+        case NOISE_WORD: return "Noise Word";
+        case COMMENT: return "Comment";
+        case ARITHMETIC_OPE: return "Arithmetic Operator";
+        case ASSIGNMENT_OPE: return "Assignment Operator";
+        case LOGICAL_OPE: return "Logical Operator (Boolean)";
+        case UNARY_OPE: return "Unary Operator";
+        case RELATIONAL_OPE: return "Relational Operator (Boolean)";
+        case DELIMITER: return "Delimiter";
+        case INT_CONSTANT: return "Constant (Num (int in C))";
+        case FLOAT_CONSTANT: return "Constant (Drift (float in C))";
+        case STRING_CONSTANT: return "Constant (Text (string in C))";
+        case INVALID: return "Invalid";
         default: return "Invalid";
     }
+
 }
 
 Token newToken(const char *value, TokenType type, int line) {
@@ -210,11 +215,12 @@ Token newToken(const char *value, TokenType type, int line) {
 
     return token;
 }
-
 Token fsmClassify(const char *token, int line) {
     int state = 0; // Initial state
     char ch;
     int decimalCount = 0; // To track the number of decimal points in the number
+    int isInteger = 1; // To track if the constant is an integer
+    int isFloat = 0;   // To track if the constant is a floating-point number
 
     for (int i = 0; (ch = token[i]) != '\0'; i++) {
         switch (state) {
@@ -235,6 +241,7 @@ Token fsmClassify(const char *token, int line) {
                 if (ch == '.') {
                     if (decimalCount > 0) return newToken(token, INVALID, line);
                     decimalCount++;
+                    isFloat = 1; // Set flag if decimal point is found
                 } else if (!isdigit(ch)) {
                     return newToken(token, INVALID, line);
                 }
@@ -257,16 +264,21 @@ Token fsmClassify(const char *token, int line) {
         if (checkNoiseWord(token)) return newToken(token, NOISE_WORD, line);
         if (checkIdentifier(token)) return newToken(token, IDENTIFIER, line);
         return newToken(token, INVALID, line);
-    } else if (state == 2 || state == 3) {
-        return newToken(token, CONSTANT, line);
+    } else if (state == 2) {
+        if (isFloat) {
+            return newToken(token, FLOAT_CONSTANT, line); // Float constant
+        } else {
+            return newToken(token, INT_CONSTANT, line); // Integer constant
+        }
+    } else if (state == 3) {
+        return newToken(token, STRING_CONSTANT, line); // String constant
     } else if (state == 4) {
         if (checkAssignment(token)) return newToken(token, ASSIGNMENT_OPE, line);
         if (checkLogical(token)) return newToken(token, LOGICAL_OPE, line);
         if (checkArithmetic(token)) return newToken(token, ARITHMETIC_OPE, line);
         if (checkUnary(token)) return newToken(token, UNARY_OPE, line);
         if (checkRelational(token)) return newToken(token, RELATIONAL_OPE, line);
-    }
-    else if (state == 5) {
+    } else if (state == 5) {
         return newToken(token, DELIMITER, line);
     }
 
@@ -300,7 +312,7 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
                 // End of the string literal
                 temp[tempIndex] = '\0';
                 Token token = newToken(temp, CONSTANT, lineNumber);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s (String)\n", token.line, token.value, typeToString(token.type));
+                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s (Text (string in C))\n", token.line, token.value, typeToString(token.type));
                 free(token.value);
                 tempIndex = 0;
                 stringLiteral = 0;
