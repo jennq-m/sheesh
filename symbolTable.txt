@@ -1,0 +1,7 @@
+Lexical Analysis of test.shs:
+
+Line 1: out             Type: Keyword
+Line 1: (               Type: Delimiter
+Line 1: "helloww"       Type: Constant
+Line 1: )               Type: Delimiter
+Line 1: ;               Type: Delimiter
