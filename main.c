@@ -276,77 +276,97 @@ Token fsmClassify(const char *token, int line) {
 
 void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
     static int inMultiLineComment = 0; // Tracks whether inside a multi-line comment
-    char *tokenStr = strtok(line, " \t\n");
-    
-    while (tokenStr != NULL) {
-        if (inMultiLineComment) {
-            // Check if the multi-line comment ends in this token
-            char *endComment = strstr(tokenStr, "*/");
+    int stringLiteral = 0;             // Tracks whether inside a string literal
+    char temp[256];                   // Buffer for building tokens
+    int tempIndex = 0;                // Index for buffer
 
-            // If still inside multi-line comment, skip token
-            if (endComment) {
+    for (int i = 0; line[i] != '\0'; i++) {
+        if (inMultiLineComment) {
+            // Check for the end of the multi-line comment
+            if (line[i] == '*' && line[i + 1] == '/') {
                 inMultiLineComment = 0;
                 Token token = newToken("*/", COMMENT, lineNumber);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s \n", token.line, token.value, typeToString(token.type));
                 free(token.value);
-                tokenStr = strtok(NULL, " \t\n");
-                continue;
+                i++; // Skip the '/'
             }
+            continue; // Skip all characters in the multi-line comment
+        }
 
-            tokenStr = strtok(NULL, " \t\n");
+        if (stringLiteral) {
+            // Handle string literals
+            temp[tempIndex++] = line[i];
+            if (line[i] == '"') {
+                // End of the string literal
+                temp[tempIndex] = '\0';
+                Token token = newToken(temp, CONSTANT, lineNumber);
+                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s (String)\n", token.line, token.value, typeToString(token.type));
+                free(token.value);
+                tempIndex = 0;
+                stringLiteral = 0;
+            }
             continue;
         }
 
-        if (strncmp(tokenStr, "//", 2) == 0) {
+        // Start of a string literal
+        if (line[i] == '"') {
+            stringLiteral = 1;
+            temp[tempIndex++] = line[i];
+            continue;
+        }
+
+        // Handle comments
+        if (line[i] == '/' && line[i + 1] == '/') {
             Token token = newToken("//", COMMENT, lineNumber);
             fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
-            return;
+            break; // Ignore the rest of the line
         }
-
-        if (strncmp(tokenStr, "/*", 2) == 0) {
+        if (line[i] == '/' && line[i + 1] == '*') {
             Token token = newToken("/*", COMMENT, lineNumber);
             fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
-
-            if (strstr(tokenStr, "*/")) {
-                tokenStr = strtok(NULL, " \t\n");
-                continue;
-            }
-
             inMultiLineComment = 1;
-            tokenStr = strtok(NULL, " \t\n");
+            i++; // Skip the '*'
             continue;
         }
 
-        char temp[256];
-        int j = 0;
-        for (int i = 0; tokenStr[i] != '\0'; i++) {
-            if (strchr(",;(){}[]", tokenStr[i])) {
-                if (j > 0) {
-                    temp[j] = '\0';
-                    Token token = fsmClassify(temp, lineNumber);
-                    fprintf(outputFile, "Line %d: Lexeme: %-15s \tToken: %s\n", token.line, token.value, typeToString(token.type));
-                    free(token.value);
-                    j = 0;
-                }
-
-                char delim[2] = {tokenStr[i], '\0'};
-                Token token = newToken(delim, DELIMITER, lineNumber);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
+        // Handle delimiters
+        if (strchr(",;(){}[]", line[i])) {
+            if (tempIndex > 0) {
+                temp[tempIndex] = '\0'; // Null-terminate the current token
+                Token token = fsmClassify(temp, lineNumber);
+                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
                 free(token.value);
-            } else {
-                temp[j++] = tokenStr[i];
+                tempIndex = 0;
             }
+
+            // Process the delimiter
+            char delim[2] = {line[i], '\0'};
+            Token token = newToken(delim, DELIMITER, lineNumber);
+            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
+            free(token.value);
+            continue;
         }
 
-        if (j > 0) {
-            temp[j] = '\0';
+        // Accumulate token characters
+        if (!isspace(line[i])) {
+            temp[tempIndex++] = line[i];
+        } else if (tempIndex > 0) {
+            // Process the accumulated token
+            temp[tempIndex] = '\0';
             Token token = fsmClassify(temp, lineNumber);
             fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
+            tempIndex = 0;
         }
+    }
 
-        tokenStr = strtok(NULL, " \t\n");
+    // Handle leftover token at the end of the line
+    if (tempIndex > 0) {
+        temp[tempIndex] = '\0';
+        Token token = fsmClassify(temp, lineNumber);
+        fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+        free(token.value);
     }
 }
