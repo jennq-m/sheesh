@@ -1,5 +1,160 @@
-out("helloww");
-// comment
-/* 
-mahabanag comment 
+// Assignment_Operators
+=
+hello hello
++=
+-=
+*=
+/=
+%=
+
+// Logical_Operators
+&&
+||
+!
+
+// Arithmetic_Operators
++
+-
+*
+/
+%
+
+// Unary_Operators
++
+-
+++
+--
+
+// Relational_Operators
+==
+!=
+>
+<
+>=
+<=
+
+// Keywords
+bounce
+car
+do
+drift
+empty
+ex
+flip
+frozen
+group
+iffy
+input
+jump
+legit
+locked
+lockin
+long
+meanwhile
+nickname
+num
+open
+other
+out
+outside
+pl
+rep
+scenario
+short
+standard
+stop
+team
+text
+vibe
+
+// Reserve Word
+always
+cap
+cont
+nocap
+toptier
+
+// Noise Words
+aylist
+eat
+put
+tier
+tra
+wise
+
+// Comments
+// Single-line comment
+/*
+Multi-line comment
 */
+
+// Delimiters
+,
+;
+(
+)
+{
+}
+"
+"
+[
+]
+
+// Identifiers
+Valid100
+inv@lid
+Valid_identifier
+valid_identifier
+_valid1
+#valid2
+1invalid
+valid#1
+valid__alphabet
+invalid##
+test#identifier
+va lid
+casesensitiveidentifier
+CaseSensitiveIdentifier
+thisIsInv@_valid1
+##thisShouldBeValid
+beh##
+vibe
+always
+
+
+// Invalid
+@
+..
+1.01.01
+
+// Constant
+5
+"test"
+5.5
+'h'
+50
+
+/*
+Multi-line
+comment here
+*/
+
+// Statements
+num count;
+drift decimal = 89.70;
+num count = number;
+count *= test_number;
+iffy (average >= 97.90) {
+    out("GWA is very high!");
+}
+iffy (a == b) {
+    out("Same!");
+} ex (a > b) {
+    out("Greater!");
+} other {
+    out("Less!");
+}
+meanwhile (i < 5) {
+    out(i);
+    i++;
+}
