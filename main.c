@@ -152,10 +152,43 @@ TokenType fsmClassify(const char *token) {
     return INVALID;
 }
 
-
 void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
+    static int inMultiLineComment = 0; // Tracks whether inside a multi-line comment
     char *token = strtok(line, " \t\n");
+    
     while (token != NULL) {
+        if (inMultiLineComment) {
+            // Check if the multi-line comment ends in this token
+            char *endComment = strstr(token, "*/");
+            if (endComment) {
+                inMultiLineComment = 0; // Exit multi-line comment state
+                token = strtok(NULL, " \t\n"); // Continue with the rest of the line
+                continue;
+            }
+            // If still inside multi-line comment, skip token
+            token = strtok(NULL, " \t\n");
+            continue;
+        }
+        
+        // Check for single-line and multi-line comment starts
+        if (strncmp(token, "//", 2) == 0) {
+            fprintf(outputFile, "Line %d: %-15s Type: Comment\n", lineNumber, token);
+            break; // Ignore the rest of the line
+        } else if (strncmp(token, "/*", 2) == 0) {
+            fprintf(outputFile, "Line %d: %-15s Type: Comment\n", lineNumber, token);
+            // Check if the multi-line comment ends in this token
+            char *endComment = strstr(token, "*/");
+            if (endComment) {
+                // Multi-line comment ends within the same token
+                token = strtok(NULL, " \t\n");
+                continue;
+            }
+            // Otherwise, set the multi-line comment state
+            inMultiLineComment = 1;
+            token = strtok(NULL, " \t\n");
+            continue;
+        }
+
         // Split the token further if it contains delimiters
         char temp[256];
         int j = 0;
@@ -209,4 +242,3 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
         token = strtok(NULL, " \t\n");
     }
 }
-

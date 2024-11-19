@@ -5,3 +5,5 @@ Line 1: (               Type: Delimiter
 Line 1: "helloww"       Type: Constant
 Line 1: )               Type: Delimiter
 Line 1: ;               Type: Delimiter
+Line 2: //              Type: Comment
+Line 3: /*              Type: Comment
