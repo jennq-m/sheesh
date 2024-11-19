@@ -1,0 +1,29 @@
+<svg width="380px" height="380px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+        <!-- Define the drop shadow filter -->
+        <filter id="dropShadow">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="2.5"/> <!-- Blur the source -->
+            <feOffset dx="2" dy="2" result="offsetblur"/> <!-- Offset the shadow -->
+            <feFlood flood-color="blue" flood-opacity="0.5"/> <!-- Shadow color -->
+            <feComposite in2="offsetblur" operator="in"/> <!-- Apply composite to the shadow -->
+            <feMerge> <!-- Merge the layers -->
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <circle  cx="50" cy="50" r="38" fill="blue" filter="url(#dropShadow)" />
+    <g>
+        <ellipse cx="34" cy="45" rx="9" ry="11" fill="white" id="eye" />
+        <use href="#eye" x="31" />
+    </g>
+    <rect x="28" y="64" rx="8" ry="8" width="44" height="30" fill="blue" filter="url(#dropShadow)" />
+    <g> 
+        <line x1="35" y1="82" x2="35" y2="95" stroke="white" stroke-width="1.5" id="line" />
+        <use href="#line" x="10" />
+        <use href="#line" x="20" />
+        <use href="#line" x="30" />
+    </g>
+    <text x="44" y="70" fill="white" font-size="20" font-family="Consolas" font-weight="1000" >A</text>
+    <text x="40" y="30" fill="white" font-size="12" font-family="Consolas" font-weight="1000">&lt;/&gt;</text>
+</svg>

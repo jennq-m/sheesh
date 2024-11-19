@@ -1,0 +1,12 @@
+{
+    "iconDefinitions": {
+      "shs-icon": {
+        "iconPath": "./icons/skull.svg"
+      }
+    },
+    "fileExtensions": {
+      "shs": "shs-icon"
+    },
+    "folderNames": {},
+    "languageIds": {}
+  }

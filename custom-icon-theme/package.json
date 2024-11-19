@@ -1,0 +1,19 @@
+{
+    "name": "custom-icon-theme",
+    "displayName": "Custom Icon Theme",
+    "description": "A custom icon theme for .shs files",
+    "version": "1.0.0",
+    "engines": {
+      "vscode": "^1.0.0"
+    },
+    "contributes": {
+      "iconThemes": [
+        {
+          "id": "custom-theme",
+          "label": "Custom Theme",
+          "path": "./file-icon-theme.json"
+        }
+      ]
+    }
+  }
+  
