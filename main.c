@@ -5,8 +5,9 @@
 
 // Token types
 typedef enum {
-    IDENTIFIER, KEYWORD, RESERVED_WORD, CONSTANT, NOISE_WORD, COMMENT,
-    OPERATOR, DELIMITER, WHITESPACE, INVALID
+    IDENTIFIER, KEYWORD, RESERVED_WORD, CONSTANT, NOISE_WORD, COMMENT, 
+    ARITHMETIC_OPE, ASSIGNMENT_OPE, LOGICAL_OPE, UNARY_OPE, RELATIONAL_OPE, 
+    DELIMITER, INVALID
 } TokenType;
 
 typedef struct {
@@ -29,9 +30,14 @@ const char *reservedWords[] = { "always", "cap", "cont", "nocap", "toptier", NUL
 const char *noiseWords[] = { "aylist", "eat", "put", "tier", "tra", "wise", NULL };
 
 // Function prototypes
-int isKeyword(const char *word);
-int isReservedWord(const char *word);
-int isNoiseWord(const char *word);
+int checkKeyword(const char *word);
+int checkReservedWord(const char *word);
+int checkNoiseWord(const char *word);
+int checkAssignment(const char *token);
+int checkLogical(const char *token);
+int checkArithmetic(const char *token);
+int checkUnary(const char *token);
+int checkRelational(const char *token);
 Token newToken(const char *value, TokenType type, int line);
 Token fsmClassify(const char *token, int line);
 void analyzeLine(FILE *outputFile, char *line, int lineNumber);
@@ -74,11 +80,11 @@ int main(int argc, char *argv[]) {
     fclose(file);
     fclose(outputFile);
 
-    printf("Results saved to symbolTable.txt\n");
+    printf("See symbolTable.txt for lexical analysis.\n");
     return 0;
 }
 
-int isKeyword(const char *word) {
+int checkKeyword(const char *word) {
     for (int i = 0; keywords[i] != NULL; i++) {
         if (strcmp(word, keywords[i]) == 0) {
             return 1;
@@ -87,7 +93,7 @@ int isKeyword(const char *word) {
     return 0;
 }
 
-int isReservedWord(const char *word) {
+int checkReservedWord(const char *word) {
     for (int i = 0; reservedWords[i] != NULL; i++) {
         if (strcmp(word, reservedWords[i]) == 0) {
             return 1;
@@ -96,7 +102,7 @@ int isReservedWord(const char *word) {
     return 0;
 }
 
-int isNoiseWord(const char *word) {
+int checkNoiseWord(const char *word) {
     for (int i = 0; noiseWords[i] != NULL; i++) {
         if (strcmp(word, noiseWords[i]) == 0) {
             return 1;
@@ -105,23 +111,7 @@ int isNoiseWord(const char *word) {
     return 0;
 }
 
-char *typeToString(TokenType type) {
-     switch (type) {
-        case 0: return "Identifier";
-        case 1: return "Keyword";
-        case 2: return "Reserved Word";
-        case 3: return "Constant";
-        case 4: return "Noise Word";
-        case 5: return "Comment";
-        case 6: return "Operator";
-        case 7: return "Delimiter";
-        case 8: return "Whitespace";
-        case 9: return "Invalid";
-        default: return "Invalid";
-    }
-}
-
-int check_identifier(const char *token) {
+int checkIdentifier(const char *token) {
     int i = 0;
     char current = token[i];
     int state = 1;
@@ -163,6 +153,55 @@ int check_identifier(const char *token) {
     return state == 3;
 }
 
+int checkAssignment(const char *token) {
+    int assignment = strcmp(token, "=") == 0 || strcmp(token, "+=") == 0 || strcmp(token, "-=") == 0 || strcmp(token, "*=") == 0 || strcmp(token, "/=") == 0 || strcmp(token, "%=") == 0;
+    
+    return assignment;
+}
+
+int checkLogical(const char *token) {
+    int logical = strcmp(token, "&&") == 0 || strcmp(token, "||") == 0 || strcmp(token, "!") == 0;
+
+    return logical;
+}
+
+int checkArithmetic(const char *token) {
+    int arithmetic = strcmp(token, "+") == 0 || strcmp(token, "-") == 0 || strcmp(token, "*") == 0 || strcmp(token, "/") == 0 || strcmp(token, "%") == 0 || strcmp(token, "^") == 0 || strcmp(token, "$") == 0;
+    
+    return arithmetic;
+}
+
+int checkUnary(const char *token) {
+    int unary = strcmp(token, "++") == 0 || strcmp(token, "--") == 0;
+
+    return unary;
+}
+
+int checkRelational(const char *token) {
+    int relational = strcmp(token, "==") == 0 || strcmp(token, "!=") == 0 || strcmp(token, ">") == 0 || strcmp(token, "<") == 0 || strcmp(token, ">=") == 0 || strcmp(token, "<=") == 0;
+    
+    return relational;
+}
+
+char *typeToString(TokenType type) {
+     switch (type) {
+        case 0: return "Identifier";
+        case 1: return "Keyword";
+        case 2: return "Reserved Word";
+        case 3: return "Constant";
+        case 4: return "Noise Word";
+        case 5: return "Comment";
+        case 6: return "Arithmetic Operator";
+        case 7: return "Assignment Operator";
+        case 8: return "Logical Operator (Boolean)";
+        case 9: return "Unary Operator";
+        case 10: return "Relational Operator (Boolean)";
+        case 11: return "Delimiter";
+        case 12: return "Invalid";
+        default: return "Invalid";
+    }
+}
+
 Token newToken(const char *value, TokenType type, int line) {
     Token token;
     token.value = strdup(value);
@@ -183,7 +222,7 @@ Token fsmClassify(const char *token, int line) {
                 if (isalpha(ch) || ch == '_' || ch == '#') state = 1;
                 else if (isdigit(ch)) state = 2;
                 else if (ch == '\'' || ch == '"') state = 3;
-                else if (strchr("=+-*/%&|!<>", ch)) state = 4;
+                else if (strchr("+-*/%=!<>&|^$", ch)) state = 4;
                 else if (strchr(",;(){}[]", ch)) state = 5;
                 else if (ch == '/' && token[i + 1] == '/') return newToken(token, COMMENT, line);
                 else if (ch == '/' && token[i + 1] == '*') return newToken(token, COMMENT, line);
@@ -204,7 +243,7 @@ Token fsmClassify(const char *token, int line) {
                 if (ch == '\'' || ch == '"') return newToken(token, CONSTANT, line);
                 break;
             case 4: // Operator
-                if (!strchr("=+-*/%&|!<>", ch)) return newToken(token, INVALID, line);
+                if (strchr("+-*/%=!<>&|^$", ch)) state = 4;
                 break;
             case 5: // Delimiter
                 return newToken(token, DELIMITER, line);
@@ -213,16 +252,21 @@ Token fsmClassify(const char *token, int line) {
 
     // Final classification based on state
     if (state == 1) {
-        if (isKeyword(token)) return newToken(token, KEYWORD, line);
-        if (isReservedWord(token)) return newToken(token, RESERVED_WORD, line);
-        if (isNoiseWord(token)) return newToken(token, NOISE_WORD, line);
-        if (check_identifier(token)) return newToken(token, IDENTIFIER, line);
+        if (checkKeyword(token)) return newToken(token, KEYWORD, line);
+        if (checkReservedWord(token)) return newToken(token, RESERVED_WORD, line);
+        if (checkNoiseWord(token)) return newToken(token, NOISE_WORD, line);
+        if (checkIdentifier(token)) return newToken(token, IDENTIFIER, line);
         return newToken(token, INVALID, line);
     } else if (state == 2 || state == 3) {
         return newToken(token, CONSTANT, line);
     } else if (state == 4) {
-        return newToken(token, OPERATOR, line);
-    } else if (state == 5) {
+        if (checkAssignment(token)) return newToken(token, ASSIGNMENT_OPE, line);
+        if (checkLogical(token)) return newToken(token, LOGICAL_OPE, line);
+        if (checkArithmetic(token)) return newToken(token, ARITHMETIC_OPE, line);
+        if (checkUnary(token)) return newToken(token, UNARY_OPE, line);
+        if (checkRelational(token)) return newToken(token, RELATIONAL_OPE, line);
+    }
+    else if (state == 5) {
         return newToken(token, DELIMITER, line);
     }
 

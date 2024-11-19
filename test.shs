@@ -1,6 +1,5 @@
 // Assignment_Operators
 =
-hello hello
 +=
 -=
 *=
@@ -18,6 +17,8 @@ hello hello
 *
 /
 %
+^
+$
 
 // Unary_Operators
 +
