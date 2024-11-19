@@ -160,4 +160,8 @@ meanwhile (i < 5) {
     i++;
 }
 
+<<<<<<< HEAD
 num num1 = 10;
+=======
+Inaantok na akooo
+>>>>>>> 7da7ede3143e457cc4fb6b69b78dad0dabb5a905
