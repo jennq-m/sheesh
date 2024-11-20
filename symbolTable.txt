@@ -142,7 +142,7 @@ Line 146: Lexeme: ;               Token: Delimiter (Semicolon)
 Line 147: Lexeme: num             Token: Keyword
 Line 147: Lexeme: count           Token: Identifier
 Line 147: Lexeme: =               Token: Assignment Operator
-Line 147: Lexeme: number          Token: Identifier
+Line 147: Lexeme: number          Token: Keyword
 Line 147: Lexeme: ;               Token: Delimiter (Semicolon)
 Line 148: Lexeme: count           Token: Identifier
 Line 148: Lexeme: *=              Token: Assignment Operator
@@ -212,7 +212,7 @@ Line 161: Lexeme: ++              Token: Unary Operator
 Line 161: Lexeme: ;               Token: Delimiter (Semicolon)
 Line 162: Lexeme: }               Token: Bracket (Closing (Right) Brace)
 Line 165: Lexeme: num             Token: Keyword
-Line 165: Lexeme: num1            Token: Identifier
+Line 165: Lexeme: num1            Token: Keyword
 Line 165: Lexeme: =               Token: Assignment Operator
 Line 165: Lexeme: 10              Token: Constant (Num (int in C))
 Line 165: Lexeme: ;               Token: Delimiter (Semicolon)

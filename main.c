@@ -18,14 +18,6 @@ typedef struct {
     int sheeshLine;
 } Token;
 
-const char *keywords[] = {
-    "bounce", "car", "do", "drift", "empty", "ex", "flip", "frozen",
-    "group", "iffy", "input", "jump", "legit", "locked", "lockin",
-    "long", "meanwhile", "nickname", "num", "open", "other", "out",
-    "outside", "pl", "rep", "scenario", "short", "standard", "stop",
-    "team", "text", "vibe", NULL
-};
-
 const char *reservedWords[] = { "always", "cap", "cont", "nocap", "toptier", NULL };
 
 const char *noiseWords[] = { "aylist", "eat", "put", "tier", "tra", "wise", NULL };
@@ -90,12 +82,170 @@ int checkFilename(int argc, char *argv) {
 }
 
 int checkKeyword(const char *sheeshLexeme) {
-    for (int i = 0; keywords[i] != NULL; i++) {
-        if (strcmp(sheeshLexeme, keywords[i]) == 0) {
-            return 1;
+    int state = 1;
+
+    for (int i = 0; sheeshLexeme[i] != '\0'; i++) {
+        char curr = sheeshLexeme[i];
+
+        switch(state) {
+            case 1: // Q1 (start state)
+                if (curr == 'b') state = 25;
+                if (curr == 'c') state = 31;
+                if (curr == 'd') state = 34;
+                if (curr == 'e') state = 40;
+                if (curr == 'f') state = 46;
+                if (curr == 'g') state = 55;
+                if (curr == 'i') state = 60;
+                if (curr == 'j') state = 66;
+                if (curr == 'l') state = 70;
+                if (curr == 'm') state = 83;
+                if (curr == 'n') state = 92;
+                if (curr == 'o') state = 102;
+                if (curr == 'p') state = 116;
+                if (curr == 'r') state = 118;
+                if (curr == 's') state = 121;
+                if (curr == 't') state = 142;
+                if (curr == 'v') state = 148;
+
+                break;
+            case 25:
+                if (strncmp(sheeshLexeme + i, "ounce", 5) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 31:
+                if (strncmp(sheeshLexeme + i, "ar", 2) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 34:
+                if (strncmp(sheeshLexeme + i, "o", 1) == 0 || strncmp(sheeshLexeme + i, "rift", 4) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 40:
+                if (strncmp(sheeshLexeme + i, "mpty", 4) == 0 || strncmp(sheeshLexeme + i, "x", 1) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 46:
+                if (strncmp(sheeshLexeme + i, "lip", 3) == 0 || strncmp(sheeshLexeme + i, "rozen", 5) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 55:
+                if (strncmp(sheeshLexeme + i, "roup", 4) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 60:
+                if (strncmp(sheeshLexeme + i, "f", 1) == 0 || strncmp(sheeshLexeme + i, "nput", 4) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 66:
+                if (strncmp(sheeshLexeme + i, "ump", 3) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 70:
+                if (strncmp(sheeshLexeme + i, "egit", 4) == 0 || strncmp(sheeshLexeme + i, "ockin", 5) == 0 || strncmp(sheeshLexeme + i, "ong", 3) == 0 || strncmp(sheeshLexeme + i, "ocked", 5) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 83:
+                if (strncmp(sheeshLexeme + i, "eanwhile", 8) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 92:
+                if (strncmp(sheeshLexeme + i, "ickname", 7) == 0 || strncmp(sheeshLexeme + i, "um", 2) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 102:
+                if (strncmp(sheeshLexeme + i, "pen", 3) == 0 || strncmp(sheeshLexeme + i, "ther", 4) == 0 || strncmp(sheeshLexeme + i, "ut", 2) == 0 || strncmp(sheeshLexeme + i, "utside", 6) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 116:
+                if (strncmp(sheeshLexeme + i, "l", 1) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 118:
+                if (strncmp(sheeshLexeme + i, "ep", 2) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 121:
+                if (strncmp(sheeshLexeme + i, "cenario", 7) == 0 || strncmp(sheeshLexeme + i, "hort", 4) == 0 || strncmp(sheeshLexeme + i, "tandard", 7) == 0 || strncmp(sheeshLexeme + i, "top", 3) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+            case 142:
+                if (strncmp(sheeshLexeme + i, "eam", 3) == 0 || strncmp(sheeshLexeme + i, "ext", 3) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+                
+                break;
+            case 148:
+                if (strncmp(sheeshLexeme + i, "ibe", 3) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+                
+                break;
         }
     }
-    return 0;
 }
 
 int checkReservedWord(const char *sheeshLexeme) {
@@ -326,6 +476,8 @@ Token fsmClassify(const char *sheeshLexeme, int sheeshLine) {
                 if (!isalnum(ch) && ch != '_' && ch != '#') {
                     return newToken(sheeshLexeme, INVALID, sheeshLine);
                 }
+
+                
 
                 break;
 
