@@ -531,8 +531,9 @@ void analyzeLine(FILE *outputJam, char *sheeshLine, int sheeshColumn) {
             continue;
         }
         
-         // Handle `++`
-        if (sheeshLine[i] == '+' && sheeshLine[i + 1] == '+') {
+         // Handle `++` and '--'
+        if ((sheeshLine[i] == '+' && sheeshLine[i + 1] == '+') || 
+            (sheeshLine[i] == '-' && sheeshLine[i + 1] == '-')) {
             if (tempMarker > 0) {
                 temp[tempMarker] = '\0';
                 Token token = fsmClassify(temp, sheeshColumn);
@@ -541,24 +542,15 @@ void analyzeLine(FILE *outputJam, char *sheeshLine, int sheeshColumn) {
                 tempMarker = 0;
             }
 
-            Token token = newToken("++", UNARY_OPE, sheeshColumn);
-            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            free(token.value);
-            i++;
-            continue;
-        }
-
-           // Handle `--`
-        if (sheeshLine[i] == '-' && sheeshLine[i + 1] == '-') {
-            if (tempMarker > 0) {
-                temp[tempMarker] = '\0';
-                Token token = fsmClassify(temp, sheeshColumn);
-                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
-                tempMarker = 0;
+            char *operator = "";
+            if (sheeshLine[i] == '+') {
+                operator = "++";
+            } else if (sheeshLine[i] == '-') {
+                operator = "--";
             }
 
-            Token token = newToken("--", UNARY_OPE, sheeshColumn);
+            Token token = newToken(operator, UNARY_OPE, sheeshColumn);
+
             fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
             free(token.value);
             i++;
