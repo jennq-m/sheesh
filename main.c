@@ -555,6 +555,9 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
     char ch;
     int decimalCount = 0;
     int checkFloat = 0;
+    char temp[256];
+    int tempMarker = 0;
+    
 
     for (int i = 0; (ch = sheeshLexeme[i]) != '\0'; i++) {
         switch (state) {
@@ -805,14 +808,54 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             continue;
         }
 
-        if (!isspace(sheeshLine[i])) {
+        if (isalpha(sheeshLine[i]) || sheeshLine[i] == '_') {
+    // Collect identifier characters
+    temp[tempMarker++] = sheeshLine[i];
+    while (isalnum(sheeshLine[i + 1]) || sheeshLine[i + 1] == '_') {
+        temp[tempMarker++] = sheeshLine[++i];
+    }
+    temp[tempMarker] = '\0';  
+    Token token = newToken(temp, IDENTIFIER, sheeshColumn);  
+    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+    free(token.value); 
+    tempMarker = 0;  
+    continue;
+}
+
+
+        if (isdigit(sheeshLine[i])) {
+            
             temp[tempMarker++] = sheeshLine[i];
-        } else if (tempMarker > 0) {
-            temp[tempMarker] = '\0';
-            Token token = sheeshLexer(temp, sheeshColumn);
+        } else if (strchr("+-*/", sheeshLine[i])) {
+            
+            if (tempMarker > 0) {
+                temp[tempMarker] = '\0';  
+                Token token = sheeshLexer(temp, sheeshColumn);  // Classify the number token
+                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: Constant\n", token.sheeshLine, token.value);
+                free(token.value);  
+                tempMarker = 0;  
+            }
+            
+            temp[0] = sheeshLine[i];
+            temp[1] = '\0';  // Null-terminate the operator lexeme
+            Token token = sheeshLexer(temp, sheeshColumn);  // Classify the operator token
             fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            free(token.value);
-            tempMarker = 0;
+            free(token.value);  // Free dynamically allocated memory
+        } else if (isspace(sheeshLine[i])) {
+            // Skip spaces but process any lexemes before spaces
+            if (tempMarker > 0) {
+                temp[tempMarker] = '\0'; 
+                Token token = sheeshLexer(temp, sheeshColumn);  // Classify the token
+                if (token.type == CONSTANT) {
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                } else {
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                }
+                free(token.value);  
+                tempMarker = 0;  
+            }
+        } else {
+            continue;
         }
     }
 
