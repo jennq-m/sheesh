@@ -40,7 +40,7 @@ int checkUnary(const char *sheeshLexeme);
 int checkRelational(const char *sheeshLexeme);
 Token newToken(const char *value, TokenType type, int line);
 Token fsmClassify(const char *sheeshLexeme, int line);
-void analyzeLine(FILE *outputFile, char *line, int sheeshmark);
+void analyzeLine(FILE *outputJam, char *line, int sheeshmark);
 
 int main(int argc, char *argv[]) {
     checkFilename(argc, argv[1]);
@@ -51,8 +51,8 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    FILE *outputFile = fopen("symbolTable.txt", "w");
-    if (!outputFile) {
+    FILE *outputJam = fopen("symbolTable.txt", "w");
+    if (!outputJam) {
         perror("Error opening output file");
         fclose(file);
         return 1;
@@ -61,15 +61,15 @@ int main(int argc, char *argv[]) {
     char line[256];
     int sheeshmark = 1;
 
-    fprintf(outputFile, "Lexical Analysis of %s:\n\n", argv[1]);
+    fprintf(outputJam, "Lexical Analysis of %s:\n\n", argv[1]);
 
     while (fgets(line, sizeof(line), file)) {
-        analyzeLine(outputFile, line, sheeshmark);
+        analyzeLine(outputJam, line, sheeshmark);
         sheeshmark++;
     }
 
     fclose(file);
-    fclose(outputFile);
+    fclose(outputJam);
 
     printf("See symbolTable.txt for lexical analysis.\n");
     return 0;
@@ -405,7 +405,7 @@ Token fsmClassify(const char *sheeshLexeme, int line) {
 }
 
 
-void analyzeLine(FILE *outputFile, char *line, int sheeshmark) {
+void analyzeLine(FILE *outputJam, char *line, int sheeshmark) {
     static int inMultiLineComment = 0;
     int stringLiteral = 0;
     char temp[256];
@@ -417,7 +417,7 @@ void analyzeLine(FILE *outputFile, char *line, int sheeshmark) {
             if (line[i] == '*' && line[i + 1] == '/') {
                 inMultiLineComment = 0;
                 Token token = newToken("*/", COMMENT, sheeshmark);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s \n", token.line, token.value, typeToString(token.type));
+                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s \n", token.line, token.value, typeToString(token.type));
                 free(token.value);
                 i++; // Skip the '/'
             }
@@ -431,7 +431,7 @@ void analyzeLine(FILE *outputFile, char *line, int sheeshmark) {
                 // End of the string literal
                 temp[tempMarker] = '\0';
                 Token token = newToken(temp, CONSTANT, sheeshmark);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s (Text (string in C))\n", token.line, token.value, typeToString(token.type));
+                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s (Text (string in C))\n", token.line, token.value, typeToString(token.type));
                 free(token.value);
                 tempMarker = 0;
                 stringLiteral = 0;
@@ -444,7 +444,7 @@ void analyzeLine(FILE *outputFile, char *line, int sheeshmark) {
             if (tempMarker > 0) {
                 temp[tempMarker] = '\0';
                 Token token = fsmClassify(temp, sheeshmark);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
                 free(token.value);
                 tempMarker = 0;
             }
@@ -457,14 +457,14 @@ void analyzeLine(FILE *outputFile, char *line, int sheeshmark) {
         // Handle comments
         if (line[i] == '/' && line[i + 1] == '/') {
             Token token = newToken("//", COMMENT, sheeshmark);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
             break; // Ignore the rest of the line
         }
 
         if (line[i] == '/' && line[i + 1] == '*') {
             Token token = newToken("/*", COMMENT, sheeshmark);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
             inMultiLineComment = 1;
             i++; // Skip the '*'
@@ -476,14 +476,14 @@ void analyzeLine(FILE *outputFile, char *line, int sheeshmark) {
             if (tempMarker > 0) {
                 temp[tempMarker] = '\0'; // Null-terminate the current token
                 Token token = fsmClassify(temp, sheeshmark);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
                 free(token.value);
                 tempMarker = 0;
             }
 
             char delim[2] = {line[i], '\0'};
             Token token = newToken(delim, DELIMITER, sheeshmark);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
             free(token.value);
             continue;
         }
@@ -493,7 +493,7 @@ void analyzeLine(FILE *outputFile, char *line, int sheeshmark) {
         } else if (tempMarker > 0) {
             temp[tempMarker] = '\0';
             Token token = fsmClassify(temp, sheeshmark);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
             tempMarker = 0;
         }
@@ -503,11 +503,11 @@ void analyzeLine(FILE *outputFile, char *line, int sheeshmark) {
         temp[tempMarker] = '\0';
         if (stringLiteral) {
             Token token = newToken(temp, DELIMITER, sheeshmark);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
             free(token.value);
         } else {
             Token token = fsmClassify(temp, sheeshmark);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
         }
     }
