@@ -169,3 +169,8 @@ i++
 --i
 i--
 ++i
+
+cap 
+nocap
+bnocap
+cap20
