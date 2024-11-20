@@ -223,4 +223,9 @@ Line 166: Lexeme: 10.0            Token: Constant (Drift (float in C))
 Line 166: Lexeme: ;               Token: Delimiter (Semicolon)
 Line 167: Lexeme: i               Token: Identifier
 Line 167: Lexeme: ++              Token: Unary Operator
-Line 168: Lexeme: --i             Token: Invalid
+Line 168: Lexeme: --              Token: Unary Operator
+Line 168: Lexeme: i               Token: Identifier
+Line 169: Lexeme: i               Token: Identifier
+Line 169: Lexeme: --              Token: Unary Operator
+Line 170: Lexeme: ++              Token: Unary Operator
+Line 170: Lexeme: i               Token: Identifier
