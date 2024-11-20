@@ -117,6 +117,7 @@ int checkNoiseWord(const char *word) {
     return 0;
 }
 
+// FSM to check if identifier is valid
 int checkIdentifier(const char *token) {
     int i = 0;
     char current = token[i];
@@ -130,7 +131,9 @@ int checkIdentifier(const char *token) {
                 } else {
                     return 0;
                 }
+
                 break;
+
             case 3: // Q3
                 if (isalnum(current)) {
                     state = 3;
@@ -139,7 +142,9 @@ int checkIdentifier(const char *token) {
                 } else {
                     return 0;
                 }
+
                 break;
+
             case 4: // Q4
                 if (isalnum(current)) {
                     state = 3;
@@ -148,7 +153,9 @@ int checkIdentifier(const char *token) {
                 } else {
                     return 0;
                 }
+
                 break;
+
             default:
                 return 0;
         }
@@ -156,7 +163,11 @@ int checkIdentifier(const char *token) {
         current = token[++i];
     }
 
-    return state == 3;
+    if (state == 3) {
+        return 1;
+    }
+
+    return 0;
 }
 
 int checkAssignment(const char *token) {
