@@ -66,9 +66,9 @@ Line 68: Lexeme: text            Token: Keyword
 Line 69: Lexeme: vibe            Token: Keyword
 Line 71: Lexeme: //              Token: Comment
 Line 72: Lexeme: always          Token: Reserved Word
-Line 73: Lexeme: cap             Token: Constant, Reserved Word
+Line 73: Lexeme: cap             Token: Constant (Legit (bool in C))
 Line 74: Lexeme: cont            Token: Reserved Word
-Line 75: Lexeme: nocap           Token: Constant, Reserved Word
+Line 75: Lexeme: nocap           Token: Constant (Legit (bool in C))
 Line 76: Lexeme: toptier         Token: Reserved Word
 Line 78: Lexeme: //              Token: Comment
 Line 79: Lexeme: aylist          Token: Noise Word

@@ -192,7 +192,7 @@ int checkLogical(const char *sheeshLexeme) {
 }
 
 int checkArithmetic(const char *sheeshLexeme) {
-    char *arithmetic_operators[7] = {"+", "-", "*", "/", "%", "^", "$"};
+    char *arithmetic_operators[7] = {"+", "-", "*", "/", "%", "^", "|"};
 
     for (int i = 0; i < sizeof(arithmetic_operators) / sizeof(arithmetic_operators[0]); i++) {
         if (strcmp(sheeshLexeme, arithmetic_operators[i]) == 0) {
