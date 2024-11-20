@@ -625,7 +625,6 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
     return newToken(sheeshLexeme, INVALID, sheeshLine);
 }
 
-
 void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
     static int inMultiLineComment = 0;
     int stringLiteral = 0;
@@ -686,8 +685,6 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             i++;
             continue;
         }
-
-        
 
         TokenType delimiter;
 
