@@ -179,9 +179,15 @@ int checkUnary(const char *token) {
 }
 
 int checkRelational(const char *token) {
-    int relational = strcmp(token, "==") == 0 || strcmp(token, "!=") == 0 || strcmp(token, ">") == 0 || strcmp(token, "<") == 0 || strcmp(token, ">=") == 0 || strcmp(token, "<=") == 0;
+    char *relational_operators[6] = {"==", "!=", ">", "<", ">=", "<="};
+
+    for (int i = 0; i < sizeof(relational_operators); i++) {
+        if (strcmp(token, relational_operators[i]) == 0) {
+            return 1;
+        }
+    }
     
-    return relational;
+    return 0;
 }
 
 char *typeToString(TokenType type) {
@@ -322,6 +328,14 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
 
         // Start of a string literal
         if (line[i] == '"') {
+            if (tempIndex > 0) {
+                temp[tempIndex] = '\0';
+                Token token = fsmClassify(temp, lineNumber);
+                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+                free(token.value);
+                tempIndex = 0;
+            }
+
             stringLiteral = 1;
             temp[tempIndex++] = line[i];
             continue;
@@ -353,7 +367,6 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
                 tempIndex = 0;
             }
 
-            // Process the delimiter
             char delim[2] = {line[i], '\0'};
             Token token = newToken(delim, DELIMITER, lineNumber);
             fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
@@ -361,11 +374,9 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
             continue;
         }
 
-        // Accumulate token characters
         if (!isspace(line[i])) {
             temp[tempIndex++] = line[i];
         } else if (tempIndex > 0) {
-            // Process the accumulated token
             temp[tempIndex] = '\0';
             Token token = fsmClassify(temp, lineNumber);
             fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
@@ -374,11 +385,16 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
         }
     }
 
-    // Handle leftover token at the end of the line
     if (tempIndex > 0) {
         temp[tempIndex] = '\0';
-        Token token = fsmClassify(temp, lineNumber);
-        fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
-        free(token.value);
+        if (stringLiteral) {
+            Token token = newToken(temp, DELIMITER, lineNumber);
+            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
+            free(token.value);
+        } else {
+            Token token = fsmClassify(temp, lineNumber);
+            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            free(token.value);
+        }
     }
 }
