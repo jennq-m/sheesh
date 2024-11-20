@@ -264,13 +264,13 @@ char *typeToString(TokenType type) {
         case C_PARENTHESIS:
             return "Delimiter (Closing (Right) Parenthesis)";
         case O_BRACKET:
-            return "Delimiter (Open (Left) Bracket)";
+            return "Bracket (Open (Left) Bracket)";
         case C_BRACKET:
-            return "Delimiter (Closing (Right) Bracket)";
+            return "Bracket (Closing (Right) Bracket)";
         case O_BRACE:
-            return "Delimiter (Open (Left) Brace)";
+            return "Bracket (Open (Left) Brace)";
         case C_BRACE:
-            return "Delimiter (Closing (Right) Brace)";
+            return "Bracket (Closing (Right) Brace)";
         case INT_CONSTANT: 
             return "Constant (Num (int in C))";
         case FLOAT_CONSTANT: 
