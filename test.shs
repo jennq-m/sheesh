@@ -154,6 +154,11 @@ $ello
 capt@
 name@name
 @111
+..
+.
+1.A
+1.
+35.8394.0
 
 
 // Should not be classified as keywords / reserved words
@@ -236,9 +241,4 @@ i--
 ++i
 testing, the, comma
 1.01
-..
-.
-1.A
-1.
-35.8394.0
 3434.5347
