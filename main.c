@@ -268,14 +268,15 @@ char *typeToString(TokenType type) {
     }
 }
 
-Token newToken(const char *value, TokenType type, int line) {
+Token newToken(const char *value, TokenType type, int sheeshmark) {
     Token token;
     token.value = strdup(value);
     token.type = type;
-    token.line = line;
+    token.line = sheeshmark;
 
     return token;
 }
+
 Token fsmClassify(const char *sheeshLexeme, int line) {
     int state = 0;
     char ch;
@@ -460,7 +461,7 @@ void analyzeLine(FILE *outputFile, char *line, int sheeshmark) {
             free(token.value);
             break; // Ignore the rest of the line
         }
-        
+
         if (line[i] == '/' && line[i + 1] == '*') {
             Token token = newToken("/*", COMMENT, sheeshmark);
             fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
