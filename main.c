@@ -238,7 +238,7 @@ char *typeToString(TokenType type) {
         case CONSTANT: 
             return "Constant";
         case CONSTANDRESERVED: 
-            return "Constant, Reserved Word";
+            return "Constant (Legit (bool in C))";
         case NOISE_WORD: 
             return "Noise Word";
         case COMMENT: 
