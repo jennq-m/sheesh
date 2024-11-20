@@ -7,219 +7,218 @@ Line 4: Lexeme: -=              Token: Assignment Operator
 Line 5: Lexeme: *=              Token: Assignment Operator
 Line 6: Lexeme: /=              Token: Assignment Operator
 Line 7: Lexeme: %=              Token: Assignment Operator
-Line 8: Lexeme: "test haha"     Token: Constant (Text (string in C))
-Line 10: Lexeme: //              Token: Comment
-Line 11: Lexeme: &&              Token: Logical Operator (Boolean)
-Line 12: Lexeme: ||              Token: Logical Operator (Boolean)
-Line 13: Lexeme: !               Token: Logical Operator (Boolean)
-Line 15: Lexeme: //              Token: Comment
-Line 16: Lexeme: +               Token: Arithmetic Operator
-Line 17: Lexeme: -               Token: Arithmetic Operator
-Line 18: Lexeme: *               Token: Arithmetic Operator
-Line 19: Lexeme: /               Token: Arithmetic Operator
-Line 20: Lexeme: %               Token: Arithmetic Operator
-Line 21: Lexeme: ^               Token: Arithmetic Operator
-Line 22: Lexeme: $               Token: Arithmetic Operator
-Line 24: Lexeme: //              Token: Comment
-Line 25: Lexeme: +               Token: Arithmetic Operator
-Line 26: Lexeme: -               Token: Arithmetic Operator
-Line 27: Lexeme: ++              Token: Unary Operator
-Line 28: Lexeme: --              Token: Unary Operator
-Line 30: Lexeme: //              Token: Comment
-Line 31: Lexeme: ==              Token: Relational Operator (Boolean)
-Line 32: Lexeme: !=              Token: Relational Operator (Boolean)
-Line 33: Lexeme: >               Token: Relational Operator (Boolean)
-Line 34: Lexeme: <               Token: Relational Operator (Boolean)
-Line 35: Lexeme: >=              Token: Relational Operator (Boolean)
-Line 36: Lexeme: <=              Token: Relational Operator (Boolean)
-Line 38: Lexeme: //              Token: Comment
-Line 39: Lexeme: bounce          Token: Keyword
-Line 40: Lexeme: car             Token: Keyword
-Line 41: Lexeme: do              Token: Keyword
-Line 42: Lexeme: drift           Token: Keyword
-Line 43: Lexeme: empty           Token: Keyword
-Line 44: Lexeme: ex              Token: Keyword
-Line 45: Lexeme: flip            Token: Keyword
-Line 46: Lexeme: frozen          Token: Keyword
-Line 47: Lexeme: group           Token: Keyword
-Line 48: Lexeme: iffy            Token: Keyword
-Line 49: Lexeme: input           Token: Keyword
-Line 50: Lexeme: jump            Token: Keyword
-Line 51: Lexeme: legit           Token: Keyword
-Line 52: Lexeme: locked          Token: Keyword
-Line 53: Lexeme: lockin          Token: Keyword
-Line 54: Lexeme: long            Token: Keyword
-Line 55: Lexeme: meanwhile       Token: Keyword
-Line 56: Lexeme: nickname        Token: Keyword
-Line 57: Lexeme: num             Token: Keyword
-Line 58: Lexeme: open            Token: Keyword
-Line 59: Lexeme: other           Token: Keyword
-Line 60: Lexeme: out             Token: Keyword
-Line 61: Lexeme: outside         Token: Keyword
-Line 62: Lexeme: pl              Token: Keyword
-Line 63: Lexeme: rep             Token: Keyword
-Line 64: Lexeme: scenario        Token: Keyword
-Line 65: Lexeme: short           Token: Keyword
-Line 66: Lexeme: standard        Token: Keyword
-Line 67: Lexeme: stop            Token: Keyword
-Line 68: Lexeme: team            Token: Keyword
-Line 69: Lexeme: text            Token: Keyword
-Line 70: Lexeme: vibe            Token: Keyword
-Line 72: Lexeme: //              Token: Comment
-Line 73: Lexeme: always          Token: Reserved Word
-Line 74: Lexeme: cap             Token: Constant, Reserved Word
-Line 75: Lexeme: cont            Token: Reserved Word
-Line 76: Lexeme: nocap           Token: Constant, Reserved Word
-Line 77: Lexeme: toptier         Token: Reserved Word
-Line 79: Lexeme: //              Token: Comment
-Line 80: Lexeme: aylist          Token: Noise Word
-Line 81: Lexeme: eat             Token: Noise Word
-Line 82: Lexeme: put             Token: Noise Word
-Line 83: Lexeme: tier            Token: Noise Word
-Line 84: Lexeme: tra             Token: Noise Word
-Line 85: Lexeme: wise            Token: Noise Word
+Line 9: Lexeme: //              Token: Comment
+Line 10: Lexeme: &&              Token: Logical Operator (Boolean)
+Line 11: Lexeme: ||              Token: Logical Operator (Boolean)
+Line 12: Lexeme: !               Token: Logical Operator (Boolean)
+Line 14: Lexeme: //              Token: Comment
+Line 15: Lexeme: +               Token: Arithmetic Operator
+Line 16: Lexeme: -               Token: Arithmetic Operator
+Line 17: Lexeme: *               Token: Arithmetic Operator
+Line 18: Lexeme: /               Token: Arithmetic Operator
+Line 19: Lexeme: %               Token: Arithmetic Operator
+Line 20: Lexeme: ^               Token: Arithmetic Operator
+Line 21: Lexeme: $               Token: Arithmetic Operator
+Line 23: Lexeme: //              Token: Comment
+Line 24: Lexeme: +               Token: Arithmetic Operator
+Line 25: Lexeme: -               Token: Arithmetic Operator
+Line 26: Lexeme: ++              Token: Unary Operator
+Line 27: Lexeme: --              Token: Unary Operator
+Line 29: Lexeme: //              Token: Comment
+Line 30: Lexeme: ==              Token: Relational Operator (Boolean)
+Line 31: Lexeme: !=              Token: Relational Operator (Boolean)
+Line 32: Lexeme: >               Token: Relational Operator (Boolean)
+Line 33: Lexeme: <               Token: Relational Operator (Boolean)
+Line 34: Lexeme: >=              Token: Relational Operator (Boolean)
+Line 35: Lexeme: <=              Token: Relational Operator (Boolean)
+Line 37: Lexeme: //              Token: Comment
+Line 38: Lexeme: bounce          Token: Keyword
+Line 39: Lexeme: car             Token: Keyword
+Line 40: Lexeme: do              Token: Keyword
+Line 41: Lexeme: drift           Token: Keyword
+Line 42: Lexeme: empty           Token: Keyword
+Line 43: Lexeme: ex              Token: Keyword
+Line 44: Lexeme: flip            Token: Keyword
+Line 45: Lexeme: frozen          Token: Keyword
+Line 46: Lexeme: group           Token: Keyword
+Line 47: Lexeme: iffy            Token: Keyword
+Line 48: Lexeme: input           Token: Keyword
+Line 49: Lexeme: jump            Token: Keyword
+Line 50: Lexeme: legit           Token: Keyword
+Line 51: Lexeme: locked          Token: Keyword
+Line 52: Lexeme: lockin          Token: Keyword
+Line 53: Lexeme: long            Token: Keyword
+Line 54: Lexeme: meanwhile       Token: Keyword
+Line 55: Lexeme: nickname        Token: Keyword
+Line 56: Lexeme: num             Token: Keyword
+Line 57: Lexeme: open            Token: Keyword
+Line 58: Lexeme: other           Token: Keyword
+Line 59: Lexeme: out             Token: Keyword
+Line 60: Lexeme: outside         Token: Keyword
+Line 61: Lexeme: pl              Token: Keyword
+Line 62: Lexeme: rep             Token: Keyword
+Line 63: Lexeme: scenario        Token: Keyword
+Line 64: Lexeme: short           Token: Keyword
+Line 65: Lexeme: standard        Token: Keyword
+Line 66: Lexeme: stop            Token: Keyword
+Line 67: Lexeme: team            Token: Keyword
+Line 68: Lexeme: text            Token: Keyword
+Line 69: Lexeme: vibe            Token: Keyword
+Line 71: Lexeme: //              Token: Comment
+Line 72: Lexeme: always          Token: Reserved Word
+Line 73: Lexeme: cap             Token: Constant, Reserved Word
+Line 74: Lexeme: cont            Token: Reserved Word
+Line 75: Lexeme: nocap           Token: Constant, Reserved Word
+Line 76: Lexeme: toptier         Token: Reserved Word
+Line 78: Lexeme: //              Token: Comment
+Line 79: Lexeme: aylist          Token: Noise Word
+Line 80: Lexeme: eat             Token: Noise Word
+Line 81: Lexeme: put             Token: Noise Word
+Line 82: Lexeme: tier            Token: Noise Word
+Line 83: Lexeme: tra             Token: Noise Word
+Line 84: Lexeme: wise            Token: Noise Word
+Line 86: Lexeme: //              Token: Comment
 Line 87: Lexeme: //              Token: Comment
-Line 88: Lexeme: //              Token: Comment
-Line 89: Lexeme: /*              Token: Comment
-Line 91: Lexeme: */              Token: Comment 
-Line 93: Lexeme: //              Token: Comment
-Line 94: Lexeme: ,               Token: Delimiter
-Line 95: Lexeme: ;               Token: Delimiter
-Line 96: Lexeme: (               Token: Delimiter
-Line 97: Lexeme: )               Token: Delimiter
-Line 98: Lexeme: {               Token: Delimiter
-Line 99: Lexeme: }               Token: Delimiter
+Line 88: Lexeme: /*              Token: Comment
+Line 90: Lexeme: */              Token: Comment 
+Line 92: Lexeme: //              Token: Comment
+Line 93: Lexeme: ,               Token: Delimiter
+Line 94: Lexeme: ;               Token: Delimiter
+Line 95: Lexeme: (               Token: Delimiter
+Line 96: Lexeme: )               Token: Delimiter
+Line 97: Lexeme: {               Token: Delimiter
+Line 98: Lexeme: }               Token: Delimiter
+Line 99: Lexeme: "
+              Token: Delimiter
 Line 100: Lexeme: "
               Token: Delimiter
-Line 101: Lexeme: "
-              Token: Delimiter
-Line 102: Lexeme: [               Token: Delimiter
-Line 103: Lexeme: ]               Token: Delimiter
-Line 105: Lexeme: //              Token: Comment
-Line 106: Lexeme: Valid100        Token: Identifier
-Line 107: Lexeme: inv@lid         Token: Invalid
-Line 108: Lexeme: Valid_identifier Token: Identifier
-Line 109: Lexeme: valid_identifier Token: Identifier
-Line 110: Lexeme: _valid1         Token: Identifier
-Line 111: Lexeme: #valid2         Token: Identifier
-Line 112: Lexeme: 1invalid        Token: Invalid
-Line 113: Lexeme: valid#1         Token: Identifier
-Line 114: Lexeme: valid__alphabet Token: Identifier
-Line 115: Lexeme: invalid##       Token: Invalid
-Line 116: Lexeme: test#identifier Token: Identifier
-Line 117: Lexeme: va              Token: Identifier
-Line 117: Lexeme: lid             Token: Identifier
-Line 118: Lexeme: casesensitiveidentifier Token: Identifier
-Line 119: Lexeme: CaseSensitiveIdentifier Token: Identifier
-Line 120: Lexeme: thisIsInv@_valid1 Token: Invalid
-Line 121: Lexeme: ##thisShouldBeValid Token: Identifier
-Line 122: Lexeme: beh##           Token: Invalid
-Line 123: Lexeme: vibe            Token: Keyword
-Line 124: Lexeme: always          Token: Reserved Word
-Line 127: Lexeme: //              Token: Comment
-Line 128: Lexeme: @               Token: Invalid
-Line 129: Lexeme: ..              Token: Invalid
-Line 130: Lexeme: 1.01.01         Token: Invalid
-Line 132: Lexeme: //              Token: Comment
-Line 133: Lexeme: 5               Token: Constant (Num (int in C))
-Line 134: Lexeme: "test"          Token: Constant (Text (string in C))
-Line 135: Lexeme: 5.5             Token: Constant (Drift (float in C))
-Line 136: Lexeme: 'h'             Token: Constant
-Line 137: Lexeme: 50              Token: Constant (Num (int in C))
-Line 139: Lexeme: /*              Token: Comment
-Line 142: Lexeme: */              Token: Comment 
-Line 144: Lexeme: //              Token: Comment
-Line 145: Lexeme: num             Token: Keyword
-Line 145: Lexeme: count           Token: Identifier
+Line 101: Lexeme: [               Token: Delimiter
+Line 102: Lexeme: ]               Token: Delimiter
+Line 104: Lexeme: //              Token: Comment
+Line 105: Lexeme: Valid100        Token: Identifier
+Line 106: Lexeme: inv@lid         Token: Invalid
+Line 107: Lexeme: Valid_identifier Token: Identifier
+Line 108: Lexeme: valid_identifier Token: Identifier
+Line 109: Lexeme: _valid1         Token: Identifier
+Line 110: Lexeme: #valid2         Token: Identifier
+Line 111: Lexeme: 1invalid        Token: Invalid
+Line 112: Lexeme: valid#1         Token: Identifier
+Line 113: Lexeme: valid__alphabet Token: Identifier
+Line 114: Lexeme: invalid##       Token: Invalid
+Line 115: Lexeme: test#identifier Token: Identifier
+Line 116: Lexeme: va              Token: Identifier
+Line 116: Lexeme: lid             Token: Identifier
+Line 117: Lexeme: casesensitiveidentifier Token: Identifier
+Line 118: Lexeme: CaseSensitiveIdentifier Token: Identifier
+Line 119: Lexeme: thisIsInv@_valid1 Token: Invalid
+Line 120: Lexeme: ##thisShouldBeValid Token: Identifier
+Line 121: Lexeme: beh##           Token: Invalid
+Line 122: Lexeme: vibe            Token: Keyword
+Line 123: Lexeme: always          Token: Reserved Word
+Line 126: Lexeme: //              Token: Comment
+Line 127: Lexeme: @               Token: Invalid
+Line 128: Lexeme: ..              Token: Invalid
+Line 129: Lexeme: 1.01.01         Token: Invalid
+Line 131: Lexeme: //              Token: Comment
+Line 132: Lexeme: 5               Token: Constant (Num (int in C))
+Line 133: Lexeme: "test"          Token: Constant (Text (string in C))
+Line 134: Lexeme: 5.5             Token: Constant (Drift (float in C))
+Line 135: Lexeme: 'h'             Token: Constant
+Line 136: Lexeme: 50              Token: Constant (Num (int in C))
+Line 138: Lexeme: /*              Token: Comment
+Line 141: Lexeme: */              Token: Comment 
+Line 143: Lexeme: //              Token: Comment
+Line 144: Lexeme: num             Token: Keyword
+Line 144: Lexeme: count           Token: Identifier
+Line 144: Lexeme: ;               Token: Delimiter
+Line 145: Lexeme: drift           Token: Keyword
+Line 145: Lexeme: decimal         Token: Identifier
+Line 145: Lexeme: =               Token: Assignment Operator
+Line 145: Lexeme: 89.70           Token: Constant (Drift (float in C))
 Line 145: Lexeme: ;               Token: Delimiter
-Line 146: Lexeme: drift           Token: Keyword
-Line 146: Lexeme: decimal         Token: Identifier
+Line 146: Lexeme: num             Token: Keyword
+Line 146: Lexeme: count           Token: Identifier
 Line 146: Lexeme: =               Token: Assignment Operator
-Line 146: Lexeme: 89.70           Token: Constant (Drift (float in C))
+Line 146: Lexeme: number          Token: Identifier
 Line 146: Lexeme: ;               Token: Delimiter
-Line 147: Lexeme: num             Token: Keyword
 Line 147: Lexeme: count           Token: Identifier
-Line 147: Lexeme: =               Token: Assignment Operator
-Line 147: Lexeme: number          Token: Identifier
+Line 147: Lexeme: *=              Token: Assignment Operator
+Line 147: Lexeme: test_number     Token: Identifier
 Line 147: Lexeme: ;               Token: Delimiter
-Line 148: Lexeme: count           Token: Identifier
-Line 148: Lexeme: *=              Token: Assignment Operator
-Line 148: Lexeme: test_number     Token: Identifier
-Line 148: Lexeme: ;               Token: Delimiter
-Line 149: Lexeme: iffy            Token: Keyword
+Line 148: Lexeme: iffy            Token: Keyword
+Line 148: Lexeme: (               Token: Delimiter
+Line 148: Lexeme: average         Token: Identifier
+Line 148: Lexeme: >=              Token: Relational Operator (Boolean)
+Line 148: Lexeme: 97.90           Token: Constant (Drift (float in C))
+Line 148: Lexeme: )               Token: Delimiter
+Line 148: Lexeme: {               Token: Delimiter
+Line 149: Lexeme: out             Token: Keyword
 Line 149: Lexeme: (               Token: Delimiter
-Line 149: Lexeme: average         Token: Identifier
-Line 149: Lexeme: >=              Token: Relational Operator (Boolean)
-Line 149: Lexeme: 97.90           Token: Constant (Drift (float in C))
+Line 149: Lexeme: "GWA is very high!" Token: Constant (Text (string in C))
 Line 149: Lexeme: )               Token: Delimiter
-Line 149: Lexeme: {               Token: Delimiter
-Line 150: Lexeme: out             Token: Keyword
-Line 150: Lexeme: (               Token: Delimiter
-Line 150: Lexeme: "GWA is very high!" Token: Constant (Text (string in C))
-Line 150: Lexeme: )               Token: Delimiter
-Line 150: Lexeme: ;               Token: Delimiter
-Line 151: Lexeme: }               Token: Delimiter
-Line 152: Lexeme: iffy            Token: Keyword
+Line 149: Lexeme: ;               Token: Delimiter
+Line 150: Lexeme: }               Token: Delimiter
+Line 151: Lexeme: iffy            Token: Keyword
+Line 151: Lexeme: (               Token: Delimiter
+Line 151: Lexeme: a               Token: Identifier
+Line 151: Lexeme: ==              Token: Relational Operator (Boolean)
+Line 151: Lexeme: b               Token: Identifier
+Line 151: Lexeme: )               Token: Delimiter
+Line 151: Lexeme: {               Token: Delimiter
+Line 152: Lexeme: out             Token: Keyword
 Line 152: Lexeme: (               Token: Delimiter
-Line 152: Lexeme: a               Token: Identifier
-Line 152: Lexeme: ==              Token: Relational Operator (Boolean)
-Line 152: Lexeme: b               Token: Identifier
+Line 152: Lexeme: "Same!"         Token: Constant (Text (string in C))
 Line 152: Lexeme: )               Token: Delimiter
-Line 152: Lexeme: {               Token: Delimiter
-Line 153: Lexeme: out             Token: Keyword
+Line 152: Lexeme: ;               Token: Delimiter
+Line 153: Lexeme: }               Token: Delimiter
+Line 153: Lexeme: ex              Token: Keyword
 Line 153: Lexeme: (               Token: Delimiter
-Line 153: Lexeme: "Same!"         Token: Constant (Text (string in C))
+Line 153: Lexeme: a               Token: Identifier
+Line 153: Lexeme: >               Token: Relational Operator (Boolean)
+Line 153: Lexeme: b               Token: Identifier
 Line 153: Lexeme: )               Token: Delimiter
-Line 153: Lexeme: ;               Token: Delimiter
-Line 154: Lexeme: }               Token: Delimiter
-Line 154: Lexeme: ex              Token: Keyword
+Line 153: Lexeme: {               Token: Delimiter
+Line 154: Lexeme: out             Token: Keyword
 Line 154: Lexeme: (               Token: Delimiter
-Line 154: Lexeme: a               Token: Identifier
-Line 154: Lexeme: >               Token: Relational Operator (Boolean)
-Line 154: Lexeme: b               Token: Identifier
+Line 154: Lexeme: "Greater!"      Token: Constant (Text (string in C))
 Line 154: Lexeme: )               Token: Delimiter
-Line 154: Lexeme: {               Token: Delimiter
-Line 155: Lexeme: out             Token: Keyword
-Line 155: Lexeme: (               Token: Delimiter
-Line 155: Lexeme: "Greater!"      Token: Constant (Text (string in C))
-Line 155: Lexeme: )               Token: Delimiter
-Line 155: Lexeme: ;               Token: Delimiter
-Line 156: Lexeme: }               Token: Delimiter
-Line 156: Lexeme: other           Token: Keyword
-Line 156: Lexeme: {               Token: Delimiter
-Line 157: Lexeme: out             Token: Keyword
-Line 157: Lexeme: (               Token: Delimiter
-Line 157: Lexeme: "Less!"         Token: Constant (Text (string in C))
-Line 157: Lexeme: )               Token: Delimiter
-Line 157: Lexeme: ;               Token: Delimiter
-Line 158: Lexeme: }               Token: Delimiter
-Line 159: Lexeme: meanwhile       Token: Keyword
+Line 154: Lexeme: ;               Token: Delimiter
+Line 155: Lexeme: }               Token: Delimiter
+Line 155: Lexeme: other           Token: Keyword
+Line 155: Lexeme: {               Token: Delimiter
+Line 156: Lexeme: out             Token: Keyword
+Line 156: Lexeme: (               Token: Delimiter
+Line 156: Lexeme: "Less!"         Token: Constant (Text (string in C))
+Line 156: Lexeme: )               Token: Delimiter
+Line 156: Lexeme: ;               Token: Delimiter
+Line 157: Lexeme: }               Token: Delimiter
+Line 158: Lexeme: meanwhile       Token: Keyword
+Line 158: Lexeme: (               Token: Delimiter
+Line 158: Lexeme: i               Token: Identifier
+Line 158: Lexeme: <               Token: Relational Operator (Boolean)
+Line 158: Lexeme: 5               Token: Constant (Num (int in C))
+Line 158: Lexeme: )               Token: Delimiter
+Line 158: Lexeme: {               Token: Delimiter
+Line 159: Lexeme: out             Token: Keyword
 Line 159: Lexeme: (               Token: Delimiter
 Line 159: Lexeme: i               Token: Identifier
-Line 159: Lexeme: <               Token: Relational Operator (Boolean)
-Line 159: Lexeme: 5               Token: Constant (Num (int in C))
 Line 159: Lexeme: )               Token: Delimiter
-Line 159: Lexeme: {               Token: Delimiter
-Line 160: Lexeme: out             Token: Keyword
-Line 160: Lexeme: (               Token: Delimiter
-Line 160: Lexeme: i               Token: Identifier
-Line 160: Lexeme: )               Token: Delimiter
+Line 159: Lexeme: ;               Token: Delimiter
+Line 160: Lexeme: i++             Token: Invalid
 Line 160: Lexeme: ;               Token: Delimiter
-Line 161: Lexeme: i++             Token: Invalid
-Line 161: Lexeme: ;               Token: Delimiter
-Line 162: Lexeme: }               Token: Delimiter
-Line 165: Lexeme: num             Token: Keyword
-Line 165: Lexeme: num1            Token: Identifier
+Line 161: Lexeme: }               Token: Delimiter
+Line 164: Lexeme: num             Token: Keyword
+Line 164: Lexeme: num1            Token: Identifier
+Line 164: Lexeme: =               Token: Assignment Operator
+Line 164: Lexeme: 10              Token: Constant (Num (int in C))
+Line 164: Lexeme: ;               Token: Delimiter
+Line 165: Lexeme: drift           Token: Keyword
+Line 165: Lexeme: d1              Token: Identifier
 Line 165: Lexeme: =               Token: Assignment Operator
-Line 165: Lexeme: 10              Token: Constant (Num (int in C))
+Line 165: Lexeme: 10.0            Token: Constant (Drift (float in C))
 Line 165: Lexeme: ;               Token: Delimiter
-Line 166: Lexeme: drift           Token: Keyword
-Line 166: Lexeme: d1              Token: Identifier
-Line 166: Lexeme: =               Token: Assignment Operator
-Line 166: Lexeme: 10.0            Token: Constant (Drift (float in C))
-Line 166: Lexeme: ;               Token: Delimiter
-Line 167: Lexeme: cap             Token: Constant, Reserved Word
-Line 168: Lexeme: nocap           Token: Constant, Reserved Word
-Line 168: Lexeme: ball            Token: Identifier
-Line 169: Lexeme: bnocap          Token: Identifier
-Line 170: Lexeme: always          Token: Reserved Word
+Line 166: Lexeme: cap             Token: Constant, Reserved Word
+Line 167: Lexeme: nocap           Token: Constant, Reserved Word
+Line 167: Lexeme: ball            Token: Identifier
+Line 168: Lexeme: bnocap          Token: Identifier
+Line 169: Lexeme: always          Token: Reserved Word

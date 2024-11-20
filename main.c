@@ -31,6 +31,7 @@ const char *reservedWords[] = { "always", "cap", "cont", "nocap", "toptier", NUL
 const char *noiseWords[] = { "aylist", "eat", "put", "tier", "tra", "wise", NULL };
 
 // Function prototypes
+int checkFilename(int argc, char *argv);
 int checkKeyword(const char *word);
 int checkReservedWord(const char *word);
 int checkNoiseWord(const char *word);
@@ -44,16 +45,7 @@ Token fsmClassify(const char *token, int line);
 void analyzeLine(FILE *outputFile, char *line, int lineNumber);
 
 int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Usage: %s <test.shs>\n", argv[0]);
-        return 1;
-    }
-
-    // Validate file extension
-    if (!strstr(argv[1], ".shs")) {
-        printf("Error: Only .shs files are allowed.\n");
-        return 1;
-    }
+    checkFilename(argc, argv[1]);
 
     FILE *file = fopen(argv[1], "r");
     if (!file) {
@@ -83,6 +75,19 @@ int main(int argc, char *argv[]) {
 
     printf("See symbolTable.txt for lexical analysis.\n");
     return 0;
+}
+
+int checkFilename(int argc, char *argv) {
+    if (argc < 2) {
+        printf("Usage: %s <test.shs>\n", argv[0]);
+        exit(1);
+    }
+
+    // Validate file extension
+    if (!strstr(argv, ".shs")) {
+        printf("Error: Only .shs files are allowed.\n");
+        exit(1);
+    }
 }
 
 int checkKeyword(const char *word) {
