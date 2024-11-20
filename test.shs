@@ -45,7 +45,7 @@ ex
 flip
 frozen
 group
-iffy
+if
 input
 jump
 legit
@@ -129,10 +129,22 @@ always
 @
 ..
 1.01.01
+0pen
+0open
+capt@
+
+// Should not be classified as keywords / reserved words
 drifta
 adrift
+darift
+heycont
+acap
 caps
 scap
+bnum
+numerate
+num20
+cap0
 
 // Constant
 5
@@ -151,10 +163,10 @@ num count;
 drift decimal = 89.70;
 num count = number;
 count *= test_number;
-iffy (average >= 97.90) {
+if (average >= 97.90) {
     out("GWA is very high!");
 }
-iffy (a == b) {
+if (a == b) {
     out("Same!");
 } ex (a > b) {
     out("Greater!");

@@ -86,24 +86,44 @@ int checkKeyword(const char *sheeshLexeme) {
 
         switch(state) {
             case 1:
-                if (curr == 'b') state = 25;
-                if (curr == 'c') state = 31;
-                if (curr == 'd') state = 34;
-                if (curr == 'e') state = 40;
-                if (curr == 'f') state = 46;
-                if (curr == 'g') state = 55;
-                if (curr == 'i') state = 60;
-                if (curr == 'j') state = 66;
-                if (curr == 'l') state = 70;
-                if (curr == 'm') state = 83;
-                if (curr == 'n') state = 92;
-                if (curr == 'o') state = 102;
-                if (curr == 'p') state = 116;
-                if (curr == 'r') state = 118;
-                if (curr == 's') state = 121;
-                if (curr == 't') state = 142;
-                if (curr == 'v') state = 148;
-
+                if (curr == 'b') {
+                    state = 25;
+                } else if (curr == 'c') {
+                    state = 31;
+                } else if (curr == 'd') {
+                    state = 34;
+                } else if (curr == 'e') {
+                    state = 40;
+                } else if (curr == 'f') { 
+                    state = 46;
+                } else if (curr == 'g') {
+                    state = 55;
+                } else if (curr == 'i') {
+                    state = 60;
+                } else if (curr == 'j') { 
+                    state = 66;
+                } else if (curr == 'l') { 
+                    state = 70;
+                } else if (curr == 'm') {
+                    state = 83;
+                } else if (curr == 'n') {
+                    state = 92;
+                } else if (curr == 'o') {
+                    state = 102;
+                } else if (curr == 'p') {
+                    state = 116;
+                } else if (curr == 'r') {
+                    state = 118;
+                } else if (curr == 's') {
+                    state = 121;
+                } else if (curr == 't') {
+                    state = 142;
+                } else if (curr == 'v') {
+                    state = 148;
+                } else { 
+                    return 0;
+                }
+                
                 break;
 
             case 25:
@@ -258,8 +278,13 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
                 
                 break;
+
+            default:
+                return 0;
         }
     }
+
+    return 0;
 }
 
 int checkReservedWord(const char *sheeshLexeme) {
@@ -270,10 +295,17 @@ int checkReservedWord(const char *sheeshLexeme) {
 
         switch(state) {
             case 1:
-                if (curr == 'a') state = 2;
-                if (curr == 'c') state = 3;
-                if (curr == 'n') state = 4;
-                if (curr == 't') state = 5;
+                if (curr == 'a') {
+                    state = 2;
+                } else if (curr == 'c') {
+                    state = 3;
+                } else if (curr == 'n') { 
+                    state = 4;
+                } else if (curr == 't') {
+                    state = 5;
+                } else {
+                    return 0;
+                }
 
                 break;
 
