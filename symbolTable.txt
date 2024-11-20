@@ -362,15 +362,19 @@ Line 233: Lexeme: i               Token: Identifier
 Line 233: Lexeme: ++              Token: Unary Operator
 Line 234: Lexeme: --              Token: Unary Operator
 Line 234: Lexeme: i               Token: Identifier
-Line 235: Lexeme: testing         Token: Identifier
-Line 235: Lexeme: ,               Token: Delimiter (Comma)
-Line 235: Lexeme: the             Token: Identifier
-Line 235: Lexeme: ,               Token: Delimiter (Comma)
-Line 235: Lexeme: comma           Token: Identifier
-Line 236: Lexeme: 1.01            Token: Constant (Drift (float in C))
-Line 237: Lexeme: ..              Token: Invalid
-Line 238: Lexeme: .               Token: Invalid
-Line 239: Lexeme: 1.A             Token: Invalid
-Line 240: Lexeme: 1.              Token: Invalid
-Line 241: Lexeme: 35.8394.0       Token: Invalid
-Line 242: Lexeme: 3434.5347       Token: Constant (Drift (float in C))
+Line 235: Lexeme: i               Token: Identifier
+Line 235: Lexeme: --              Token: Unary Operator
+Line 236: Lexeme: ++              Token: Unary Operator
+Line 236: Lexeme: i               Token: Identifier
+Line 237: Lexeme: testing         Token: Identifier
+Line 237: Lexeme: ,               Token: Delimiter (Comma)
+Line 237: Lexeme: the             Token: Identifier
+Line 237: Lexeme: ,               Token: Delimiter (Comma)
+Line 237: Lexeme: comma           Token: Identifier
+Line 238: Lexeme: 1.01            Token: Constant (Drift (float in C))
+Line 239: Lexeme: ..              Token: Invalid
+Line 240: Lexeme: .               Token: Invalid
+Line 241: Lexeme: 1.A             Token: Invalid
+Line 242: Lexeme: 1.              Token: Invalid
+Line 243: Lexeme: 35.8394.0       Token: Invalid
+Line 244: Lexeme: 3434.5347       Token: Constant (Drift (float in C))
