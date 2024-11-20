@@ -262,7 +262,7 @@ Token fsmClassify(const char *token, int line) {
     if (state == 1) {
         if (checkKeyword(token)) return newToken(token, KEYWORD, line);
         if (checkReservedWord(token)) {
-            if (strcmp(token, "cap") || strcmp(token, "nocap")) {
+            if (!(strcmp(token, "cap")) || !(strcmp(token, "nocap"))) {
                 return newToken(token, CONSTANDRESERVED, line);
             }
             else {

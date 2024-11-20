@@ -65,11 +65,11 @@ Line 67: Lexeme: team            Token: Keyword
 Line 68: Lexeme: text            Token: Keyword
 Line 69: Lexeme: vibe            Token: Keyword
 Line 71: Lexeme: //              Token: Comment
-Line 72: Lexeme: always          Token: Constant, Reserved Word
+Line 72: Lexeme: always          Token: Reserved Word
 Line 73: Lexeme: cap             Token: Constant, Reserved Word
-Line 74: Lexeme: cont            Token: Constant, Reserved Word
+Line 74: Lexeme: cont            Token: Reserved Word
 Line 75: Lexeme: nocap           Token: Constant, Reserved Word
-Line 76: Lexeme: toptier         Token: Constant, Reserved Word
+Line 76: Lexeme: toptier         Token: Reserved Word
 Line 78: Lexeme: //              Token: Comment
 Line 79: Lexeme: aylist          Token: Noise Word
 Line 80: Lexeme: eat             Token: Noise Word
@@ -114,7 +114,7 @@ Line 119: Lexeme: thisIsInv@_valid1 Token: Invalid
 Line 120: Lexeme: ##thisShouldBeValid Token: Identifier
 Line 121: Lexeme: beh##           Token: Invalid
 Line 122: Lexeme: vibe            Token: Keyword
-Line 123: Lexeme: always          Token: Constant, Reserved Word
+Line 123: Lexeme: always          Token: Reserved Word
 Line 126: Lexeme: //              Token: Comment
 Line 127: Lexeme: @               Token: Invalid
 Line 128: Lexeme: ..              Token: Invalid
@@ -221,3 +221,4 @@ Line 166: Lexeme: cap             Token: Constant, Reserved Word
 Line 167: Lexeme: nocap           Token: Constant, Reserved Word
 Line 167: Lexeme: ball            Token: Identifier
 Line 168: Lexeme: bnocap          Token: Identifier
+Line 169: Lexeme: always          Token: Reserved Word
