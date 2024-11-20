@@ -66,9 +66,9 @@ Line 68: Lexeme: text            Token: Keyword
 Line 69: Lexeme: vibe            Token: Keyword
 Line 71: Lexeme: //              Token: Comment
 Line 72: Lexeme: always          Token: Reserved Word
-Line 73: Lexeme: cap             Token: Reserved Word
+Line 73: Lexeme: cap             Token: Constant, Reserved Word
 Line 74: Lexeme: cont            Token: Reserved Word
-Line 75: Lexeme: nocap           Token: Reserved Word
+Line 75: Lexeme: nocap           Token: Constant, Reserved Word
 Line 76: Lexeme: toptier         Token: Reserved Word
 Line 78: Lexeme: //              Token: Comment
 Line 79: Lexeme: aylist          Token: Noise Word
@@ -89,9 +89,9 @@ Line 96: Lexeme: )               Token: Delimiter
 Line 97: Lexeme: {               Token: Delimiter
 Line 98: Lexeme: }               Token: Delimiter
 Line 99: Lexeme: "
-              Token: Constant (Text (string in C))
+              Token: Delimiter
 Line 100: Lexeme: "
-              Token: Constant (Text (string in C))
+              Token: Delimiter
 Line 101: Lexeme: [               Token: Delimiter
 Line 102: Lexeme: ]               Token: Delimiter
 Line 104: Lexeme: //              Token: Comment
@@ -217,4 +217,3 @@ Line 165: Lexeme: d1              Token: Identifier
 Line 165: Lexeme: =               Token: Assignment Operator
 Line 165: Lexeme: 10.0            Token: Constant (Drift (float in C))
 Line 165: Lexeme: ;               Token: Delimiter
-Line 166: Lexeme: ''              Token: Constant

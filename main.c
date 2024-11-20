@@ -7,7 +7,7 @@
 typedef enum {
     IDENTIFIER, KEYWORD, RESERVED_WORD, CONSTANT, NOISE_WORD, COMMENT, 
     ARITHMETIC_OPE, ASSIGNMENT_OPE, LOGICAL_OPE, UNARY_OPE, RELATIONAL_OPE, 
-    DELIMITER, INVALID, INT_CONSTANT, FLOAT_CONSTANT, STRING_CONSTANT
+    DELIMITER, INVALID, INT_CONSTANT, FLOAT_CONSTANT, STRING_CONSTANT, CONSTANDRESERVED
 } TokenType;
 
 
@@ -31,6 +31,7 @@ const char *reservedWords[] = { "always", "cap", "cont", "nocap", "toptier", NUL
 const char *noiseWords[] = { "aylist", "eat", "put", "tier", "tra", "wise", NULL };
 
 // Function prototypes
+int checkFilename(int argc, char *argv);
 int checkKeyword(const char *word);
 int checkReservedWord(const char *word);
 int checkNoiseWord(const char *word);
@@ -44,16 +45,7 @@ Token fsmClassify(const char *token, int line);
 void analyzeLine(FILE *outputFile, char *line, int lineNumber);
 
 int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Usage: %s <test.shs>\n", argv[0]);
-        return 1;
-    }
-
-    // Validate file extension
-    if (!strstr(argv[1], ".shs")) {
-        printf("Error: Only .shs files are allowed.\n");
-        return 1;
-    }
+    checkFilename(argc, argv[1]);
 
     FILE *file = fopen(argv[1], "r");
     if (!file) {
@@ -83,6 +75,19 @@ int main(int argc, char *argv[]) {
 
     printf("See symbolTable.txt for lexical analysis.\n");
     return 0;
+}
+
+int checkFilename(int argc, char *argv) {
+    if (argc < 2) {
+        printf("Usage: %s <test.shs>\n", argv[0]);
+        exit(1);
+    }
+
+    // Validate file extension
+    if (!strstr(argv, ".shs")) {
+        printf("Error: Only .shs files are allowed.\n");
+        exit(1);
+    }
 }
 
 int checkKeyword(const char *word) {
@@ -155,33 +160,63 @@ int checkIdentifier(const char *token) {
 }
 
 int checkAssignment(const char *token) {
-    int assignment = strcmp(token, "=") == 0 || strcmp(token, "+=") == 0 || strcmp(token, "-=") == 0 || strcmp(token, "*=") == 0 || strcmp(token, "/=") == 0 || strcmp(token, "%=") == 0;
-    
-    return assignment;
+    char *assignment_operators[6] = {"=", "+=", "-=", "*=", "/=", "%="};
+
+    for (int i = 0; i < sizeof(assignment_operators) / sizeof(assignment_operators[0]); i++) {
+        if (strcmp(token, assignment_operators[i]) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int checkLogical(const char *token) {
-    int logical = strcmp(token, "&&") == 0 || strcmp(token, "||") == 0 || strcmp(token, "!") == 0;
+    char *logical_operators[3] = {"&&", "||", "!"};
 
-    return logical;
+    for (int i = 0; i < sizeof(logical_operators) / sizeof(logical_operators[0]); i++) {
+        if (strcmp(token, logical_operators[i]) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int checkArithmetic(const char *token) {
-    int arithmetic = strcmp(token, "+") == 0 || strcmp(token, "-") == 0 || strcmp(token, "*") == 0 || strcmp(token, "/") == 0 || strcmp(token, "%") == 0 || strcmp(token, "^") == 0 || strcmp(token, "$") == 0;
-    
-    return arithmetic;
+    char *arithmetic_operators[7] = {"+", "-", "*", "/", "%", "^", "$"};
+
+    for (int i = 0; i < sizeof(arithmetic_operators) / sizeof(arithmetic_operators[0]); i++) {
+        if (strcmp(token, arithmetic_operators[i]) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int checkUnary(const char *token) {
-    int unary = strcmp(token, "++") == 0 || strcmp(token, "--") == 0;
+    char *unary_operators[2] = {"++", "--"};
 
-    return unary;
+    for (int i = 0; i < sizeof(unary_operators) / sizeof(unary_operators[0]); i++) {
+        if (strcmp(token, unary_operators[i]) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int checkRelational(const char *token) {
-    int relational = strcmp(token, "==") == 0 || strcmp(token, "!=") == 0 || strcmp(token, ">") == 0 || strcmp(token, "<") == 0 || strcmp(token, ">=") == 0 || strcmp(token, "<=") == 0;
+    char *relational_operators[6] = {"==", "!=", ">", "<", ">=", "<="};
+
+    for (int i = 0; i < sizeof(relational_operators) / sizeof(relational_operators[0]); i++) {
+        if (strcmp(token, relational_operators[i]) == 0) {
+            return 1;
+        }
+    }
     
-    return relational;
+    return 0;
 }
 
 char *typeToString(TokenType type) {
@@ -190,6 +225,7 @@ char *typeToString(TokenType type) {
         case KEYWORD: return "Keyword";
         case RESERVED_WORD: return "Reserved Word";
         case CONSTANT: return "Constant";
+        case CONSTANDRESERVED: return "Constant, Reserved Word";
         case NOISE_WORD: return "Noise Word";
         case COMMENT: return "Comment";
         case ARITHMETIC_OPE: return "Arithmetic Operator";
@@ -260,7 +296,15 @@ Token fsmClassify(const char *token, int line) {
     // Final classification based on state
     if (state == 1) {
         if (checkKeyword(token)) return newToken(token, KEYWORD, line);
-        if (checkReservedWord(token)) return newToken(token, RESERVED_WORD, line);
+        if (checkReservedWord(token)) {
+            if (!(strcmp(token, "cap")) || !(strcmp(token, "nocap"))) {
+                return newToken(token, CONSTANDRESERVED, line);
+            }
+            else {
+                return newToken(token, RESERVED_WORD, line);
+            }
+        }
+    
         if (checkNoiseWord(token)) return newToken(token, NOISE_WORD, line);
         if (checkIdentifier(token)) return newToken(token, IDENTIFIER, line);
         return newToken(token, INVALID, line);
@@ -322,6 +366,14 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
 
         // Start of a string literal
         if (line[i] == '"') {
+            if (tempIndex > 0) {
+                temp[tempIndex] = '\0';
+                Token token = fsmClassify(temp, lineNumber);
+                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+                free(token.value);
+                tempIndex = 0;
+            }
+
             stringLiteral = 1;
             temp[tempIndex++] = line[i];
             continue;
@@ -353,7 +405,6 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
                 tempIndex = 0;
             }
 
-            // Process the delimiter
             char delim[2] = {line[i], '\0'};
             Token token = newToken(delim, DELIMITER, lineNumber);
             fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
@@ -361,11 +412,9 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
             continue;
         }
 
-        // Accumulate token characters
         if (!isspace(line[i])) {
             temp[tempIndex++] = line[i];
         } else if (tempIndex > 0) {
-            // Process the accumulated token
             temp[tempIndex] = '\0';
             Token token = fsmClassify(temp, lineNumber);
             fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
@@ -374,11 +423,16 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
         }
     }
 
-    // Handle leftover token at the end of the line
     if (tempIndex > 0) {
         temp[tempIndex] = '\0';
-        Token token = fsmClassify(temp, lineNumber);
-        fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
-        free(token.value);
+        if (stringLiteral) {
+            Token token = newToken(temp, DELIMITER, lineNumber);
+            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
+            free(token.value);
+        } else {
+            Token token = fsmClassify(temp, lineNumber);
+            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            free(token.value);
+        }
     }
 }
