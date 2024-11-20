@@ -20,7 +20,6 @@ typedef struct {
 
 const char *noiseWords[] = { "aylist", "eat", "put", "tier", "tra", "wise", NULL };
 
-// Function prototypes
 int checkFilename(int argc, char *argv);
 int checkKeyword(const char *sheeshLexeme);
 int checkReservedWord(const char *sheeshLexeme);
@@ -86,7 +85,7 @@ int checkKeyword(const char *sheeshLexeme) {
         char curr = sheeshLexeme[i];
 
         switch(state) {
-            case 1: // Q1 (start state)
+            case 1:
                 if (curr == 'b') state = 25;
                 if (curr == 'c') state = 31;
                 if (curr == 'd') state = 34;
@@ -270,7 +269,7 @@ int checkReservedWord(const char *sheeshLexeme) {
         char curr = sheeshLexeme[i];
 
         switch(state) {
-            case 1: // Q1 (start state)
+            case 1:
                 if (curr == 'a') state = 2;
                 if (curr == 'c') state = 3;
                 if (curr == 'n') state = 4;
@@ -328,7 +327,6 @@ int checkNoiseWord(const char *sheeshLexeme) {
     return 0;
 }
 
-// FSM to check if identifier is valid
 int checkIdentifier(const char *sheeshLexeme) {
     int i = 0;
     char current = sheeshLexeme[i];
@@ -336,7 +334,7 @@ int checkIdentifier(const char *sheeshLexeme) {
 
     while (current != '\0') {
         switch(state) {
-            case 1: // Q1
+            case 1:
                 if (isalpha(current) || current == '_' || current == '#') {
                     state = 3;
                 } else {
@@ -345,7 +343,7 @@ int checkIdentifier(const char *sheeshLexeme) {
 
                 break;
 
-            case 3: // Q3
+            case 3:
                 if (isalnum(current)) {
                     state = 3;
                 } else if (current == '#' || current == '_') {
@@ -356,7 +354,7 @@ int checkIdentifier(const char *sheeshLexeme) {
 
                 break;
 
-            case 4: // Q4
+            case 4:
                 if (isalnum(current)) {
                     state = 3;
                 } else if (current == '#' || current == '_') {
@@ -513,7 +511,7 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
 
     for (int i = 0; (ch = sheeshLexeme[i]) != '\0'; i++) {
         switch (state) {
-            case 0: // Q0 (start state)
+            case 0:
                 if (isalpha(ch) || ch == '_' || ch == '#') {
                     state = 1;
                 } else if (isdigit(ch)) { 
@@ -636,22 +634,19 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
 
     for (int i = 0; sheeshLine[i] != '\0'; i++) {
         if (inMultiLineComment) {
-            // Check for the end of the multi-sheeshLine comment
             if (sheeshLine[i] == '*' && sheeshLine[i + 1] == '/') {
                 inMultiLineComment = 0;
                 Token token = newToken("*/", COMMENT, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s \n", token.sheeshLine, token.value, typeToString(token.type));
                 free(token.value);
-                i++; // Skip the '/'
+                i++;
             }
-            continue; // Skip all characters in the multi-sheeshLine comment
+            continue;
         }
 
         if (stringLiteral) {
-            // Handle string literals
             temp[tempMarker++] = sheeshLine[i];
             if (sheeshLine[i] == '"') {
-                // End of the string literal
                 temp[tempMarker] = '\0';
                 Token token = newToken(temp, CONSTANT, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s (Text (string in C))\n", token.sheeshLine, token.value, typeToString(token.type));
@@ -688,7 +683,7 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
             free(token.value);
             inMultiLineComment = 1;
-            i++; // Skip the '*'
+            i++;
             continue;
         }
 
@@ -741,7 +736,6 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             continue;
         }
         
-         // Handle `++` and '--'
         if ((sheeshLine[i] == '+' && sheeshLine[i + 1] == '+') || 
             (sheeshLine[i] == '-' && sheeshLine[i + 1] == '-')) {
             if (tempMarker > 0) {
