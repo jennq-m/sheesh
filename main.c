@@ -3,13 +3,11 @@
 #include <string.h>
 #include <ctype.h>
 
-// Token types
 typedef enum {
     IDENTIFIER, KEYWORD, RESERVED_WORD, CONSTANT, NOISE_WORD, COMMENT, 
     ARITHMETIC_OPE, ASSIGNMENT_OPE, LOGICAL_OPE, UNARY_OPE, RELATIONAL_OPE, 
     DELIMITER, INVALID, INT_CONSTANT, FLOAT_CONSTANT, STRING_CONSTANT, CONSTANDRESERVED
 } TokenType;
-
 
 typedef struct {
     TokenType type;
@@ -18,7 +16,6 @@ typedef struct {
     int line;
 } Token;
 
-// Keywords, Reserved Words, and Noise Words
 const char *keywords[] = {
     "bounce", "car", "do", "drift", "empty", "ex", "flip", "frozen",
     "group", "iffy", "input", "jump", "legit", "locked", "lockin",
@@ -28,21 +25,22 @@ const char *keywords[] = {
 };
 
 const char *reservedWords[] = { "always", "cap", "cont", "nocap", "toptier", NULL };
+
 const char *noiseWords[] = { "aylist", "eat", "put", "tier", "tra", "wise", NULL };
 
 // Function prototypes
 int checkFilename(int argc, char *argv);
-int checkKeyword(const char *word);
-int checkReservedWord(const char *word);
-int checkNoiseWord(const char *word);
-int checkAssignment(const char *token);
-int checkLogical(const char *token);
-int checkArithmetic(const char *token);
-int checkUnary(const char *token);
-int checkRelational(const char *token);
+int checkKeyword(const char *sheeshLexeme);
+int checkReservedWord(const char *sheeshLexeme);
+int checkNoiseWord(const char *sheeshLexeme);
+int checkAssignment(const char *sheeshLexeme);
+int checkLogical(const char *sheeshLexeme);
+int checkArithmetic(const char *sheeshLexeme);
+int checkUnary(const char *sheeshLexeme);
+int checkRelational(const char *sheeshLexeme);
 Token newToken(const char *value, TokenType type, int line);
-Token fsmClassify(const char *token, int line);
-void analyzeLine(FILE *outputFile, char *line, int lineNumber);
+Token fsmClassify(const char *sheeshLexeme, int line);
+void analyzeLine(FILE *outputJam, char *line, int sheeshmark);
 
 int main(int argc, char *argv[]) {
     checkFilename(argc, argv[1]);
@@ -53,25 +51,25 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    FILE *outputFile = fopen("symbolTable.txt", "w");
-    if (!outputFile) {
+    FILE *outputJam = fopen("symbolTable.txt", "w");
+    if (!outputJam) {
         perror("Error opening output file");
         fclose(file);
         return 1;
     }
 
     char line[256];
-    int lineNumber = 1;
+    int sheeshmark = 1;
 
-    fprintf(outputFile, "Lexical Analysis of %s:\n\n", argv[1]);
+    fprintf(outputJam, "Lexical Analysis of %s:\n\n", argv[1]);
 
     while (fgets(line, sizeof(line), file)) {
-        analyzeLine(outputFile, line, lineNumber);
-        lineNumber++;
+        analyzeLine(outputJam, line, sheeshmark);
+        sheeshmark++;
     }
 
     fclose(file);
-    fclose(outputFile);
+    fclose(outputJam);
 
     printf("See symbolTable.txt for lexical analysis.\n");
     return 0;
@@ -83,43 +81,43 @@ int checkFilename(int argc, char *argv) {
         exit(1);
     }
 
-    // Validate file extension
     if (!strstr(argv, ".shs")) {
         printf("Error: Filetype must be '.shs'. Please try again.\n");
         exit(1);
     }
 }
 
-int checkKeyword(const char *word) {
+int checkKeyword(const char *sheeshLexeme) {
     for (int i = 0; keywords[i] != NULL; i++) {
-        if (strcmp(word, keywords[i]) == 0) {
+        if (strcmp(sheeshLexeme, keywords[i]) == 0) {
             return 1;
         }
     }
     return 0;
 }
 
-int checkReservedWord(const char *word) {
+int checkReservedWord(const char *sheeshLexeme) {
     for (int i = 0; reservedWords[i] != NULL; i++) {
-        if (strcmp(word, reservedWords[i]) == 0) {
+        if (strcmp(sheeshLexeme, reservedWords[i]) == 0) {
             return 1;
         }
     }
     return 0;
 }
 
-int checkNoiseWord(const char *word) {
+int checkNoiseWord(const char *sheeshLexeme) {
     for (int i = 0; noiseWords[i] != NULL; i++) {
-        if (strcmp(word, noiseWords[i]) == 0) {
+        if (strcmp(sheeshLexeme, noiseWords[i]) == 0) {
             return 1;
         }
     }
     return 0;
 }
 
-int checkIdentifier(const char *token) {
+// FSM to check if identifier is valid
+int checkIdentifier(const char *sheeshLexeme) {
     int i = 0;
-    char current = token[i];
+    char current = sheeshLexeme[i];
     int state = 1;
 
     while (current != '\0') {
@@ -130,7 +128,9 @@ int checkIdentifier(const char *token) {
                 } else {
                     return 0;
                 }
+
                 break;
+
             case 3: // Q3
                 if (isalnum(current)) {
                     state = 3;
@@ -139,7 +139,9 @@ int checkIdentifier(const char *token) {
                 } else {
                     return 0;
                 }
+
                 break;
+
             case 4: // Q4
                 if (isalnum(current)) {
                     state = 3;
@@ -148,22 +150,28 @@ int checkIdentifier(const char *token) {
                 } else {
                     return 0;
                 }
+
                 break;
+
             default:
                 return 0;
         }
 
-        current = token[++i];
+        current = sheeshLexeme[++i];
     }
 
-    return state == 3;
+    if (state == 3) {
+        return 1;
+    }
+
+    return 0;
 }
 
-int checkAssignment(const char *token) {
+int checkAssignment(const char *sheeshLexeme) {
     char *assignment_operators[6] = {"=", "+=", "-=", "*=", "/=", "%="};
 
     for (int i = 0; i < sizeof(assignment_operators) / sizeof(assignment_operators[0]); i++) {
-        if (strcmp(token, assignment_operators[i]) == 0) {
+        if (strcmp(sheeshLexeme, assignment_operators[i]) == 0) {
             return 1;
         }
     }
@@ -171,11 +179,11 @@ int checkAssignment(const char *token) {
     return 0;
 }
 
-int checkLogical(const char *token) {
+int checkLogical(const char *sheeshLexeme) {
     char *logical_operators[3] = {"&&", "||", "!"};
 
     for (int i = 0; i < sizeof(logical_operators) / sizeof(logical_operators[0]); i++) {
-        if (strcmp(token, logical_operators[i]) == 0) {
+        if (strcmp(sheeshLexeme, logical_operators[i]) == 0) {
             return 1;
         }
     }
@@ -183,11 +191,11 @@ int checkLogical(const char *token) {
     return 0;
 }
 
-int checkArithmetic(const char *token) {
+int checkArithmetic(const char *sheeshLexeme) {
     char *arithmetic_operators[7] = {"+", "-", "*", "/", "%", "^", "$"};
 
     for (int i = 0; i < sizeof(arithmetic_operators) / sizeof(arithmetic_operators[0]); i++) {
-        if (strcmp(token, arithmetic_operators[i]) == 0) {
+        if (strcmp(sheeshLexeme, arithmetic_operators[i]) == 0) {
             return 1;
         }
     }
@@ -195,11 +203,11 @@ int checkArithmetic(const char *token) {
     return 0;
 }
 
-int checkUnary(const char *token) {
+int checkUnary(const char *sheeshLexeme) {
     char *unary_operators[2] = {"++", "--"};
 
     for (int i = 0; i < sizeof(unary_operators) / sizeof(unary_operators[0]); i++) {
-        if (strcmp(token, unary_operators[i]) == 0) {
+        if (strcmp(sheeshLexeme, unary_operators[i]) == 0) {
             return 1;
         }
     }
@@ -207,11 +215,11 @@ int checkUnary(const char *token) {
     return 0;
 }
 
-int checkRelational(const char *token) {
+int checkRelational(const char *sheeshLexeme) {
     char *relational_operators[6] = {"==", "!=", ">", "<", ">=", "<="};
 
     for (int i = 0; i < sizeof(relational_operators) / sizeof(relational_operators[0]); i++) {
-        if (strcmp(token, relational_operators[i]) == 0) {
+        if (strcmp(sheeshLexeme, relational_operators[i]) == 0) {
             return 1;
         }
     }
@@ -260,106 +268,156 @@ char *typeToString(TokenType type) {
     }
 }
 
-Token newToken(const char *value, TokenType type, int line) {
+Token newToken(const char *value, TokenType type, int sheeshmark) {
     Token token;
     token.value = strdup(value);
     token.type = type;
-    token.line = line;
+    token.line = sheeshmark;
 
     return token;
 }
-Token fsmClassify(const char *token, int line) {
-    int state = 0; // Initial state
-    char ch;
-    int decimalCount = 0; // To track the number of decimal points in the number
-    int isInteger = 1; // To track if the constant is an integer
-    int isFloat = 0;   // To track if the constant is a floating-point number
 
-    for (int i = 0; (ch = token[i]) != '\0'; i++) {
+Token fsmClassify(const char *sheeshLexeme, int line) {
+    int state = 0;
+    char ch;
+    int decimalCount = 0;
+    int checkFloat = 0;
+
+    for (int i = 0; (ch = sheeshLexeme[i]) != '\0'; i++) {
         switch (state) {
-            case 0: // Initial state
-                if (isalpha(ch) || ch == '_' || ch == '#') state = 1;
-                else if (isdigit(ch)) state = 2;
-                else if (ch == '\'' || ch == '"') state = 3;
-                else if (strchr("+-*/%=!<>&|^$", ch)) state = 4;
-                else if (strchr(",;(){}[]", ch)) state = 5;
-                else if (ch == '/' && token[i + 1] == '/') return newToken(token, COMMENT, line);
-                else if (ch == '/' && token[i + 1] == '*') return newToken(token, COMMENT, line);
-                else return newToken(token, INVALID, line);
-                break;
-            case 1: // Identifier
-                if (!isalnum(ch) && ch != '_' && ch != '#') return newToken(token, INVALID, line);
-                break;
-            case 2: // Constant (number)
-                if (ch == '.') {
-                    if (decimalCount > 0) return newToken(token, INVALID, line);
-                    decimalCount++;
-                    isFloat = 1; // Set flag if decimal point is found
-                } else if (!isdigit(ch)) {
-                    return newToken(token, INVALID, line);
+            case 0: // Q0 (start state)
+                if (isalpha(ch) || ch == '_' || ch == '#') {
+                    state = 1;
+                } else if (isdigit(ch)) { 
+                    state = 2; 
+                } else if (ch == '\'' || ch == '"') {
+                    state = 3; 
+                } else if (strchr("+-*/%=!<>&|^$", ch)) { 
+                    state = 4; 
+                } else if (strchr(",;(){}[]", ch)) { 
+                    state = 5; 
+                } else if (ch == '/' && sheeshLexeme[i + 1] == '/') { 
+                    return newToken(sheeshLexeme, COMMENT, line); 
+                } else if (ch == '/' && sheeshLexeme[i + 1] == '*') { 
+                    return newToken(sheeshLexeme, COMMENT, line); 
+                } else { 
+                    return newToken(sheeshLexeme, INVALID, line); 
                 }
+
                 break;
-            case 3: // Constant (char/string)
-                if (ch == '\'' || ch == '"') return newToken(token, CONSTANT, line);
+
+            case 1:
+                if (!isalnum(ch) && ch != '_' && ch != '#') {
+                    return newToken(sheeshLexeme, INVALID, line);
+                }
+
                 break;
-            case 4: // Operator
-                if (strchr("+-*/%=!<>&|^$", ch)) state = 4;
+
+            case 2:
+                if (ch == '.') {
+                    if (decimalCount > 0) {
+                        return newToken(sheeshLexeme, INVALID, line);
+                    }
+
+                    decimalCount++;
+                    checkFloat = 1;
+                } else if (!isdigit(ch)) {
+                    return newToken(sheeshLexeme, INVALID, line);
+                }
+
                 break;
-            case 5: // Delimiter
-                return newToken(token, DELIMITER, line);
+
+            case 3:
+                if (ch == '\'' || ch == '"') {
+                    return newToken(sheeshLexeme, CONSTANT, line);
+                }
+
+                break;
+
+            case 4:
+                if (strchr("+-*/%=!<>&|^$", ch)) {
+                    state = 4;
+                }
+                
+                break;
+
+            case 5:
+                return newToken(sheeshLexeme, DELIMITER, line);
         }
     }
 
-    // Final classification based on state
     if (state == 1) {
-        if (checkKeyword(token)) return newToken(token, KEYWORD, line);
-        if (checkReservedWord(token)) {
-            if (!(strcmp(token, "cap")) || !(strcmp(token, "nocap"))) {
-                return newToken(token, CONSTANDRESERVED, line);
+        if (checkKeyword(sheeshLexeme)) {
+            return newToken(sheeshLexeme, KEYWORD, line);
+        }
+
+        if (checkReservedWord(sheeshLexeme)) {
+            if (!(strcmp(sheeshLexeme, "cap")) || !(strcmp(sheeshLexeme, "nocap"))) {
+                return newToken(sheeshLexeme, CONSTANDRESERVED, line);
             }
             else {
-                return newToken(token, RESERVED_WORD, line);
+                return newToken(sheeshLexeme, RESERVED_WORD, line);
             }
         }
     
-        if (checkNoiseWord(token)) return newToken(token, NOISE_WORD, line);
-        if (checkIdentifier(token)) return newToken(token, IDENTIFIER, line);
-        return newToken(token, INVALID, line);
+        if (checkNoiseWord(sheeshLexeme)) {
+            return newToken(sheeshLexeme, NOISE_WORD, line);
+        }
+
+        if (checkIdentifier(sheeshLexeme)) {
+            return newToken(sheeshLexeme, IDENTIFIER, line);
+        }
+
+        return newToken(sheeshLexeme, INVALID, line);
     } else if (state == 2) {
-        if (isFloat) {
-            return newToken(token, FLOAT_CONSTANT, line); // Float constant
+        if (checkFloat) {
+            return newToken(sheeshLexeme, FLOAT_CONSTANT, line);
         } else {
-            return newToken(token, INT_CONSTANT, line); // Integer constant
+            return newToken(sheeshLexeme, INT_CONSTANT, line);
         }
     } else if (state == 3) {
-        return newToken(token, STRING_CONSTANT, line); // String constant
+        return newToken(sheeshLexeme, STRING_CONSTANT, line);
     } else if (state == 4) {
-        if (checkAssignment(token)) return newToken(token, ASSIGNMENT_OPE, line);
-        if (checkLogical(token)) return newToken(token, LOGICAL_OPE, line);
-        if (checkArithmetic(token)) return newToken(token, ARITHMETIC_OPE, line);
-        if (checkUnary(token)) return newToken(token, UNARY_OPE, line);
-        if (checkRelational(token)) return newToken(token, RELATIONAL_OPE, line);
+        if (checkAssignment(sheeshLexeme)) {
+            return newToken(sheeshLexeme, ASSIGNMENT_OPE, line);
+        }
+
+        if (checkLogical(sheeshLexeme)) {
+            return newToken(sheeshLexeme, LOGICAL_OPE, line);
+        }
+
+        if (checkArithmetic(sheeshLexeme)) {
+            return newToken(sheeshLexeme, ARITHMETIC_OPE, line);
+        }
+
+        if (checkUnary(sheeshLexeme)) {
+            return newToken(sheeshLexeme, UNARY_OPE, line);
+        }
+
+        if (checkRelational(sheeshLexeme)) {
+            return newToken(sheeshLexeme, RELATIONAL_OPE, line);
+        }
     } else if (state == 5) {
-        return newToken(token, DELIMITER, line);
+        return newToken(sheeshLexeme, DELIMITER, line);
     }
 
-    return newToken(token, INVALID, line);
+    return newToken(sheeshLexeme, INVALID, line);
 }
 
 
-void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
-    static int inMultiLineComment = 0; // Tracks whether inside a multi-line comment
-    int stringLiteral = 0;             // Tracks whether inside a string literal
-    char temp[256];                   // Buffer for building tokens
-    int tempIndex = 0;                // Index for buffer
+void analyzeLine(FILE *outputJam, char *line, int sheeshmark) {
+    static int inMultiLineComment = 0;
+    int stringLiteral = 0;
+    char temp[256];
+    int tempMarker = 0;
 
     for (int i = 0; line[i] != '\0'; i++) {
         if (inMultiLineComment) {
             // Check for the end of the multi-line comment
             if (line[i] == '*' && line[i + 1] == '/') {
                 inMultiLineComment = 0;
-                Token token = newToken("*/", COMMENT, lineNumber);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s \n", token.line, token.value, typeToString(token.type));
+                Token token = newToken("*/", COMMENT, sheeshmark);
+                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s \n", token.line, token.value, typeToString(token.type));
                 free(token.value);
                 i++; // Skip the '/'
             }
@@ -368,14 +426,14 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
 
         if (stringLiteral) {
             // Handle string literals
-            temp[tempIndex++] = line[i];
+            temp[tempMarker++] = line[i];
             if (line[i] == '"') {
                 // End of the string literal
-                temp[tempIndex] = '\0';
-                Token token = newToken(temp, CONSTANT, lineNumber);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s (Text (string in C))\n", token.line, token.value, typeToString(token.type));
+                temp[tempMarker] = '\0';
+                Token token = newToken(temp, CONSTANT, sheeshmark);
+                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s (Text (string in C))\n", token.line, token.value, typeToString(token.type));
                 free(token.value);
-                tempIndex = 0;
+                tempMarker = 0;
                 stringLiteral = 0;
             }
             continue;
@@ -383,29 +441,30 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
 
         // Start of a string literal
         if (line[i] == '"') {
-            if (tempIndex > 0) {
-                temp[tempIndex] = '\0';
-                Token token = fsmClassify(temp, lineNumber);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            if (tempMarker > 0) {
+                temp[tempMarker] = '\0';
+                Token token = fsmClassify(temp, sheeshmark);
+                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
                 free(token.value);
-                tempIndex = 0;
+                tempMarker = 0;
             }
 
             stringLiteral = 1;
-            temp[tempIndex++] = line[i];
+            temp[tempMarker++] = line[i];
             continue;
         }
 
         // Handle comments
         if (line[i] == '/' && line[i + 1] == '/') {
-            Token token = newToken("//", COMMENT, lineNumber);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            Token token = newToken("//", COMMENT, sheeshmark);
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
             break; // Ignore the rest of the line
         }
+
         if (line[i] == '/' && line[i + 1] == '*') {
-            Token token = newToken("/*", COMMENT, lineNumber);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            Token token = newToken("/*", COMMENT, sheeshmark);
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
             inMultiLineComment = 1;
             i++; // Skip the '*'
@@ -414,41 +473,41 @@ void analyzeLine(FILE *outputFile, char *line, int lineNumber) {
 
         // Handle delimiters
         if (strchr(",;(){}[]", line[i])) {
-            if (tempIndex > 0) {
-                temp[tempIndex] = '\0'; // Null-terminate the current token
-                Token token = fsmClassify(temp, lineNumber);
-                fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            if (tempMarker > 0) {
+                temp[tempMarker] = '\0'; // Null-terminate the current token
+                Token token = fsmClassify(temp, sheeshmark);
+                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
                 free(token.value);
-                tempIndex = 0;
+                tempMarker = 0;
             }
 
             char delim[2] = {line[i], '\0'};
-            Token token = newToken(delim, DELIMITER, lineNumber);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
+            Token token = newToken(delim, DELIMITER, sheeshmark);
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
             free(token.value);
             continue;
         }
 
         if (!isspace(line[i])) {
-            temp[tempIndex++] = line[i];
-        } else if (tempIndex > 0) {
-            temp[tempIndex] = '\0';
-            Token token = fsmClassify(temp, lineNumber);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            temp[tempMarker++] = line[i];
+        } else if (tempMarker > 0) {
+            temp[tempMarker] = '\0';
+            Token token = fsmClassify(temp, sheeshmark);
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
-            tempIndex = 0;
+            tempMarker = 0;
         }
     }
 
-    if (tempIndex > 0) {
-        temp[tempIndex] = '\0';
+    if (tempMarker > 0) {
+        temp[tempMarker] = '\0';
         if (stringLiteral) {
-            Token token = newToken(temp, DELIMITER, lineNumber);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
+            Token token = newToken(temp, DELIMITER, sheeshmark);
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: Delimiter\n", token.line, token.value);
             free(token.value);
         } else {
-            Token token = fsmClassify(temp, lineNumber);
-            fprintf(outputFile, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
+            Token token = fsmClassify(temp, sheeshmark);
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.line, token.value, typeToString(token.type));
             free(token.value);
         }
     }
