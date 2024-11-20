@@ -18,8 +18,6 @@ typedef struct {
     int sheeshLine;
 } Token;
 
-const char *reservedWords[] = { "always", "cap", "cont", "nocap", "toptier", NULL };
-
 const char *noiseWords[] = { "aylist", "eat", "put", "tier", "tra", "wise", NULL };
 
 // Function prototypes
@@ -252,7 +250,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
                 
                 break;
-                
+
             case 148:
                 if (strncmp(sheeshLexeme + i, "ibe", 3) == 0) {
                     return 1;
@@ -266,11 +264,58 @@ int checkKeyword(const char *sheeshLexeme) {
 }
 
 int checkReservedWord(const char *sheeshLexeme) {
-    for (int i = 0; reservedWords[i] != NULL; i++) {
-        if (strcmp(sheeshLexeme, reservedWords[i]) == 0) {
-            return 1;
+    int state = 1;
+
+    for (int i = 0; sheeshLexeme[i] != '\0'; i++) {
+        char curr = sheeshLexeme[i];
+
+        switch(state) {
+            case 1: // Q1 (start state)
+                if (curr == 'a') state = 2;
+                if (curr == 'c') state = 3;
+                if (curr == 'n') state = 4;
+                if (curr == 't') state = 5;
+
+                break;
+
+            case 2:
+                if (strncmp(sheeshLexeme + i, "lways", 5) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+
+            case 3:
+                if (strncmp(sheeshLexeme + i, "ap", 2) == 0 || strncmp(sheeshLexeme + i, "ont", 3) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+
+            case 4:
+                if (strncmp(sheeshLexeme + i, "ocap", 4) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
+
+            case 5:
+                if (strncmp(sheeshLexeme + i, "op", 2) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+                break;
         }
     }
+    
     return 0;
 }
 
