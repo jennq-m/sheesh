@@ -1,0 +1,214 @@
+// Assignment_Operators
+=
++=
+-=
+*=
+/=
+%=
+
+// Logical_Operators
+&&
+||
+!
+
+// Relational_Operators
+==
+!=
+>
+<
+>=
+<=
+
+// Arithmetic_Operators
++
+-
+*
+/
+%
+^
+|
+
+// Unary_Operators
++
+-
+++
+--
+
+
+// Keywords
+bounce
+car
+do
+drift
+empty
+ex
+flip
+frozen
+group
+if
+input
+jump
+legit
+locked
+lockin
+long
+meanwhile
+nickname
+num
+open
+other
+out
+outside
+pl
+rep
+scenario
+short
+standard
+stop
+team
+text
+vibe
+
+// Reserve Word
+always
+cap
+cont
+nocap
+toptier
+
+// Noise Words
+aylist
+eat
+put
+tier
+tra
+wise
+
+// Full keyword/reserved word that has noise words
+playlist
+repeat
+output
+extra
+otherwise
+toptier
+
+// Comments
+// Single-line comment
+/*
+Multi-line comment
+*/
+
+// Delimiters
+,
+;
+(
+)
+{
+}
+"
+"
+[
+]
+a[]
+
+// Identifiers
+Valid100
+inv@lid
+00invalid
+iv~s
+i$invalid
+Valid_identifier
+valid_identifier
+_valid1
+#valid2
+1invalid
+valid#1
+valid__alphabet
+invalid##
+test#identifier
+va lid
+casesensitiveidentifier
+CaseSensitiveIdentifier
+thisIsInv@_valid1
+##thisShouldBeValid
+beh##
+vibe
+always
+
+
+// Invalid
+@
+..
+$ello
+10$2
+1.01.01
+0pen
+0open
+capt@
+name@name
+@111
+
+// Should not be classified as keywords / reserved words
+drifta
+adrift
+darift
+heycont
+acap
+caps
+scap
+bnum
+numerate
+num20
+cap0
+bnocap
+cap20
+nocapb
+
+// Constant
+5
+"test"
+5.5
+'h'
+50
+
+/*
+Multi-line
+comment here
+*/
+
+// Test Statements
+a+b;
+a+=b;
+emotion = happy|sad;
+one+one;
+1*2;
+out("test string");
+
+// Statements
+num count;
+drift decimal = 89.70;
+num count = number;
+count *= test_number;
+if (average>=97.90) {
+    out("GWA is very high!");
+}
+if (a == b) {
+    out("Same!");
+} ex (a > b) {
+    out("Greater!");
+} other {
+    out("Less!");
+}
+meanwhile (i < 5) {
+    out(i);
+    i++;
+}
+
+
+num num1 = 10;
+drift d1 = 10.0;
+i++
+--i
+i--
+++i
+testing, the, comma

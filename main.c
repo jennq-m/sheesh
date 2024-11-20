@@ -564,7 +564,7 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
             case 0:
                 if (isalpha(ch) || ch == '_' || ch == '#') {
                     state = 1;
-                } else if (isdigit(ch)) { 
+                } else if (isdigit(ch) || ch == '.') { 
                     state = 2; 
                 } else if (ch == '\'' || ch == '"') {
                     state = 3; 
@@ -901,11 +901,9 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             continue;
         }
 
-        if (isdigit(sheeshLine[i])) {
-            
+        if (isdigit(sheeshLine[i]) || sheeshLine[i] == '.') {
             temp[tempMarker++] = sheeshLine[i];
         } else if (strchr("+-*/", sheeshLine[i])) {
-            
             if (tempMarker > 0) {
                 temp[tempMarker] = '\0';  
                 Token token = sheeshLexer(temp, sheeshColumn);  
