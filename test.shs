@@ -160,3 +160,10 @@ meanwhile (i < 5) {
     out(i);
     i++;
 }
+
+
+num num1 = 10;
+drift d1 = 10.0;
+cap
+nocap ball
+bnocap

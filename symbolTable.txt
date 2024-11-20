@@ -90,6 +90,7 @@ Line 97: Lexeme: )               Token: Delimiter
 Line 98: Lexeme: {               Token: Delimiter
 Line 99: Lexeme: }               Token: Delimiter
 Line 100: Lexeme: "
+<<<<<<< HEAD
               Token: Delimiter
 Line 101: Lexeme: "
               Token: Delimiter
@@ -131,6 +132,52 @@ Line 142: Lexeme: */              Token: Comment
 Line 144: Lexeme: //              Token: Comment
 Line 145: Lexeme: num             Token: Keyword
 Line 145: Lexeme: count           Token: Identifier
+=======
+              Token: Constant (Text (string in C))
+Line 101: Lexeme: [               Token: Delimiter
+Line 102: Lexeme: ]               Token: Delimiter
+Line 104: Lexeme: //              Token: Comment
+Line 105: Lexeme: Valid100        Token: Identifier
+Line 106: Lexeme: inv@lid         Token: Invalid
+Line 107: Lexeme: Valid_identifier Token: Identifier
+Line 108: Lexeme: valid_identifier Token: Identifier
+Line 109: Lexeme: _valid1         Token: Identifier
+Line 110: Lexeme: #valid2         Token: Identifier
+Line 111: Lexeme: 1invalid        Token: Invalid
+Line 112: Lexeme: valid#1         Token: Identifier
+Line 113: Lexeme: valid__alphabet Token: Identifier
+Line 114: Lexeme: invalid##       Token: Invalid
+Line 115: Lexeme: test#identifier Token: Identifier
+Line 116: Lexeme: va              Token: Identifier
+Line 116: Lexeme: lid             Token: Identifier
+Line 117: Lexeme: casesensitiveidentifier Token: Identifier
+Line 118: Lexeme: CaseSensitiveIdentifier Token: Identifier
+Line 119: Lexeme: thisIsInv@_valid1 Token: Invalid
+Line 120: Lexeme: ##thisShouldBeValid Token: Identifier
+Line 121: Lexeme: beh##           Token: Invalid
+Line 122: Lexeme: vibe            Token: Keyword
+Line 123: Lexeme: always          Token: Constant, Reserved Word
+Line 126: Lexeme: //              Token: Comment
+Line 127: Lexeme: @               Token: Invalid
+Line 128: Lexeme: ..              Token: Invalid
+Line 129: Lexeme: 1.01.01         Token: Invalid
+Line 131: Lexeme: //              Token: Comment
+Line 132: Lexeme: 5               Token: Constant (Num (int in C))
+Line 133: Lexeme: "test"          Token: Constant (Text (string in C))
+Line 134: Lexeme: 5.5             Token: Constant (Drift (float in C))
+Line 135: Lexeme: 'h'             Token: Constant
+Line 136: Lexeme: 50              Token: Constant (Num (int in C))
+Line 138: Lexeme: /*              Token: Comment
+Line 141: Lexeme: */              Token: Comment 
+Line 143: Lexeme: //              Token: Comment
+Line 144: Lexeme: num             Token: Keyword
+Line 144: Lexeme: count           Token: Identifier
+Line 144: Lexeme: ;               Token: Delimiter
+Line 145: Lexeme: drift           Token: Keyword
+Line 145: Lexeme: decimal         Token: Identifier
+Line 145: Lexeme: =               Token: Assignment Operator
+Line 145: Lexeme: 89.70           Token: Constant (Drift (float in C))
+>>>>>>> cdfa546a5a4870994934e0b87f86a99345d3160d
 Line 145: Lexeme: ;               Token: Delimiter
 Line 146: Lexeme: drift           Token: Keyword
 Line 146: Lexeme: decimal         Token: Identifier
@@ -205,6 +252,24 @@ Line 160: Lexeme: (               Token: Delimiter
 Line 160: Lexeme: i               Token: Identifier
 Line 160: Lexeme: )               Token: Delimiter
 Line 160: Lexeme: ;               Token: Delimiter
+<<<<<<< HEAD
 Line 161: Lexeme: i++             Token: Invalid
 Line 161: Lexeme: ;               Token: Delimiter
 Line 162: Lexeme: }               Token: Delimiter
+=======
+Line 161: Lexeme: }               Token: Delimiter
+Line 164: Lexeme: num             Token: Keyword
+Line 164: Lexeme: num1            Token: Identifier
+Line 164: Lexeme: =               Token: Assignment Operator
+Line 164: Lexeme: 10              Token: Constant (Num (int in C))
+Line 164: Lexeme: ;               Token: Delimiter
+Line 165: Lexeme: drift           Token: Keyword
+Line 165: Lexeme: d1              Token: Identifier
+Line 165: Lexeme: =               Token: Assignment Operator
+Line 165: Lexeme: 10.0            Token: Constant (Drift (float in C))
+Line 165: Lexeme: ;               Token: Delimiter
+Line 166: Lexeme: cap             Token: Constant, Reserved Word
+Line 167: Lexeme: nocap           Token: Constant, Reserved Word
+Line 167: Lexeme: ball            Token: Identifier
+Line 168: Lexeme: bnocap          Token: Identifier
+>>>>>>> cdfa546a5a4870994934e0b87f86a99345d3160d

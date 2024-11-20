@@ -7,7 +7,7 @@
 typedef enum {
     IDENTIFIER, KEYWORD, RESERVED_WORD, CONSTANT, NOISE_WORD, COMMENT, 
     ARITHMETIC_OPE, ASSIGNMENT_OPE, LOGICAL_OPE, UNARY_OPE, RELATIONAL_OPE, 
-    DELIMITER, INVALID, INT_CONSTANT, FLOAT_CONSTANT, STRING_CONSTANT
+    DELIMITER, INVALID, INT_CONSTANT, FLOAT_CONSTANT, STRING_CONSTANT, CONSTANDRESERVED
 } TokenType;
 
 
@@ -196,6 +196,7 @@ char *typeToString(TokenType type) {
         case KEYWORD: return "Keyword";
         case RESERVED_WORD: return "Reserved Word";
         case CONSTANT: return "Constant";
+        case CONSTANDRESERVED: return "Constant, Reserved Word";
         case NOISE_WORD: return "Noise Word";
         case COMMENT: return "Comment";
         case ARITHMETIC_OPE: return "Arithmetic Operator";
@@ -266,7 +267,15 @@ Token fsmClassify(const char *token, int line) {
     // Final classification based on state
     if (state == 1) {
         if (checkKeyword(token)) return newToken(token, KEYWORD, line);
-        if (checkReservedWord(token)) return newToken(token, RESERVED_WORD, line);
+        if (checkReservedWord(token)) {
+            if (strcmp(token, "cap") || strcmp(token, "nocap")) {
+                return newToken(token, CONSTANDRESERVED, line);
+            }
+            else {
+                return newToken(token, RESERVED_WORD, line);
+            }
+        }
+    
         if (checkNoiseWord(token)) return newToken(token, NOISE_WORD, line);
         if (checkIdentifier(token)) return newToken(token, IDENTIFIER, line);
         return newToken(token, INVALID, line);
