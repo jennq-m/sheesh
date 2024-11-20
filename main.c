@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
+//Enumariting different token type
 typedef enum {
     IDENTIFIER, KEYWORD, RESERVED_WORD, CONSTANT, NOISE_WORD, COMMENT, 
     ARITHMETIC_OPE, ASSIGNMENT_OPE, LOGICAL_OPE, UNARY_OPE, RELATIONAL_OPE, 
@@ -11,6 +12,7 @@ typedef enum {
     FLOAT_CONSTANT, STRING_CONSTANT, CONSTANDRESERVED
 } TokenType;
 
+//Holding attributes of TOKEN
 typedef struct {
     TokenType type;
     char *token_type;
@@ -20,6 +22,7 @@ typedef struct {
 
 const char *noiseWords[] = { "aylist", "eat", "put", "tier", "tra", "wise", NULL };
 
+//Declaration of Function Prototype
 int checkFilename(int argc, char *argv);
 int checkKeyword(const char *sheeshLexeme);
 int checkReservedWord(const char *sheeshLexeme);
@@ -33,6 +36,7 @@ Token newToken(const char *value, TokenType type, int sheeshLine);
 Token sheeshLexer(const char *sheeshLexeme, int sheeshLine);
 void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn);
 
+//Function where reading .shs file and writing to the SymbolTable.txt
 int main(int argc, char *argv[]) {
     checkFilename(argc, argv[1]);
 
@@ -66,6 +70,7 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+//Ensure that the file is .shs
 int checkFilename(int argc, char *argv) {
     if (argc < 2) {
         printf("Usage: <filename>\n");
@@ -78,6 +83,7 @@ int checkFilename(int argc, char *argv) {
     }
 }
 
+//Finite State Machie for Keyword
 int checkKeyword(const char *sheeshLexeme) {
     int state = 1;
 
@@ -287,6 +293,7 @@ int checkKeyword(const char *sheeshLexeme) {
     return 0;
 }
 
+//Finite State Machine for Reserved Words
 int checkReservedWord(const char *sheeshLexeme) {
     int state = 1;
 
@@ -353,6 +360,7 @@ int checkReservedWord(const char *sheeshLexeme) {
     return 0;
 }
 
+
 int checkNoiseWord(const char *sheeshLexeme) {
     for (int i = 0; noiseWords[i] != NULL; i++) {
         if (strcmp(sheeshLexeme, noiseWords[i]) == 0) {
@@ -362,6 +370,7 @@ int checkNoiseWord(const char *sheeshLexeme) {
     return 0;
 }
 
+//Finite State Machine for Identifier
 int checkIdentifier(const char *sheeshLexeme) {
     int i = 0;
     char current = sheeshLexeme[i];
@@ -474,6 +483,7 @@ int checkRelational(const char *sheeshLexeme) {
     return 0;
 }
 
+//Returning the corresponding token typ
 char *typeToString(TokenType type) {
     switch (type) {
         case IDENTIFIER: 
@@ -529,6 +539,7 @@ char *typeToString(TokenType type) {
     }
 }
 
+//Creating  and returning a new token 
 Token newToken(const char *value, TokenType type, int sheeshColumn) {
     Token token;
     token.value = strdup(value);
@@ -538,6 +549,7 @@ Token newToken(const char *value, TokenType type, int sheeshColumn) {
     return token;
 }
 
+//
 Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
     int state = 0;
     char ch;
