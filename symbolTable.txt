@@ -207,7 +207,8 @@ Line 160: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
 Line 160: Lexeme: i               Token: Identifier
 Line 160: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
 Line 160: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 161: Lexeme: i++             Token: Invalid
+Line 161: Lexeme: i               Token: Identifier
+Line 161: Lexeme: ++              Token: Unary Operator
 Line 161: Lexeme: ;               Token: Delimiter (Semicolon)
 Line 162: Lexeme: }               Token: Bracket (Closing (Right) Brace)
 Line 165: Lexeme: num             Token: Keyword
@@ -220,3 +221,6 @@ Line 166: Lexeme: d1              Token: Identifier
 Line 166: Lexeme: =               Token: Assignment Operator
 Line 166: Lexeme: 10.0            Token: Constant (Drift (float in C))
 Line 166: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 167: Lexeme: i               Token: Identifier
+Line 167: Lexeme: ++              Token: Unary Operator
+Line 168: Lexeme: --i             Token: Invalid

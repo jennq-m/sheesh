@@ -482,6 +482,8 @@ void analyzeLine(FILE *outputJam, char *sheeshLine, int sheeshColumn) {
             continue;
         }
 
+        
+
         TokenType delimiter;
 
         switch (sheeshLine[i]) {
@@ -526,6 +528,23 @@ void analyzeLine(FILE *outputJam, char *sheeshLine, int sheeshColumn) {
             Token token = newToken(delim, delimiter, sheeshColumn);
             fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
             free(token.value);
+            continue;
+        }
+        
+         // Handle `++`
+        if (sheeshLine[i] == '+' && sheeshLine[i + 1] == '+') {
+            if (tempMarker > 0) {
+                temp[tempMarker] = '\0';
+                Token token = fsmClassify(temp, sheeshColumn);
+                fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                free(token.value);
+                tempMarker = 0;
+            }
+
+            Token token = newToken("++", UNARY_OPE, sheeshColumn);
+            fprintf(outputJam, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+            free(token.value);
+            i++;
             continue;
         }
 
