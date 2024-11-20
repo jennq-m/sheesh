@@ -155,33 +155,57 @@ int checkIdentifier(const char *token) {
 }
 
 int checkAssignment(const char *token) {
-    int assignment = strcmp(token, "=") == 0 || strcmp(token, "+=") == 0 || strcmp(token, "-=") == 0 || strcmp(token, "*=") == 0 || strcmp(token, "/=") == 0 || strcmp(token, "%=") == 0;
-    
-    return assignment;
+    char *assignment_operators[6] = {"=", "+=", "-=", "*=", "/=", "%="};
+
+    for (int i = 0; i < sizeof(assignment_operators) / sizeof(assignment_operators[0]); i++) {
+        if (strcmp(token, assignment_operators[i]) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int checkLogical(const char *token) {
-    int logical = strcmp(token, "&&") == 0 || strcmp(token, "||") == 0 || strcmp(token, "!") == 0;
+    char *logical_operators[3] = {"&&", "||", "!"};
 
-    return logical;
+    for (int i = 0; i < sizeof(logical_operators) / sizeof(logical_operators[0]); i++) {
+        if (strcmp(token, logical_operators[i]) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int checkArithmetic(const char *token) {
-    int arithmetic = strcmp(token, "+") == 0 || strcmp(token, "-") == 0 || strcmp(token, "*") == 0 || strcmp(token, "/") == 0 || strcmp(token, "%") == 0 || strcmp(token, "^") == 0 || strcmp(token, "$") == 0;
-    
-    return arithmetic;
+    char *arithmetic_operators[7] = {"+", "-", "*", "/", "%", "^", "$"};
+
+    for (int i = 0; i < sizeof(arithmetic_operators) / sizeof(arithmetic_operators[0]); i++) {
+        if (strcmp(token, arithmetic_operators[i]) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int checkUnary(const char *token) {
-    int unary = strcmp(token, "++") == 0 || strcmp(token, "--") == 0;
+    char *unary_operators[2] = {"++", "--"};
 
-    return unary;
+    for (int i = 0; i < sizeof(unary_operators) / sizeof(unary_operators[0]); i++) {
+        if (strcmp(token, unary_operators[i]) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int checkRelational(const char *token) {
     char *relational_operators[6] = {"==", "!=", ">", "<", ">=", "<="};
 
-    for (int i = 0; i < sizeof(relational_operators); i++) {
+    for (int i = 0; i < sizeof(relational_operators) / sizeof(relational_operators[0]); i++) {
         if (strcmp(token, relational_operators[i]) == 0) {
             return 1;
         }
