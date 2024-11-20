@@ -163,7 +163,3 @@ meanwhile (i < 5) {
 
 num num1 = 10;
 drift d1 = 10.0;
-cap
-nocap ball
-bnocap
-always

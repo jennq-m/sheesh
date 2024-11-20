@@ -217,8 +217,3 @@ Line 165: Lexeme: d1              Token: Identifier
 Line 165: Lexeme: =               Token: Assignment Operator
 Line 165: Lexeme: 10.0            Token: Constant (Drift (float in C))
 Line 165: Lexeme: ;               Token: Delimiter
-Line 166: Lexeme: cap             Token: Constant, Reserved Word
-Line 167: Lexeme: nocap           Token: Constant, Reserved Word
-Line 167: Lexeme: ball            Token: Identifier
-Line 168: Lexeme: bnocap          Token: Identifier
-Line 169: Lexeme: always          Token: Reserved Word
