@@ -79,13 +79,13 @@ int main(int argc, char *argv[]) {
 
 int checkFilename(int argc, char *argv) {
     if (argc < 2) {
-        printf("Usage: %s <test.shs>\n", argv[0]);
+        printf("Usage: <filename>\n");
         exit(1);
     }
 
     // Validate file extension
     if (!strstr(argv, ".shs")) {
-        printf("Error: Only .shs files are allowed.\n");
+        printf("Error: Filetype must be '.shs'. Please try again.\n");
         exit(1);
     }
 }
