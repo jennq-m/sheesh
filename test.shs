@@ -213,16 +213,15 @@ meanwhile (i < 5) {
 }
 
 do {
-      out(i);
-      i++;
+    out(i);
+    i++;
 } meanwhile (i < 5);
 
-
 rep (num i=0; i<5; i++) {
-      out(i);
-      rep (num j=0; j<5; j++) {
-            out(j);
-      }
+    out(i);
+    rep (num j=0; j<5; j++) {
+        out(j);
+    }
 }
 
 out("Hello world!");
