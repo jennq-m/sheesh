@@ -108,6 +108,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 if (curr == 'v') state = 148;
 
                 break;
+
             case 25:
                 if (strncmp(sheeshLexeme + i, "ounce", 5) == 0) {
                     return 1;
@@ -116,6 +117,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 31:
                 if (strncmp(sheeshLexeme + i, "ar", 2) == 0) {
                     return 1;
@@ -124,6 +126,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 34:
                 if (strncmp(sheeshLexeme + i, "o", 1) == 0 || strncmp(sheeshLexeme + i, "rift", 4) == 0) {
                     return 1;
@@ -132,6 +135,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 40:
                 if (strncmp(sheeshLexeme + i, "mpty", 4) == 0 || strncmp(sheeshLexeme + i, "x", 1) == 0) {
                     return 1;
@@ -140,6 +144,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 46:
                 if (strncmp(sheeshLexeme + i, "lip", 3) == 0 || strncmp(sheeshLexeme + i, "rozen", 5) == 0) {
                     return 1;
@@ -148,6 +153,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 55:
                 if (strncmp(sheeshLexeme + i, "roup", 4) == 0) {
                     return 1;
@@ -156,6 +162,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 60:
                 if (strncmp(sheeshLexeme + i, "f", 1) == 0 || strncmp(sheeshLexeme + i, "nput", 4) == 0) {
                     return 1;
@@ -164,6 +171,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 66:
                 if (strncmp(sheeshLexeme + i, "ump", 3) == 0) {
                     return 1;
@@ -172,6 +180,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 70:
                 if (strncmp(sheeshLexeme + i, "egit", 4) == 0 || strncmp(sheeshLexeme + i, "ockin", 5) == 0 || strncmp(sheeshLexeme + i, "ong", 3) == 0 || strncmp(sheeshLexeme + i, "ocked", 5) == 0) {
                     return 1;
@@ -180,6 +189,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 83:
                 if (strncmp(sheeshLexeme + i, "eanwhile", 8) == 0) {
                     return 1;
@@ -188,6 +198,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 92:
                 if (strncmp(sheeshLexeme + i, "ickname", 7) == 0 || strncmp(sheeshLexeme + i, "um", 2) == 0) {
                     return 1;
@@ -196,6 +207,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 102:
                 if (strncmp(sheeshLexeme + i, "pen", 3) == 0 || strncmp(sheeshLexeme + i, "ther", 4) == 0 || strncmp(sheeshLexeme + i, "ut", 2) == 0 || strncmp(sheeshLexeme + i, "utside", 6) == 0) {
                     return 1;
@@ -204,6 +216,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 116:
                 if (strncmp(sheeshLexeme + i, "l", 1) == 0) {
                     return 1;
@@ -212,6 +225,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 118:
                 if (strncmp(sheeshLexeme + i, "ep", 2) == 0) {
                     return 1;
@@ -220,6 +234,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 121:
                 if (strncmp(sheeshLexeme + i, "cenario", 7) == 0 || strncmp(sheeshLexeme + i, "hort", 4) == 0 || strncmp(sheeshLexeme + i, "tandard", 7) == 0 || strncmp(sheeshLexeme + i, "top", 3) == 0) {
                     return 1;
@@ -228,6 +243,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
 
                 break;
+
             case 142:
                 if (strncmp(sheeshLexeme + i, "eam", 3) == 0 || strncmp(sheeshLexeme + i, "ext", 3) == 0) {
                     return 1;
@@ -236,6 +252,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 }
                 
                 break;
+                
             case 148:
                 if (strncmp(sheeshLexeme + i, "ibe", 3) == 0) {
                     return 1;
@@ -600,7 +617,6 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             continue;
         }
 
-        // Start of a string literal
         if (sheeshLine[i] == '"') {
             if (tempMarker > 0) {
                 temp[tempMarker] = '\0';
@@ -615,12 +631,11 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             continue;
         }
 
-        // Handle comments
         if (sheeshLine[i] == '/' && sheeshLine[i + 1] == '/') {
             Token token = newToken("//", COMMENT, sheeshColumn);
             fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
             free(token.value);
-            break; // Ignore the rest of the sheeshLine
+            break;
         }
 
         if (sheeshLine[i] == '/' && sheeshLine[i + 1] == '*') {
