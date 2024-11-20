@@ -114,6 +114,9 @@ a[]
 // Identifiers
 Valid100
 inv@lid
+00invalid
+iv~s
+i$invalid
 Valid_identifier
 valid_identifier
 _valid1
@@ -136,10 +139,14 @@ always
 // Invalid
 @
 ..
+$ello
+10$2
 1.01.01
 0pen
 0open
 capt@
+name@name
+@111
 
 // Should not be classified as keywords / reserved words
 drifta
@@ -153,6 +160,9 @@ bnum
 numerate
 num20
 cap0
+bnocap
+cap20
+nocapb
 
 // Constant
 5
@@ -166,12 +176,20 @@ Multi-line
 comment here
 */
 
+// Test Statements
+a+b;
+a+=b;
+emotion = happy|sad;
+one+one;
+1*2;
+out("test string");
+
 // Statements
 num count;
 drift decimal = 89.70;
 num count = number;
 count *= test_number;
-if (average >= 97.90) {
+if (average>=97.90) {
     out("GWA is very high!");
 }
 if (a == b) {
@@ -193,9 +211,4 @@ i++
 --i
 i--
 ++i
-
-cap 
-nocap
-bnocap
-cap20
-nocapb
+testing, the, comma
