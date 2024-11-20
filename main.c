@@ -643,6 +643,11 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
 
         return newToken(sheeshLexeme, INVALID, sheeshLine);
     } else if (state == 2) {
+
+        if (sheeshLexeme[strlen(sheeshLexeme) - 1] == '.') {
+            return newToken(sheeshLexeme, INVALID, sheeshLine);
+        }
+
         if (checkFloat) {
             return newToken(sheeshLexeme, FLOAT_CONSTANT, sheeshLine);
         } else {
