@@ -281,7 +281,7 @@ Token fsmClassify(const char *sheeshLexeme, int line) {
     int state = 0;
     char ch;
     int decimalCount = 0;
-    int isFloat = 0;
+    int checkFloat = 0;
 
     for (int i = 0; (ch = sheeshLexeme[i]) != '\0'; i++) {
         switch (state) {
@@ -320,7 +320,7 @@ Token fsmClassify(const char *sheeshLexeme, int line) {
                     }
 
                     decimalCount++;
-                    isFloat = 1;
+                    checkFloat = 1;
                 } else if (!isdigit(ch)) {
                     return newToken(sheeshLexeme, INVALID, line);
                 }
@@ -370,7 +370,7 @@ Token fsmClassify(const char *sheeshLexeme, int line) {
 
         return newToken(sheeshLexeme, INVALID, line);
     } else if (state == 2) {
-        if (isFloat) {
+        if (checkFloat) {
             return newToken(sheeshLexeme, FLOAT_CONSTANT, line);
         } else {
             return newToken(sheeshLexeme, INT_CONSTANT, line);
