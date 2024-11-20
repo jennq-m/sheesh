@@ -69,7 +69,7 @@ Line 73: Lexeme: always          Token: Reserved Word
 Line 74: Lexeme: cap             Token: Constant (Legit (bool in C)), Reserved Word
 Line 75: Lexeme: cont            Token: Reserved Word
 Line 76: Lexeme: nocap           Token: Constant (Legit (bool in C)), Reserved Word
-Line 77: Lexeme: toptier         Token: Identifier
+Line 77: Lexeme: toptier         Token: Reserved Word
 Line 79: Lexeme: //              Token: Comment
 Line 80: Lexeme: aylist          Token: Noise Word
 Line 81: Lexeme: eat             Token: Noise Word
@@ -78,174 +78,181 @@ Line 83: Lexeme: tier            Token: Noise Word
 Line 84: Lexeme: tra             Token: Noise Word
 Line 85: Lexeme: wise            Token: Noise Word
 Line 87: Lexeme: //              Token: Comment
-Line 88: Lexeme: //              Token: Comment
-Line 89: Lexeme: /*              Token: Comment
-Line 91: Lexeme: */              Token: Comment 
-Line 93: Lexeme: //              Token: Comment
-Line 94: Lexeme: ,               Token: Delimiter (Comma)
-Line 95: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 96: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 97: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
-Line 98: Lexeme: {               Token: Bracket (Open (Left) Brace)
-Line 99: Lexeme: }               Token: Bracket (Closing (Right) Brace)
-Line 100: Lexeme: "
+Line 88: Lexeme: playlist        Token: Keyword
+Line 89: Lexeme: repeat          Token: Keyword
+Line 90: Lexeme: output          Token: Keyword
+Line 91: Lexeme: extra           Token: Keyword
+Line 92: Lexeme: otherwise       Token: Keyword
+Line 93: Lexeme: toptier         Token: Reserved Word
+Line 95: Lexeme: //              Token: Comment
+Line 96: Lexeme: //              Token: Comment
+Line 97: Lexeme: /*              Token: Comment
+Line 99: Lexeme: */              Token: Comment 
+Line 101: Lexeme: //              Token: Comment
+Line 102: Lexeme: ,               Token: Delimiter (Comma)
+Line 103: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 104: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
+Line 105: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
+Line 106: Lexeme: {               Token: Bracket (Open (Left) Brace)
+Line 107: Lexeme: }               Token: Bracket (Closing (Right) Brace)
+Line 108: Lexeme: "
               Token: Delimiter (Quotation)
-Line 101: Lexeme: "
+Line 109: Lexeme: "
               Token: Delimiter (Quotation)
-Line 102: Lexeme: [               Token: Bracket (Open (Left) Bracket)
-Line 103: Lexeme: ]               Token: Bracket (Closing (Right) Bracket)
-Line 104: Lexeme: a               Token: Identifier
-Line 104: Lexeme: [               Token: Bracket (Open (Left) Bracket)
-Line 104: Lexeme: ]               Token: Bracket (Closing (Right) Bracket)
-Line 106: Lexeme: //              Token: Comment
-Line 107: Lexeme: Valid100        Token: Identifier
-Line 108: Lexeme: inv@lid         Token: Invalid
-Line 109: Lexeme: Valid_identifier Token: Identifier
-Line 110: Lexeme: valid_identifier Token: Identifier
-Line 111: Lexeme: _valid1         Token: Identifier
-Line 112: Lexeme: #valid2         Token: Identifier
-Line 113: Lexeme: 1invalid        Token: Invalid
-Line 114: Lexeme: valid#1         Token: Identifier
-Line 115: Lexeme: valid__alphabet Token: Identifier
-Line 116: Lexeme: invalid##       Token: Invalid
-Line 117: Lexeme: test#identifier Token: Identifier
-Line 118: Lexeme: va              Token: Identifier
-Line 118: Lexeme: lid             Token: Identifier
-Line 119: Lexeme: casesensitiveidentifier Token: Identifier
-Line 120: Lexeme: CaseSensitiveIdentifier Token: Identifier
-Line 121: Lexeme: thisIsInv@_valid1 Token: Invalid
-Line 122: Lexeme: ##thisShouldBeValid Token: Identifier
-Line 123: Lexeme: beh##           Token: Invalid
-Line 124: Lexeme: vibe            Token: Keyword
-Line 125: Lexeme: always          Token: Reserved Word
-Line 128: Lexeme: //              Token: Comment
-Line 129: Lexeme: @               Token: Invalid
-Line 130: Lexeme: ..              Token: Invalid
-Line 131: Lexeme: 1.01.01         Token: Invalid
-Line 132: Lexeme: 0pen            Token: Invalid
-Line 133: Lexeme: 0open           Token: Invalid
-Line 134: Lexeme: capt@           Token: Invalid
+Line 110: Lexeme: [               Token: Bracket (Open (Left) Bracket)
+Line 111: Lexeme: ]               Token: Bracket (Closing (Right) Bracket)
+Line 112: Lexeme: a               Token: Identifier
+Line 112: Lexeme: [               Token: Bracket (Open (Left) Bracket)
+Line 112: Lexeme: ]               Token: Bracket (Closing (Right) Bracket)
+Line 114: Lexeme: //              Token: Comment
+Line 115: Lexeme: Valid100        Token: Identifier
+Line 116: Lexeme: inv@lid         Token: Invalid
+Line 117: Lexeme: Valid_identifier Token: Identifier
+Line 118: Lexeme: valid_identifier Token: Identifier
+Line 119: Lexeme: _valid1         Token: Identifier
+Line 120: Lexeme: #valid2         Token: Identifier
+Line 121: Lexeme: 1invalid        Token: Invalid
+Line 122: Lexeme: valid#1         Token: Identifier
+Line 123: Lexeme: valid__alphabet Token: Identifier
+Line 124: Lexeme: invalid##       Token: Invalid
+Line 125: Lexeme: test#identifier Token: Identifier
+Line 126: Lexeme: va              Token: Identifier
+Line 126: Lexeme: lid             Token: Identifier
+Line 127: Lexeme: casesensitiveidentifier Token: Identifier
+Line 128: Lexeme: CaseSensitiveIdentifier Token: Identifier
+Line 129: Lexeme: thisIsInv@_valid1 Token: Invalid
+Line 130: Lexeme: ##thisShouldBeValid Token: Identifier
+Line 131: Lexeme: beh##           Token: Invalid
+Line 132: Lexeme: vibe            Token: Keyword
+Line 133: Lexeme: always          Token: Reserved Word
 Line 136: Lexeme: //              Token: Comment
-Line 137: Lexeme: drifta          Token: Identifier
-Line 138: Lexeme: adrift          Token: Identifier
-Line 139: Lexeme: darift          Token: Identifier
-Line 140: Lexeme: heycont         Token: Identifier
-Line 141: Lexeme: acap            Token: Identifier
-Line 142: Lexeme: caps            Token: Identifier
-Line 143: Lexeme: scap            Token: Identifier
-Line 144: Lexeme: bnum            Token: Identifier
-Line 145: Lexeme: numerate        Token: Identifier
-Line 146: Lexeme: num20           Token: Identifier
-Line 147: Lexeme: cap0            Token: Identifier
-Line 149: Lexeme: //              Token: Comment
-Line 150: Lexeme: 5               Token: Constant (Num (int in C))
-Line 151: Lexeme: "test"          Token: Constant (Text (string in C))
-Line 152: Lexeme: 5.5             Token: Constant (Drift (float in C))
-Line 153: Lexeme: 'h'             Token: Constant
-Line 154: Lexeme: 50              Token: Constant (Num (int in C))
-Line 156: Lexeme: /*              Token: Comment
-Line 159: Lexeme: */              Token: Comment 
-Line 161: Lexeme: //              Token: Comment
-Line 162: Lexeme: num             Token: Keyword
-Line 162: Lexeme: count           Token: Identifier
-Line 162: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 163: Lexeme: drift           Token: Keyword
-Line 163: Lexeme: decimal         Token: Identifier
-Line 163: Lexeme: =               Token: Assignment Operator
-Line 163: Lexeme: 89.70           Token: Constant (Drift (float in C))
-Line 163: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 164: Lexeme: num             Token: Keyword
-Line 164: Lexeme: count           Token: Identifier
-Line 164: Lexeme: =               Token: Assignment Operator
-Line 164: Lexeme: number          Token: Identifier
-Line 164: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 165: Lexeme: count           Token: Identifier
-Line 165: Lexeme: *=              Token: Assignment Operator
-Line 165: Lexeme: test_number     Token: Identifier
-Line 165: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 166: Lexeme: if              Token: Keyword
-Line 166: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 166: Lexeme: average         Token: Identifier
-Line 166: Lexeme: >=              Token: Relational Operator (Boolean)
-Line 166: Lexeme: 97.90           Token: Constant (Drift (float in C))
-Line 166: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
-Line 166: Lexeme: {               Token: Bracket (Open (Left) Brace)
-Line 167: Lexeme: out             Token: Keyword
-Line 167: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 167: Lexeme: "GWA is very high!" Token: Constant (Text (string in C))
-Line 167: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
-Line 167: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 168: Lexeme: }               Token: Bracket (Closing (Right) Brace)
-Line 169: Lexeme: if              Token: Keyword
-Line 169: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 169: Lexeme: a               Token: Identifier
-Line 169: Lexeme: ==              Token: Relational Operator (Boolean)
-Line 169: Lexeme: b               Token: Identifier
-Line 169: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
-Line 169: Lexeme: {               Token: Bracket (Open (Left) Brace)
-Line 170: Lexeme: out             Token: Keyword
-Line 170: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 170: Lexeme: "Same!"         Token: Constant (Text (string in C))
-Line 170: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
+Line 137: Lexeme: @               Token: Invalid
+Line 138: Lexeme: ..              Token: Invalid
+Line 139: Lexeme: 1.01.01         Token: Invalid
+Line 140: Lexeme: 0pen            Token: Invalid
+Line 141: Lexeme: 0open           Token: Invalid
+Line 142: Lexeme: capt@           Token: Invalid
+Line 144: Lexeme: //              Token: Comment
+Line 145: Lexeme: drifta          Token: Identifier
+Line 146: Lexeme: adrift          Token: Identifier
+Line 147: Lexeme: darift          Token: Identifier
+Line 148: Lexeme: heycont         Token: Identifier
+Line 149: Lexeme: acap            Token: Identifier
+Line 150: Lexeme: caps            Token: Identifier
+Line 151: Lexeme: scap            Token: Identifier
+Line 152: Lexeme: bnum            Token: Identifier
+Line 153: Lexeme: numerate        Token: Identifier
+Line 154: Lexeme: num20           Token: Identifier
+Line 155: Lexeme: cap0            Token: Identifier
+Line 157: Lexeme: //              Token: Comment
+Line 158: Lexeme: 5               Token: Constant (Num (int in C))
+Line 159: Lexeme: "test"          Token: Constant (Text (string in C))
+Line 160: Lexeme: 5.5             Token: Constant (Drift (float in C))
+Line 161: Lexeme: 'h'             Token: Constant
+Line 162: Lexeme: 50              Token: Constant (Num (int in C))
+Line 164: Lexeme: /*              Token: Comment
+Line 167: Lexeme: */              Token: Comment 
+Line 169: Lexeme: //              Token: Comment
+Line 170: Lexeme: num             Token: Keyword
+Line 170: Lexeme: count           Token: Identifier
 Line 170: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 171: Lexeme: }               Token: Bracket (Closing (Right) Brace)
-Line 171: Lexeme: ex              Token: Keyword
-Line 171: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 171: Lexeme: a               Token: Identifier
-Line 171: Lexeme: >               Token: Relational Operator (Boolean)
-Line 171: Lexeme: b               Token: Identifier
-Line 171: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
-Line 171: Lexeme: {               Token: Bracket (Open (Left) Brace)
-Line 172: Lexeme: out             Token: Keyword
-Line 172: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 172: Lexeme: "Greater!"      Token: Constant (Text (string in C))
-Line 172: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
+Line 171: Lexeme: drift           Token: Keyword
+Line 171: Lexeme: decimal         Token: Identifier
+Line 171: Lexeme: =               Token: Assignment Operator
+Line 171: Lexeme: 89.70           Token: Constant (Drift (float in C))
+Line 171: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 172: Lexeme: num             Token: Keyword
+Line 172: Lexeme: count           Token: Identifier
+Line 172: Lexeme: =               Token: Assignment Operator
+Line 172: Lexeme: number          Token: Identifier
 Line 172: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 173: Lexeme: }               Token: Bracket (Closing (Right) Brace)
-Line 173: Lexeme: other           Token: Keyword
-Line 173: Lexeme: {               Token: Bracket (Open (Left) Brace)
-Line 174: Lexeme: out             Token: Keyword
+Line 173: Lexeme: count           Token: Identifier
+Line 173: Lexeme: *=              Token: Assignment Operator
+Line 173: Lexeme: test_number     Token: Identifier
+Line 173: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 174: Lexeme: if              Token: Keyword
 Line 174: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 174: Lexeme: "Less!"         Token: Constant (Text (string in C))
+Line 174: Lexeme: average         Token: Identifier
+Line 174: Lexeme: >=              Token: Relational Operator (Boolean)
+Line 174: Lexeme: 97.90           Token: Constant (Drift (float in C))
 Line 174: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
-Line 174: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 175: Lexeme: }               Token: Bracket (Closing (Right) Brace)
-Line 176: Lexeme: meanwhile       Token: Keyword
-Line 176: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 176: Lexeme: i               Token: Identifier
-Line 176: Lexeme: <               Token: Relational Operator (Boolean)
-Line 176: Lexeme: 5               Token: Constant (Num (int in C))
-Line 176: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
-Line 176: Lexeme: {               Token: Bracket (Open (Left) Brace)
-Line 177: Lexeme: out             Token: Keyword
+Line 174: Lexeme: {               Token: Bracket (Open (Left) Brace)
+Line 175: Lexeme: out             Token: Keyword
+Line 175: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
+Line 175: Lexeme: "GWA is very high!" Token: Constant (Text (string in C))
+Line 175: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
+Line 175: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 176: Lexeme: }               Token: Bracket (Closing (Right) Brace)
+Line 177: Lexeme: if              Token: Keyword
 Line 177: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
-Line 177: Lexeme: i               Token: Identifier
+Line 177: Lexeme: a               Token: Identifier
+Line 177: Lexeme: ==              Token: Relational Operator (Boolean)
+Line 177: Lexeme: b               Token: Identifier
 Line 177: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
-Line 177: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 178: Lexeme: i               Token: Identifier
-Line 178: Lexeme: ++              Token: Unary Operator
+Line 177: Lexeme: {               Token: Bracket (Open (Left) Brace)
+Line 178: Lexeme: out             Token: Keyword
+Line 178: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
+Line 178: Lexeme: "Same!"         Token: Constant (Text (string in C))
+Line 178: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
 Line 178: Lexeme: ;               Token: Delimiter (Semicolon)
 Line 179: Lexeme: }               Token: Bracket (Closing (Right) Brace)
-Line 182: Lexeme: num             Token: Keyword
-Line 182: Lexeme: num1            Token: Identifier
-Line 182: Lexeme: =               Token: Assignment Operator
-Line 182: Lexeme: 10              Token: Constant (Num (int in C))
+Line 179: Lexeme: ex              Token: Keyword
+Line 179: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
+Line 179: Lexeme: a               Token: Identifier
+Line 179: Lexeme: >               Token: Relational Operator (Boolean)
+Line 179: Lexeme: b               Token: Identifier
+Line 179: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
+Line 179: Lexeme: {               Token: Bracket (Open (Left) Brace)
+Line 180: Lexeme: out             Token: Keyword
+Line 180: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
+Line 180: Lexeme: "Greater!"      Token: Constant (Text (string in C))
+Line 180: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
+Line 180: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 181: Lexeme: }               Token: Bracket (Closing (Right) Brace)
+Line 181: Lexeme: other           Token: Keyword
+Line 181: Lexeme: {               Token: Bracket (Open (Left) Brace)
+Line 182: Lexeme: out             Token: Keyword
+Line 182: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
+Line 182: Lexeme: "Less!"         Token: Constant (Text (string in C))
+Line 182: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
 Line 182: Lexeme: ;               Token: Delimiter (Semicolon)
-Line 183: Lexeme: drift           Token: Keyword
-Line 183: Lexeme: d1              Token: Identifier
-Line 183: Lexeme: =               Token: Assignment Operator
-Line 183: Lexeme: 10.0            Token: Constant (Drift (float in C))
-Line 183: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 183: Lexeme: }               Token: Bracket (Closing (Right) Brace)
+Line 184: Lexeme: meanwhile       Token: Keyword
+Line 184: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
 Line 184: Lexeme: i               Token: Identifier
-Line 184: Lexeme: ++              Token: Unary Operator
-Line 185: Lexeme: --              Token: Unary Operator
+Line 184: Lexeme: <               Token: Relational Operator (Boolean)
+Line 184: Lexeme: 5               Token: Constant (Num (int in C))
+Line 184: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
+Line 184: Lexeme: {               Token: Bracket (Open (Left) Brace)
+Line 185: Lexeme: out             Token: Keyword
+Line 185: Lexeme: (               Token: Delimiter (Open (Left) Parenthesis)
 Line 185: Lexeme: i               Token: Identifier
+Line 185: Lexeme: )               Token: Delimiter (Closing (Right) Parenthesis)
+Line 185: Lexeme: ;               Token: Delimiter (Semicolon)
 Line 186: Lexeme: i               Token: Identifier
-Line 186: Lexeme: --              Token: Unary Operator
-Line 187: Lexeme: ++              Token: Unary Operator
-Line 187: Lexeme: i               Token: Identifier
-Line 189: Lexeme: cap             Token: Constant (Legit (bool in C)), Reserved Word
-Line 190: Lexeme: nocap           Token: Constant (Legit (bool in C)), Reserved Word
-Line 191: Lexeme: bnocap          Token: Identifier
-Line 192: Lexeme: cap20           Token: Identifier
-Line 193: Lexeme: nocapb          Token: Identifier
+Line 186: Lexeme: ++              Token: Unary Operator
+Line 186: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 187: Lexeme: }               Token: Bracket (Closing (Right) Brace)
+Line 190: Lexeme: num             Token: Keyword
+Line 190: Lexeme: num1            Token: Identifier
+Line 190: Lexeme: =               Token: Assignment Operator
+Line 190: Lexeme: 10              Token: Constant (Num (int in C))
+Line 190: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 191: Lexeme: drift           Token: Keyword
+Line 191: Lexeme: d1              Token: Identifier
+Line 191: Lexeme: =               Token: Assignment Operator
+Line 191: Lexeme: 10.0            Token: Constant (Drift (float in C))
+Line 191: Lexeme: ;               Token: Delimiter (Semicolon)
+Line 192: Lexeme: i               Token: Identifier
+Line 192: Lexeme: ++              Token: Unary Operator
+Line 193: Lexeme: --              Token: Unary Operator
+Line 193: Lexeme: i               Token: Identifier
+Line 194: Lexeme: i               Token: Identifier
+Line 194: Lexeme: --              Token: Unary Operator
+Line 195: Lexeme: ++              Token: Unary Operator
+Line 195: Lexeme: i               Token: Identifier
+Line 197: Lexeme: cap             Token: Constant (Legit (bool in C)), Reserved Word
+Line 198: Lexeme: nocap           Token: Constant (Legit (bool in C)), Reserved Word
+Line 199: Lexeme: bnocap          Token: Identifier
+Line 200: Lexeme: cap20           Token: Identifier
+Line 201: Lexeme: nocapb          Token: Identifier

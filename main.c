@@ -123,7 +123,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 } else { 
                     return 0;
                 }
-                
+
                 break;
 
             case 25:
@@ -154,7 +154,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 break;
 
             case 40:
-                if (strcmp(sheeshLexeme + i, "mpty") == 0 || strcmp(sheeshLexeme + i, "x") == 0) {
+                if (strcmp(sheeshLexeme + i, "mpty") == 0 || strcmp(sheeshLexeme + i, "x") == 0 || strcmp(sheeshLexeme + i, "xtra") == 0) {
                     return 1;
                 } else {
                     return 0;
@@ -226,7 +226,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 break;
 
             case 102:
-                if (strcmp(sheeshLexeme + i, "pen") == 0 || strcmp(sheeshLexeme + i, "ther") == 0 || strcmp(sheeshLexeme + i, "ut") == 0 || strcmp(sheeshLexeme + i, "utside") == 0) {
+                if (strcmp(sheeshLexeme + i, "pen") == 0 || strcmp(sheeshLexeme + i, "ther") == 0 || strcmp(sheeshLexeme + i, "ut") == 0 || strcmp(sheeshLexeme + i, "utside") == 0 || strcmp(sheeshLexeme + i, "utput") == 0 || strcmp(sheeshLexeme + i, "therwise") == 0) {
                     return 1;
                 } else {
                     return 0;
@@ -235,7 +235,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 break;
 
             case 116:
-                if (strcmp(sheeshLexeme + i, "l") == 0) {
+                if (strcmp(sheeshLexeme + i, "l") == 0 || strcmp(sheeshLexeme + i, "laylist") == 0) {
                     return 1;
                 } else {
                     return 0;
@@ -244,7 +244,7 @@ int checkKeyword(const char *sheeshLexeme) {
                 break;
 
             case 118:
-                if (strcmp(sheeshLexeme + i, "ep") == 0) {
+                if (strcmp(sheeshLexeme + i, "ep") == 0 || strcmp(sheeshLexeme + i, "epeat") == 0) {
                     return 1;
                 } else {
                     return 0;
@@ -337,7 +337,7 @@ int checkReservedWord(const char *sheeshLexeme) {
                 break;
 
             case 5:
-                if (strcmp(sheeshLexeme + i, "op") == 0) {
+                if (strcmp(sheeshLexeme + i, "op") == 0 || strcmp(sheeshLexeme + i, "optier") == 0) {
                     return 1;
                 } else {
                     return 0;

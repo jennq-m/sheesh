@@ -84,6 +84,14 @@ tier
 tra
 wise
 
+// Full keyword/reserved word that has noise words
+playlist
+repeat
+output
+extra
+otherwise
+toptier
+
 // Comments
 // Single-line comment
 /*
