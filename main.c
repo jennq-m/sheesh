@@ -221,26 +221,43 @@ int checkRelational(const char *token) {
 
 char *typeToString(TokenType type) {
     switch (type) {
-        case IDENTIFIER: return "Identifier";
-        case KEYWORD: return "Keyword";
-        case RESERVED_WORD: return "Reserved Word";
-        case CONSTANT: return "Constant";
-        case CONSTANDRESERVED: return "Constant, Reserved Word";
-        case NOISE_WORD: return "Noise Word";
-        case COMMENT: return "Comment";
-        case ARITHMETIC_OPE: return "Arithmetic Operator";
-        case ASSIGNMENT_OPE: return "Assignment Operator";
-        case LOGICAL_OPE: return "Logical Operator (Boolean)";
-        case UNARY_OPE: return "Unary Operator";
-        case RELATIONAL_OPE: return "Relational Operator (Boolean)";
-        case DELIMITER: return "Delimiter";
-        case INT_CONSTANT: return "Constant (Num (int in C))";
-        case FLOAT_CONSTANT: return "Constant (Drift (float in C))";
-        case STRING_CONSTANT: return "Constant (Text (string in C))";
-        case INVALID: return "Invalid";
-        default: return "Invalid";
+        case IDENTIFIER: 
+            return "Identifier";
+        case KEYWORD: 
+            return "Keyword";
+        case RESERVED_WORD: 
+            return "Reserved Word";
+        case CONSTANT: 
+            return "Constant";
+        case CONSTANDRESERVED: 
+            return "Constant, Reserved Word";
+        case NOISE_WORD: 
+            return "Noise Word";
+        case COMMENT: 
+            return "Comment";
+        case ARITHMETIC_OPE: 
+            return "Arithmetic Operator";
+        case ASSIGNMENT_OPE: 
+            return "Assignment Operator";
+        case LOGICAL_OPE: 
+            return "Logical Operator (Boolean)";
+        case UNARY_OPE: 
+            return "Unary Operator";
+        case RELATIONAL_OPE: 
+            return "Relational Operator (Boolean)";
+        case DELIMITER: 
+            return "Delimiter";
+        case INT_CONSTANT: 
+            return "Constant (Num (int in C))";
+        case FLOAT_CONSTANT: 
+            return "Constant (Drift (float in C))";
+        case STRING_CONSTANT: 
+            return "Constant (Text (string in C))";
+        case INVALID: 
+            return "Invalid";
+        default: 
+            return "Invalid";
     }
-
 }
 
 Token newToken(const char *value, TokenType type, int line) {
