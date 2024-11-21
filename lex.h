@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-// Enumeration for token types
+//Enumerating different token type
 typedef enum {
     IDENTIFIER, 
     KEYWORD, 
@@ -33,7 +33,7 @@ typedef enum {
     CHAR_CONSTANT
 } TokenType;
 
-// Structure to represent a token
+//Holding attributes of TOKEN
 typedef struct {
     char *value;       
     TokenType type;    
@@ -45,7 +45,7 @@ Token newToken(const char *value, TokenType type, int sheeshLine);
 Token sheeshLexer(const char *sheeshLexeme, int sheeshLine);
 void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshLineNum);
 
-// Function prototypes
+//Declaration of Function Prototype
 int checkFilename(int argc, char *argv);
 int checkKeyword(const char *sheeshLexeme);
 int checkReservedWord(const char *sheeshLexeme);
