@@ -463,7 +463,7 @@ Token newToken(const char *value, TokenType type, int sheeshColumn) {
     return token;
 }
 
-//
+//LEXER
 Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
     int state = 0;
     char ch;
@@ -877,21 +877,8 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         }
 
         if (isdigit(sheeshLine[i]) || sheeshLine[i] == '.') {
+            // printf("heajdksajd");
             temp[tempMarker++] = sheeshLine[i];
-        } else if (strchr("+-*/", sheeshLine[i])) {
-            if (tempMarker > 0) {
-                temp[tempMarker] = '\0';  
-                Token token = sheeshLexer(temp, sheeshColumn);  
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: Constant\n", token.sheeshLine, token.value);
-                free(token.value);  
-                tempMarker = 0;  
-            }
-            
-            temp[0] = sheeshLine[i];
-            temp[1] = '\0';  
-            Token token = sheeshLexer(temp, sheeshColumn);  
-            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            free(token.value);  
         } else if (isspace(sheeshLine[i])) {
            
             if (tempMarker > 0) {
