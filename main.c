@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-//Enumariting different token type
+//Enumerating different token type
 typedef enum {
     IDENTIFIER, KEYWORD, RESERVED_WORD, CONSTANT, NOISE_WORD, COMMENT, 
     ARITHMETIC_OPE, ASSIGNMENT_OPE, LOGICAL_OPE, UNARY_OPE, RELATIONAL_OPE, 
