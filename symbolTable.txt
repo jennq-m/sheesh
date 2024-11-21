@@ -143,12 +143,17 @@ Line 147: Lexeme: //              Token: Comment
 Line 148: Lexeme: @               Token: Invalid
 Line 149: Lexeme: $ello           Token: Invalid
 Line 150: Lexeme: 10$2            Token: Invalid
+Line 151: Lexeme: 1.01.01         Token: Invalid
 Line 152: Lexeme: 0pen            Token: Invalid
 Line 153: Lexeme: 0open           Token: Invalid
 Line 154: Lexeme: capt@           Token: Invalid
 Line 155: Lexeme: name@name       Token: Invalid
 Line 156: Lexeme: @111            Token: Invalid
+Line 157: Lexeme: ..              Token: Invalid
+Line 158: Lexeme: .               Token: Invalid
 Line 159: Lexeme: 1.A             Token: Invalid
+Line 160: Lexeme: 1.              Token: Invalid
+Line 161: Lexeme: 35.8394.0       Token: Invalid
 Line 162: Lexeme: 'sdssdfdf'      Token: Invalid
 Line 163: Lexeme: ''              Token: Invalid
 Line 166: Lexeme: //              Token: Comment
@@ -167,8 +172,11 @@ Line 178: Lexeme: bnocap          Token: Identifier
 Line 179: Lexeme: cap20           Token: Identifier
 Line 180: Lexeme: nocapb          Token: Identifier
 Line 182: Lexeme: //              Token: Comment
+Line 183: Lexeme: 5               Token: Constant (Num (int in C))
 Line 184: Lexeme: "test"          Token: Constant (Text (string in C))
+Line 185: Lexeme: 5.5             Token: Constant (Drift (float in C))
 Line 186: Lexeme: 'h'             Token: Constant (Vibe (char in C))
+Line 187: Lexeme: 50              Token: Constant (Num (int in C))
 Line 188: Lexeme: nocap           Token: Constant (Legit (bool in C)), Reserved Word
 Line 189: Lexeme: cap             Token: Constant (Legit (bool in C)), Reserved Word
 Line 191: Lexeme: /*              Token: Comment
@@ -370,3 +378,5 @@ Line 244: Lexeme: ,               Token: Delimiter (Comma)
 Line 244: Lexeme: the             Token: Identifier
 Line 244: Lexeme: ,               Token: Delimiter (Comma)
 Line 244: Lexeme: comma           Token: Identifier
+Line 245: Lexeme: 1.01            Token: Constant (Drift (float in C))
+Line 246: Lexeme: 3434.5347       Token: Constant (Drift (float in C))
