@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     fprintf(outputSheesh, "Lexical Analysis of %s:\n\n", argv[1]);
 
     while (fgets(sheeshLine, sizeof(sheeshLine), file)) {
-        analyzeLine(outputSheesh, sheeshLine, sheeshColumn);
+        sheeshScanLine(outputSheesh, sheeshLine, sheeshColumn);
         sheeshColumn++;
     }
 
@@ -52,7 +52,7 @@ int checkFilename(int argc, char *argv) {
     }
 }
 
-//Finite State Machie for Keyword
+//Finite State Machine for Keyword
 int checkKeyword(const char *sheeshLexeme) {
     int state = 1;
 
@@ -453,7 +453,7 @@ int checkRelational(const char *sheeshLexeme) {
     return 0;
 }
 
-//Creating  and returning a new token 
+//Creating and returning a new token 
 Token newToken(const char *value, TokenType type, int sheeshColumn) {
     Token token;
     token.value = strdup(value);
@@ -600,13 +600,12 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
     return newToken(sheeshLexeme, INVALID, sheeshLine);
 }
 
-void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
+void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
     static int inMultiLineComment = 0;
     int stringLiteral = 0;
     int characterConstant = 0;
     char temp[256];
     int tempMarker = 0;
-    int charDetected = 0;
 
     for (int i = 0; sheeshLine[i] != '\0'; i++) {
 
@@ -664,8 +663,6 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
 
                 tempMarker = 0;
                 characterConstant = 0;
-            } else {
-                charDetected += 1;
             }
             continue;
         }
@@ -877,7 +874,6 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         }
 
         if (isdigit(sheeshLine[i]) || sheeshLine[i] == '.') {
-            // printf("heajdksajd");
             temp[tempMarker++] = sheeshLine[i];
         } else if (isspace(sheeshLine[i])) {
            
@@ -897,7 +893,7 @@ void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         }
     }
 
-if (tempMarker > 0) {
+    if (tempMarker > 0) {
         temp[tempMarker] = '\0';
         if (stringLiteral || characterConstant) {
             Token token = newToken(temp, QUOTATION, sheeshColumn);

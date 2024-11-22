@@ -43,7 +43,7 @@ typedef struct {
 
 Token newToken(const char *value, TokenType type, int sheeshLine);
 Token sheeshLexer(const char *sheeshLexeme, int sheeshLine);
-void analyzeLine(FILE *outputSheesh, char *sheeshLine, int sheeshLineNum);
+void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshLineNum);
 
 //Declaration of Function Prototype
 int checkFilename(int argc, char *argv);

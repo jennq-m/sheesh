@@ -98,6 +98,9 @@ toptier
 Multi-line comment
 */
 
+single // line if
+whole  
+
 // Delimiters and Brackets
 ,
 ;
@@ -114,6 +117,8 @@ Multi-line comment
 a[]
 
 // Identifiers
+_#
+valid_#_#
 Valid100
 Val1d
 val1d
@@ -246,3 +251,5 @@ testing, the, comma
 3434.5347
 5/7
 5%8
+'hello'
+pl
