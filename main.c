@@ -54,209 +54,32 @@ int checkFilename(int argc, char *argv) {
 
 //Finite State Machine for Keyword
 int checkKeyword(const char *sheeshLexeme) {
-    int state = 1;
+    int currChar = 0;
 
-    for (int i = 0; sheeshLexeme[i] != '\0'; i++) {
-        char curr = sheeshLexeme[i];
-
-        switch(state) {
-            case 1:
-                if (curr == 'b') {
-                    state = 25;
-                } else if (curr == 'c') {
-                    state = 31;
-                } else if (curr == 'd') {
-                    state = 34;
-                } else if (curr == 'e') {
-                    state = 40;
-                } else if (curr == 'f') { 
-                    state = 46;
-                } else if (curr == 'g') {
-                    state = 55;
-                } else if (curr == 'i') {
-                    state = 60;
-                } else if (curr == 'j') { 
-                    state = 66;
-                } else if (curr == 'l') { 
-                    state = 70;
-                } else if (curr == 'm') {
-                    state = 83;
-                } else if (curr == 'n') {
-                    state = 92;
-                } else if (curr == 'o') {
-                    state = 102;
-                } else if (curr == 'p') {
-                    state = 116;
-                } else if (curr == 'r') {
-                    state = 118;
-                } else if (curr == 's') {
-                    state = 121;
-                } else if (curr == 't') {
-                    state = 142;
-                } else if (curr == 'v') {
-                    state = 148;
-                } else { 
-                    return 0;
-                }
-
-                break;
-
-            case 25:
-                if (strcmp(sheeshLexeme + i, "ounce") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 31:
-                if (strcmp(sheeshLexeme + i, "ar") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 34:
-                if (strcmp(sheeshLexeme + i, "o") == 0 || strcmp(sheeshLexeme + i, "rift") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 40:
-                if (strcmp(sheeshLexeme + i, "mpty") == 0 || strcmp(sheeshLexeme + i, "x") == 0 || strcmp(sheeshLexeme + i, "xtra") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 46:
-                if (strcmp(sheeshLexeme + i, "lip") == 0 || strcmp(sheeshLexeme + i, "rozen") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 55:
-                if (strcmp(sheeshLexeme + i, "roup") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 60:
-                if (strcmp(sheeshLexeme + i, "f") == 0 || strcmp(sheeshLexeme + i, "nput") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 66:
-                if (strcmp(sheeshLexeme + i, "ump") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 70:
-                if (strcmp(sheeshLexeme + i, "egit") == 0 || strcmp(sheeshLexeme + i, "ockin") == 0 || strcmp(sheeshLexeme + i, "ong") == 0 || strcmp(sheeshLexeme + i, "ocked") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 83:
-                if (strcmp(sheeshLexeme + i, "eanwhile") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 92:
-                if (strcmp(sheeshLexeme + i, "ickname") == 0 || strcmp(sheeshLexeme + i, "um") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 102:
-                if (strcmp(sheeshLexeme + i, "pen") == 0 || strcmp(sheeshLexeme + i, "ther") == 0 || strcmp(sheeshLexeme + i, "ut") == 0 || strcmp(sheeshLexeme + i, "utside") == 0 || strcmp(sheeshLexeme + i, "utput") == 0 || strcmp(sheeshLexeme + i, "therwise") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 116:
-                if (strcmp(sheeshLexeme + i, "l") == 0 || strcmp(sheeshLexeme + i, "laylist") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 118:
-                if (strcmp(sheeshLexeme + i, "ep") == 0 || strcmp(sheeshLexeme + i, "epeat") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 121:
-                if (strcmp(sheeshLexeme + i, "cenario") == 0 || strcmp(sheeshLexeme + i, "hort") == 0 || strcmp(sheeshLexeme + i, "tandard") == 0 || strcmp(sheeshLexeme + i, "top") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 142:
-                if (strcmp(sheeshLexeme + i, "eam") == 0 || strcmp(sheeshLexeme + i, "ext") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-                
-                break;
-
-            case 148:
-                if (strcmp(sheeshLexeme + i, "ibe") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-                
-                break;
-
-            default:
-                return 0;
-        }
+    switch (sheeshLexeme[currChar++]) {
+        case 'b':
+            switch(sheeshLexeme[currChar++]) {
+                case 'o':
+                    switch(sheeshLexeme[currChar++]) {
+                        case 'u':
+                            switch(sheeshLexeme[currChar++]) {
+                                case 'n':
+                                    switch(sheeshLexeme[currChar++]) {
+                                        case 'c':
+                                            switch(sheeshLexeme[currChar++]) {
+                                                case 'e':
+                                                    return 1;
+                                                break;
+                                            }
+                                        break;   
+                                    }
+                                break;     
+                            }
+                        break;    
+                    } 
+                break; 
+            }
+        break;
     }
 
     return 0;
