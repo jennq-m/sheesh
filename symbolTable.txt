@@ -399,3 +399,6 @@ Line 260: Lexeme: bounceif        Token: Identifier
 Line 261: Lexeme: ifbounce        Token: Identifier
 Line 262: Lexeme: ifmeanwhile     Token: Identifier
 Line 263: Lexeme: meanwhileif     Token: Identifier
+Line 265: Lexeme: alwaysif        Token: Identifier
+Line 266: Lexeme: captoptier      Token: Identifier
+Line 267: Lexeme: cont            Token: Reserved Word

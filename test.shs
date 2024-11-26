@@ -261,3 +261,7 @@ bounceif
 ifbounce
 ifmeanwhile
 meanwhileif
+
+alwaysif
+captoptier
+cont

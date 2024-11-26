@@ -585,66 +585,102 @@ int checkKeyword(const char *sheeshLexeme) {
 
 //Finite State Machine for Reserved Words
 int checkReservedWord(const char *sheeshLexeme) {
-    int state = 1;
+    int currChar = 0;
 
-    for (int i = 0; sheeshLexeme[i] != '\0'; i++) {
-        char curr = sheeshLexeme[i];
+    switch(sheeshLexeme[currChar++]) {
 
-        switch(state) {
-            case 1:
-                if (curr == 'a') {
-                    state = 2;
-                } else if (curr == 'c') {
-                    state = 3;
-                } else if (curr == 'n') { 
-                    state = 4;
-                } else if (curr == 't') {
-                    state = 5;
-                } else {
-                    return 0;
-                }
+        case 'a':
+            switch(sheeshLexeme[currChar++]) {
+                case 'l':
+                    switch(sheeshLexeme[currChar++]) {
+                        case 'w':
+                            switch(sheeshLexeme[currChar++]) {
+                                case 'a':
+                                    switch(sheeshLexeme[currChar++]) {
+                                        case 'y':
+                                            switch(sheeshLexeme[currChar++]) {
+                                                case 's':
+                                                    switch(sheeshLexeme[currChar++]) {
+                                                        case '\0':
+                                                            return 1;
+                                                    }
+                                            }
+                                    }
+                            }
+                    }
+            }
 
-                break;
+            currChar = 0;
+        
+        case 'c':
+            switch(sheeshLexeme[currChar++]) {
+                case 'a':
+                    switch(sheeshLexeme[currChar++]) {
+                        case 'p':
+                            switch(sheeshLexeme[currChar++]) {
+                                case '\0':
+                                    return 1;
+                            }
+                    }
+                
+                case 'o':
+                    switch(sheeshLexeme[currChar++]) {
+                        case 'n':
+                            switch(sheeshLexeme[currChar++]) {
+                                case 't':
+                                    switch(sheeshLexeme[currChar++]) {
+                                        case '\0':
+                                            return 1;
+                                    }
+                            }
+                    }
+            }
 
-            case 2:
-                if (strcmp(sheeshLexeme + i, "lways") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+            currChar = 0;
 
-                break;
+        case 'n':
+            switch(sheeshLexeme[currChar++]) {
+                case 'o':
+                    switch(sheeshLexeme[currChar++]) {
+                        case 'c':
+                            switch(sheeshLexeme[currChar++]) {
+                                case 'a':
+                                    switch(sheeshLexeme[currChar++]) {
+                                        case 'p':
+                                            switch(sheeshLexeme[currChar++]) {
+                                                case '\0':
+                                                    return 1;
+                                            }
+                                    }
+                            }
+                    }
+            }
 
-            case 3:
-                if (strcmp(sheeshLexeme + i, "ap") == 0 || strcmp(sheeshLexeme + i, "ont") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 4:
-                if (strcmp(sheeshLexeme + i, "ocap") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-
-            case 5:
-                if (strcmp(sheeshLexeme + i, "op") == 0 || strcmp(sheeshLexeme + i, "optier") == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-
-                break;
-            
-            default:
-                return 0;
-        }   
+            currChar = 0;
+        
+        case 't':
+            switch(sheeshLexeme[currChar++]) {
+                case 'o':
+                    switch(sheeshLexeme[currChar++]) {
+                        case 'p':
+                            switch(sheeshLexeme[currChar++]) {
+                                case 't':
+                                    switch(sheeshLexeme[currChar++]) {
+                                        case 'i':
+                                            switch(sheeshLexeme[currChar++]) {
+                                                case 'e':
+                                                    switch(sheeshLexeme[currChar++]) {
+                                                        case 'r':
+                                                            switch(sheeshLexeme[currChar++]) {
+                                                                case '\0':
+                                                                    return 1;
+                                                            }
+                                                    }
+                                            }
+                                    }
+                            }
+                    }
+            }
     }
     
     return 0;
