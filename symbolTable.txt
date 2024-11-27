@@ -78,11 +78,11 @@ Line 83: Lexeme: tier            Token: Noise Word
 Line 84: Lexeme: tra             Token: Noise Word
 Line 85: Lexeme: wise            Token: Noise Word
 Line 87: Lexeme: //              Token: Comment
-Line 88: Lexeme: playlist        Token: Identifier
-Line 89: Lexeme: repeat          Token: Identifier
-Line 90: Lexeme: output          Token: Identifier
-Line 91: Lexeme: extra           Token: Identifier
-Line 92: Lexeme: otherwise       Token: Identifier
+Line 88: Lexeme: playlist        Token: Keyword
+Line 89: Lexeme: repeat          Token: Keyword
+Line 90: Lexeme: output          Token: Keyword
+Line 91: Lexeme: extra           Token: Keyword
+Line 92: Lexeme: otherwise       Token: Keyword
 Line 93: Lexeme: toptier         Token: Reserved Word
 Line 95: Lexeme: //              Token: Comment
 Line 96: Lexeme: //              Token: Comment
@@ -402,3 +402,9 @@ Line 263: Lexeme: meanwhileif     Token: Identifier
 Line 265: Lexeme: alwaysif        Token: Identifier
 Line 266: Lexeme: captoptier      Token: Identifier
 Line 267: Lexeme: cont            Token: Reserved Word
+Line 268: Lexeme: playlistadgsd   Token: Identifier
+Line 269: Lexeme: playlistif      Token: Identifier
+Line 271: Lexeme: repeatif        Token: Identifier
+Line 272: Lexeme: otherw          Token: Identifier
+Line 273: Lexeme: otherwise       Token: Keyword
+Line 274: Lexeme: other           Token: Keyword
