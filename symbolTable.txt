@@ -408,3 +408,7 @@ Line 271: Lexeme: repeatif        Token: Identifier
 Line 272: Lexeme: otherw          Token: Identifier
 Line 273: Lexeme: otherwise       Token: Keyword
 Line 274: Lexeme: other           Token: Keyword
+Line 276: Lexeme: traif           Token: Identifier
+Line 277: Lexeme: tra             Token: Noise Word
+Line 278: Lexeme: pl              Token: Keyword
+Line 278: Lexeme: aylist          Token: Noise Word
