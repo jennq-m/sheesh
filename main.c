@@ -1275,7 +1275,9 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 (sheeshLine[i] == '-' && sheeshLine[i+1] == '=') ||   
                 (sheeshLine[i] == '*' && sheeshLine[i+1] == '=') ||   
                 (sheeshLine[i] == '/' && sheeshLine[i+1] == '=') ||   
-                (sheeshLine[i] == '%' && sheeshLine[i+1] == '=')) {   
+                (sheeshLine[i] == '%' && sheeshLine[i+1] == '=') ||
+                (sheeshLine[i] == '^' && sheeshLine[i+1] == '=') ||
+                (sheeshLine[i] == '|' && sheeshLine[i+1] == '=')) {   
                 
                 if (tempMarker > 0) {
                     temp[tempMarker] = '\0';

@@ -412,3 +412,6 @@ Line 276: Lexeme: traif           Token: Identifier
 Line 277: Lexeme: tra             Token: Noise Word
 Line 278: Lexeme: pl              Token: Keyword
 Line 278: Lexeme: aylist          Token: Noise Word
+Line 280: Lexeme: =               Token: Assignment Operator
+Line 281: Lexeme: ^=              Token: Assignment Operator
+Line 282: Lexeme: |=              Token: Assignment Operator
