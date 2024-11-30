@@ -415,3 +415,38 @@ Line 278: Lexeme: aylist          Token: Noise Word
 Line 280: Lexeme: =               Token: Assignment Operator
 Line 281: Lexeme: ^=              Token: Assignment Operator
 Line 282: Lexeme: |=              Token: Assignment Operator
+Line 284: Lexeme: number          Token: Identifier
+Line 284: Lexeme: =               Token: Assignment Operator
+Line 284: Lexeme: 5               Token: Constant (Num (int in C))
+Line 285: Lexeme: number          Token: Identifier
+Line 285: Lexeme: =               Token: Assignment Operator
+Line 285: Lexeme: 8               Token: Constant (Num (int in C))
+Line 287: Lexeme: power           Token: Identifier
+Line 287: Lexeme: ^=              Token: Assignment Operator
+Line 287: Lexeme: 2               Token: Constant (Num (int in C))
+Line 288: Lexeme: power           Token: Identifier
+Line 288: Lexeme: ^=              Token: Assignment Operator
+Line 288: Lexeme: 2               Token: Constant (Num (int in C))
+Line 290: Lexeme: intDiv          Token: Identifier
+Line 290: Lexeme: |=              Token: Assignment Operator
+Line 290: Lexeme: 2               Token: Constant (Num (int in C))
+Line 291: Lexeme: intDiv          Token: Identifier
+Line 291: Lexeme: |=              Token: Assignment Operator
+Line 291: Lexeme: 5               Token: Constant (Num (int in C))
+Line 293: Lexeme: cap             Token: Constant (Legit (bool in C)), Reserved Word
+Line 293: Lexeme: &&              Token: Logical Operator (Boolean)
+Line 293: Lexeme: nocap           Token: Constant (Legit (bool in C)), Reserved Word
+Line 294: Lexeme: cap             Token: Constant (Legit (bool in C)), Reserved Word
+Line 294: Lexeme: &&              Token: Logical Operator (Boolean)
+Line 294: Lexeme: nocap           Token: Constant (Legit (bool in C)), Reserved Word
+Line 296: Lexeme: cap             Token: Constant (Legit (bool in C)), Reserved Word
+Line 296: Lexeme: ||              Token: Logical Operator (Boolean)
+Line 296: Lexeme: nocap           Token: Constant (Legit (bool in C)), Reserved Word
+Line 297: Lexeme: cap             Token: Constant (Legit (bool in C)), Reserved Word
+Line 297: Lexeme: ||              Token: Logical Operator (Boolean)
+Line 297: Lexeme: nocap           Token: Constant (Legit (bool in C)), Reserved Word
+Line 299: Lexeme: !               Token: Logical Operator (Boolean)
+Line 299: Lexeme: bool            Token: Identifier
+Line 301: Lexeme: fl              Token: Identifier
+Line 301: Lexeme: =               Token: Assignment Operator
+Line 301: Lexeme: 5.10            Token: Constant (Drift (float in C))

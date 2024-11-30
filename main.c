@@ -913,16 +913,6 @@ int checkIdentifier(const char *sheeshLexeme) {
 }
 
 int checkAssignment(const char *sheeshLexeme) {
-    // char *assignment_operators[6] = {"=", "+=", "-=", "*=", "/=", "%="};
-
-    // for (int i = 0; i < sizeof(assignment_operators) / sizeof(assignment_operators[0]); i++) {
-    //     if (strcmp(sheeshLexeme, assignment_operators[i]) == 0) {
-    //         return 1;
-    //     }
-    // }
-
-    // return 0;
-
     int currChar = 0;
 
     switch(sheeshLexeme[currChar++]) {
@@ -953,12 +943,34 @@ int checkAssignment(const char *sheeshLexeme) {
 }
 
 int checkLogical(const char *sheeshLexeme) {
-    char *logical_operators[3] = {"&&", "||", "!"};
+    int currChar = 0;
 
-    for (int i = 0; i < sizeof(logical_operators) / sizeof(logical_operators[0]); i++) {
-        if (strcmp(sheeshLexeme, logical_operators[i]) == 0) {
-            return 1;
-        }
+    switch(sheeshLexeme[currChar++]) {
+        case '!':
+            switch(sheeshLexeme[currChar++]) {
+                case '\0':
+                    return 1;
+            }
+            currChar = 0;
+
+        case '&':
+            switch(sheeshLexeme[currChar++]) {
+                case '&':
+                    switch(sheeshLexeme[currChar++]) {
+                        case '\0':
+                            return 1;
+                    }
+            }
+            currChar = 0;
+
+        case '|':
+            switch(sheeshLexeme[currChar++]) {
+                case '|':
+                    switch(sheeshLexeme[currChar++]) {
+                        case '\0':
+                            return 1;
+                    }
+            }
     }
 
     return 0;

@@ -280,3 +280,22 @@ pl aylist
 =
 ^=
 |=
+
+number=5
+number = 8
+
+power^=2
+power ^= 2
+
+intDiv|=2
+intDiv |= 5
+
+cap&&nocap
+cap && nocap
+
+cap||nocap
+cap || nocap
+
+!bool
+
+fl=5.10
