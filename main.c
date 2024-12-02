@@ -977,12 +977,20 @@ int checkLogical(const char *sheeshLexeme) {
 }
 
 int checkArithmetic(const char *sheeshLexeme) {
-    char *arithmetic_operators[7] = {"+", "-", "*", "/", "%", "^", "|"};
+    int currChar = 0;
 
-    for (int i = 0; i < sizeof(arithmetic_operators) / sizeof(arithmetic_operators[0]); i++) {
-        if (strcmp(sheeshLexeme, arithmetic_operators[i]) == 0) {
-            return 1;
-        }
+    switch(sheeshLexeme[currChar++]) {
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+        case '%':
+        case '^':
+        case '|':
+            switch(sheeshLexeme[currChar++]) {
+                case '\0':
+                    return 1;
+            }
     }
 
     return 0;

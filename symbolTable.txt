@@ -450,3 +450,21 @@ Line 299: Lexeme: bool            Token: Identifier
 Line 301: Lexeme: fl              Token: Identifier
 Line 301: Lexeme: =               Token: Assignment Operator
 Line 301: Lexeme: 5.10            Token: Constant (Drift (float in C))
+Line 303: Lexeme: 3               Token: Constant (Num (int in C))
+Line 303: Lexeme: +               Token: Arithmetic Operator
+Line 303: Lexeme: 8               Token: Constant (Num (int in C))
+Line 304: Lexeme: 3               Token: Constant (Num (int in C))
+Line 304: Lexeme: +               Token: Arithmetic Operator
+Line 304: Lexeme: 8               Token: Constant (Num (int in C))
+Line 306: Lexeme: 9               Token: Constant (Num (int in C))
+Line 306: Lexeme: |               Token: Arithmetic Operator
+Line 306: Lexeme: 11              Token: Constant (Num (int in C))
+Line 307: Lexeme: 9               Token: Constant (Num (int in C))
+Line 307: Lexeme: |               Token: Arithmetic Operator
+Line 307: Lexeme: 11              Token: Constant (Num (int in C))
+Line 309: Lexeme: 10.5            Token: Constant (Drift (float in C))
+Line 309: Lexeme: *               Token: Arithmetic Operator
+Line 309: Lexeme: 2               Token: Constant (Num (int in C))
+Line 310: Lexeme: 10.5            Token: Constant (Drift (float in C))
+Line 310: Lexeme: *               Token: Arithmetic Operator
+Line 310: Lexeme: 2               Token: Constant (Num (int in C))
