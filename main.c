@@ -997,12 +997,27 @@ int checkArithmetic(const char *sheeshLexeme) {
 }
 
 int checkUnary(const char *sheeshLexeme) {
-    char *unary_operators[2] = {"++", "--"};
+    int currChar = 0;
 
-    for (int i = 0; i < sizeof(unary_operators) / sizeof(unary_operators[0]); i++) {
-        if (strcmp(sheeshLexeme, unary_operators[i]) == 0) {
-            return 1;
-        }
+    switch(sheeshLexeme[currChar++]) {
+        case '+':
+            switch(sheeshLexeme[currChar++]) {
+                case '+':
+                    switch(sheeshLexeme[currChar++]) {
+                        case '\0':
+                            return 1;
+                    }
+            }
+            currChar = 0;
+
+        case '-':
+            switch(sheeshLexeme[currChar++]) {
+                case '-':
+                    switch(sheeshLexeme[currChar++]) {
+                        case '\0':
+                            return 1;
+                    }
+            }
     }
 
     return 0;
