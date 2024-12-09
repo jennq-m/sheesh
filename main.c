@@ -1024,12 +1024,32 @@ int checkUnary(const char *sheeshLexeme) {
 }
 
 int checkRelational(const char *sheeshLexeme) {
-    char *relational_operators[6] = {"==", "!=", ">", "<", ">=", "<="};
+    int currChar = 0;
 
-    for (int i = 0; i < sizeof(relational_operators) / sizeof(relational_operators[0]); i++) {
-        if (strcmp(sheeshLexeme, relational_operators[i]) == 0) {
-            return 1;
-        }
+    switch(sheeshLexeme[currChar++]) {
+        case '=':
+        case '!':
+            switch(sheeshLexeme[currChar++]) {
+                case '=':
+                    switch(sheeshLexeme[currChar++]) {
+                        case '\0':
+                            return 1;
+                    }
+            }
+            currChar = 0;
+
+        case '>':
+        case '<':
+            switch(sheeshLexeme[currChar++]) {
+                case '\0':
+                    return 1;
+                
+                case '=':
+                    switch(sheeshLexeme[currChar++]) {
+                        case '\0':
+                            return 1;
+                    }
+            }
     }
     
     return 0;
