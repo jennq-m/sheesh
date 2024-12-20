@@ -1165,18 +1165,18 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
         }
 
         if (checkFloat) {
-            return newToken(sheeshLexeme, FLOAT_CONSTANT, sheeshLine);
+            return newToken(sheeshLexeme, CONSTANT_DRIFT, sheeshLine);
         } else {
-            return newToken(sheeshLexeme, INT_CONSTANT, sheeshLine);
+            return newToken(sheeshLexeme, CONSTANT_NUM, sheeshLine);
         }
     } else if (state == 3) {
         switch(ch) {
             case '\'':
-                return newToken(sheeshLexeme, STRING_CONSTANT, sheeshLine);
+                return newToken(sheeshLexeme, CONSTANT_TEXT, sheeshLine);
             case '"':
-                return newToken(sheeshLexeme, CHAR_CONSTANT, sheeshLine);    
+                return newToken(sheeshLexeme, CONSTANT_VIBE, sheeshLine);    
         }
-        return newToken(sheeshLexeme, STRING_CONSTANT, sheeshLine);
+        return newToken(sheeshLexeme, CONSTANT_TEXT, sheeshLine);
     } else if (state == 4) {
         if (checkAssignment(sheeshLexeme)) {
             return newToken(sheeshLexeme, ASSIGNMENT_OPE, sheeshLine);
@@ -1226,7 +1226,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             temp[tempMarker++] = sheeshLine[i];
             if (sheeshLine[i] == '"') {
                 temp[tempMarker] = '\0';
-                Token token = newToken(temp, STRING_CONSTANT, sheeshColumn);
+                Token token = newToken(temp, CONSTANT_TEXT, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
                 free(token.value);
                 tempMarker = 0;
@@ -1241,7 +1241,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 temp[tempMarker] = '\0';
         
                 if (tempMarker == 3) {
-                    Token token = newToken(temp, CHAR_CONSTANT, sheeshColumn);
+                    Token token = newToken(temp, CONSTANT_VIBE, sheeshColumn);
                     fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
                     free(token.value);
                     tempMarker = 0;
@@ -1249,7 +1249,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 } else {
                     temp[tempMarker] = '\0';
                     if (tempMarker <= 2) {
-                        Token token = newToken(temp, QUOTATION, sheeshColumn);
+                        Token token = newToken(temp, DELIMITER_QUOTATION, sheeshColumn);
                         fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
                         free(token.value);
                     }
@@ -1370,28 +1370,28 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         TokenType delimiter;
         switch (sheeshLine[i]) {
             case ',':
-                delimiter = COMMA;
+                delimiter = DELIMITER_COMMA;
                 break;
             case ';':
-                delimiter = SEMICOLON;
+                delimiter = DELIMITER_SEMICOLON;
                 break;
             case '(':
-                delimiter = O_PARENTHESIS;
+                delimiter = DELIMITER_O_PARENTHESIS;
                 break;
             case ')':
-                delimiter = C_PARENTHESIS;
+                delimiter = DELIMITER_C_PARENTHESIS;
                 break;
             case '[':
-                delimiter = O_BRACKET;
+                delimiter = DELIMITER_O_BRACKET;
                 break;
             case ']':
-                delimiter = C_BRACKET;
+                delimiter = DELIMITER_C_BRACKET;
                 break;
             case '{':
-                delimiter = O_BRACE;
+                delimiter = DELIMITER_O_BRACE;
                 break;
             case '}':
-                delimiter = C_BRACE;
+                delimiter = DELIMITER_C_BRACE;
                 break;
             default:
                 delimiter = INVALID;
@@ -1500,8 +1500,8 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
     if (tempMarker > 0) {
         temp[tempMarker] = '\0';
         if (stringLiteral || characterConstant) {
-            Token token = newToken(temp, QUOTATION, sheeshColumn);
-            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: Delimiter (Quotation)\n", token.sheeshLine, token.value);
+            Token token = newToken(temp, DELIMITER_QUOTATION, sheeshColumn);
+            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: DELIMITER_QUOTATION\n", token.sheeshLine, token.value);
             free(token.value);
         } else {
             Token token = sheeshLexer(temp, sheeshColumn);

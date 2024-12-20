@@ -16,21 +16,21 @@ typedef enum {
     LOGICAL_OPE, 
     UNARY_OPE, 
     RELATIONAL_OPE, 
-    COMMA, 
-    SEMICOLON, 
-    QUOTATION, 
-    O_PARENTHESIS, 
-    C_PARENTHESIS, 
-    O_BRACE, 
-    C_BRACE, 
-    O_BRACKET, 
-    C_BRACKET, 
+    DELIMITER_COMMA, 
+    DELIMITER_SEMICOLON, 
+    DELIMITER_QUOTATION, 
+    DELIMITER_O_PARENTHESIS, 
+    DELIMITER_C_PARENTHESIS, 
+    DELIMITER_O_BRACE, 
+    DELIMITER_C_BRACE, 
+    DELIMITER_O_BRACKET, 
+    DELIMITER_C_BRACKET, 
     INVALID, 
-    INT_CONSTANT, 
-    FLOAT_CONSTANT, 
-    STRING_CONSTANT, 
+    CONSTANT_NUM, 
+    CONSTANT_DRIFT, 
+    CONSTANT_TEXT, 
     CONSTANDRESERVED, 
-    CHAR_CONSTANT
+    CONSTANT_VIBE
 } TokenType;
 
 //Holding attributes of TOKEN
@@ -59,57 +59,57 @@ int checkRelational(const char *sheeshLexeme);
 char *typeToString(TokenType type) {
     switch (type) {
         case IDENTIFIER: 
-            return "Identifier";
+            return "IDENTIFIER";
         case KEYWORD: 
-            return "Keyword";
+            return "KEYWORD";
         case RESERVED_WORD: 
-            return "Reserved Word";
+            return "RESERVED_WORD";
         case CONSTANT: 
-            return "Constant";
+            return "CONSTANT";
         case CONSTANDRESERVED: 
-            return "Constant (Legit (bool in C)), Reserved Word";
+            return "CONSTANDRESERVED";
         case NOISE_WORD: 
-            return "Noise Word";
+            return "NOISE_WORD";
         case COMMENT: 
-            return "Comment";
+            return "COMMENT";
         case ARITHMETIC_OPE: 
-            return "Arithmetic Operator";
+            return "ARITHMETIC_OPE";
         case ASSIGNMENT_OPE: 
-            return "Assignment Operator";
+            return "ASSIGNMENT_OPE";
         case LOGICAL_OPE: 
-            return "Logical Operator (Boolean)";
+            return "LOGICAL_OPE";
         case UNARY_OPE: 
-            return "Unary Operator";
+            return "UNARY_OPE";
         case RELATIONAL_OPE: 
-            return "Relational Operator (Boolean)";
-        case COMMA:
-            return "Delimiter (Comma)";
-        case SEMICOLON:
-            return "Delimiter (Semicolon)";
-        case O_PARENTHESIS:
-            return "Delimiter (Open (Left) Parenthesis)";
-        case C_PARENTHESIS:
-            return "Delimiter (Closing (Right) Parenthesis)";
-        case O_BRACKET:
-            return "Bracket (Open (Left) Bracket)";
-        case C_BRACKET:
-            return "Bracket (Closing (Right) Bracket)";
-        case O_BRACE:
-            return "Bracket (Open (Left) Brace)";
-        case C_BRACE:
-            return "Bracket (Closing (Right) Brace)";
-        case INT_CONSTANT: 
-            return "Constant (Num (int in C))";
-        case FLOAT_CONSTANT: 
-            return "Constant (Drift (float in C))";
-        case STRING_CONSTANT: 
-            return "Constant (Text (string in C))";
-        case CHAR_CONSTANT:
-            return "Constant (Vibe (char in C))";
+            return "RELATIONAL_OPE";
+        case DELIMITER_COMMA:
+            return "DELIMITER_COMMA";
+        case DELIMITER_SEMICOLON:
+            return "DELIMITER_SEMICOLON";
+        case DELIMITER_O_PARENTHESIS:
+            return "DELIMITER_O_PARENTHESIS";
+        case DELIMITER_C_PARENTHESIS:
+            return "DELIMITER_C_PARENTHESIS";
+        case DELIMITER_O_BRACKET:
+            return "DELIMITER_O_BRACKET";
+        case DELIMITER_C_BRACKET:
+            return "DELIMITER_C_BRACKET";
+        case DELIMITER_O_BRACE:
+            return "DELIMITER_O_BRACE";
+        case DELIMITER_C_BRACE:
+            return "DELIMITER_C_BRACE";
+        case CONSTANT_NUM: 
+            return "CONSTANT_NUM";
+        case CONSTANT_DRIFT: 
+            return "CONSTANT_DRIFT";
+        case CONSTANT_TEXT: 
+            return "CONSTANT_TEXT";
+        case CONSTANT_VIBE:
+            return "CONSTANT_VIBE";
         case INVALID: 
-            return "Invalid";
+            return "INVALID";
         default: 
-            return "Invalid";
+            return "INVALID";
     }
 }
 
