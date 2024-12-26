@@ -868,36 +868,58 @@ int checkIdentifier(const char *sheeshLexeme) {
     while (current != '\0') {
         switch(state) {
             case 1:
-                if (isalpha(current) || current == '_' || current == '#') {
-                    state = 3;
-                } else {
-                    return 0;
+                switch (current) {
+                    case 'A' ... 'Z':
+                    case 'a' ... 'z':
+                    case '_':
+                    case '#':
+                        state = 3;
+                        break;
+                        
+                    default:
+                        return 0;
                 }
 
                 break;
 
             case 3:
-                if (isalnum(current)) {
-                    state = 3;
-                } else if (current == '#' || current == '_') {
-                    state = 4;
-                } else {
-                    return 0;
+                switch(current) {
+                    case 'A' ... 'Z':
+                    case 'a' ... 'z':
+                    case '0' ... '9':
+                        state = 3;
+                        break;
+
+                    case '#':
+                    case '_':
+                        state = 4;
+                        break;
+
+                    default:
+                        return 0;
                 }
 
                 break;
 
             case 4:
-                if (isalnum(current)) {
-                    state = 3;
-                } else if (current == '#' || current == '_') {
-                    state = 4;
-                } else {
-                    return 0;
+                switch(current) {
+                    case 'A' ... 'Z':
+                    case 'a' ... 'z':
+                    case '0' ... '9':
+                        state = 3;
+                        break;
+
+                    case '#':
+                    case '_':
+                        state = 4;
+                        break;
+
+                    default:
+                        return 0;
                 }
 
                 break;
-
+                
             default:
                 return 0;
         }
