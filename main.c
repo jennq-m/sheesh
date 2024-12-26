@@ -181,7 +181,7 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
 
         if (checkArithmetic(sheeshLexeme)) {
             return newToken(sheeshLexeme, ARITHMETIC_OPE, sheeshLine);
-        }
+        } 
 
         if (checkUnary(sheeshLexeme)) {
             return newToken(sheeshLexeme, UNARY_OPE, sheeshLine);
@@ -308,7 +308,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
 
 
         if (strchr("+-*/=!<>&|^%", sheeshLine[i])) {
-
             char lookAhead[3] = {sheeshLine[i], sheeshLine[i+1], '\0'};
             
             if ((sheeshLine[i] == '=' && sheeshLine[i+1] == '=') ||   
@@ -406,30 +405,30 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             continue;
         }
         
-        if ((sheeshLine[i] == '+' && sheeshLine[i + 1] == '+') || 
-            (sheeshLine[i] == '-' && sheeshLine[i + 1] == '-')) {
-            if (tempMarker > 0) {
-                temp[tempMarker] = '\0';
-                Token token = sheeshLexer(temp, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
-                tempMarker = 0;
-            }
+        // if ((sheeshLine[i] == '+' && sheeshLine[i + 1] == '+') || 
+        //     (sheeshLine[i] == '-' && sheeshLine[i + 1] == '-')) {
+        //     if (tempMarker > 0) {
+        //         temp[tempMarker] = '\0';
+        //         Token token = sheeshLexer(temp, sheeshColumn);
+        //         fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+        //         free(token.value);
+        //         tempMarker = 0;
+        //     }
 
-            char *operator = "";
-            if (sheeshLine[i] == '+') {
-                operator = "++";
-            } else if (sheeshLine[i] == '-') {
-                operator = "--";
-            }
+        //     char *operator = "";
+        //     if (sheeshLine[i] == '+') {
+        //         operator = "++";
+        //     } else if (sheeshLine[i] == '-') {
+        //         operator = "--";
+        //     }
 
-            Token token = newToken(operator, UNARY_OPE, sheeshColumn);
+        //     Token token = newToken(operator, UNARY_OPE, sheeshColumn);
 
-            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            free(token.value);
-            i++;
-            continue;
-        }
+        //     fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+        //     free(token.value);
+        //     i++;
+        //     continue;
+        // }
 
         if (isalpha(sheeshLine[i]) || (ispunct(sheeshLine[i]) && sheeshLine[i] != '.')) {
             temp[tempMarker++] = sheeshLine[i];

@@ -491,3 +491,5 @@ Line 321: Lexeme: ++              Token: UNARY_OPE
 Line 321: Lexeme: +               Token: ARITHMETIC_OPE
 Line 322: Lexeme: ++              Token: UNARY_OPE
 Line 322: Lexeme: +               Token: ARITHMETIC_OPE
+Line 323: Lexeme: /*              Token: COMMENT
+Line 326: Lexeme: */              Token: COMMENT 
