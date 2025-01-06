@@ -405,31 +405,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             continue;
         }
         
-        // if ((sheeshLine[i] == '+' && sheeshLine[i + 1] == '+') || 
-        //     (sheeshLine[i] == '-' && sheeshLine[i + 1] == '-')) {
-        //     if (tempMarker > 0) {
-        //         temp[tempMarker] = '\0';
-        //         Token token = sheeshLexer(temp, sheeshColumn);
-        //         fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-        //         free(token.value);
-        //         tempMarker = 0;
-        //     }
-
-        //     char *operator = "";
-        //     if (sheeshLine[i] == '+') {
-        //         operator = "++";
-        //     } else if (sheeshLine[i] == '-') {
-        //         operator = "--";
-        //     }
-
-        //     Token token = newToken(operator, UNARY_OPE, sheeshColumn);
-
-        //     fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-        //     free(token.value);
-        //     i++;
-        //     continue;
-        // }
-
         if (isalpha(sheeshLine[i]) || (ispunct(sheeshLine[i]) && sheeshLine[i] != '.')) {
             temp[tempMarker++] = sheeshLine[i];
             while ((isalnum(sheeshLine[i + 1]) || ispunct(sheeshLine[i + 1])) && !(strchr("+-*/%=!<>&|^()\"{}[];,", sheeshLine[i + 1]))) {

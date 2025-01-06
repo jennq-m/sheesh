@@ -413,7 +413,7 @@ Line 277: Lexeme: tra             Token: NOISE_WORD
 Line 278: Lexeme: pl              Token: KEYWORD
 Line 278: Lexeme: aylist          Token: NOISE_WORD
 Line 280: Lexeme: =               Token: ASSIGNMENT_OPE
-Line 281: Lexeme: ^=              Token: ASSIGNMENT_OPE
+Line 281: Lexeme: ^=              Token: INVALID
 Line 282: Lexeme: |=              Token: ASSIGNMENT_OPE
 Line 284: Lexeme: number          Token: IDENTIFIER
 Line 284: Lexeme: =               Token: ASSIGNMENT_OPE
@@ -422,10 +422,10 @@ Line 285: Lexeme: number          Token: IDENTIFIER
 Line 285: Lexeme: =               Token: ASSIGNMENT_OPE
 Line 285: Lexeme: 8               Token: CONSTANT_NUM
 Line 287: Lexeme: power           Token: IDENTIFIER
-Line 287: Lexeme: ^=              Token: ASSIGNMENT_OPE
+Line 287: Lexeme: ^=              Token: INVALID
 Line 287: Lexeme: 2               Token: CONSTANT_NUM
 Line 288: Lexeme: power           Token: IDENTIFIER
-Line 288: Lexeme: ^=              Token: ASSIGNMENT_OPE
+Line 288: Lexeme: ^=              Token: INVALID
 Line 288: Lexeme: 2               Token: CONSTANT_NUM
 Line 290: Lexeme: intDiv          Token: IDENTIFIER
 Line 290: Lexeme: |=              Token: ASSIGNMENT_OPE
@@ -493,3 +493,12 @@ Line 322: Lexeme: ++              Token: UNARY_OPE
 Line 322: Lexeme: +               Token: ARITHMETIC_OPE
 Line 323: Lexeme: /*              Token: COMMENT
 Line 326: Lexeme: */              Token: COMMENT 
+Line 327: Lexeme: var             Token: IDENTIFIER
+Line 327: Lexeme: ++              Token: UNARY_OPE
+Line 327: Lexeme: +               Token: ARITHMETIC_OPE
+Line 328: Lexeme: var             Token: IDENTIFIER
+Line 328: Lexeme: ^=              Token: INVALID
+Line 328: Lexeme: 10              Token: CONSTANT_NUM
+Line 329: Lexeme: var             Token: IDENTIFIER
+Line 329: Lexeme: ^               Token: ARITHMETIC_OPE
+Line 329: Lexeme: 3               Token: CONSTANT_NUM

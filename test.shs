@@ -324,3 +324,6 @@ val+++
 haha
 ><
 */
+var+++
+var ^= 10
+var^3
