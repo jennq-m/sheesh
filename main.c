@@ -554,12 +554,12 @@ ASTNode* parseFactor() {
         nextToken();
         node = parseExpression();
         if (currentToken.type != DELIMITER_C_PARENTHESIS) {
-            printf("Syntax error: expected ')'\n");
+            printf("Syntax error (Line %d): Expected ')'\n", currentToken.sheeshLine);
             exit(1);
         }
         nextToken();
     } else {
-        printf("Syntax error: unexpected token %s\n", currentToken.value);
+            printf("Syntax error (Line %d): Unexpected Token\n", currentToken.sheeshLine);
         exit(1);
     }
 
@@ -591,7 +591,7 @@ void parse() {
         if (currentToken.type == DELIMITER_SEMICOLON) {
             nextToken();
         } else if (currentToken.value != NULL) {
-            printf("Syntax error: expected ';' or end of input, got '%s'\n", currentToken.value);
+            printf("Syntax error (Line %d): expected ';' or end of input, got '%s'\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
     }
