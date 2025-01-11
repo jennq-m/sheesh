@@ -40,6 +40,8 @@ typedef struct {
     int sheeshLine;    
 } Token;
 
+Token allTokens[1000];
+int tokenCount = 0;
 
 Token newToken(const char *value, TokenType type, int sheeshLine);
 Token sheeshLexer(const char *sheeshLexeme, int sheeshLine);
@@ -55,6 +57,8 @@ int checkLogical(const char *sheeshLexeme);
 int checkArithmetic(const char *sheeshLexeme);
 int checkUnary(const char *sheeshLexeme);
 int checkRelational(const char *sheeshLexeme);
+void nextToken();
+void parse();
 
 char *typeToString(TokenType type) {
     switch (type) {

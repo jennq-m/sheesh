@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    FILE *outputSheesh = fopen("symbolTable.txt", "w");
+    FILE *outputSheesh = fopen("test.txt", "w");
     if (!outputSheesh) {
         perror("Error opening output file");
         fclose(file);
@@ -41,6 +41,13 @@ int main(int argc, char *argv[]) {
         sheeshColumn++;
     }
 
+    printf("\nTotal Tokens Created: %d\n", tokenCount);
+    for (int i = 0; i < tokenCount; i++) {
+        printf("Token %d: Lexeme: %-15s Token Type: %s\n", i + 1, allTokens[i].value, typeToString(allTokens[i].type));
+    }
+
+    parse();
+
     fclose(file);
     fclose(outputSheesh);
 
@@ -54,6 +61,8 @@ Token newToken(const char *value, TokenType type, int sheeshColumn) {
     token.value = strdup(value);
     token.type = type;
     token.sheeshLine = sheeshColumn;
+
+    allTokens[tokenCount++] = token;
 
     return token;
 }
@@ -209,7 +218,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 inMultiLineComment = 0;
                 Token token = newToken("*/", COMMENT, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s \n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
                 i++;
             }
             continue;
@@ -221,7 +229,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 temp[tempMarker] = '\0';
                 Token token = newToken(temp, CONSTANT_TEXT, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
                 tempMarker = 0;
                 stringLiteral = 0;
             }
@@ -236,7 +243,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 if (tempMarker == 3) {
                     Token token = newToken(temp, CONSTANT_VIBE, sheeshColumn);
                     fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                    free(token.value);
                     tempMarker = 0;
                     characterConstant = 0;
                 } else {
@@ -244,12 +250,10 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                     if (tempMarker <= 2) {
                         Token token = newToken(temp, DELIMITER_QUOTATION, sheeshColumn);
                         fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                        free(token.value);
                     }
                     else {
                         Token token = newToken(temp, INVALID, sheeshColumn);
                         fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                        free(token.value);
                     }
 
                     tempMarker = 0;
@@ -267,7 +271,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 temp[tempMarker] = '\0';
                 Token token = sheeshLexer(temp, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
                 tempMarker = 0;
             }
 
@@ -281,7 +284,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 temp[tempMarker] = '\0';
                 Token token = sheeshLexer(temp, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
+                
                 tempMarker = 0;
             }
 
@@ -293,14 +296,14 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         if (sheeshLine[i] == '/' && sheeshLine[i + 1] == '/') {
             Token token = newToken("//", COMMENT, sheeshColumn);
             fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            free(token.value);
+            
             break;
         }
 
         if (sheeshLine[i] == '/' && sheeshLine[i + 1] == '*') {
             Token token = newToken("/*", COMMENT, sheeshColumn);
             fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            free(token.value);
+            
             inMultiLineComment = 1;
             i++;
             continue;
@@ -330,13 +333,13 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                     temp[tempMarker] = '\0';
                     Token token = sheeshLexer(temp, sheeshColumn);
                     fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                    free(token.value);
+                    
                     tempMarker = 0;
                 }
 
                 Token token = sheeshLexer(lookAhead, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
+                
                 
                 i++;  
                 continue;
@@ -347,14 +350,14 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 temp[tempMarker] = '\0';
                 Token token = sheeshLexer(temp, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
+                
                 tempMarker = 0;
             }
 
             char op[2] = {sheeshLine[i], '\0'};
             Token token = sheeshLexer(op, sheeshColumn);
             fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            free(token.value);
+            
             continue;
         }
 
@@ -394,14 +397,14 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 temp[tempMarker] = '\0';
                 Token token = sheeshLexer(temp, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
+                
                 tempMarker = 0;
             }
 
             char delim[2] = {sheeshLine[i], '\0'};
             Token token = newToken(delim, delimiter, sheeshColumn);
             fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            free(token.value);
+            
             continue;
         }
         
@@ -415,29 +418,29 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             if (checkKeyword(temp)) {
                 Token token = newToken(temp, KEYWORD, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value); 
+                 
             } else if (checkReservedWord(temp)) {
                 if (!(strcmp(temp, "cap")) || !(strcmp(temp, "nocap"))) {
                     Token token = newToken(temp, CONSTANDRESERVED, sheeshColumn);
                     fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                    free(token.value);
+                    
                 } else {
                     Token token = newToken(temp, RESERVED_WORD, sheeshColumn);
                     fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                    free(token.value);
+                    
                 }
             } else if (checkNoiseWord(temp)) {
                 Token token = newToken(temp, NOISE_WORD, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value);
+                
             } else if (checkIdentifier(temp)) {
                 Token token = newToken(temp, IDENTIFIER, sheeshColumn);  
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value); 
+                 
             } else {
                 Token token = newToken(temp, INVALID, sheeshColumn);  
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                free(token.value); 
+                 
             }
             
             tempMarker = 0;  
@@ -456,7 +459,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 } else {
                     fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
                 }
-                free(token.value);  
+                  
                 tempMarker = 0;  
             }
         } else {
@@ -469,11 +472,127 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         if (stringLiteral || characterConstant) {
             Token token = newToken(temp, DELIMITER_QUOTATION, sheeshColumn);
             fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: DELIMITER_QUOTATION\n", token.sheeshLine, token.value);
-            free(token.value);
+            
         } else {
             Token token = sheeshLexer(temp, sheeshColumn);
             fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            free(token.value);
+            
+        }
+    }
+}
+
+typedef struct ASTNode {
+    char *value;
+    struct ASTNode *left, *right;
+} ASTNode;
+
+ASTNode* parseExpression();
+ASTNode* parseTerm();
+ASTNode* parseFactor();
+Token currentToken;
+int currentIndex = 0;
+
+void nextToken() {
+    if (currentIndex < tokenCount) {
+        currentToken = allTokens[currentIndex++];
+    } else {
+        currentToken.value = NULL;
+        currentToken.type = INVALID;
+    }
+}
+
+ASTNode* parseExpression() {
+    ASTNode *left = parseTerm();
+
+    while (currentToken.type == ARITHMETIC_OPE && 
+           (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
+        char *op = strdup(currentToken.value);
+        nextToken();
+        ASTNode *right = parseTerm();
+        ASTNode *node = malloc(sizeof(ASTNode));
+        node->value = op;
+        node->left = left;
+        node->right = right;
+        left = node;
+    }
+
+    return left;
+}
+
+ASTNode* parseTerm() {
+    ASTNode *left = parseFactor();
+
+    while (currentToken.type == ARITHMETIC_OPE && 
+           (strcmp(currentToken.value, "*") == 0 || strcmp(currentToken.value, "/") == 0)) {
+        char *op = strdup(currentToken.value);
+        nextToken();
+        ASTNode *right = parseFactor();
+        ASTNode *node = malloc(sizeof(ASTNode));
+        node->value = op;
+        node->left = left;
+        node->right = right;
+        left = node;
+    }
+
+    return left;
+}
+
+ASTNode* parseFactor() {
+    ASTNode *node = NULL;
+
+    if (currentToken.type == CONSTANT_NUM) {
+        node = malloc(sizeof(ASTNode));
+        node->value = strdup(currentToken.value);
+        node->left = node->right = NULL;
+        nextToken();
+    } else if (currentToken.type == IDENTIFIER) {
+        node = malloc(sizeof(ASTNode));
+        node->value = strdup(currentToken.value);
+        node->left = node->right = NULL;
+        nextToken();
+    } else if (currentToken.type == DELIMITER_O_PARENTHESIS) {
+        nextToken();
+        node = parseExpression();
+        if (currentToken.type != DELIMITER_C_PARENTHESIS) {
+            printf("Syntax error: expected ')'\n");
+            exit(1);
+        }
+        nextToken();
+    } else {
+        printf("Syntax error: unexpected token %s\n", currentToken.value);
+        exit(1);
+    }
+
+    return node;
+}
+
+void inOrderTraversal(ASTNode *node) {
+    if (node == NULL) {
+        return;
+    }
+
+    inOrderTraversal(node->left);
+
+    printf("%s ", node->value);
+
+    inOrderTraversal(node->right);
+}
+
+void parse() {
+    nextToken();
+
+    while (currentToken.value != NULL) {
+        ASTNode *ast = parseExpression();  
+
+        printf("Parsed expression: ");
+        inOrderTraversal(ast);
+        printf("\n");
+
+        if (currentToken.type == DELIMITER_SEMICOLON) {
+            nextToken();
+        } else if (currentToken.value != NULL) {
+            printf("Syntax error: expected ';' or end of input, got '%s'\n", currentToken.value);
+            exit(1);
         }
     }
 }
