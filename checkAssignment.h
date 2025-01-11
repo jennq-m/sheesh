@@ -17,7 +17,6 @@ int checkAssignment(const char *sheeshLexeme) {
         case '*':
         case '/':
         case '%':
-        case '^':
         case '|':
             switch(sheeshLexeme[currChar++]) {
                 case '=':
