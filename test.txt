@@ -1,0 +1,17 @@
+Lexical Analysis of syntax.shs:
+
+Line 1: Lexeme: a               Token: IDENTIFIER
+Line 1: Lexeme: +               Token: ARITHMETIC_OPE
+Line 1: Lexeme: b               Token: IDENTIFIER
+Line 1: Lexeme: ;               Token: DELIMITER_SEMICOLON
+Line 2: Lexeme: 5               Token: CONSTANT_NUM
+Line 2: Lexeme: +               Token: ARITHMETIC_OPE
+Line 2: Lexeme: 1               Token: CONSTANT_NUM
+Line 2: Lexeme: *               Token: ARITHMETIC_OPE
+Line 2: Lexeme: 2               Token: CONSTANT_NUM
+Line 2: Lexeme: ;               Token: DELIMITER_SEMICOLON
+Line 3: Lexeme: int             Token: IDENTIFIER
+Line 3: Lexeme: hello           Token: IDENTIFIER
+Line 3: Lexeme: =               Token: ASSIGNMENT_OPE
+Line 3: Lexeme: 25              Token: CONSTANT_NUM
+Line 3: Lexeme: ;               Token: DELIMITER_SEMICOLON
