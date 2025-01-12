@@ -16,15 +16,15 @@ typedef enum {
     LOGICAL_OPE, 
     UNARY_OPE, 
     RELATIONAL_OPE, 
-    DELIMITER_COMMA, 
-    DELIMITER_SEMICOLON, 
-    DELIMITER_QUOTATION, 
-    DELIMITER_O_PARENTHESIS, 
-    DELIMITER_C_PARENTHESIS, 
-    DELIMITER_O_BRACE, 
-    DELIMITER_C_BRACE, 
-    DELIMITER_O_BRACKET, 
-    DELIMITER_C_BRACKET, 
+    DELIM_COMMA, 
+    DELIM_SEMCOL, 
+    DELIM_QUOTATION, 
+    DELIM_O_PAREN, 
+    DELIM_C_PAREN, 
+    DELIM_O_BRACE, 
+    DELIM_C_BRACE, 
+    DELIM_O_BRCKT, 
+    DELIM_C_BRCKT, 
     INVALID, 
     CONSTANT_NUM, 
     CONSTANT_DRIFT, 
@@ -86,22 +86,22 @@ char *typeToString(TokenType type) {
             return "UNARY_OPE";
         case RELATIONAL_OPE: 
             return "RELATIONAL_OPE";
-        case DELIMITER_COMMA:
-            return "DELIMITER_COMMA";
-        case DELIMITER_SEMICOLON:
-            return "DELIMITER_SEMICOLON";
-        case DELIMITER_O_PARENTHESIS:
-            return "DELIMITER_O_PARENTHESIS";
-        case DELIMITER_C_PARENTHESIS:
-            return "DELIMITER_C_PARENTHESIS";
-        case DELIMITER_O_BRACKET:
-            return "DELIMITER_O_BRACKET";
-        case DELIMITER_C_BRACKET:
-            return "DELIMITER_C_BRACKET";
-        case DELIMITER_O_BRACE:
-            return "DELIMITER_O_BRACE";
-        case DELIMITER_C_BRACE:
-            return "DELIMITER_C_BRACE";
+        case DELIM_COMMA:
+            return "DELIM_COMMA";
+        case DELIM_SEMCOL:
+            return "DELIM_SEMCOL";
+        case DELIM_O_PAREN:
+            return "DELIM_O_PAREN";
+        case DELIM_C_PAREN:
+            return "DELIM_C_PAREN";
+        case DELIM_O_BRCKT:
+            return "DELIM_O_BRCKT";
+        case DELIM_C_BRCKT:
+            return "DELIM_C_BRCKT";
+        case DELIM_O_BRACE:
+            return "DELIM_O_BRACE";
+        case DELIM_C_BRACE:
+            return "DELIM_C_BRACE";
         case CONSTANT_NUM: 
             return "CONSTANT_NUM";
         case CONSTANT_DRIFT: 

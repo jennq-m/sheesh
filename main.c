@@ -248,7 +248,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 } else {
                     temp[tempMarker] = '\0';
                     if (tempMarker <= 2) {
-                        Token token = newToken(temp, DELIMITER_QUOTATION, sheeshColumn);
+                        Token token = newToken(temp, DELIM_QUOTATION, sheeshColumn);
                         fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
                     }
                     else {
@@ -365,28 +365,28 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         TokenType delimiter;
         switch (sheeshLine[i]) {
             case ',':
-                delimiter = DELIMITER_COMMA;
+                delimiter = DELIM_COMMA;
                 break;
             case ';':
-                delimiter = DELIMITER_SEMICOLON;
+                delimiter = DELIM_SEMCOL;
                 break;
             case '(':
-                delimiter = DELIMITER_O_PARENTHESIS;
+                delimiter = DELIM_O_PAREN;
                 break;
             case ')':
-                delimiter = DELIMITER_C_PARENTHESIS;
+                delimiter = DELIM_C_PAREN;
                 break;
             case '[':
-                delimiter = DELIMITER_O_BRACKET;
+                delimiter = DELIM_O_BRCKT;
                 break;
             case ']':
-                delimiter = DELIMITER_C_BRACKET;
+                delimiter = DELIM_C_BRCKT;
                 break;
             case '{':
-                delimiter = DELIMITER_O_BRACE;
+                delimiter = DELIM_O_BRACE;
                 break;
             case '}':
-                delimiter = DELIMITER_C_BRACE;
+                delimiter = DELIM_C_BRACE;
                 break;
             default:
                 delimiter = INVALID;
@@ -470,8 +470,8 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
     if (tempMarker > 0) {
         temp[tempMarker] = '\0';
         if (stringLiteral || characterConstant) {
-            Token token = newToken(temp, DELIMITER_QUOTATION, sheeshColumn);
-            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: DELIMITER_QUOTATION\n", token.sheeshLine, token.value);
+            Token token = newToken(temp, DELIM_QUOTATION, sheeshColumn);
+            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: DELIM_QUOTATION\n", token.sheeshLine, token.value);
             
         } else {
             Token token = sheeshLexer(temp, sheeshColumn);
@@ -550,10 +550,10 @@ ASTNode* parseFactor() {
         node->value = strdup(currentToken.value);
         node->left = node->right = NULL;
         nextToken();
-    } else if (currentToken.type == DELIMITER_O_PARENTHESIS) {
+    } else if (currentToken.type == DELIM_O_PAREN) {
         nextToken();
         node = parseExpression();
-        if (currentToken.type != DELIMITER_C_PARENTHESIS) {
+        if (currentToken.type != DELIM_C_PAREN) {
             printf("Syntax error (Line %d): Expected ')'\n", currentToken.sheeshLine);
             exit(1);
         }
@@ -588,7 +588,7 @@ void parse() {
         inOrderTraversal(ast);
         printf("\n");
 
-        if (currentToken.type == DELIMITER_SEMICOLON) {
+        if (currentToken.type == DELIM_SEMCOL) {
             nextToken();
         } else if (currentToken.value != NULL) {
             printf("Syntax error (Line %d): expected ';' or end of input, got '%s'\n", currentToken.sheeshLine, currentToken.value);
