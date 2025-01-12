@@ -417,16 +417,16 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
 
             if (checkKeyword(temp)) {
                 Token token = newToken(temp, KEYWORD, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %-15s\n", token.sheeshLine, token.value, token.value);
                  
             } else if (checkReservedWord(temp)) {
                 if (!(strcmp(temp, "cap")) || !(strcmp(temp, "nocap"))) {
                     Token token = newToken(temp, CONSTANDRESERVED, sheeshColumn);
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, token.value);
                     
                 } else {
                     Token token = newToken(temp, RESERVED_WORD, sheeshColumn);
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, token.value);
                     
                 }
             } else if (checkNoiseWord(temp)) {
