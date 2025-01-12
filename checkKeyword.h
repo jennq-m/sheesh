@@ -29,6 +29,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'c':
             switch(sheeshLexeme[currChar++]) {
@@ -43,6 +44,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'd':
             switch(sheeshLexeme[currChar++]) {
@@ -50,7 +52,8 @@ int checkKeyword(const char *sheeshLexeme) {
                     switch(sheeshLexeme[currChar++]) {
                         case '\0':
                             return 1;
-                    } 
+                    }
+                    break; 
                 
                 case 'r':
                     switch(sheeshLexeme[currChar++]) {
@@ -69,6 +72,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'e':
             switch(sheeshLexeme[currChar++]) {
@@ -86,6 +90,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                     }
                             }
                     }
+                    break;
                 
                 case 'x':
                     switch(sheeshLexeme[currChar++]) {
@@ -107,6 +112,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'f':
             switch(sheeshLexeme[currChar++]) {
@@ -121,6 +127,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                     }
                             }
                     }
+                    break;
                 
                 case 'r':
                     switch(sheeshLexeme[currChar++]) {
@@ -139,9 +146,11 @@ int checkKeyword(const char *sheeshLexeme) {
                                     }
                             }
                     }
+                    break;
             }
-
+    
             currChar = 0;
+            break;
         
         case 'g':
             switch(sheeshLexeme[currChar++]) {
@@ -162,6 +171,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'i':
             switch(sheeshLexeme[currChar++]) {
@@ -170,6 +180,7 @@ int checkKeyword(const char *sheeshLexeme) {
                         case '\0':
                             return 1;
                     }
+                    break;
                 
                 case 'n':
                     switch(sheeshLexeme[currChar++]) {
@@ -188,6 +199,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'j':
             switch(sheeshLexeme[currChar++]) {
@@ -205,6 +217,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'l':
             switch(sheeshLexeme[currChar++]) {
@@ -222,6 +235,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                     }
                             }
                     }
+                    break;
 
                 case 'o':
                     switch(sheeshLexeme[currChar++]) {
@@ -237,6 +251,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                                             return 1;
                                                     }
                                             }
+                                            break;
 
                                         case 'i':
                                             switch(sheeshLexeme[currChar++]) {
@@ -248,6 +263,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                             }
                                     }
                             }
+                            break;
 
                         case 'n':
                             switch(sheeshLexeme[currChar++]) {
@@ -261,6 +277,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'm':
             switch(sheeshLexeme[currChar++]) {
@@ -293,6 +310,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'n':
             switch(sheeshLexeme[currChar++]) {
@@ -319,7 +337,8 @@ int checkKeyword(const char *sheeshLexeme) {
                                     }
                             }
                     }
-
+                    break;
+                    
                 case 'u':
                     switch(sheeshLexeme[currChar++]) {
                         case 'm':
@@ -331,6 +350,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'o':
             switch(sheeshLexeme[currChar++]) {
@@ -345,6 +365,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                     }
                             }
                     }
+                    break;
 
                 case 't':
                     switch(sheeshLexeme[currChar++]) {
@@ -374,6 +395,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                             }
                                     }
                             }
+                            break;
 
                         case 'u':
                             switch(sheeshLexeme[currChar++]) {
@@ -384,6 +406,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                     }
                             }
                     }
+                    break;
 
                 case 'u':
                     switch(sheeshLexeme[currChar++]) {
@@ -406,6 +429,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                                     }
                                             }
                                     }
+                                    break;
 
                                 case 'p':
                                     switch(sheeshLexeme[currChar++]) {
@@ -423,6 +447,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'p':
             switch(sheeshLexeme[currChar++]) {
@@ -455,6 +480,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'r':
             switch(sheeshLexeme[currChar++]) {
@@ -481,6 +507,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 's':
             switch(sheeshLexeme[currChar++]) {
@@ -507,6 +534,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                     }
                             }
                     }
+                    break;
 
                 case 'h':
                     switch(sheeshLexeme[currChar++]) {
@@ -522,6 +550,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                     }
                             }
                     }
+                    break;
 
                 case 't':
                     switch(sheeshLexeme[currChar++]) {
@@ -545,6 +574,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                             }
                                     }
                             }
+                            break;
 
                         case 'o':
                             switch(sheeshLexeme[currChar++]) {
@@ -558,6 +588,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 't':
             switch(sheeshLexeme[currChar++]) {
@@ -571,6 +602,7 @@ int checkKeyword(const char *sheeshLexeme) {
                                             return 1;
                                     }
                             }
+                            break;
                             
                         case 'x':
                             switch(sheeshLexeme[currChar++]) {
@@ -584,6 +616,7 @@ int checkKeyword(const char *sheeshLexeme) {
             }
 
             currChar = 0;
+            break;
 
         case 'v':
             switch(sheeshLexeme[currChar++]) {
