@@ -60,6 +60,7 @@ int checkRelational(const char *sheeshLexeme);
 void nextToken();
 void parse();
 
+
 char *typeToString(TokenType type) {
     switch (type) {
         case IDENTIFIER: 

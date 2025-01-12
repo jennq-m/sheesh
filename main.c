@@ -489,6 +489,7 @@ typedef struct ASTNode {
 ASTNode* parseExpression();
 ASTNode* parseTerm();
 ASTNode* parseFactor();
+ASTNode* parseUnaryVal();
 Token currentToken;
 int currentIndex = 0;
 
@@ -538,6 +539,11 @@ ASTNode* parseExpression() {
 
 ASTNode* parseTerm() {
     ASTNode *left = parseFactor();
+    ASTNode *node = NULL;
+
+    if (currentToken.type == IDENTIFIER || currentToken.type == UNARY_OPE) {
+        node = parseUnaryVal();
+    } 
 
     while (currentToken.type == ARITHMETIC_OPE && 
            (strcmp(currentToken.value, "*") == 0 || strcmp(currentToken.value, "/") == 0)) {
@@ -557,7 +563,9 @@ ASTNode* parseTerm() {
 ASTNode* parseFactor() {
     ASTNode *node = NULL;
 
-    if (currentToken.type == CONSTANT_NUM) {
+    if (currentToken.type == IDENTIFIER || currentToken.type == UNARY_OPE) {
+        node = parseUnaryVal();
+    } else if (currentToken.type == CONSTANT_NUM) {
         node = malloc(sizeof(ASTNode));
         node->value = strdup(currentToken.value);
         node->left = node->right = NULL;
@@ -575,12 +583,59 @@ ASTNode* parseFactor() {
             exit(1);
         }
         nextToken();
-    } else {
-            printf("Syntax error (Line %d): Unexpected Token\n", currentToken.sheeshLine);
-        exit(1);
-    }
+    } 
 
     return node;
+}
+
+ASTNode* parseUnaryVal() {
+    ASTNode *node = NULL;
+
+    if (currentToken.type == IDENTIFIER) {
+        node = malloc(sizeof(ASTNode));
+        node->value = strdup(currentToken.value);
+        node->left = node->right = NULL;
+
+        nextToken();
+
+        if (currentToken.type == UNARY_OPE && (strcmp(currentToken.value, "++") == 0 || (strcmp(currentToken.value, "--") == 0))) {
+            char *op = strdup(currentToken.value);
+
+            ASTNode *postfixNode = malloc(sizeof(ASTNode));
+            postfixNode->value = op;
+            postfixNode->right = NULL;
+            postfixNode->left = node;
+
+            nextToken();
+
+            return postfixNode;
+        }
+        return node;
+    }
+
+    if (currentToken.type == UNARY_OPE && (strcmp(currentToken.value, "++") == 0 || (strcmp(currentToken.value, "--") == 0))) {
+        char *op = strdup(currentToken.value);
+        nextToken();
+
+        if (currentToken.type != IDENTIFIER) {
+            printf("Syntax error (Line %d): Expected identifier before/after unary operator\n", currentToken.sheeshLine);
+            exit(1);
+        } 
+
+        node = malloc(sizeof(ASTNode));
+        node->value = op;
+        node->left = NULL;
+        node->right = malloc(sizeof(ASTNode));
+        node->right->value = strdup(currentToken.value);
+        node->right->left = node->right->right = NULL;
+
+        nextToken();
+
+        return node;
+    }
+
+    printf("Syntax error (Line %d): Unexpected token for unary expression\n", currentToken.sheeshLine);
+    exit(1);
 }
 
 void inOrderTraversal(ASTNode *node) {
