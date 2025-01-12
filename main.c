@@ -41,10 +41,10 @@ int main(int argc, char *argv[]) {
         sheeshColumn++;
     }
 
-    printf("\nTotal Tokens Created: %d\n", tokenCount);
-    for (int i = 0; i < tokenCount; i++) {
-        printf("Token %d: Lexeme: %-15s Token Type: %s\n", i + 1, allTokens[i].value, typeToString(allTokens[i].type));
-    }
+    // printf("\nTotal Tokens Created: %d\n", tokenCount);
+    // for (int i = 0; i < tokenCount; i++) {
+    //     printf("Token %d: Lexeme: %-15s Token Type: %s\n", i + 1, allTokens[i].value, typeToString(allTokens[i].type));
+    // }
 
     parse();
 
@@ -501,6 +501,23 @@ void nextToken() {
     }
 }
 
+ASTNode *newNode(const char *value) {
+    ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+    node->value = strdup(value);
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
+void printParseTree(ASTNode *node) {
+    if (!node) return;
+    printf("(");
+    printf("%s", node->value);
+    printParseTree(node->left);
+    printParseTree(node->right);
+    printf(")");
+}
+
 ASTNode* parseExpression() {
     ASTNode *left = parseTerm();
 
@@ -586,6 +603,10 @@ void parse() {
 
         printf("Parsed expression: ");
         inOrderTraversal(ast);
+        printf("\n");
+
+        printf("Parse Tree: ");
+        printParseTree(ast);
         printf("\n");
 
         if (currentToken.type == DELIM_SEMCOL) {
