@@ -338,9 +338,8 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 }
 
                 Token token = sheeshLexer(lookAhead, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                
-                
+                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, token.value);
+ 
                 i++;  
                 continue;
             }
@@ -356,7 +355,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
 
             char op[2] = {sheeshLine[i], '\0'};
             Token token = sheeshLexer(op, sheeshColumn);
-            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, token.value);
             
             continue;
         }
