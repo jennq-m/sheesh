@@ -510,7 +510,9 @@ ASTNode* parseSign();
 void nextToken() {
     if (currentIndex < tokenCount) {
         currentToken = allTokens[currentIndex++];
+        printf("Next token: %s (%d)\n", currentToken.value, currentToken.type);
     } else {
+        printf("End of token stream\n");
         currentToken.value = NULL;
         currentToken.type = INVALID;
     }
@@ -534,56 +536,84 @@ void printParseTree(ASTNode *node) {
 }
 
 ASTNode* parseProgram() {
+    printf("Entering parseProgram\n");
     if (currentToken.type == RESERVED_WORD && strcmp(currentToken.value, "toptier") == 0) {
+        printf("Matched toptier\n");
         ASTNode *node = newNode("program");
         nextToken();
         if (currentToken.type == DELIM_O_PAREN) {
+            printf("Matched opening parenthesis\n");
             nextToken();
             if (currentToken.type == DELIM_C_PAREN) {
+                printf("Matched closing parenthesis\n");
                 nextToken();
                 if (currentToken.type == DELIM_O_BRACE) {
+                    printf("Matched opening brace\n");
                     nextToken();
                     node->left = parseBody();
                     if (currentToken.type == DELIM_C_BRACE) {
+                        printf("Matched closing brace\n");
                         nextToken();
                         return node;
+                    } else {
+                        printf("Syntax error: Missing closing brace\n");
                     }
+                } else {
+                    printf("Syntax error: Missing opening brace\n");
                 }
+            } else {
+                printf("Syntax error: Missing closing parenthesis\n");
             }
+        } else {
+            printf("Syntax error: Missing opening parenthesis\n");
         }
+    } else {
+        printf("Syntax error: Missing toptier keyword\n");
     }
     printf("Syntax error: Invalid program structure\n");
     exit(1);
 }
 
+
 ASTNode* parseBody() {
+    printf("Entering parseBody\n");
     ASTNode *node = newNode("body");
     node->left = parseStmts();
     return node;
 }
 
+
 ASTNode* parseStmts() {
-    ASTNode *node = newNode("stmts");
-    node->left = parseExprStmt();
-    while (currentToken.type == DELIM_SEMCOL) {
-        nextToken();
-        ASTNode *nextStmt = newNode("stmts");
-        nextStmt->left = parseExprStmt();
-        node->right = nextStmt;
+    printf("Entering parseStmts\n");
+    ASTNode *node = NULL;  // Root for statements
+    ASTNode *current = NULL;
+
+    while (currentToken.type != DELIM_C_BRACE && currentToken.type != INVALID) {
+        ASTNode *stmt = parseExprStmt();  // Parse a single statement
+        if (!node) {
+            node = stmt;  // First statement becomes the root
+        } else {
+            current->right = stmt;  // Chain subsequent statements
+        }
+        current = stmt;  // Move to the latest statement
     }
     return node;
 }
 
+
 ASTNode* parseExprStmt() {
-    ASTNode *node = newNode("expr_stmt");
-    node->left = parseExpr();
+    printf("Entering parseExprStmt\n");
+    ASTNode *node = parseExpr(); // Parse the expression (e.g., -5)
     if (currentToken.type == DELIM_SEMCOL) {
-        nextToken();
-        return node;
+        printf("Matched semicolon\n");
+        nextToken(); // Consume the semicolon
+    } else {
+        printf("Syntax error: Missing semicolon\n");
+        exit(1);
     }
-    printf("Syntax error: Missing semicolon\n");
-    exit(1);
+    return node;
 }
+
 
 ASTNode* parseExpr() {
     ASTNode *node = newNode("expr");

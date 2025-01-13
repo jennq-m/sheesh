@@ -7,4 +7,7 @@ Line 1: Lexeme: {               Token: DELIM_O_BRACE
 Line 2: Lexeme: -               Token: -
 Line 2: Lexeme: 5               Token: CONSTANT_NUM
 Line 2: Lexeme: ;               Token: DELIM_SEMCOL
-Line 3: Lexeme: }               Token: DELIM_C_BRACE
+Line 3: Lexeme: -               Token: -
+Line 3: Lexeme: 1               Token: CONSTANT_NUM
+Line 3: Lexeme: ;               Token: DELIM_SEMCOL
+Line 4: Lexeme: }               Token: DELIM_C_BRACE
