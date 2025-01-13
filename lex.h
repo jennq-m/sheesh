@@ -29,6 +29,7 @@ typedef enum {
     CONSTANT_NUM, 
     CONSTANT_DRIFT, 
     CONSTANT_TEXT, 
+    CONSTANT_TXTFS,
     CONSTANDRESERVED, 
     CONSTANT_VIBE
 } TokenType;
@@ -109,6 +110,8 @@ char *typeToString(TokenType type) {
             return "CONSTANT_DRIFT";
         case CONSTANT_TEXT: 
             return "CONSTANT_TEXT";
+        case CONSTANT_TXTFS: 
+            return "CONSTANT_TXTFS";
         case CONSTANT_VIBE:
             return "CONSTANT_VIBE";
         case INVALID: 
