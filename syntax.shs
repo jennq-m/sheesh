@@ -9,4 +9,10 @@ toptier() {
     cap;
     'c';
     "cat";
+    identifier;
+    (a+b);
+    (a + b);
+    (1.5);
+    ++i;
+    identifier++;
 }
