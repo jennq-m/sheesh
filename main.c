@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    FILE *outputSheesh = fopen("test.txt", "w");
+    FILE *outputSheesh = fopen("symbol_table.txt", "w");
     if (!outputSheesh) {
         perror("Error opening output file");
         fclose(file);
@@ -46,12 +46,20 @@ int main(int argc, char *argv[]) {
     //     printf("Token %d: Lexeme: %-15s Token Type: %s\n", i + 1, allTokens[i].value, typeToString(allTokens[i].type));
     // }
 
-    parse();
+    FILE *outputParser = fopen("parse_tree.txt", "w");
+    if (!outputParser) {
+        perror("Error opening output file");
+        fclose(file);
+        return 1;
+    }
+
+    parse(outputParser);
 
     fclose(file);
     fclose(outputSheesh);
+    fclose(outputParser);
 
-    printf("See symbolTable.txt for lexical analysis.\n");
+    printf("See symbol_table.txt for lexical analysis.\n");
     return 0;
 }
 
@@ -526,14 +534,38 @@ ASTNode* newNode(const char *value) {
     return node;
 }
 
-void printParseTree(ASTNode *node) {
+void printParseTree(ASTNode *node, int indent, FILE *file) {
     if (!node) return;
-    printf("(");
-    printf("%s", node->value);
-    printParseTree(node->left);
-    printParseTree(node->right);
-    printf(")");
+
+    // Print indentation
+    for (int i = 0; i < indent; i++) {
+        fprintf(file, "    "); // Write spaces to the file for indentation
+    }
+
+    // Check if the node has children
+    if (node->left || node->right) {
+        fprintf(file, "%s(\n", node->value); // Write the node's value with an opening parenthesis
+
+        // Recursively write left and right children
+        if (node->left) {
+            printParseTree(node->left, indent + 1, file);
+        }
+        if (node->right) {
+            printParseTree(node->right, indent + 1, file);
+        }
+
+        // Write the closing parenthesis with matching indentation
+        for (int i = 0; i < indent; i++) {
+            fprintf(file, "    ");
+        }
+        fprintf(file, ")\n");
+    } else {
+        // If the node has no children, just write the value
+        fprintf(file, "%s\n", node->value);
+    }
 }
+
+
 
 ASTNode* parseProgram() {
     printf("Entering parseProgram\n");
@@ -917,10 +949,11 @@ ASTNode* parseDriftVal() {
     exit(1);
 }
 
-void parse() {
+void parse(FILE* file) {
     nextToken();
     ASTNode *ast = parseProgram();
-    printf("Parse Tree: ");
-    printParseTree(ast);
+    printf("See parse_tree.txt for parse tree.");
+    
+    printParseTree(ast, 0, file);
     printf("\n");
 }
