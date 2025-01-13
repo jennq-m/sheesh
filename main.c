@@ -946,9 +946,11 @@ ASTNode* parseSign() {
         ASTNode *node = newNode("sign"); 
         node->left = newNode(currentToken.value);
         nextToken();
+        
         return node;
     }
-    return NULL; // No sign found, which is acceptable
+
+    return NULL;
 }
 
 ASTNode* parseDriftVal() {
