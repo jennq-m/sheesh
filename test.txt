@@ -1,26 +1,10 @@
 Lexical Analysis of syntax.shs:
 
-Line 1: Lexeme: 5               Token: CONSTANT_NUM
-Line 1: Lexeme: *               Token: *
-Line 1: Lexeme: 1               Token: CONSTANT_NUM
-Line 1: Lexeme: +               Token: +
-Line 1: Lexeme: 2               Token: CONSTANT_NUM
-Line 1: Lexeme: *               Token: *
-Line 1: Lexeme: 3               Token: CONSTANT_NUM
-Line 1: Lexeme: /               Token: /
-Line 1: Lexeme: 4               Token: CONSTANT_NUM
-Line 1: Lexeme: *               Token: *
-Line 1: Lexeme: 5               Token: CONSTANT_NUM
-Line 1: Lexeme: ;               Token: DELIM_SEMCOL
-Line 2: Lexeme: i               Token: IDENTIFIER
-Line 2: Lexeme: ++              Token: ++
+Line 1: Lexeme: toptier         Token: toptier
+Line 1: Lexeme: (               Token: DELIM_O_PAREN
+Line 1: Lexeme: )               Token: DELIM_C_PAREN
+Line 1: Lexeme: {               Token: DELIM_O_BRACE
+Line 2: Lexeme: -               Token: -
+Line 2: Lexeme: 5               Token: CONSTANT_NUM
 Line 2: Lexeme: ;               Token: DELIM_SEMCOL
-Line 3: Lexeme: identifier      Token: IDENTIFIER
-Line 3: Lexeme: ++              Token: ++
-Line 3: Lexeme: ;               Token: DELIM_SEMCOL
-Line 4: Lexeme: --              Token: --
-Line 4: Lexeme: test            Token: IDENTIFIER
-Line 4: Lexeme: ;               Token: DELIM_SEMCOL
-Line 6: Lexeme: 6               Token: CONSTANT_NUM
-Line 6: Lexeme: *               Token: *
-Line 6: Lexeme: @               Token: INVALID
+Line 3: Lexeme: }               Token: DELIM_C_BRACE
