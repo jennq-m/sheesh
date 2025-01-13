@@ -5,4 +5,8 @@ toptier() {
     10;
     20;
     +89;
+    nocap;
+    cap;
+    'c';
+    "cat";
 }

@@ -152,7 +152,7 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
 
         if (checkReservedWord(sheeshLexeme)) {
             if (!(strcmp(sheeshLexeme, "cap")) || !(strcmp(sheeshLexeme, "nocap"))) {
-                return newToken(sheeshLexeme, CONSTANDRESERVED, sheeshLine);
+                return newToken(sheeshLexeme, CONSTANT_LEGIT, sheeshLine);
             }
             else {
                 return newToken(sheeshLexeme, RESERVED_WORD, sheeshLine);
@@ -425,7 +425,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                  
             } else if (checkReservedWord(temp)) {
                 if (!(strcmp(temp, "cap")) || !(strcmp(temp, "nocap"))) {
-                    Token token = newToken(temp, CONSTANDRESERVED, sheeshColumn);
+                    Token token = newToken(temp, CONSTANT_LEGIT, sheeshColumn);
                     fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, token.value);
                     
                 } else {
@@ -743,7 +743,8 @@ ASTNode* parsePrimary() {
     if (currentToken.type == CONSTANT_NUM || 
         currentToken.type == CONSTANT_DRIFT || 
         currentToken.type == CONSTANT_VIBE || 
-        currentToken.type == CONSTANT_TEXT || 
+        currentToken.type == CONSTANT_TEXT ||
+        currentToken.type == CONSTANT_LEGIT ||
         (currentToken.type == ARITHMETIC_OPE && 
         (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0))) {
         return parseLiteral();
@@ -882,6 +883,8 @@ ASTNode* parseUnaryVal() {
 }
 
 ASTNode* parseLiteral() {
+    // <literal> 		::= 	<num_val> | <drift_val> | CONSTANT_VIBE | CONSTANT_TEXT | CONSTANT_LEGIT
+
     ASTNode *node = newNode("literal");
 
     if (currentToken.type == ARITHMETIC_OPE && 
@@ -891,35 +894,40 @@ ASTNode* parseLiteral() {
             if (currentToken.type == CONSTANT_NUM) {
                 previousToken();
                 node->left = parseNumVal();
+
                 return node;
             } 
 
             if (currentToken.type == CONSTANT_DRIFT) {
                 previousToken();
                 node->left = parseDriftVal();
+
                 return node;
             } 
         }
     
     if (currentToken.type == CONSTANT_NUM) {
             node->left = parseNumVal();
+
             return node;
     } else if (currentToken.type == CONSTANT_DRIFT) {
             node->left = parseDriftVal();
+            
             return node;
-    } else if (currentToken.type == CONSTANT_VIBE || 
-               currentToken.type == CONSTANT_TEXT) {
-        ASTNode *node = newNode(currentToken.value);
-        printf("Matched <literal>: %s\n", node->value);
+    } else if (currentToken.type == CONSTANT_VIBE || currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_LEGIT) {
+        node->left = newNode(currentToken.value);
         nextToken();
+
         return node;
     }
 
-    printf("Syntax error: Invalid <literal>\n");
+    printf("Syntax error at Line %s: Invalid <literal>\n", currentToken.sheeshLine);
     exit(1);
 }
 
 ASTNode* parseNumVal() {
+    // <num_val>		::=	<sign> CONSTANT_NUM | CONSTANT_NUM
+    
     ASTNode *signNode = parseSign();
     if (currentToken.type == CONSTANT_NUM) {
         ASTNode *numNode = newNode("num_val");
@@ -930,23 +938,26 @@ ASTNode* parseNumVal() {
             ASTNode *node = newNode("num_val");
             node->left = signNode;
             node->right = numNode;
-            printf("Matched signed <num_val>: %s %s\n", signNode->value, numNode->value);
+
             return node;
         }
-        printf("Matched <num_val>: %s\n", numNode->value);
+
         return numNode;
     }
-    printf("Syntax error: Invalid <num_val>\n");
+
+    printf("Syntax error at Line %s: Invalid <num_val>\n", currentToken.sheeshLine);
     exit(1);
 }
 
 ASTNode* parseSign() {
+    // <sign>   		::= 	‘-’ | ‘+’
+
     if (currentToken.type == ARITHMETIC_OPE && 
        (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
         ASTNode *node = newNode("sign"); 
         node->left = newNode(currentToken.value);
         nextToken();
-        
+
         return node;
     }
 
@@ -954,6 +965,7 @@ ASTNode* parseSign() {
 }
 
 ASTNode* parseDriftVal() {
+    // <drift_val> 		::= 	<sign> CONSTANT_DRIFT | CONSTANT_DRIFT
     ASTNode *signNode = parseSign();
     if (currentToken.type == CONSTANT_DRIFT) {
         ASTNode *driftNode = newNode("drift_val");
@@ -970,7 +982,7 @@ ASTNode* parseDriftVal() {
         return driftNode;
     }
     
-    printf("Syntax error: Invalid <drift_val>\n");
+    printf("Syntax error at Line %s: Invalid <drift_val>\n", currentToken.sheeshLine);
     exit(1);
 }
 

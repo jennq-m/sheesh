@@ -106,6 +106,66 @@ program(
                                         )
                                     )
                                 )
+                                expr(
+                                    and_expr(
+                                        equality_expr(
+                                            relational_expr(
+                                                addsub_expr(
+                                                    primary(
+                                                        literal(
+                                                            nocap
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                    expr(
+                                        and_expr(
+                                            equality_expr(
+                                                relational_expr(
+                                                    addsub_expr(
+                                                        primary(
+                                                            literal(
+                                                                cap
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                        expr(
+                                            and_expr(
+                                                equality_expr(
+                                                    relational_expr(
+                                                        addsub_expr(
+                                                            primary(
+                                                                literal(
+                                                                    'c'
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                            expr(
+                                                and_expr(
+                                                    equality_expr(
+                                                        relational_expr(
+                                                            addsub_expr(
+                                                                primary(
+                                                                    literal(
+                                                                        "cat"
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
                             )
                         )
                     )

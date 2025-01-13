@@ -31,7 +31,8 @@ typedef enum {
     CONSTANT_TEXT, 
     CONSTANT_TXTFS,
     CONSTANDRESERVED, 
-    CONSTANT_VIBE
+    CONSTANT_VIBE,
+    CONSTANT_LEGIT
 } TokenType;
 
 //Holding attributes of TOKEN

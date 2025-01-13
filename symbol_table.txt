@@ -18,4 +18,12 @@ Line 6: Lexeme: ;               Token: DELIM_SEMCOL
 Line 7: Lexeme: +               Token: +
 Line 7: Lexeme: 89              Token: CONSTANT_NUM
 Line 7: Lexeme: ;               Token: DELIM_SEMCOL
-Line 8: Lexeme: }               Token: DELIM_C_BRACE
+Line 8: Lexeme: nocap           Token: nocap
+Line 8: Lexeme: ;               Token: DELIM_SEMCOL
+Line 9: Lexeme: cap             Token: cap
+Line 9: Lexeme: ;               Token: DELIM_SEMCOL
+Line 10: Lexeme: 'c'             Token: CONSTANT_VIBE
+Line 10: Lexeme: ;               Token: DELIM_SEMCOL
+Line 11: Lexeme: "cat"           Token: CONSTANT_TEXT
+Line 11: Lexeme: ;               Token: DELIM_SEMCOL
+Line 12: Lexeme: }               Token: DELIM_C_BRACE
