@@ -174,9 +174,9 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
     } else if (state == 3) {
         switch(ch) {
             case '\'':
-                return newToken(sheeshLexeme, CONSTANT_TEXT, sheeshLine);
+                return newToken(sheeshLexeme, CONSTANT_VIBE, sheeshLine);
             case '"':
-                return newToken(sheeshLexeme, CONSTANT_VIBE, sheeshLine);    
+                return newToken(sheeshLexeme, CONSTANT_TEXT, sheeshLine);    
         }
         return newToken(sheeshLexeme, CONSTANT_TEXT, sheeshLine);
     } else if (state == 4) {
@@ -210,6 +210,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
     int characterConstant = 0;
     char temp[256];
     int tempMarker = 0;
+    int hasFormatSpecifier = 0;
 
     for (int i = 0; sheeshLine[i] != '\0'; i++) {
 
@@ -225,10 +226,22 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
 
         if (stringLiteral) {
             temp[tempMarker++] = sheeshLine[i];
+            if (sheeshLine[i] == '%' && strchr("dfsc", sheeshLine[i + 1])) {
+                hasFormatSpecifier = 1;
+            }
+
             if (sheeshLine[i] == '"') {
                 temp[tempMarker] = '\0';
-                Token token = newToken(temp, CONSTANT_TEXT, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+
+                if (!hasFormatSpecifier) {
+                    Token token = newToken(temp, CONSTANT_TEXT, sheeshColumn);
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                }
+                else { 
+                    Token token = newToken(temp, CONSTANT_TXTFS, sheeshColumn);
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                }
+
                 tempMarker = 0;
                 stringLiteral = 0;
             }
@@ -267,27 +280,12 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         }
 
         if (sheeshLine[i] == '"') {
-            if (tempMarker > 0) {
-                temp[tempMarker] = '\0';
-                Token token = sheeshLexer(temp, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                tempMarker = 0;
-            }
-
             stringLiteral = 1;
             temp[tempMarker++] = sheeshLine[i];
             continue;
         }
 
         if (sheeshLine[i] == '\'') {
-            if (tempMarker > 0) {
-                temp[tempMarker] = '\0';
-                Token token = sheeshLexer(temp, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                
-                tempMarker = 0;
-            }
-
             characterConstant = 1;
             temp[tempMarker++] = sheeshLine[i];
             continue;
