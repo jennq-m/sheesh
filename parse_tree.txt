@@ -7,13 +7,8 @@ program(
                         addsub_expr(
                             primary(
                                 literal(
-                                    num_val(
-                                        sign(
-                                            -
-                                        )
-                                        num_val(
-                                            5
-                                        )
+                                    drift_val(
+                                        1.5
                                     )
                                 )
                             )
@@ -28,12 +23,12 @@ program(
                             addsub_expr(
                                 primary(
                                     literal(
-                                        num_val(
+                                        drift_val(
                                             sign(
                                                 +
                                             )
-                                            num_val(
-                                                1
+                                            drift_val(
+                                                2.77
                                             )
                                         )
                                     )
@@ -49,8 +44,64 @@ program(
                                 addsub_expr(
                                     primary(
                                         literal(
-                                            num_val(
-                                                2
+                                            drift_val(
+                                                5.5
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    expr(
+                        and_expr(
+                            equality_expr(
+                                relational_expr(
+                                    addsub_expr(
+                                        primary(
+                                            literal(
+                                                num_val(
+                                                    10
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                        expr(
+                            and_expr(
+                                equality_expr(
+                                    relational_expr(
+                                        addsub_expr(
+                                            primary(
+                                                literal(
+                                                    num_val(
+                                                        20
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            expr(
+                                and_expr(
+                                    equality_expr(
+                                        relational_expr(
+                                            addsub_expr(
+                                                primary(
+                                                    literal(
+                                                        num_val(
+                                                            sign(
+                                                                +
+                                                            )
+                                                            num_val(
+                                                                89
+                                                            )
+                                                        )
+                                                    )
+                                                )
                                             )
                                         )
                                     )

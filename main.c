@@ -526,6 +526,16 @@ void nextToken() {
     }
 }
 
+void previousToken() {
+    if (currentIndex > 1) {
+        currentIndex--;
+        currentToken = allTokens[currentIndex - 1];
+        printf("Previous token: %s (%d)\n", currentToken.value, currentToken.type);
+    } else {
+        printf("Already at the start of the token stream\n");
+    }
+}
+
 ASTNode* newNode(const char *value) {
     ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
     node->value = strdup(value);
@@ -873,15 +883,28 @@ ASTNode* parseUnaryVal() {
 
 ASTNode* parseLiteral() {
     ASTNode *node = newNode("literal");
+
+    if (currentToken.type == ARITHMETIC_OPE && 
+        (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
+            nextToken();
+
+            if (currentToken.type == CONSTANT_NUM) {
+                previousToken();
+                node->left = parseNumVal();
+                return node;
+            } 
+
+            if (currentToken.type == CONSTANT_DRIFT) {
+                previousToken();
+                node->left = parseDriftVal();
+                return node;
+            } 
+        }
     
-    if (currentToken.type == CONSTANT_NUM || 
-        (currentToken.type == ARITHMETIC_OPE && 
-        (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0))) {
+    if (currentToken.type == CONSTANT_NUM) {
             node->left = parseNumVal();
             return node;
-    } else if (currentToken.type == CONSTANT_DRIFT || 
-               (currentToken.type == ARITHMETIC_OPE && 
-               (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0))) {
+    } else if (currentToken.type == CONSTANT_DRIFT) {
             node->left = parseDriftVal();
             return node;
     } else if (currentToken.type == CONSTANT_VIBE || 
@@ -929,22 +952,22 @@ ASTNode* parseSign() {
 }
 
 ASTNode* parseDriftVal() {
-    printf("Entering <drift_val>\n");
-
     ASTNode *signNode = parseSign();
     if (currentToken.type == CONSTANT_DRIFT) {
-        ASTNode *driftNode = newNode(currentToken.value);
+        ASTNode *driftNode = newNode("drift_val");
+        driftNode->left = newNode(currentToken.value);
         nextToken();
+        
         if (signNode) {
             ASTNode *node = newNode("drift_val");
             node->left = signNode;
             node->right = driftNode;
-            printf("Matched signed <drift_val>: %s %s\n", signNode->value, driftNode->value);
             return node;
         }
-        printf("Matched <drift_val>: %s\n", driftNode->value);
+
         return driftNode;
     }
+    
     printf("Syntax error: Invalid <drift_val>\n");
     exit(1);
 }
