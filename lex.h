@@ -115,6 +115,8 @@ char *typeToString(TokenType type) {
             return "CONSTANT_TXTFS";
         case CONSTANT_VIBE:
             return "CONSTANT_VIBE";
+        case CONSTANT_LEGIT:
+            return "CONSTANT_LEGIT";
         case INVALID: 
             return "INVALID";
         default: 
