@@ -492,6 +492,7 @@ ASTNode* parseNumVal();
 ASTNode* parseDriftVal();
 ASTNode* parseSign();
 ASTNode* parseUnaryOp();
+ASTNode* parseIdentExpr();
 
 void nextToken() {
     if (currentIndex < tokenCount) {
@@ -717,57 +718,80 @@ ASTNode* parseMultDivExpr() {
 }
 
 ASTNode* parsePrimary() {
-    // <primary>             	::=   	<literal> | IDENTIFIER | DELIM_O_PAREN <expr> DELIM_C_PAREN | ('+' | '-' | '!') <primary> | <unary_val> | IDENTIFIER ASSIGNMENT_OPE <expr>
+    printf("Entering parsePrimary. Current token: %s (Type: %d, Line: %d)\n", currentToken.value, currentToken.type, currentToken.sheeshLine);
 
     ASTNode *primaryNode = newNode("<primary>");
 
-    if (currentToken.type == CONSTANT_NUM || currentToken.type == CONSTANT_DRIFT || currentToken.type == CONSTANT_VIBE || 
-        currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_LEGIT || (currentToken.type == ARITHMETIC_OPE && 
-        (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0))) {
-        
-        primaryNode->left = parseLiteral();
+    // Handle literals or unary '+'/'-'
+    if (currentToken.type == CONSTANT_NUM || currentToken.type == CONSTANT_DRIFT || currentToken.type == CONSTANT_VIBE ||
+        currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_LEGIT || 
+        (currentToken.type == ARITHMETIC_OPE && (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0))) {
 
+        printf("Parsing literal: %s\n", currentToken.value);
+        primaryNode->left = parseLiteral();
         return primaryNode;
+
+    // Handle identifiers
     } else if (currentToken.type == IDENTIFIER) {
+        printf("Parsing identifier: %s\n", currentToken.value);
         ASTNode *identifierNode = newNode(currentToken.value);
         nextToken();
 
-        if (currentToken.type == UNARY_OPE) {
-            previousToken();
-            identifierNode->left = parseUnaryVal();
+        if (currentToken.type == ASSIGNMENT_OPE) {
+            printf("Found assignment operator: %s\n", currentToken.value);
+            ASTNode *assignNode = newNode(currentToken.value); // Assignment operator node
+            nextToken();
+            assignNode->left = identifierNode;
+            assignNode->right = parseExpr(); // Parse the expression being assigned
+            primaryNode->left = assignNode;
+            return primaryNode;
         }
 
         primaryNode->left = identifierNode;
-
         return primaryNode;
-    } else if (currentToken.type == DELIM_O_PAREN) {
-        ASTNode *openParenNode = newNode(currentToken.value);
-        nextToken();
 
+    // Handle parenthesized expressions
+    } else if (currentToken.type == DELIM_O_PAREN) {
+        printf("Parsing parenthesized expression\n");
+        nextToken(); // Consume '('
         ASTNode *exprNode = parseExpr();
 
         if (currentToken.type != DELIM_C_PAREN) {
             printf("Syntax error: Missing closing parenthesis\n");
             exit(1);
         }
-
-        ASTNode *closeParenNode = newNode(currentToken.value);
-        nextToken();
-
-        openParenNode->right = exprNode;
-        exprNode->right = closeParenNode;
-        primaryNode->left = openParenNode;
-
+        nextToken(); // Consume ')'
+        primaryNode->left = exprNode;
         return primaryNode;
-    } else if (currentToken.type == UNARY_OPE) {
-        primaryNode->left = parseUnaryVal();
 
-        return primaryNode;
+    // Handle unary operators like '!', '++', '--'
+    } else if (strcmp(currentToken.value, "!") == 0 || strcmp(currentToken.value, "++") == 0 || strcmp(currentToken.value, "--") == 0) {
+        printf("Parsing unary operator: %s\n", currentToken.value);
+        ASTNode *opNode = newNode(currentToken.value); // Create a node for the unary operator
+        nextToken(); // Consume the unary operator
+
+        if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
+            printf("Unary operator applied to: %s\n", currentToken.value);
+            opNode->right = parseIdentExpr();
+            primaryNode->left = opNode;
+            return primaryNode;
+        } else if (currentToken.type == CONSTANT_LEGIT) {
+            printf("Unary operator applied to: %s\n", currentToken.value);
+            opNode->right = newNode(currentToken.value);
+            primaryNode->left = opNode;
+            nextToken();
+            return primaryNode;
+        } else {
+            printf("Syntax error: Expected identifier (/identifier expression) or CONSTANT_LEGIT after '%s'\n", opNode->value);
+            exit(1);
+        }
     }
 
-    printf("Syntax error: Invalid primary expression\n");
+    printf("Syntax error at Line %d: Invalid <primary_expr>. Current token: %s (Type: %d)\n", currentToken.sheeshLine, currentToken.value, currentToken.type);
     exit(1);
 }
+
+
 
 ASTNode* parseLiteral() {
     // <literal> 		::= 	<num_val> | <drift_val> | CONSTANT_VIBE | CONSTANT_TEXT | CONSTANT_LEGIT
@@ -813,9 +837,8 @@ ASTNode* parseLiteral() {
 }
 
 ASTNode* parseNumVal() {
-    // <num_val>		::=	<sign> CONSTANT_NUM | CONSTANT_NUM
-    
     ASTNode *signNode = parseSign();
+
     if (currentToken.type == CONSTANT_NUM) {
         ASTNode *numNode = newNode("num_val");
         numNode->left = newNode(currentToken.value);
@@ -825,16 +848,20 @@ ASTNode* parseNumVal() {
             ASTNode *node = newNode("num_val");
             node->left = signNode;
             node->right = numNode;
-
             return node;
         }
-
         return numNode;
+
+    } else if (currentToken.type == IDENTIFIER) {
+        ASTNode *node = newNode("num_val");
+        node->left = signNode ? signNode : parseIdentExpr();
+        return node;
     }
 
-    printf("Syntax error at Line %s: Invalid <num_val>\n", currentToken.sheeshLine);
+    printf("Syntax error: Invalid <num_val>\n");
     exit(1);
 }
+
 
 ASTNode* parseSign() {
     // <sign>   		::= 	‘-’ | ‘+’
@@ -852,26 +879,31 @@ ASTNode* parseSign() {
 }
 
 ASTNode* parseDriftVal() {
-    // <drift_val> 		::= 	<sign> CONSTANT_DRIFT | CONSTANT_DRIFT
     ASTNode *signNode = parseSign();
+
     if (currentToken.type == CONSTANT_DRIFT) {
         ASTNode *driftNode = newNode("drift_val");
         driftNode->left = newNode(currentToken.value);
         nextToken();
-        
+
         if (signNode) {
             ASTNode *node = newNode("drift_val");
             node->left = signNode;
             node->right = driftNode;
             return node;
         }
-
         return driftNode;
+
+    } else if (currentToken.type == IDENTIFIER) {
+        ASTNode *node = newNode("drift_val");
+        node->left = signNode ? signNode : parseIdentExpr();
+        return node;
     }
-    
-    printf("Syntax error at Line %s: Invalid <drift_val>\n", currentToken.sheeshLine);
+
+    printf("Syntax error: Invalid <drift_val>\n");
     exit(1);
 }
+
 
 ASTNode* parseUnaryVal() {
     if (currentToken.type == UNARY_OPE) {
@@ -911,6 +943,31 @@ ASTNode* parseUnaryVal() {
     printf("Syntax error: Invalid unary value\n");
     exit(1);
 }
+
+ASTNode* parseIdentExpr() {
+    ASTNode *node = newNode("<ident_expr>");
+
+    if (currentToken.type == IDENTIFIER) {
+        node->left = newNode(currentToken.value); // Add identifier node
+        nextToken(); // Consume identifier
+        return node;
+    } else if (currentToken.type == DELIM_O_PAREN) {
+        nextToken(); // Consume opening parenthesis
+        ASTNode *exprNode = parseExpr(); // Parse the expression inside the parenthesis
+
+        if (currentToken.type != DELIM_C_PAREN) {
+            printf("Syntax error at Line %d: Missing closing parenthesis in <ident_expr>\n", currentToken.sheeshLine);
+            exit(1);
+        }
+
+        nextToken(); // Consume closing parenthesis
+        return exprNode; // Return the parsed expression node
+    }
+
+    printf("Syntax error: Invalid <ident_expr>\n");
+    exit(1);
+}
+
 
 
 // ASTNode* parseUnaryOp() {

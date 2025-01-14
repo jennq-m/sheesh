@@ -1,18 +1,7 @@
 toptier() {
-    1.5;
-    +2.77;
-    5.5;
-    10;
-    20;
-    +89;
-    nocap;
-    cap;
-    'c';
-    "cat";
-    identifier;
-    (a+b);
-    (a + b);
-    (1.5);
-    ++i;
-    identifier++;
+    !test;
+    !cap;
+    !nocap;
+    !(x+y);
+    !(5+5);
 }
