@@ -638,7 +638,7 @@ ASTNode* parseExprStmt() {
 ASTNode* parseExpr() {
     ASTNode *node = newNode("<expr>");
     node->left = parseAndExpr();
-    while (currentToken.type == ARITHMETIC_OPE && strcmp(currentToken.value, "||") == 0) {
+    while (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "||") == 0) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
@@ -651,7 +651,7 @@ ASTNode* parseExpr() {
 ASTNode* parseAndExpr() {
     ASTNode *node = newNode("and_expr");
     node->left = parseEqualityExpr();
-    while (currentToken.type == ARITHMETIC_OPE && strcmp(currentToken.value, "&&") == 0) {
+    while (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "&&") == 0) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
@@ -664,7 +664,7 @@ ASTNode* parseAndExpr() {
 ASTNode* parseEqualityExpr() {
     ASTNode *node = newNode("equality_expr");
     node->left = parseRelationalExpr();
-    if (currentToken.type == ARITHMETIC_OPE && (strcmp(currentToken.value, "==") == 0 || strcmp(currentToken.value, "!=") == 0)) {
+    if (currentToken.type == RELATIONAL_OPE && (strcmp(currentToken.value, "==") == 0 || strcmp(currentToken.value, "!=") == 0)) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
@@ -677,7 +677,7 @@ ASTNode* parseEqualityExpr() {
 ASTNode* parseRelationalExpr() {
     ASTNode *node = newNode("relational_expr");
     node->left = parseAddSubExpr();
-    if (currentToken.type == ARITHMETIC_OPE && (strcmp(currentToken.value, "<") == 0 || strcmp(currentToken.value, "<=" ) == 0 || strcmp(currentToken.value, ">") == 0 || strcmp(currentToken.value, ">=") == 0)) {
+    if (currentToken.type == RELATIONAL_OPE && (strcmp(currentToken.value, "<") == 0 || strcmp(currentToken.value, "<=" ) == 0 || strcmp(currentToken.value, ">") == 0 || strcmp(currentToken.value, ">=") == 0)) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
@@ -696,7 +696,7 @@ ASTNode* parseAddSubExpr() {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
-        opNode->right = parseMultDivExpr();
+        opNode->right = parseExpr();
         node = opNode;
     }
     return node;
@@ -706,11 +706,11 @@ ASTNode* parseMultDivExpr() {
     ASTNode *node = newNode("<multdiv_expr>");
     node->left = parsePrimary();
     while (currentToken.type == ARITHMETIC_OPE && 
-           (strcmp(currentToken.value, "*") == 0 || strcmp(currentToken.value, "/") == 0 || strcmp(currentToken.value, "%") == 0)) {
+           (strcmp(currentToken.value, "*") == 0 || strcmp(currentToken.value, "/") == 0 || strcmp(currentToken.value, "%") == 0) || strcmp(currentToken.value, "|") == 0) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
-        opNode->right = parsePrimary();
+        opNode->right = parseExpr();
         node = opNode;
     }
     return node;

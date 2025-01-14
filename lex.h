@@ -29,7 +29,6 @@ typedef enum {
     CONSTANT_DRIFT, 
     CONSTANT_TEXT, 
     CONSTANT_TXTFS,
-    CONSTANDRESERVED, 
     CONSTANT_VIBE,
     CONSTANT_LEGIT
 } TokenType;
@@ -70,8 +69,6 @@ char *typeToString(TokenType type) {
             return "KEYWORD";
         case RESERVED_WORD: 
             return "RESERVED_WORD";
-        case CONSTANDRESERVED: 
-            return "CONSTANDRESERVED";
         case NOISE_WORD: 
             return "NOISE_WORD";
         case COMMENT: 
