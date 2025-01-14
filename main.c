@@ -877,7 +877,8 @@ ASTNode* parseUnaryVal() {
     if (currentToken.type == UNARY_OPE) {
         // Handle prefix unary operators (e.g., ++identifier or --identifier)
         ASTNode *node = newNode("<unary_val>");
-        node->left = parseUnaryOp();
+        node->left = newNode(currentToken.value);
+        nextToken();
 
         if (currentToken.type == IDENTIFIER) {
             node->right = newNode(currentToken.value);
@@ -912,19 +913,19 @@ ASTNode* parseUnaryVal() {
 }
 
 
-ASTNode* parseUnaryOp() {
-    // <unary_op>   		::= 	‘++’ | ‘--’
+// ASTNode* parseUnaryOp() {
+//     // <unary_op>   		::= 	‘++’ | ‘--’
 
-    if (currentToken.type == UNARY_OPE) {
-        ASTNode *node = newNode("<unary_op>"); 
-        node->left = newNode(currentToken.value);
-        nextToken();
+//     if (currentToken.type == UNARY_OPE) {
+//         ASTNode *node = newNode("<unary_op>"); 
+//         node->left = newNode(currentToken.value);
+//         nextToken();
 
-        return node;
-    }
+//         return node;
+//     }
 
-    return NULL;
-}
+//     return NULL;
+// }
 // ASTNode* parseDecStmt() {
 //     if (currentToken.type == IDENTIFIER) {
 //         ASTNode *node = newNode("dec_stmt");

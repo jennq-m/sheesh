@@ -216,9 +216,19 @@ program(
                                                                                                                 )
                                                                                                             )
                                                                                                         )
-                                                                                                        <multdiv_expr>(
-                                                                                                            <primary>(
-                                                                                                                b
+                                                                                                        <expr>(
+                                                                                                            and_expr(
+                                                                                                                equality_expr(
+                                                                                                                    relational_expr(
+                                                                                                                        addsub_expr(
+                                                                                                                            <multdiv_expr>(
+                                                                                                                                <primary>(
+                                                                                                                                    b
+                                                                                                                                )
+                                                                                                                            )
+                                                                                                                        )
+                                                                                                                    )
+                                                                                                                )
                                                                                                             )
                                                                                                         )
                                                                                                     )
@@ -254,9 +264,19 @@ program(
                                                                                                                     )
                                                                                                                 )
                                                                                                             )
-                                                                                                            <multdiv_expr>(
-                                                                                                                <primary>(
-                                                                                                                    b
+                                                                                                            <expr>(
+                                                                                                                and_expr(
+                                                                                                                    equality_expr(
+                                                                                                                        relational_expr(
+                                                                                                                            addsub_expr(
+                                                                                                                                <multdiv_expr>(
+                                                                                                                                    <primary>(
+                                                                                                                                        b
+                                                                                                                                    )
+                                                                                                                                )
+                                                                                                                            )
+                                                                                                                        )
+                                                                                                                    )
                                                                                                                 )
                                                                                                             )
                                                                                                         )
@@ -315,9 +335,7 @@ program(
                                                                                     <multdiv_expr>(
                                                                                         <primary>(
                                                                                             <unary_val>(
-                                                                                                <unary_op>(
-                                                                                                    ++
-                                                                                                )
+                                                                                                ++
                                                                                                 i
                                                                                             )
                                                                                         )
