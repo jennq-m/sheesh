@@ -8,7 +8,6 @@ typedef enum {
     IDENTIFIER, 
     KEYWORD, 
     RESERVED_WORD, 
-    CONSTANT, 
     NOISE_WORD, 
     COMMENT, 
     ARITHMETIC_OPE, 
@@ -71,8 +70,6 @@ char *typeToString(TokenType type) {
             return "KEYWORD";
         case RESERVED_WORD: 
             return "RESERVED_WORD";
-        case CONSTANT: 
-            return "CONSTANT";
         case CONSTANDRESERVED: 
             return "CONSTANDRESERVED";
         case NOISE_WORD: 

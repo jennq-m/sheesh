@@ -41,11 +41,6 @@ int main(int argc, char *argv[]) {
         sheeshColumn++;
     }
 
-    // printf("\nTotal Tokens Created: %d\n", tokenCount);
-    // for (int i = 0; i < tokenCount; i++) {
-    //     printf("Token %d: Lexeme: %-15s Token Type: %s\n", i + 1, allTokens[i].value, typeToString(allTokens[i].type));
-    // }
-
     FILE *outputParser = fopen("parse_tree.txt", "w");
     if (!outputParser) {
         perror("Error opening output file");
@@ -92,12 +87,8 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
                     state = 1;
                 } else if (isdigit(ch) || ch == '.') { 
                     state = 2; 
-                } else if (ch == '\'' || ch == '"') {
-                    state = 3; 
                 } else if (strchr("+-*/%=!<>&|^$", ch)) { 
                     state = 4; 
-                } else if (strchr(",;(){}[]", ch)) { 
-                    state = 5; 
                 } else if (ch == '/' && sheeshLexeme[i + 1] == '/') { 
                     return newToken(sheeshLexeme, COMMENT, sheeshLine); 
                 } else if (ch == '/' && sheeshLexeme[i + 1] == '*') { 
@@ -128,14 +119,6 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
                 }
 
                 break;
-
-            case 3:
-                if (ch == '\'' || ch == '"') {
-                    return newToken(sheeshLexeme, CONSTANT, sheeshLine);
-                }
-
-                break;
-
             case 4:
                 if (strchr("+-*/%=!<>&|^$", ch)) {
                     state = 4;
@@ -151,7 +134,7 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
         }
 
         if (checkReservedWord(sheeshLexeme)) {
-            if (!(strcmp(sheeshLexeme, "cap")) || !(strcmp(sheeshLexeme, "nocap"))) {
+            if (strcmp(sheeshLexeme, "cap") == 0 || strcmp(sheeshLexeme, "nocap") == 0) {
                 return newToken(sheeshLexeme, CONSTANT_LEGIT, sheeshLine);
             }
             else {
@@ -454,16 +437,10 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         if (isdigit(sheeshLine[i]) || sheeshLine[i] == '.') {
             temp[tempMarker++] = sheeshLine[i];
         } else if (isspace(sheeshLine[i])) {
-           
             if (tempMarker > 0) {
                 temp[tempMarker] = '\0'; 
                 Token token = sheeshLexer(temp, sheeshColumn); 
-                if (token.type == CONSTANT) {
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                } else {
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                }
-                  
+                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
                 tempMarker = 0;  
             }
         } else {

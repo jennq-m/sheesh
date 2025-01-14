@@ -605,3 +605,7 @@ Line 372: Lexeme: ,               Token: DELIM_COMMA
 Line 372: Lexeme: letter          Token: IDENTIFIER
 Line 372: Lexeme: )               Token: DELIM_C_PAREN
 Line 372: Lexeme: ;               Token: DELIM_SEMCOL
+Line 373: Lexeme: "
+              Token: DELIM_QUOTATION
+Line 375: Lexeme: 123             Token: CONSTANT_NUM
+Line 375: Lexeme: 456             Token: CONSTANT_NUM
