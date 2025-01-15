@@ -911,32 +911,58 @@ ASTNode* parseEqualityExpr() {
 }
 
 ASTNode* parseRelationalExpr() {
-    printf("Checking <parseRelationalExpr>...");
+    printf("Checking <parseRelationalExpr>...\n");
     ASTNode *node = newNode("relational_expr");
     node->left = parseAddSubExpr();
-    if (currentToken.type == RELATIONAL_OPE && (strcmp(currentToken.value, "<") == 0 || strcmp(currentToken.value, "<=" ) == 0 || strcmp(currentToken.value, ">") == 0 || strcmp(currentToken.value, ">=") == 0)) {
+    
+    if (!node->left) {
+        printf("SYNTAX ERROR LINE %d: Expected addsub_expr. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    }
+
+    if (currentToken.type == RELATIONAL_OPE && 
+        (strcmp(currentToken.value, "<") == 0 || strcmp(currentToken.value, "<=") == 0 || strcmp(currentToken.value, ">") == 0 || strcmp(currentToken.value, ">=") == 0)) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
+
+        // Parse the right operand
         opNode->right = parseAddSubExpr();
+        if (!opNode->right) {
+            printf("SYNTAX ERROR LINE %d: Expected addsub_expr. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
+        }
+
         return opNode;
     }
+
     return node;
 }
 
 ASTNode* parseAddSubExpr() {
-    printf("Checking <parseAddSubExpr>...");
+    printf("Checking <parseAddSubExpr>...\n");
     ASTNode *node = newNode("addsub_expr");
     node->left = parseMultDivExpr();
 
-    while (currentToken.type == ARITHMETIC_OPE && 
-           (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
+    if (!node->left) {
+        printf("SYNTAX ERROR LINE %d: Expected multdiv_expr. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1); 
+    }
+
+    while (currentToken.type == ARITHMETIC_OPE && (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
+
         opNode->right = parseMultDivExpr();
+        if (!opNode->right) {
+            printf("SYNTAX ERROR LINE %d: Expected multdiv_expr. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);  // Exit if right operand is invalid
+        }
+
         node = opNode;
     }
+
     return node;
 }
 
@@ -944,14 +970,27 @@ ASTNode* parseMultDivExpr() {
     printf("Entering parseMultDivExpr. Current token: %s (Type: %d, Line: %d)\n", currentToken.value, currentToken.type, currentToken.sheeshLine);
     ASTNode *node = newNode("<multdiv_expr>");
     node->left = parsePrimary();
+
+    if (!node->left) {
+        printf("SYNTAX ERROR LINE %d: Invalid token. Expected 'primary'. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    }
+
     while (currentToken.type == ARITHMETIC_OPE && 
-           (strcmp(currentToken.value, "*") == 0 || strcmp(currentToken.value, "/") == 0 || strcmp(currentToken.value, "%") == 0) || strcmp(currentToken.value, "|") == 0) {
+           (strcmp(currentToken.value, "*") == 0 || strcmp(currentToken.value, "/") == 0 || strcmp(currentToken.value, "%") == 0 || strcmp(currentToken.value, "|") == 0)) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
+
         opNode->right = parsePrimary();
+        if (!opNode->right) {
+            printf("SYNTAX ERROR LINE %d: Expected primary expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
+        }
+
         node = opNode;
     }
+
     return node;
 }
 
