@@ -15,7 +15,6 @@ toptier() {
     (a + b);
     (1.5);
     ++i;
-    identifier++;
     !test;
     !cap;
     !nocap;
@@ -26,4 +25,5 @@ toptier() {
     -(5 - 2);
     integer = 10;
     drift a;
+    legit a, b;
 }
