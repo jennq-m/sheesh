@@ -645,15 +645,13 @@ void nextToken() {
         currentToken = allTokens[currentIndex++];
         printf("Next token: %s (%d)\n", currentToken.value, currentToken.type);
 
-        // Skip tokens of type COMMENT
         if (currentToken.type != COMMENT) {
-            return; // Exit the loop if it's not a COMMENT
+            return;
         } else {
             printf("Skipping comment: %s\n", currentToken.value);
         }
     }
 
-    // If we reach here, we've hit the end of the token stream
     printf("End of token stream\n");
     currentToken.value = NULL;
     currentToken.type = INVALID;
@@ -680,16 +678,13 @@ ASTNode* newNode(const char *value) {
 void printParseTree(ASTNode *node, int indent, FILE *file) {
     if (!node) return;
 
-    // Print indentation
     for (int i = 0; i < indent; i++) {
-        fprintf(file, "    "); // Write spaces to the file for indentation
+        fprintf(file, "    ");
     }
 
-    // Check if the node has children
     if (node->left || node->right) {
-        fprintf(file, "%s(\n", node->value); // Write the node's value with an opening parenthesis
+        fprintf(file, "%s(\n", node->value);
 
-        // Recursively write left and right children
         if (node->left) {
             printParseTree(node->left, indent + 1, file);
         }
@@ -697,13 +692,11 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
             printParseTree(node->right, indent + 1, file);
         }
 
-        // Write the closing parenthesis with matching indentation
         for (int i = 0; i < indent; i++) {
             fprintf(file, "    ");
         }
         fprintf(file, ")\n");
     } else {
-        // If the node has no children, just write the value
         fprintf(file, "%s\n", node->value);
     }
 }
@@ -762,24 +755,23 @@ ASTNode* parseProgram() {
 ASTNode* parseBody() {
     printf("Entering parseBody\n");
     ASTNode *node = newNode("body");
+
     node->left = parseStmts();
     return node;
 }
 
 ASTNode* parseStmts() {
     printf("Entering parseStmts\n");
-    ASTNode *node = NULL;  // Root for statements
+    ASTNode *node = NULL;
     ASTNode *current = NULL;
 
     while (currentToken.type != DELIM_C_BRACE && currentToken.type != INVALID) {
         ASTNode *stmt = NULL;
 
-        // Check for declaration statements
         if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT ||
             currentToken.type == SHORT || currentToken.type == LONG || currentToken.type == LEGIT) {
             stmt = parseDecStmt();
 
-        // Check for assignment statements
         } else if (currentToken.type == IDENTIFIER) {
             nextToken();
             if (currentToken.type == ASSIGNMENT_OPE) {
@@ -790,36 +782,37 @@ ASTNode* parseStmts() {
                 stmt = parseExprStmt();
             }
 
-        // Check for iterative statements
         } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
             stmt = parseIterativeStmt();
-
-        // Check for input statements
         } else if (currentToken.type == INPUT) {
             stmt = parseInputStmt();
-
-        // Check for output statements
         } else if (currentToken.type == OUT || currentToken.type == OUTPUT) {
             stmt = parseOutputStmt();
-
-        // Handle other statements (e.g., expression statements)
         } else {
             stmt = parseExprStmt();
         }
 
-        // Chain the parsed statement into the statement list
-        if (!node) {
-            node = stmt;  // First statement becomes the root
-        } else {
-            current->right = stmt;  // Chain subsequent statements
+        if (!stmt) {
+            printf("SYNTAX ERROR LINE %d: Unexpected token encountered. Got %s. Skipping tokens until stmt is found..\n", currentToken.sheeshLine, currentToken.value);
+            nextToken();
+            continue;
         }
-        current = stmt;  // Move to the latest statement
+
+        if (!node) {
+            node = stmt;
+        } else {
+            current->right = stmt;
+        }
+        
+        current = stmt;
     }
+
+        if (currentToken.type == INVALID) {
+            printf("SYNTAX ERROR LINE %d: Encountered INVALID token %s. Terminating program...\n", currentToken.sheeshLine, currentToken.value);
+        }
 
     return node;
 }
-
-
 
 ASTNode* parseExprStmt() {
     printf("Entering parseExprStmt\n");
