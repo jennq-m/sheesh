@@ -625,7 +625,6 @@ ASTNode* parseLiteral();
 ASTNode* parseNumVal();
 ASTNode* parseDriftVal();
 ASTNode* parseSign();
-ASTNode* parseUnaryOp();
 ASTNode* parseIdentExpr();
 ASTNode* parseDataType();
 ASTNode* parseVarList();
@@ -787,11 +786,11 @@ ASTNode* parseStmts() {
             stmt = parseIterativeStmt();
 
         // Check for input statements
-        } else if (strcmp(currentToken.value, "input") == 0) {
+        } else if (currentToken.type == INPUT) {
             stmt = parseInputStmt();
 
         // Check for output statements
-        } else if (strcmp(currentToken.value, "out") == 0) {
+        } else if (currentToken.type == OUT || currentToken.type == OUTPUT) {
             stmt = parseOutputStmt();
 
         // Handle other statements (e.g., expression statements)

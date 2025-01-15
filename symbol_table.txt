@@ -1,4 +1,5 @@
 Lexical Analysis of syntax.shs:
+Lexical Analysis of syntax.shs:
 
 Line 1: Lexeme: toptier         Token: TOPTIER
 Line 1: Lexeme: (               Token: DELIM_O_PAREN
