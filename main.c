@@ -129,9 +129,89 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
     }
 
     if (state == 1) {
-        if (checkKeyword(sheeshLexeme)) {
-            return newToken(sheeshLexeme, KEYWORD, sheeshLine);
+
+        for (int i = 0; (ch = sheeshLexeme[i]) != '\0'; i++) {
+        TokenType keyword = checkKeyword(sheeshLexeme);
+
+        // Print the result
+        switch (keyword) {
+            case BOUNCE:
+                return newToken(sheeshLexeme, BOUNCE, sheeshLine);
+            case CAR:
+                return newToken(sheeshLexeme, CAR, sheeshLine);
+            case DO:
+                return newToken(sheeshLexeme, DO, sheeshLine);
+            case DRIFT:
+                return newToken(sheeshLexeme, DRIFT, sheeshLine);
+            case EMPTY:
+                return newToken(sheeshLexeme, EMPTY, sheeshLine);
+            case EX:
+                return newToken(sheeshLexeme, EX, sheeshLine);
+            case FLIP:
+                return newToken(sheeshLexeme, FLIP, sheeshLine);
+            case FROZEN:
+                return newToken(sheeshLexeme, FROZEN, sheeshLine);
+            case GROUP:
+                return newToken(sheeshLexeme, GROUP, sheeshLine);
+            case IF:
+                return newToken(sheeshLexeme, IF, sheeshLine);
+            case INPUT:
+                return newToken(sheeshLexeme, INPUT, sheeshLine);
+            case JUMP:
+                return newToken(sheeshLexeme, JUMP, sheeshLine);
+            case LEGIT:
+                return newToken(sheeshLexeme, LEGIT, sheeshLine);
+            case LOCKED:
+                return newToken(sheeshLexeme, LOCKED, sheeshLine);
+            case LOCKIN:
+                return newToken(sheeshLexeme, LOCKIN, sheeshLine);
+            case LONG:
+                return newToken(sheeshLexeme, LONG, sheeshLine);
+            case MEANWHILE:
+                return newToken(sheeshLexeme, MEANWHILE, sheeshLine);
+            case NICKNAME:
+                return newToken(sheeshLexeme, NICKNAME, sheeshLine);
+            case NUM:
+                return newToken(sheeshLexeme, NUM, sheeshLine);
+            case OPEN:
+                return newToken(sheeshLexeme, OPEN, sheeshLine);
+            case OTHER:
+                return newToken(sheeshLexeme, OTHER, sheeshLine);
+            case OUT:
+                return newToken(sheeshLexeme, OUT, sheeshLine);
+            case OUTSIDE:
+                return newToken(sheeshLexeme, OUTSIDE, sheeshLine);
+            case PL:
+                return newToken(sheeshLexeme, PL, sheeshLine);
+            case REP:
+                return newToken(sheeshLexeme, REP, sheeshLine);
+            case SCENARIO:
+                return newToken(sheeshLexeme, SCENARIO, sheeshLine);
+            case SHORT:
+                return newToken(sheeshLexeme, SHORT, sheeshLine);
+            case STANDARD:
+                return newToken(sheeshLexeme, STANDARD, sheeshLine);
+            case STOP:
+                return newToken(sheeshLexeme, STOP, sheeshLine);
+            case TEAM:
+                return newToken(sheeshLexeme, TEAM, sheeshLine);
+            case TEXT:
+                return newToken(sheeshLexeme, TEXT, sheeshLine);
+            case VIBE:
+                return newToken(sheeshLexeme, VIBE, sheeshLine);
+            case PLAYLIST:
+                return newToken(sheeshLexeme, PLAYLIST, sheeshLine);
+            case REPEAT:
+                return newToken(sheeshLexeme, REPEAT, sheeshLine);
+            case OUTPUT:
+                return newToken(sheeshLexeme, OUTPUT, sheeshLine);
+            case EXTRA:
+                return newToken(sheeshLexeme, EXTRA, sheeshLine);
+            case OTHERWISE:
+                return newToken(sheeshLexeme, OTHERWISE, sheeshLine);
+
         }
+    }
 
         if (checkReservedWord(sheeshLexeme)) {
             if (strcmp(sheeshLexeme, "cap") == 0 || strcmp(sheeshLexeme, "nocap") == 0) {
@@ -396,26 +476,80 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         }
         
         if (isalpha(sheeshLine[i]) || (ispunct(sheeshLine[i]) && sheeshLine[i] != '.')) {
-            temp[tempMarker++] = sheeshLine[i];
-            while ((isalnum(sheeshLine[i + 1]) || ispunct(sheeshLine[i + 1])) && !(strchr("+-*/%=!<>&|^()\"{}[];,", sheeshLine[i + 1]))) {
-                temp[tempMarker++] = sheeshLine[++i];
-            }
-            temp[tempMarker] = '\0';
+    temp[tempMarker++] = sheeshLine[i];
+    while ((isalnum(sheeshLine[i + 1]) || ispunct(sheeshLine[i + 1])) && 
+           !(strchr("+-*/%=!<>&|^()\"{}[];,", sheeshLine[i + 1]))) {
+        temp[tempMarker++] = sheeshLine[++i];
+    }
+    temp[tempMarker] = '\0'; // Null-terminate the lexeme
 
-            if (checkKeyword(temp)) {
-                Token token = newToken(temp, KEYWORD, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %-15s\n", token.sheeshLine, token.value, token.value);
-                 
-            } else if (checkReservedWord(temp)) {
-                if ((strcmp(temp, "cap") != 0) && (strcmp(temp, "nocap") != 0)) {
-                    Token token = newToken(temp, RESERVED_WORD, sheeshColumn);
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, token.value);
-                    
-                } else {
-                    Token token = newToken(temp, CONSTANT_LEGIT, sheeshColumn);
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                    
-                }
+    TokenType keyword = checkKeyword(temp);
+    Token token; // Declare the Token structure
+
+    TokenType reservedWord = checkReservedWord(temp);
+    Token rwToken;
+
+    if (keyword) { // If keyword is valid
+        switch (keyword) {
+            case BOUNCE:    token = newToken(temp, BOUNCE, sheeshColumn); break;
+            case CAR:       token = newToken(temp, CAR, sheeshColumn); break;
+            case DO:        token = newToken(temp, DO, sheeshColumn); break;
+            case DRIFT:     token = newToken(temp, DRIFT, sheeshColumn); break;
+            case EMPTY:     token = newToken(temp, EMPTY, sheeshColumn); break;
+            case EX:        token = newToken(temp, EX, sheeshColumn); break;
+            case FLIP:      token = newToken(temp, FLIP, sheeshColumn); break;
+            case FROZEN:    token = newToken(temp, FROZEN, sheeshColumn); break;
+            case GROUP:     token = newToken(temp, GROUP, sheeshColumn); break;
+            case IF:        token = newToken(temp, IF, sheeshColumn); break;
+            case INPUT:     token = newToken(temp, INPUT, sheeshColumn); break;
+            case JUMP:      token = newToken(temp, JUMP, sheeshColumn); break;
+            case LEGIT:     token = newToken(temp, LEGIT, sheeshColumn); break;
+            case LOCKED:    token = newToken(temp, LOCKED, sheeshColumn); break;
+            case LOCKIN:    token = newToken(temp, LOCKIN, sheeshColumn); break;
+            case LONG:      token = newToken(temp, LONG, sheeshColumn); break;
+            case MEANWHILE: token = newToken(temp, MEANWHILE, sheeshColumn); break;
+            case NICKNAME:  token = newToken(temp, NICKNAME, sheeshColumn); break;
+            case NUM:       token = newToken(temp, NUM, sheeshColumn); break;
+            case OPEN:      token = newToken(temp, OPEN, sheeshColumn); break;
+            case OTHER:     token = newToken(temp, OTHER, sheeshColumn); break;
+            case OUT:       token = newToken(temp, OUT, sheeshColumn); break;
+            case OUTSIDE:   token = newToken(temp, OUTSIDE, sheeshColumn); break;
+            case PL:        token = newToken(temp, PL, sheeshColumn); break;
+            case REP:       token = newToken(temp, REP, sheeshColumn); break;
+            case SCENARIO:  token = newToken(temp, SCENARIO, sheeshColumn); break;
+            case SHORT:     token = newToken(temp, SHORT, sheeshColumn); break;
+            case STANDARD:  token = newToken(temp, STANDARD, sheeshColumn); break;
+            case STOP:      token = newToken(temp, STOP, sheeshColumn); break;
+            case TEAM:      token = newToken(temp, TEAM, sheeshColumn); break;
+            case TEXT:      token = newToken(temp, TEXT, sheeshColumn); break;
+            case VIBE:      token = newToken(temp, VIBE, sheeshColumn); break;
+            case PLAYLIST:  token = newToken(temp, PLAYLIST, sheeshColumn); break;
+            case REPEAT:    token = newToken(temp, REPEAT, sheeshColumn); break;
+            case OUTPUT:    token = newToken(temp, OUTPUT, sheeshColumn); break;
+            case EXTRA:     token = newToken(temp, EXTRA, sheeshColumn); break;
+            case OTHERWISE: token = newToken(temp, OTHERWISE, sheeshColumn); break;
+            default:        token = newToken(temp, IDENTIFIER, sheeshColumn); break;
+        }
+
+                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %-15s\n", token.sheeshLine, token.value, typeToString(token.type));
+    }   else if (reservedWord) {
+        TokenType reservedWord = checkReservedWord(temp);
+    Token rwToken; // Declare the Token structure
+
+    if (reservedWord) { // If keyword is valid
+        switch (reservedWord) {
+            case ALWAYS:    rwToken = newToken(temp, ALWAYS, sheeshColumn); break;
+            case CAP:       rwToken = newToken(temp, CONSTANT_LEGIT, sheeshColumn); break;
+            case CONT:        rwToken = newToken(temp, CONT, sheeshColumn); break;
+            case NOCAP:       rwToken = newToken(temp, CONSTANT_LEGIT, sheeshColumn); break;
+            case TOPTIER:     rwToken = newToken(temp, TOPTIER, sheeshColumn); break;
+            case TOP:       rwToken = newToken(temp, TOPTIER, sheeshColumn); break;
+            default:        rwToken = newToken(temp, IDENTIFIER, sheeshColumn); break;
+        }
+        
+        fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", rwToken.sheeshLine, rwToken.value, typeToString(rwToken.type));
+
+        }
             } else if (checkNoiseWord(temp)) {
                 Token token = newToken(temp, NOISE_WORD, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
@@ -567,9 +701,9 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
 
 ASTNode* parseProgram() {
     printf("Entering parseProgram\n");
-    if (currentToken.type == RESERVED_WORD && strcmp(currentToken.value, "toptier") == 0) {
+    if (currentToken.type == TOPTIER) {
         printf("Matched toptier\n");
-        ASTNode *node = newNode("program");
+        ASTNode *node = newNode("<program>");
         nextToken();
         if (currentToken.type == DELIM_O_PAREN) {
             printf("Matched opening parenthesis\n");
@@ -619,10 +753,8 @@ ASTNode* parseStmts() {
 
     while (currentToken.type != DELIM_C_BRACE && currentToken.type != INVALID) {
         // Check for a declaration statement first (i.e., when we encounter a data type like "num")
-        if (strcmp(currentToken.value, "num") == 0 || strcmp(currentToken.value, "drift") == 0 || 
-            strcmp(currentToken.value, "vibe") == 0 || strcmp(currentToken.value, "text") == 0 || 
-            strcmp(currentToken.value, "short") == 0 || strcmp(currentToken.value, "long") == 0 || 
-            strcmp(currentToken.value, "legit") == 0) {
+        if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT || currentToken.type == SHORT
+        || currentToken.type == LONG || currentToken.type == LEGIT) {
             
             ASTNode *declNode = parseDecStmt();  // Parse a declaration statement
             if (!node) {
@@ -631,7 +763,7 @@ ASTNode* parseStmts() {
                 current->right = declNode;  // Chain subsequent statements
             }
             current = declNode;  // Move to the latest statement
-        } else if (strcmp(currentToken.value, "rep") == 0 || strcmp(currentToken.value, "meanwhile") == 0 || strcmp(currentToken.value, "while") == 0 || strcmp(currentToken.value, "do") == 0) {
+        } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
             ASTNode *iterativeNode = parseIterativeStmt();  // Parse a declaration statement
             if (!node) {
                 node = iterativeNode;  // First statement becomes the root
@@ -1104,10 +1236,8 @@ ASTNode* parseDataType() {
     // <data_type> ::= "num" | "drift" | "vibe" | "text" | "short" | "long" | "legit"
     ASTNode* dtNode = newNode("<data_type>");
 
-    if (strcmp(currentToken.value, "num") == 0 || strcmp(currentToken.value, "drift") == 0 || 
-        strcmp(currentToken.value, "vibe") == 0 || strcmp(currentToken.value, "text") == 0 || 
-        strcmp(currentToken.value, "short") == 0 || strcmp(currentToken.value, "long") == 0 || 
-        strcmp(currentToken.value, "legit") == 0) {
+    if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT || currentToken.type == SHORT
+        || currentToken.type == LONG || currentToken.type == LEGIT) {
         dtNode->left = newNode(currentToken.value);
         nextToken();  // Consume the data type
         return dtNode;
@@ -1128,7 +1258,6 @@ ASTNode* parseInitialization() {
     if (currentToken.type == IDENTIFIER) {
         ASTNode* idNode = newNode(currentToken.value);
         printf("Identifier: %s\n", currentToken.value);
-        initNode->left = idNode;
         nextToken();  // Consume the identifier
 
         printf("Token Type: %d, Token Value: %s\n", currentToken.type, currentToken.value);
@@ -1140,12 +1269,12 @@ ASTNode* parseInitialization() {
             printf("Enter ASSIGNMENT_OPE check in parseInitialization\n");
             ASTNode* exprNode = parseExpr();  // Ensure parseExpr can correctly handle the expression
             printf("Expression: %s\n", exprNode->value);
-            initNode->right = assignNode;  // Set the assignment node on the right of the initialization node
-            initNode->right->left = exprNode;
+            initNode->left = assignNode;  // Set the assignment node on the right of the initialization node
+            initNode->right = exprNode;
 
             return initNode;
         } else {
-            initNode->right = idNode;  // In case there's no assignment operator, treat IDENTIFIER as a variable
+            initNode->left = idNode;  // In case there's no assignment operator, treat IDENTIFIER as a variable
             return initNode;
         }
     }
@@ -1238,6 +1367,7 @@ ASTNode* parseAssignStmt() {
         ASTNode *node = newNode("assign_stmt");
         node->left = newNode(currentToken.value);
         nextToken();
+
         if (currentToken.type == ASSIGNMENT_OPE) {
             node->right = newNode(currentToken.value);
             nextToken();
@@ -1288,14 +1418,14 @@ ASTNode* parseIterativeStmt() {
     printf("Entering iterative statements\n");
     ASTNode* node = newNode("<iterative_stmt>");
 
-    if (currentToken.type == KEYWORD && strcmp(currentToken.value, "rep") == 0) {
+    if (currentToken.type == REP) {
         ASTNode *loopNode = parseRepLoop();
         node->left = loopNode;
-    } else if (currentToken.type == KEYWORD && strcmp(currentToken.value, "do") == 0) {
+    } else if (currentToken.type == DO) {
         ASTNode *loopNode = newNode("dmw_loop");
         // Add parsing logic for mw_loop
         node->left = parseDmwLoop();
-    } else if (currentToken.type == KEYWORD && (strcmp(currentToken.value, "meanwhile") == 0 || strcmp(currentToken.value, "while") == 0)) {
+    } else if (currentToken.type == MEANWHILE) {
         ASTNode *loopNode = newNode("mw_loop");
         // Add parsing logic for mw_loop
         node->left = parseMwLoop();
@@ -1310,7 +1440,7 @@ ASTNode* parseIterativeStmt() {
 ASTNode* parseRepLoop() {
     ASTNode* node = newNode("<rep_loop>");
 
-    if (currentToken.type == KEYWORD && strcmp(currentToken.value, "rep") == 0) {
+    if (currentToken.type == REP) {
         ASTNode* loopNode = newNode(currentToken.value);
         node->left = loopNode;
         nextToken();  // Consume 'rep'
@@ -1365,10 +1495,8 @@ ASTNode* parseRepLoop() {
 ASTNode* parseLoopInitial() {
     ASTNode* node = newNode("<loop_initial>");
 
-    if (strcmp(currentToken.value, "num") == 0 || strcmp(currentToken.value, "drift") == 0 || 
-        strcmp(currentToken.value, "vibe") == 0 || strcmp(currentToken.value, "text") == 0 || 
-        strcmp(currentToken.value, "short") == 0 || strcmp(currentToken.value, "long") == 0 || 
-        strcmp(currentToken.value, "legit") == 0) {
+    if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT || currentToken.type == SHORT
+        || currentToken.type == LONG || currentToken.type == LEGIT) {
         node->left = parseDecStmt();
         nextToken();  // Consume the data type
     } else if (currentToken.type == IDENTIFIER) {
@@ -1408,7 +1536,7 @@ ASTNode* parseMwLoop() {
     ASTNode* node = newNode("<mw_loop>");
     printf("Parsing 'meanwhile' loop. Current token: %s\n", currentToken.value);
 
-    if (currentToken.type == KEYWORD && strcmp(currentToken.value, "meanwhile") == 0) {
+    if (currentToken.type == MEANWHILE) {
         nextToken(); // Consume "meanwhile"
         printf("Consumed 'meanwhile'. Next token: %s\n", currentToken.value);
 
@@ -1460,7 +1588,7 @@ ASTNode* parseDmwLoop() {
     ASTNode* node = newNode("<dmw_loop>");
     printf("Parsing 'do-meanwhile' loop\n");
 
-    if (currentToken.type == KEYWORD && strcmp(currentToken.value, "do") == 0) {
+    if (strcmp(currentToken.value, "do") == 0) {
         nextToken(); // Consume "do"
 
         if (currentToken.type == DELIM_O_BRACE) {
@@ -1473,7 +1601,7 @@ ASTNode* parseDmwLoop() {
             }
             nextToken(); // Consume '}'
 
-            if (currentToken.type == KEYWORD && strcmp(currentToken.value, "meanwhile") == 0) {
+            if (currentToken.type == MEANWHILE) {
                 nextToken(); // Consume "meanwhile"
 
                 if (currentToken.type == DELIM_O_PAREN) {

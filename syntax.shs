@@ -25,10 +25,8 @@ toptier() {
     -(5 - 2);
     integer = 10;
     drift a;
-    legit a, b;
     legit a = nocap;
     drift initialization = 5.5;
-    num a, b = 1;
     a += 1;
     vibe a += 1;
     identifier++;

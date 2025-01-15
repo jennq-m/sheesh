@@ -30,7 +30,50 @@ typedef enum {
     CONSTANT_TEXT, 
     CONSTANT_TXTFS,
     CONSTANT_VIBE,
-    CONSTANT_LEGIT
+    CONSTANT_LEGIT,
+    BOUNCE,
+    CAR,
+    DO,
+    DRIFT,
+    EMPTY,
+    EX,
+    FLIP,
+    FROZEN,
+    GROUP,
+    IF,
+    INPUT,
+    JUMP,
+    LEGIT,
+    LOCKED,
+    LOCKIN,
+    LONG,
+    MEANWHILE,
+    NICKNAME,
+    NUM,
+    OPEN,
+    OTHER,
+    OUT,
+    OUTSIDE,
+    PL,
+    REP,
+    SCENARIO,
+    SHORT,
+    STANDARD,
+    STOP,
+    TEAM,
+    TEXT,
+    VIBE,
+    ALWAYS,
+    CAP,
+    CONT,
+    NOCAP,
+    PLAYLIST,
+    REPEAT,
+    TOPTIER,
+    OUTPUT,
+    TOP,
+    EXTRA,
+    OTHERWISE
 } TokenType;
 
 //Holding attributes of TOKEN
@@ -49,8 +92,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshLineNum);
 
 //Declaration of Function Prototype
 int checkFilename(int argc, char *argv);
-int checkKeyword(const char *sheeshLexeme);
-int checkReservedWord(const char *sheeshLexeme);
 int checkNoiseWord(const char *sheeshLexeme);
 int checkAssignment(const char *sheeshLexeme);
 int checkLogical(const char *sheeshLexeme);
@@ -111,6 +152,70 @@ char *typeToString(TokenType type) {
             return "CONSTANT_VIBE";
         case CONSTANT_LEGIT:
             return "CONSTANT_LEGIT";
+        case BOUNCE:    
+            case CAR:       
+            case DO:        
+            case DRIFT:     
+            case EMPTY:     
+            case EX:        
+            case FLIP:      
+            case FROZEN:    
+            case GROUP:     
+            case IF:        
+            case INPUT:     
+            case JUMP:      
+            case LEGIT:     
+            case LOCKED:    
+            case LOCKIN:    
+            case LONG:      
+            case MEANWHILE: 
+            case NICKNAME:  
+            case NUM:       
+            return "NUM";
+            case OPEN:      
+            return "OPEN";
+            case OTHER:   
+            return "OTHER";  
+            case OUT:      
+            return "OUT"; 
+            case OUTSIDE:
+            return "OUTSIDE";   
+            case PL:        
+            return "PL";
+            case REP:   
+            return "REP";    
+            case SCENARIO:
+            return "SCENARIO";  
+            case SHORT:     
+            return "SHORT";
+            case STANDARD: 
+            return "STANDARD"; 
+            case STOP:      
+            return "STOP";
+            case TEAM:    
+            return "TEAM";  
+            case TEXT:    
+            return "TEXT";  
+            case VIBE:    
+            return "VIBE";  
+            case PLAYLIST:
+            return "PLAYLIST";  
+            case REPEAT:    
+            return "REPEAT";
+            case OUTPUT:    
+            return "OUTPUT";
+            case EXTRA:     
+            return "EXTRA";
+            case OTHERWISE:
+            return "OTHERWISE"; 
+        case ALWAYS:    
+            return "ALWAYS";
+        case CONT:
+            return "CONT";
+        case TOPTIER:
+            return "TOPTIER";
+        case TOP: 
+            return "TOPTIER";
         case INVALID: 
             return "INVALID";
         default: 
