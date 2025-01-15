@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    FILE *outputSheesh = fopen("test.txt", "w");
+    FILE *outputSheesh = fopen("symbol_table.txt", "w");
     if (!outputSheesh) {
         perror("Error opening output file");
         fclose(file);
@@ -41,17 +41,20 @@ int main(int argc, char *argv[]) {
         sheeshColumn++;
     }
 
-    printf("\nTotal Tokens Created: %d\n", tokenCount);
-    for (int i = 0; i < tokenCount; i++) {
-        printf("Token %d: Lexeme: %-15s Token Type: %s\n", i + 1, allTokens[i].value, typeToString(allTokens[i].type));
+    FILE *outputParser = fopen("parse_tree.txt", "w");
+    if (!outputParser) {
+        perror("Error opening output file");
+        fclose(file);
+        return 1;
     }
 
-    parse();
+    parse(outputParser);
 
     fclose(file);
     fclose(outputSheesh);
+    fclose(outputParser);
 
-    printf("See symbolTable.txt for lexical analysis.\n");
+    printf("See symbol_table.txt for lexical analysis.\n");
     return 0;
 }
 
@@ -84,12 +87,8 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
                     state = 1;
                 } else if (isdigit(ch) || ch == '.') { 
                     state = 2; 
-                } else if (ch == '\'' || ch == '"') {
-                    state = 3; 
                 } else if (strchr("+-*/%=!<>&|^$", ch)) { 
                     state = 4; 
-                } else if (strchr(",;(){}[]", ch)) { 
-                    state = 5; 
                 } else if (ch == '/' && sheeshLexeme[i + 1] == '/') { 
                     return newToken(sheeshLexeme, COMMENT, sheeshLine); 
                 } else if (ch == '/' && sheeshLexeme[i + 1] == '*') { 
@@ -120,14 +119,6 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
                 }
 
                 break;
-
-            case 3:
-                if (ch == '\'' || ch == '"') {
-                    return newToken(sheeshLexeme, CONSTANT, sheeshLine);
-                }
-
-                break;
-
             case 4:
                 if (strchr("+-*/%=!<>&|^$", ch)) {
                     state = 4;
@@ -138,13 +129,93 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
     }
 
     if (state == 1) {
-        if (checkKeyword(sheeshLexeme)) {
-            return newToken(sheeshLexeme, KEYWORD, sheeshLine);
+
+        for (int i = 0; (ch = sheeshLexeme[i]) != '\0'; i++) {
+        TokenType keyword = checkKeyword(sheeshLexeme);
+
+        // Print the result
+        switch (keyword) {
+            case BOUNCE:
+                return newToken(sheeshLexeme, BOUNCE, sheeshLine);
+            case CAR:
+                return newToken(sheeshLexeme, CAR, sheeshLine);
+            case DO:
+                return newToken(sheeshLexeme, DO, sheeshLine);
+            case DRIFT:
+                return newToken(sheeshLexeme, DRIFT, sheeshLine);
+            case EMPTY:
+                return newToken(sheeshLexeme, EMPTY, sheeshLine);
+            case EX:
+                return newToken(sheeshLexeme, EX, sheeshLine);
+            case FLIP:
+                return newToken(sheeshLexeme, FLIP, sheeshLine);
+            case FROZEN:
+                return newToken(sheeshLexeme, FROZEN, sheeshLine);
+            case GROUP:
+                return newToken(sheeshLexeme, GROUP, sheeshLine);
+            case IF:
+                return newToken(sheeshLexeme, IF, sheeshLine);
+            case INPUT:
+                return newToken(sheeshLexeme, INPUT, sheeshLine);
+            case JUMP:
+                return newToken(sheeshLexeme, JUMP, sheeshLine);
+            case LEGIT:
+                return newToken(sheeshLexeme, LEGIT, sheeshLine);
+            case LOCKED:
+                return newToken(sheeshLexeme, LOCKED, sheeshLine);
+            case LOCKIN:
+                return newToken(sheeshLexeme, LOCKIN, sheeshLine);
+            case LONG:
+                return newToken(sheeshLexeme, LONG, sheeshLine);
+            case MEANWHILE:
+                return newToken(sheeshLexeme, MEANWHILE, sheeshLine);
+            case NICKNAME:
+                return newToken(sheeshLexeme, NICKNAME, sheeshLine);
+            case NUM:
+                return newToken(sheeshLexeme, NUM, sheeshLine);
+            case OPEN:
+                return newToken(sheeshLexeme, OPEN, sheeshLine);
+            case OTHER:
+                return newToken(sheeshLexeme, OTHER, sheeshLine);
+            case OUT:
+                return newToken(sheeshLexeme, OUT, sheeshLine);
+            case OUTSIDE:
+                return newToken(sheeshLexeme, OUTSIDE, sheeshLine);
+            case PL:
+                return newToken(sheeshLexeme, PL, sheeshLine);
+            case REP:
+                return newToken(sheeshLexeme, REP, sheeshLine);
+            case SCENARIO:
+                return newToken(sheeshLexeme, SCENARIO, sheeshLine);
+            case SHORT:
+                return newToken(sheeshLexeme, SHORT, sheeshLine);
+            case STANDARD:
+                return newToken(sheeshLexeme, STANDARD, sheeshLine);
+            case STOP:
+                return newToken(sheeshLexeme, STOP, sheeshLine);
+            case TEAM:
+                return newToken(sheeshLexeme, TEAM, sheeshLine);
+            case TEXT:
+                return newToken(sheeshLexeme, TEXT, sheeshLine);
+            case VIBE:
+                return newToken(sheeshLexeme, VIBE, sheeshLine);
+            case PLAYLIST:
+                return newToken(sheeshLexeme, PLAYLIST, sheeshLine);
+            case REPEAT:
+                return newToken(sheeshLexeme, REPEAT, sheeshLine);
+            case OUTPUT:
+                return newToken(sheeshLexeme, OUTPUT, sheeshLine);
+            case EXTRA:
+                return newToken(sheeshLexeme, EXTRA, sheeshLine);
+            case OTHERWISE:
+                return newToken(sheeshLexeme, OTHERWISE, sheeshLine);
+
         }
+    }
 
         if (checkReservedWord(sheeshLexeme)) {
-            if (!(strcmp(sheeshLexeme, "cap")) || !(strcmp(sheeshLexeme, "nocap"))) {
-                return newToken(sheeshLexeme, CONSTANDRESERVED, sheeshLine);
+            if (strcmp(sheeshLexeme, "cap") == 0 || strcmp(sheeshLexeme, "nocap") == 0) {
+                return newToken(sheeshLexeme, CONSTANT_LEGIT, sheeshLine);
             }
             else {
                 return newToken(sheeshLexeme, RESERVED_WORD, sheeshLine);
@@ -174,9 +245,9 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
     } else if (state == 3) {
         switch(ch) {
             case '\'':
-                return newToken(sheeshLexeme, CONSTANT_TEXT, sheeshLine);
+                return newToken(sheeshLexeme, CONSTANT_VIBE, sheeshLine);
             case '"':
-                return newToken(sheeshLexeme, CONSTANT_VIBE, sheeshLine);    
+                return newToken(sheeshLexeme, CONSTANT_TEXT, sheeshLine);    
         }
         return newToken(sheeshLexeme, CONSTANT_TEXT, sheeshLine);
     } else if (state == 4) {
@@ -210,6 +281,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
     int characterConstant = 0;
     char temp[256];
     int tempMarker = 0;
+    int hasFormatSpecifier = 0;
 
     for (int i = 0; sheeshLine[i] != '\0'; i++) {
 
@@ -225,10 +297,22 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
 
         if (stringLiteral) {
             temp[tempMarker++] = sheeshLine[i];
+            if (sheeshLine[i] == '%' && strchr("dfsc", sheeshLine[i + 1])) {
+                hasFormatSpecifier = 1;
+            }
+
             if (sheeshLine[i] == '"') {
                 temp[tempMarker] = '\0';
-                Token token = newToken(temp, CONSTANT_TEXT, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+
+                if (!hasFormatSpecifier) {
+                    Token token = newToken(temp, CONSTANT_TEXT, sheeshColumn);
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                }
+                else { 
+                    Token token = newToken(temp, CONSTANT_TXTFS, sheeshColumn);
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                }
+
                 tempMarker = 0;
                 stringLiteral = 0;
             }
@@ -248,7 +332,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 } else {
                     temp[tempMarker] = '\0';
                     if (tempMarker <= 2) {
-                        Token token = newToken(temp, DELIMITER_QUOTATION, sheeshColumn);
+                        Token token = newToken(temp, DELIM_QUOTATION, sheeshColumn);
                         fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
                     }
                     else {
@@ -267,27 +351,12 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         }
 
         if (sheeshLine[i] == '"') {
-            if (tempMarker > 0) {
-                temp[tempMarker] = '\0';
-                Token token = sheeshLexer(temp, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                tempMarker = 0;
-            }
-
             stringLiteral = 1;
             temp[tempMarker++] = sheeshLine[i];
             continue;
         }
 
         if (sheeshLine[i] == '\'') {
-            if (tempMarker > 0) {
-                temp[tempMarker] = '\0';
-                Token token = sheeshLexer(temp, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                
-                tempMarker = 0;
-            }
-
             characterConstant = 1;
             temp[tempMarker++] = sheeshLine[i];
             continue;
@@ -326,7 +395,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 (sheeshLine[i] == '*' && sheeshLine[i+1] == '=') ||   
                 (sheeshLine[i] == '/' && sheeshLine[i+1] == '=') ||   
                 (sheeshLine[i] == '%' && sheeshLine[i+1] == '=') ||
-                (sheeshLine[i] == '^' && sheeshLine[i+1] == '=') ||
                 (sheeshLine[i] == '|' && sheeshLine[i+1] == '=')) {   
                 
                 if (tempMarker > 0) {
@@ -338,9 +406,8 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 }
 
                 Token token = sheeshLexer(lookAhead, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                
-                
+                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, token.value);
+ 
                 i++;  
                 continue;
             }
@@ -356,7 +423,7 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
 
             char op[2] = {sheeshLine[i], '\0'};
             Token token = sheeshLexer(op, sheeshColumn);
-            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, token.value);
             
             continue;
         }
@@ -365,28 +432,28 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         TokenType delimiter;
         switch (sheeshLine[i]) {
             case ',':
-                delimiter = DELIMITER_COMMA;
+                delimiter = DELIM_COMMA;
                 break;
             case ';':
-                delimiter = DELIMITER_SEMICOLON;
+                delimiter = DELIM_SEMCOL;
                 break;
             case '(':
-                delimiter = DELIMITER_O_PARENTHESIS;
+                delimiter = DELIM_O_PAREN;
                 break;
             case ')':
-                delimiter = DELIMITER_C_PARENTHESIS;
+                delimiter = DELIM_C_PAREN;
                 break;
             case '[':
-                delimiter = DELIMITER_O_BRACKET;
+                delimiter = DELIM_O_BRCKT;
                 break;
             case ']':
-                delimiter = DELIMITER_C_BRACKET;
+                delimiter = DELIM_C_BRCKT;
                 break;
             case '{':
-                delimiter = DELIMITER_O_BRACE;
+                delimiter = DELIM_O_BRACE;
                 break;
             case '}':
-                delimiter = DELIMITER_C_BRACE;
+                delimiter = DELIM_C_BRACE;
                 break;
             default:
                 delimiter = INVALID;
@@ -409,26 +476,80 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         }
         
         if (isalpha(sheeshLine[i]) || (ispunct(sheeshLine[i]) && sheeshLine[i] != '.')) {
-            temp[tempMarker++] = sheeshLine[i];
-            while ((isalnum(sheeshLine[i + 1]) || ispunct(sheeshLine[i + 1])) && !(strchr("+-*/%=!<>&|^()\"{}[];,", sheeshLine[i + 1]))) {
-                temp[tempMarker++] = sheeshLine[++i];
-            }
-            temp[tempMarker] = '\0';
+    temp[tempMarker++] = sheeshLine[i];
+    while ((isalnum(sheeshLine[i + 1]) || ispunct(sheeshLine[i + 1])) && 
+           !(strchr("+-*/%=!<>&|^()\"{}[];,", sheeshLine[i + 1]))) {
+        temp[tempMarker++] = sheeshLine[++i];
+    }
+    temp[tempMarker] = '\0'; // Null-terminate the lexeme
 
-            if (checkKeyword(temp)) {
-                Token token = newToken(temp, KEYWORD, sheeshColumn);
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                 
-            } else if (checkReservedWord(temp)) {
-                if (!(strcmp(temp, "cap")) || !(strcmp(temp, "nocap"))) {
-                    Token token = newToken(temp, CONSTANDRESERVED, sheeshColumn);
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                    
-                } else {
-                    Token token = newToken(temp, RESERVED_WORD, sheeshColumn);
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                    
-                }
+    TokenType keyword = checkKeyword(temp);
+    Token token; // Declare the Token structure
+
+    TokenType reservedWord = checkReservedWord(temp);
+    Token rwToken;
+
+    if (keyword) { // If keyword is valid
+        switch (keyword) {
+            case BOUNCE:    token = newToken(temp, BOUNCE, sheeshColumn); break;
+            case CAR:       token = newToken(temp, CAR, sheeshColumn); break;
+            case DO:        token = newToken(temp, DO, sheeshColumn); break;
+            case DRIFT:     token = newToken(temp, DRIFT, sheeshColumn); break;
+            case EMPTY:     token = newToken(temp, EMPTY, sheeshColumn); break;
+            case EX:        token = newToken(temp, EX, sheeshColumn); break;
+            case FLIP:      token = newToken(temp, FLIP, sheeshColumn); break;
+            case FROZEN:    token = newToken(temp, FROZEN, sheeshColumn); break;
+            case GROUP:     token = newToken(temp, GROUP, sheeshColumn); break;
+            case IF:        token = newToken(temp, IF, sheeshColumn); break;
+            case INPUT:     token = newToken(temp, INPUT, sheeshColumn); break;
+            case JUMP:      token = newToken(temp, JUMP, sheeshColumn); break;
+            case LEGIT:     token = newToken(temp, LEGIT, sheeshColumn); break;
+            case LOCKED:    token = newToken(temp, LOCKED, sheeshColumn); break;
+            case LOCKIN:    token = newToken(temp, LOCKIN, sheeshColumn); break;
+            case LONG:      token = newToken(temp, LONG, sheeshColumn); break;
+            case MEANWHILE: token = newToken(temp, MEANWHILE, sheeshColumn); break;
+            case NICKNAME:  token = newToken(temp, NICKNAME, sheeshColumn); break;
+            case NUM:       token = newToken(temp, NUM, sheeshColumn); break;
+            case OPEN:      token = newToken(temp, OPEN, sheeshColumn); break;
+            case OTHER:     token = newToken(temp, OTHER, sheeshColumn); break;
+            case OUT:       token = newToken(temp, OUT, sheeshColumn); break;
+            case OUTSIDE:   token = newToken(temp, OUTSIDE, sheeshColumn); break;
+            case PL:        token = newToken(temp, PL, sheeshColumn); break;
+            case REP:       token = newToken(temp, REP, sheeshColumn); break;
+            case SCENARIO:  token = newToken(temp, SCENARIO, sheeshColumn); break;
+            case SHORT:     token = newToken(temp, SHORT, sheeshColumn); break;
+            case STANDARD:  token = newToken(temp, STANDARD, sheeshColumn); break;
+            case STOP:      token = newToken(temp, STOP, sheeshColumn); break;
+            case TEAM:      token = newToken(temp, TEAM, sheeshColumn); break;
+            case TEXT:      token = newToken(temp, TEXT, sheeshColumn); break;
+            case VIBE:      token = newToken(temp, VIBE, sheeshColumn); break;
+            case PLAYLIST:  token = newToken(temp, PLAYLIST, sheeshColumn); break;
+            case REPEAT:    token = newToken(temp, REPEAT, sheeshColumn); break;
+            case OUTPUT:    token = newToken(temp, OUTPUT, sheeshColumn); break;
+            case EXTRA:     token = newToken(temp, EXTRA, sheeshColumn); break;
+            case OTHERWISE: token = newToken(temp, OTHERWISE, sheeshColumn); break;
+            default:        token = newToken(temp, IDENTIFIER, sheeshColumn); break;
+        }
+
+                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %-15s\n", token.sheeshLine, token.value, typeToString(token.type));
+    }   else if (reservedWord) {
+        TokenType reservedWord = checkReservedWord(temp);
+    Token rwToken; // Declare the Token structure
+
+    if (reservedWord) { // If keyword is valid
+        switch (reservedWord) {
+            case ALWAYS:    rwToken = newToken(temp, ALWAYS, sheeshColumn); break;
+            case CAP:       rwToken = newToken(temp, CONSTANT_LEGIT, sheeshColumn); break;
+            case CONT:        rwToken = newToken(temp, CONT, sheeshColumn); break;
+            case NOCAP:       rwToken = newToken(temp, CONSTANT_LEGIT, sheeshColumn); break;
+            case TOPTIER:     rwToken = newToken(temp, TOPTIER, sheeshColumn); break;
+            case TOP:       rwToken = newToken(temp, TOPTIER, sheeshColumn); break;
+            default:        rwToken = newToken(temp, IDENTIFIER, sheeshColumn); break;
+        }
+        
+        fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", rwToken.sheeshLine, rwToken.value, typeToString(rwToken.type));
+
+        }
             } else if (checkNoiseWord(temp)) {
                 Token token = newToken(temp, NOISE_WORD, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
@@ -450,16 +571,10 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
         if (isdigit(sheeshLine[i]) || sheeshLine[i] == '.') {
             temp[tempMarker++] = sheeshLine[i];
         } else if (isspace(sheeshLine[i])) {
-           
             if (tempMarker > 0) {
                 temp[tempMarker] = '\0'; 
                 Token token = sheeshLexer(temp, sheeshColumn); 
-                if (token.type == CONSTANT) {
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                } else {
-                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                }
-                  
+                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
                 tempMarker = 0;  
             }
         } else {
@@ -470,8 +585,8 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
     if (tempMarker > 0) {
         temp[tempMarker] = '\0';
         if (stringLiteral || characterConstant) {
-            Token token = newToken(temp, DELIMITER_QUOTATION, sheeshColumn);
-            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: DELIMITER_QUOTATION\n", token.sheeshLine, token.value);
+            Token token = newToken(temp, DELIM_QUOTATION, sheeshColumn);
+            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: DELIM_QUOTATION\n", token.sheeshLine, token.value);
             
         } else {
             Token token = sheeshLexer(temp, sheeshColumn);
@@ -486,113 +601,1239 @@ typedef struct ASTNode {
     struct ASTNode *left, *right;
 } ASTNode;
 
-ASTNode* parseExpression();
-ASTNode* parseTerm();
-ASTNode* parseFactor();
+int tokenCount;
 Token currentToken;
 int currentIndex = 0;
+
+ASTNode* parseProgram();
+ASTNode* parseBody();
+ASTNode* parseStmts();
+ASTNode* parseExprStmt();
+ASTNode* parseExpr();
+ASTNode* parseAndExpr();
+ASTNode* parseEqualityExpr();
+ASTNode* parseRelationalExpr();
+ASTNode* parseAddSubExpr();
+ASTNode* parseMultDivExpr();
+ASTNode* parsePrimary();
+ASTNode* parseDecStmt();
+ASTNode* parseAssignStmt();
+ASTNode* parseCondStmt();
+ASTNode* parseIterativeStmt();
+ASTNode* parseUnaryVal();
+ASTNode* parseLiteral();
+ASTNode* parseNumVal();
+ASTNode* parseDriftVal();
+ASTNode* parseSign();
+ASTNode* parseUnaryOp();
+ASTNode* parseIdentExpr();
+ASTNode* parseDataType();
+ASTNode* parseVarList();
+ASTNode* parseInitialization();
+ASTNode* parseRepLoop();
+ASTNode* parseLoopInitial();
+ASTNode* parseUpdStmt();
+ASTNode* parseMwLoop();
+ASTNode* parseDmwLoop();
+ASTNode* parseInputStmt();
+ASTNode* parseInput();
+ASTNode* parseOutputStmt();
+ASTNode* parseOutput();
 
 void nextToken() {
     if (currentIndex < tokenCount) {
         currentToken = allTokens[currentIndex++];
+        printf("Next token: %s (%d)\n", currentToken.value, currentToken.type);
     } else {
+        printf("End of token stream\n");
         currentToken.value = NULL;
         currentToken.type = INVALID;
     }
 }
 
-ASTNode* parseExpression() {
-    ASTNode *left = parseTerm();
+void previousToken() {
+    if (currentIndex > 1) {
+        currentIndex--;
+        currentToken = allTokens[currentIndex - 1];
+        printf("Previous token: %s (%d)\n", currentToken.value, currentToken.type);
+    } else {
+        printf("Already at the start of the token stream\n");
+    }
+}
+
+ASTNode* newNode(const char *value) {
+    ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+    node->value = strdup(value);
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
+void printParseTree(ASTNode *node, int indent, FILE *file) {
+    if (!node) return;
+
+    // Print indentation
+    for (int i = 0; i < indent; i++) {
+        fprintf(file, "    "); // Write spaces to the file for indentation
+    }
+
+    // Check if the node has children
+    if (node->left || node->right) {
+        fprintf(file, "%s(\n", node->value); // Write the node's value with an opening parenthesis
+
+        // Recursively write left and right children
+        if (node->left) {
+            printParseTree(node->left, indent + 1, file);
+        }
+        if (node->right) {
+            printParseTree(node->right, indent + 1, file);
+        }
+
+        // Write the closing parenthesis with matching indentation
+        for (int i = 0; i < indent; i++) {
+            fprintf(file, "    ");
+        }
+        fprintf(file, ")\n");
+    } else {
+        // If the node has no children, just write the value
+        fprintf(file, "%s\n", node->value);
+    }
+}
+
+
+
+ASTNode* parseProgram() {
+    printf("Entering parseProgram\n");
+    if (currentToken.type == TOPTIER) {
+        printf("Matched toptier\n");
+        ASTNode *node = newNode("<program>");
+        nextToken();
+        if (currentToken.type == DELIM_O_PAREN) {
+            printf("Matched opening parenthesis\n");
+            nextToken();
+            if (currentToken.type == DELIM_C_PAREN) {
+                printf("Matched closing parenthesis\n");
+                nextToken();
+                if (currentToken.type == DELIM_O_BRACE) {
+                    printf("Matched opening brace\n");
+                    nextToken();
+                    node->left = parseBody();
+                    if (currentToken.type == DELIM_C_BRACE) {
+                        printf("Matched closing brace\n");
+                        nextToken();
+                        return node;
+                    } else {
+                        printf("Syntax error: Missing closing brace\n");
+                    }
+                } else {
+                    printf("Syntax error: Missing opening brace\n");
+                }
+            } else {
+                printf("Syntax error: Missing closing parenthesis\n");
+            }
+        } else {
+            printf("Syntax error: Missing opening parenthesis\n");
+        }
+    } else {
+        printf("Syntax error: Missing toptier keyword\n");
+    }
+    printf("Syntax error: Invalid program structure\n");
+    exit(1);
+}
+
+
+ASTNode* parseBody() {
+    printf("Entering parseBody\n");
+    ASTNode *node = newNode("body");
+    node->left = parseStmts();
+    return node;
+}
+ASTNode* parseStmts() {
+    printf("Entering parseStmts\n");
+    ASTNode *node = NULL;  // Root for statements
+    ASTNode *current = NULL;
+
+    while (currentToken.type != DELIM_C_BRACE && currentToken.type != INVALID) {
+        ASTNode *stmt = NULL;
+
+        // Check for conditional statements (if, if_other, ex_if)
+        if (strcmp(currentToken.value, "if") == 0) {
+            stmt = parseCondStmt();  // Parse the conditional statement (if, if_other, ex_if)
+
+        // Check for declaration statements
+        } else if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT ||
+            currentToken.type == SHORT || currentToken.type == LONG || currentToken.type == LEGIT) {
+            stmt = parseDecStmt();
+
+        // Check for assignment statements
+        } else if (currentToken.type == IDENTIFIER) {
+            nextToken();
+            if (currentToken.type == ASSIGNMENT_OPE) {
+                previousToken();
+                stmt = parseAssignStmt();
+            } else {
+                previousToken();
+                stmt = parseExprStmt();
+            }
+
+        // Check for iterative statements
+        } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
+            stmt = parseIterativeStmt();
+
+        // Check for input statements
+        } else if (strcmp(currentToken.value, "input") == 0) {
+            stmt = parseInputStmt();
+
+        // Check for output statements
+        } else if (strcmp(currentToken.value, "out") == 0) {
+            stmt = parseOutputStmt();
+
+        // Handle other statements (e.g., expression statements)
+        } else {
+            stmt = parseExprStmt();
+        }
+
+        // Chain the parsed statement into the statement list
+        if (!node) {
+            node = stmt;  // First statement becomes the root
+        } else {
+            current->right = stmt;  // Chain subsequent statements
+        }
+        current = stmt;  // Move to the latest statement
+    }
+
+    return node;
+}
+
+
+
+
+ASTNode* parseExprStmt() {
+    printf("Entering parseExprStmt\n");
+    ASTNode *node = parseExpr(); // Parse the expression (e.g., -5)
+    if (currentToken.type == DELIM_SEMCOL) {
+        printf("Matched semicolon\n");
+        nextToken(); // Consume the semicolon
+    } else {
+        printf("Syntax error: Missing semicolon\n");
+        exit(1);
+    }
+    return node;
+}
+
+
+ASTNode* parseExpr() {
+    printf("Entering parseExpr. Current token: %s (Type: %d, Line: %d)\n", currentToken.value, currentToken.type, currentToken.sheeshLine);
+    ASTNode *node = newNode("<expr>");
+    node->left = parseAndExpr();
+    while (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "||") == 0) {
+        ASTNode *opNode = newNode(currentToken.value);
+        nextToken();
+        opNode->left = node;
+        opNode->right = parseAndExpr();
+        node = opNode;
+    }
+    return node;
+}
+
+ASTNode* parseAndExpr() {
+    printf("Checking <parseAndExpr>...\n");
+    ASTNode *node = newNode("and_expr");
+    node->left = parseEqualityExpr();
+    while (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "&&") == 0) {
+        ASTNode *opNode = newNode(currentToken.value);
+        nextToken();
+        opNode->left = node;
+        opNode->right = parseEqualityExpr();
+        node = opNode;
+    }
+    return node;
+}
+
+ASTNode* parseEqualityExpr() {
+    printf("Checking <parseEqualityExpr>...\n");
+    ASTNode *node = newNode("equality_expr");
+    node->left = parseRelationalExpr();
+    if (currentToken.type == RELATIONAL_OPE && (strcmp(currentToken.value, "==") == 0 || strcmp(currentToken.value, "!=") == 0)) {
+        ASTNode *opNode = newNode(currentToken.value);
+        nextToken();
+        opNode->left = node;
+        opNode->right = parseRelationalExpr();
+        return opNode;
+    }
+    return node;
+}
+
+ASTNode* parseRelationalExpr() {
+    printf("Checking <parseRelationalExpr>...");
+    ASTNode *node = newNode("relational_expr");
+    node->left = parseAddSubExpr();
+    if (currentToken.type == RELATIONAL_OPE && (strcmp(currentToken.value, "<") == 0 || strcmp(currentToken.value, "<=" ) == 0 || strcmp(currentToken.value, ">") == 0 || strcmp(currentToken.value, ">=") == 0)) {
+        ASTNode *opNode = newNode(currentToken.value);
+        nextToken();
+        opNode->left = node;
+        opNode->right = parseAddSubExpr();
+        return opNode;
+    }
+    return node;
+}
+
+ASTNode* parseAddSubExpr() {
+    printf("Checking <parseAddSubExpr>...");
+    ASTNode *node = newNode("addsub_expr");
+    node->left = parseMultDivExpr();
 
     while (currentToken.type == ARITHMETIC_OPE && 
            (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
-        char *op = strdup(currentToken.value);
+        ASTNode *opNode = newNode(currentToken.value);
         nextToken();
-        ASTNode *right = parseTerm();
-        ASTNode *node = malloc(sizeof(ASTNode));
-        node->value = op;
-        node->left = left;
-        node->right = right;
-        left = node;
+        opNode->left = node;
+        opNode->right = parseMultDivExpr();
+        node = opNode;
     }
-
-    return left;
+    return node;
 }
 
-ASTNode* parseTerm() {
-    ASTNode *left = parseFactor();
-
+ASTNode* parseMultDivExpr() {
+    printf("Entering parseMultDivExpr. Current token: %s (Type: %d, Line: %d)\n", currentToken.value, currentToken.type, currentToken.sheeshLine);
+    ASTNode *node = newNode("<multdiv_expr>");
+    node->left = parsePrimary();
     while (currentToken.type == ARITHMETIC_OPE && 
-           (strcmp(currentToken.value, "*") == 0 || strcmp(currentToken.value, "/") == 0)) {
-        char *op = strdup(currentToken.value);
+           (strcmp(currentToken.value, "*") == 0 || strcmp(currentToken.value, "/") == 0 || strcmp(currentToken.value, "%") == 0) || strcmp(currentToken.value, "|") == 0) {
+        ASTNode *opNode = newNode(currentToken.value);
         nextToken();
-        ASTNode *right = parseFactor();
-        ASTNode *node = malloc(sizeof(ASTNode));
-        node->value = op;
-        node->left = left;
-        node->right = right;
-        left = node;
+        opNode->left = node;
+        opNode->right = parsePrimary();
+        node = opNode;
     }
-
-    return left;
+    return node;
 }
 
-ASTNode* parseFactor() {
-    ASTNode *node = NULL;
+ASTNode* parsePrimary() {
+    printf("Entering parsePrimary. Current token: %s (Type: %d, Line: %d)\n", currentToken.value, currentToken.type, currentToken.sheeshLine);
 
-    if (currentToken.type == CONSTANT_NUM) {
-        node = malloc(sizeof(ASTNode));
-        node->value = strdup(currentToken.value);
-        node->left = node->right = NULL;
-        nextToken();
-    } else if (currentToken.type == IDENTIFIER) {
-        node = malloc(sizeof(ASTNode));
-        node->value = strdup(currentToken.value);
-        node->left = node->right = NULL;
-        nextToken();
-    } else if (currentToken.type == DELIMITER_O_PARENTHESIS) {
-        nextToken();
-        node = parseExpression();
-        if (currentToken.type != DELIMITER_C_PARENTHESIS) {
-            printf("Syntax error: expected ')'\n");
+    ASTNode *primaryNode = newNode("<primary>");
+
+    // Handle semicolons explicitly
+    if (currentToken.type == DELIM_SEMCOL) {
+        printf("Syntax error: Unexpected ';' while parsing <primary_expr>\n");
+        exit(1);
+    }
+
+    // Handle literals or values
+    if (currentToken.type == CONSTANT_NUM || currentToken.type == CONSTANT_DRIFT 
+        || currentToken.type == CONSTANT_VIBE || currentToken.type == CONSTANT_TEXT 
+        || currentToken.type == CONSTANT_LEGIT || (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
+            
+        printf("Parsing literal: %s\n", currentToken.value);
+        primaryNode->left = parseLiteral();
+        return primaryNode;
+    }
+
+    // Handle identifiers
+    if (currentToken.type == IDENTIFIER) {
+        printf("Parsing identifier: %s\n", currentToken.value);
+        ASTNode *identifierNode = newNode(currentToken.value);
+        nextToken(); // Consume the identifier
+
+        //Pass post-increment values
+        if (currentToken.type == UNARY_OPE) {
+            previousToken();
+            identifierNode->left = parseUnaryVal();
+        }
+
+        // Check for assignment operator
+        if (currentToken.type == ASSIGNMENT_OPE) {
+            printf("Found assignment operator: %s\n", currentToken.value);
+            ASTNode *assignNode = newNode(currentToken.value); // Assignment operator node
+            nextToken(); // Consume '='
+            assignNode->left = identifierNode;
+            assignNode->right = parseExpr(); // Parse the right-hand side
+            primaryNode->left = assignNode;
+            return primaryNode;
+        }
+
+        primaryNode->left = identifierNode;
+        return primaryNode;
+    }
+
+    //Handle parenthesized expressions
+    if (currentToken.type == DELIM_O_PAREN) {
+        printf("Parsing parenthesized expression\n");
+        nextToken(); // Consume '('
+        ASTNode *exprNode = parseExpr();
+
+        if (currentToken.type != DELIM_C_PAREN) {
+            printf("Syntax error: Missing closing parenthesis\n");
             exit(1);
         }
+        nextToken(); // Consume ')'
+        primaryNode->left = exprNode;
+        return primaryNode;
+        
+    }  
+    
+    //Handle not operator
+    if (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "!") == 0) {
+        printf("Parsing unary operator: %s\n", currentToken.value);
+        ASTNode *opNode = newNode(currentToken.value); // Create a node for the unary operator
+        nextToken(); // Consume the unary operator
+
+        if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
+            printf("Unary operator applied to: %s\n", currentToken.value);
+            opNode->right = parseIdentExpr();
+            primaryNode->left = opNode;
+            return primaryNode;
+        } else if (currentToken.type == CONSTANT_LEGIT) {
+            printf("Unary operator applied to: %s\n", currentToken.value);
+            opNode->right = newNode(currentToken.value);
+            primaryNode->left = opNode;
+            nextToken();
+            return primaryNode;
+        } else {
+            printf("Syntax error: Expected identifier (/identifier expression) or CONSTANT_LEGIT after '%s'\n", opNode->value);
+            exit(1);
+        }
+    }
+    
+    //Pass pre-increment values
+    if (currentToken.type == UNARY_OPE) {
+        primaryNode->left = parseUnaryVal();
+
+        return primaryNode;
+    }
+
+
+    printf("Syntax error at Line %d: Invalid <primary_expr>. Current token: %s (Type: %d)\n", currentToken.sheeshLine, currentToken.value, currentToken.type);
+    exit(1);
+}
+
+
+
+ASTNode* parseLiteral() {
+    // <literal> 		::= 	<num_val> | <drift_val> | CONSTANT_VIBE | CONSTANT_TEXT | CONSTANT_LEGIT
+
+    printf("Entering parseLiteral. Current token: %s (Type: %d, Line: %d)\n", currentToken.value, currentToken.type, currentToken.sheeshLine);
+
+    ASTNode *node = newNode("literal");
+
+    if (currentToken.type == ARITHMETIC_OPE && 
+        (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
+            nextToken();
+
+            if (currentToken.type == CONSTANT_NUM || currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
+                previousToken();
+                node->left = parseNumVal();
+
+                return node;
+            } 
+
+            if (currentToken.type == CONSTANT_DRIFT) {
+                previousToken();
+                node->left = parseDriftVal();
+
+                return node;
+            } 
+        }
+    
+    if (currentToken.type == CONSTANT_NUM) {
+            node->left = parseNumVal();
+
+            return node;
+    } else if (currentToken.type == CONSTANT_DRIFT) {
+            node->left = parseDriftVal();
+            
+            return node;
+    } else if (currentToken.type == CONSTANT_VIBE || currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_LEGIT) {
+        node->left = newNode(currentToken.value);
         nextToken();
+
+        return node;
+    }
+
+    printf("Syntax error at Line %s: Invalid <literal>\n", currentToken.sheeshLine);
+    exit(1);
+}
+
+ASTNode* parseNumVal() {
+    ASTNode *signNode = parseSign(); // Parse optional sign
+
+    if (currentToken.type == CONSTANT_NUM) {
+        // Handle numeric constant
+        ASTNode *numNode = newNode("num_val");
+        numNode->left = newNode(currentToken.value); // Add constant
+        nextToken(); // Consume constant
+
+        if (signNode) {
+            ASTNode *node = newNode("num_val");
+            node->left = signNode;
+            node->right = numNode;
+            return node;
+        }
+        return numNode;
+
+    } else if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
+        // Handle identifier or parenthesized expression
+        ASTNode *exprNode;
+        exprNode = parseIdentExpr(); // Parse identifier expression
+
+        if (signNode) {
+            ASTNode *node = newNode("num_val");
+            node->left = signNode;
+            node->right = exprNode;
+            return node;
+        }
+        return exprNode;
+    }
+
+    printf("Syntax error: Invalid <num_val>\n");
+    exit(1);
+}
+
+
+ASTNode* parseSign() {
+    // <sign>   		::= 	‘-’ | ‘+’
+
+    if (currentToken.type == ARITHMETIC_OPE && 
+       (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
+        ASTNode *node = newNode("sign"); 
+        node->left = newNode(currentToken.value);
+        nextToken();
+
+        return node;
+    }
+
+    return NULL;
+}
+
+ASTNode* parseDriftVal() {
+    ASTNode *signNode = parseSign();
+
+    if (currentToken.type == CONSTANT_DRIFT) {
+        ASTNode *driftNode = newNode("drift_val");
+        driftNode->left = newNode(currentToken.value);
+        nextToken();
+
+        if (signNode) {
+            ASTNode *node = newNode("drift_val");
+            node->left = signNode;
+            node->right = driftNode;
+            return node;
+        }
+        return driftNode;
+
+    } else if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
+        // Handle identifier or parenthesized expression
+        ASTNode *exprNode;
+        if (currentToken.type == IDENTIFIER) {
+            exprNode = parseIdentExpr(); // Parse identifier expression
+        } else {
+            nextToken(); // Consume '('
+            exprNode = parseExpr(); // Parse expression inside parentheses
+
+            if (currentToken.type != DELIM_C_PAREN) {
+                printf("Syntax error: Missing closing parenthesis in <num_val>\n");
+                exit(1);
+            }
+            nextToken(); // Consume ')'
+        }
+
+        if (signNode) {
+            ASTNode *node = newNode("drift_val");
+            node->left = signNode;
+            node->right = exprNode;
+            return node;
+        }
+        return exprNode;
+    }
+
+
+    printf("Syntax error: Invalid <drift_val>\n");
+    exit(1);
+}
+
+
+ASTNode* parseUnaryVal() {
+    if (currentToken.type == UNARY_OPE) {
+        // Handle prefix unary operators (e.g., ++identifier or --identifier)
+        ASTNode *node = newNode("<unary_val>");
+        node->left = newNode(currentToken.value);
+        nextToken();
+
+        if (currentToken.type == IDENTIFIER) {
+            node->right = newNode(currentToken.value);
+            nextToken();
+            return node;
+        } else {
+            printf("Syntax error: Expected identifier after unary operator\n");
+            exit(1);
+        }
+    } else if (currentToken.type == IDENTIFIER) {
+        // Handle identifier
+        ASTNode *identifierNode = newNode(currentToken.value);
+        nextToken();
+
+        // Check for post-increment or post-decrement (e.g., identifier++)
+        if (currentToken.type == UNARY_OPE &&
+            (strcmp(currentToken.value, "++") == 0 || strcmp(currentToken.value, "--") == 0)) {
+            ASTNode *node = newNode("<unary_val>");
+            node->left = identifierNode;
+            node->right = newNode(currentToken.value); // Add the ++ or -- token as a node
+            nextToken(); // Consume the ++ or -- token
+            return node;
+        }
+
+        // If no post-increment or post-decrement, return the identifier node
+        return identifierNode;
+    }
+
+    // If none of the above cases matched, it's a syntax error
+    printf("Syntax error: Invalid unary value\n");
+    exit(1);
+}
+
+ASTNode* parseIdentExpr() {
+    ASTNode *node = newNode("<ident_expr>");
+
+    if (currentToken.type == IDENTIFIER) {
+        node->left = newNode(currentToken.value); // Add identifier node
+        nextToken(); // Consume identifier
+        return node;
+    } else if (currentToken.type == DELIM_O_PAREN) {
+        nextToken(); // Consume opening parenthesis
+        ASTNode *exprNode = parseExpr(); // Parse the expression inside the parenthesis
+
+        if (currentToken.type != DELIM_C_PAREN) {
+            printf("Syntax error at Line %d: Missing closing parenthesis in <ident_expr>\n", currentToken.sheeshLine);
+            exit(1);
+        }
+
+        nextToken(); // Consume closing parenthesis
+        return exprNode; // Return the parsed expression node
+    }
+
+    printf("Syntax error: Invalid <ident_expr>\n");
+    exit(1);
+}
+
+ASTNode* parseDecStmt() {
+    // <dec_stmt> ::= <data_type> ( IDENTIFIER | <initialization> | IDENTIFIER <var_list> | <initialization> <var_list>) DELIM_SEMCOL
+    printf("Parse Dec Statement\n");
+    ASTNode *stmtNode = newNode("<dec_stmt>");
+    ASTNode *dtNode = parseDataType();
+    stmtNode->left = dtNode;  // Set data type as the left child of the stmtNode
+    
+
+    if (currentToken.type == IDENTIFIER) {
+        printf("Found IDENTIFIER: %s\n", currentToken.value);
+
+        // Enter parseInitialization to handle IDENTIFIER = <expr> or IDENTIFIER
+        ASTNode *initNode = parseInitialization();
+        stmtNode->right = initNode;  // Attach initialization subtree
+
+        if (currentToken.type == DELIM_COMMA) {
+            // Case: IDENTIFIER <var_list> or IDENTIFIER = <expr> <var_list>
+            ASTNode *varListNode = parseVarList();
+            initNode->right->right = varListNode;  // Attach variable list subtree
+        }
+
+        if (currentToken.type == DELIM_SEMCOL) {
+            nextToken();  // Consume semicolon
+            return stmtNode;
+        } else {
+            printf("Syntax error: Missing semicolon in declaration\n");
+            exit(1);
+        }
+    }
+
+    printf("Syntax error: Invalid declaration statement\n");
+    exit(1);
+}
+
+
+
+
+ASTNode* parseDataType() {
+    // <data_type> ::= "num" | "drift" | "vibe" | "text" | "short" | "long" | "legit"
+    ASTNode* dtNode = newNode("<data_type>");
+
+    if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT || currentToken.type == SHORT
+        || currentToken.type == LONG || currentToken.type == LEGIT) {
+        dtNode->left = newNode(currentToken.value);
+        nextToken();  // Consume the data type
+        return dtNode;
+    }
+
+    printf("Syntax error: Invalid data type\n");
+    exit(1);
+}
+
+
+
+ASTNode* parseInitialization() {
+    printf("Enter parseInitialization\n");
+    ASTNode* initNode = newNode("<initialization>");
+
+    printf("Token Type: %d, Token Value: %s\n", currentToken.type, currentToken.value);
+
+    if (currentToken.type == IDENTIFIER) {
+        ASTNode* idNode = newNode(currentToken.value);
+        printf("Identifier: %s\n", currentToken.value);
+        nextToken();  // Consume the identifier
+
+        printf("Token Type: %d, Token Value: %s\n", currentToken.type, currentToken.value);
+
+        if (currentToken.type == ASSIGNMENT_OPE) {
+            ASTNode* assignNode = newNode(currentToken.value);  // Create a node for the assignment operator
+
+            nextToken();  // Consume '='
+            printf("Enter ASSIGNMENT_OPE check in parseInitialization\n");
+            ASTNode* exprNode = parseExpr();  // Ensure parseExpr can correctly handle the expression
+            printf("Expression: %s\n", exprNode->value);
+            initNode->left = assignNode;  // Set the assignment node on the right of the initialization node
+            initNode->right = exprNode;
+
+            return initNode;
+        } else {
+            initNode->left = idNode;  // In case there's no assignment operator, treat IDENTIFIER as a variable
+            return initNode;
+        }
+    }
+
+    printf("Syntax error at Line %d: Invalid initialization. Expected '=' followed by an expression.\n", currentToken.sheeshLine);
+    exit(1);
+}
+
+ASTNode* parseVarList() {
+    // <var_list> ::= (DELIM_COMMA (IDENTIFIER | <initialization>))+ 
+    ASTNode *varListNode = newNode("<var_list>");
+    ASTNode *headNode = NULL;  // Track the first node in the list
+    ASTNode *currentNode = NULL;  // Track the current node in the list
+
+    while (currentToken.type == IDENTIFIER || currentToken.type == DELIM_COMMA) {
+        if (currentToken.type == DELIM_COMMA) {
+            nextToken();  // Consume the comma
+        }
+        
+        ASTNode *node = NULL;
+
+        if (currentToken.type == IDENTIFIER) {
+            // Case: IDENTIFIER (not initialization)
+            ASTNode *idNode = newNode(currentToken.value);
+            nextToken();  // Consume identifier
+
+            // Check for initialization
+            if (currentToken.type == ASSIGNMENT_OPE && strcmp(currentToken.value, "=") == 0) {
+                idNode->left = newNode(currentToken.value);
+                nextToken();  // Consume '='
+                ASTNode *exprNode = parseExpr();
+                idNode->right = exprNode;  // Set the expression on the right of the identifier
+            }
+
+            
+
+            node = idNode;
+        }
+
+        // Add the node to the list
+        if (headNode == NULL) {
+            headNode = node;  // First node in the list
+            currentNode = headNode;
+        } else {
+            currentNode->right = node;  // Append subsequent nodes
+            currentNode = node;  // Move to the newly added node
+        }
+    }
+
+    varListNode->left = headNode;  // Set the head node as the left child of the var_list
+    return varListNode;
+}
+
+
+// ASTNode* parseUnaryOp() {
+//     // <unary_op>   		::= 	‘++’ | ‘--’
+
+//     if (currentToken.type == UNARY_OPE) {
+//         ASTNode *node = newNode("<unary_op>"); 
+//         node->left = newNode(currentToken.value);
+//         nextToken();
+
+//         return node;
+//     }
+
+//     return NULL;
+// }
+// ASTNode* parseDecStmt() {
+//     if (currentToken.type == IDENTIFIER) {
+//         ASTNode *node = newNode("dec_stmt");
+//         node->left = newNode(currentToken.value);
+//         nextToken();
+//         if (currentToken.type == ASSIGNMENT_OPE) {
+//             nextToken();
+//             node->right = parseExpr();
+//         }
+//         if (currentToken.type != DELIM_SEMCOL) {
+//             printf("Syntax error: Missing semicolon in declaration\n");
+//             exit(1);
+//         }
+//         nextToken();
+//         return node;
+//     }
+//     printf("Syntax error: Invalid declaration statement\n");
+//     exit(1);
+// }
+
+ASTNode* parseAssignStmt() {
+    if (currentToken.type == IDENTIFIER) {
+        ASTNode *node = newNode("<assign_stmt>");
+        node->left = newNode(currentToken.value); // LHS: the identifier
+        nextToken();
+
+        // Check for assignment operator, including compound assignments
+        if (currentToken.type == ASSIGNMENT_OPE) {
+            ASTNode *operatorNode = newNode(currentToken.value); // Assignment operator node
+            operatorNode->left = node->left; // Connect the identifier to the operator node
+            nextToken(); // Consume the operator
+
+            // Parse the RHS expression
+            operatorNode->right = parseExpr();
+            node->left = operatorNode; // Assign the operator node as the main content of the assignment statement
+        } else {
+            printf("Syntax error: Expected assignment operator\n");
+            exit(1);
+        }
+
+        // Ensure the statement ends with a semicolon
+        if (currentToken.type != DELIM_SEMCOL) {
+            printf("Syntax error: Missing semicolon in assignment\n");
+            exit(1);
+        }
+        nextToken(); // Consume the semicolon
+        return node;
+    }
+    printf("Syntax error: Invalid assignment statement\n");
+    exit(1);
+}
+
+ASTNode* parseIfStmt() {
+    if (strcmp(currentToken.value, "if") == 0) {
+        ASTNode *node = newNode("if_stmt");
+        nextToken();  // Consume 'if'
+
+        // Check for opening parenthesis '('
+        if (currentToken.type == DELIM_O_PAREN) {
+            nextToken();  // Consume '('
+            
+            node->left = parseExpr();  // Parse the condition (expression)
+            
+            // Ensure there's a closing parenthesis ')'
+            if (currentToken.type == DELIM_C_PAREN) {
+                nextToken();  // Consume ')'
+
+                // Check for opening brace '{' indicating the body of the 'if' statement
+                if (currentToken.type == DELIM_O_BRACE) {
+                    nextToken();  // Consume '{'
+                    
+                    node->right = parseBody();  // Parse the body (statements inside the 'if')
+
+                    // Ensure there's a closing brace '}'
+                    if (currentToken.type == DELIM_C_BRACE) {
+                        nextToken();  // Consume '}'
+                        return node;  // Successfully parsed the 'if' statement
+                    }
+                }
+            }
+        }
+    }
+
+    // If the expected structure is not found, print an error
+    printf("Syntax error: Invalid if statement\n");
+    exit(1);
+}
+
+
+ASTNode* parseCondStmt() {
+    // Check if the current token is an "if" statement
+    if (strcmp(currentToken.value, "if") == 0) {
+        // nextToken();  // Move to the next token to check for possible "if_other" or "ex_if"
+
+        // Check for "if_other" statement
+        /*if (strcmp(currentToken.value, "other") == 0) {
+            return parseIfOtherStmt();  // Parse the "if_other" statement
+        }
+        // Check for "ex_if" statement
+        else if (strcmp(currentToken.value, "ex") == 0) {
+            return parseExIfStmt();  // Parse the "ex_if" statement
+        }
+        // Otherwise, it's a regular "if" statement
+        else {*/
+            return parseIfStmt();  // Parse the "if" statement
+        //}
+    }
+
+    // If none of the above conditions matched, print an error and exit
+    printf("Syntax error: Expected conditional statement (if, if_other, ex_if)\n");
+    exit(1);
+}
+
+
+ASTNode* parseIterativeStmt() {
+    printf("Entering iterative statements\n");
+    ASTNode* node = newNode("<iterative_stmt>");
+
+    if (currentToken.type == REP) {
+        ASTNode *loopNode = newNode("rep_loop");
+        node->left = parseRepLoop();
+    } else if (currentToken.type == DO) {
+        ASTNode *loopNode = newNode("dmw_loop");
+        // Add parsing logic for mw_loop
+        node->left = parseDmwLoop();
+    } else if (currentToken.type == MEANWHILE) {
+        ASTNode *loopNode = newNode("mw_loop");
+        // Add parsing logic for mw_loop
+        node->left = parseMwLoop();
     } else {
-        printf("Syntax error: unexpected token %s\n", currentToken.value);
+        printf("Syntax error: Invalid iterative statement\n");
         exit(1);
     }
 
     return node;
 }
 
-void inOrderTraversal(ASTNode *node) {
-    if (node == NULL) {
-        return;
-    }
+ASTNode* parseRepLoop() {
+    ASTNode* node = newNode("<rep_loop>");
 
-    inOrderTraversal(node->left);
+    if (currentToken.type == REP) {
+        ASTNode* loopNode = newNode(currentToken.value);
+        node->left = loopNode;
+        nextToken();  // Consume 'rep'
 
-    printf("%s ", node->value);
+        if (currentToken.type == DELIM_O_PAREN) {
+            nextToken();  // Consume '('
+            ASTNode* initialNode = parseLoopInitial();
+            node->right = initialNode;
+                ASTNode *exprNode = parseExpr();
+                initialNode->right = exprNode;
 
-    inOrderTraversal(node->right);
-}
+                if (currentToken.type == DELIM_SEMCOL) {
+                    nextToken();  // Consume ';'
+                    ASTNode *updNode = parseUpdStmt();
+                    exprNode->right = updNode;
 
-void parse() {
-    nextToken();
+                    if (currentToken.type == DELIM_C_PAREN) {
+                        nextToken();  // Consume ')'
+                        if (currentToken.type == DELIM_O_BRACE) {
+                            nextToken();  // Consume '{'
+                            ASTNode* loopBody = parseStmts();
+                            updNode->right = loopBody;
 
-    while (currentToken.value != NULL) {
-        ASTNode *ast = parseExpression();  
-
-        printf("Parsed expression: ");
-        inOrderTraversal(ast);
-        printf("\n");
-
-        if (currentToken.type == DELIMITER_SEMICOLON) {
-            nextToken();
-        } else if (currentToken.value != NULL) {
-            printf("Syntax error: expected ';' or end of input, got '%s'\n", currentToken.value);
+                            if (currentToken.type == DELIM_C_BRACE) {
+                                nextToken();  // Consume '}'
+                                return node;
+                            } else {
+                                printf("Syntax error: Missing closing brace '}' in loop body\n");
+                                exit(1);
+                            }
+                        } else {
+                            printf("Syntax error: Missing opening brace '{' for loop body\n");
+                            exit(1);
+                        }
+                    } else {
+                        printf("Syntax error: Missing closing parenthesis ')' after update statement\n");
+                        exit(1);
+                    }
+                } else {
+                    printf("Syntax error: Missing semicolon ';' after expression\n");
+                    exit(1);
+                }
+        } else {
+            printf("Syntax error: Missing opening parenthesis '(' after 'rep'\n");
             exit(1);
         }
     }
+
+    return NULL;
+}
+
+ASTNode* parseLoopInitial() {
+    ASTNode* node = newNode("<loop_initial>");
+
+    if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT || currentToken.type == SHORT
+        || currentToken.type == LONG || currentToken.type == LEGIT) {
+        node->left = parseDecStmt();
+    } else if (currentToken.type == IDENTIFIER) {
+        node->left = parseAssignStmt();
+    } else {
+        printf("Syntax error: Invalid loop initial statement\n");
+        exit(1);
+    }
+
+    return node;
+}
+
+
+ASTNode* parseUpdStmt() {
+    ASTNode* node = newNode("<upd_stmt>");
+
+    if (currentToken.type == UNARY_OPE) {
+        // Parse unary operation
+        node->left = parseUnaryVal();
+        return node;
+    } 
+
+    if (currentToken.type == IDENTIFIER) {
+        // Hand over parsing to `parseExpr` for full context resolution
+        node->left = parseExpr();
+        return node;
+    }
+
+    // Error handling for invalid update statements
+    printf("Syntax error: Invalid update statement\n");
+    exit(1);
+
+    return NULL;
+}
+
+ASTNode* parseMwLoop() {
+    ASTNode* node = newNode("<mw_loop>");
+    printf("Parsing 'meanwhile' loop. Current token: %s\n", currentToken.value);
+
+    if (currentToken.type == MEANWHILE) {
+        nextToken(); // Consume "meanwhile"
+        printf("Consumed 'meanwhile'. Next token: %s\n", currentToken.value);
+
+        if (currentToken.type == DELIM_O_PAREN) {
+            nextToken(); // Consume '('
+            printf("Consumed '('. Parsing condition expression.\n");
+
+            node->left = parseExpr(); // Parse the condition expression
+            printf("Parsed condition expression. Next token: %s\n", currentToken.value);
+
+            if (currentToken.type != DELIM_C_PAREN) {
+                printf("Syntax error: Expected ')' after 'meanwhile' condition. Found: %s\n", currentToken.value);
+                exit(1);
+            }
+            nextToken(); // Consume ')'
+            printf("Consumed ')'. Next token: %s\n", currentToken.value);
+
+            if (currentToken.type == DELIM_O_BRACE) {
+                nextToken(); // Consume '{'
+                printf("Consumed '{'. Parsing loop body.\n");
+
+                node->right = parseBody(); // Parse the body of the loop
+                printf("Parsed loop body. Next token: %s\n", currentToken.value);
+
+                if (currentToken.type != DELIM_C_BRACE) {
+                    printf("Syntax error: Expected '}' to close 'meanwhile' loop body. Found: %s\n", currentToken.value);
+                    exit(1);
+                }
+                nextToken(); // Consume '}'
+                printf("Consumed '}'. Next token: %s\n", currentToken.value);
+            } else {
+                printf("Syntax error: Expected '{' after 'meanwhile' condition. Found: %s\n", currentToken.value);
+                exit(1);
+            }
+        } else {
+            printf("Syntax error: Expected '(' after 'meanwhile'. Found: %s\n", currentToken.value);
+            exit(1);
+        }
+    } else {
+        printf("Syntax error: Invalid loop start. Expected 'meanwhile'. Found: %s\n", currentToken.value);
+        exit(1);
+    }
+
+    return node;
+}
+
+
+ASTNode* parseDmwLoop() {
+    ASTNode* node = newNode("<dmw_loop>");
+    printf("Parsing 'do-meanwhile' loop\n");
+
+    if (strcmp(currentToken.value, "do") == 0) {
+        nextToken(); // Consume "do"
+
+        if (currentToken.type == DELIM_O_BRACE) {
+            nextToken(); // Consume '{'
+            node->left = parseBody(); // Parse the body of the loop
+
+            if (currentToken.type != DELIM_C_BRACE) {
+                printf("Syntax error: Expected '}' to close 'do' block\n");
+                exit(1);
+            }
+            nextToken(); // Consume '}'
+
+            if (currentToken.type == MEANWHILE) {
+                nextToken(); // Consume "meanwhile"
+
+                if (currentToken.type == DELIM_O_PAREN) {
+                    nextToken(); // Consume '('
+                    node->right = parseExpr(); // Parse the condition expression
+
+                    if (currentToken.type != DELIM_C_PAREN) {
+                        printf("Syntax error: Expected ')' after 'meanwhile' condition\n");
+                        exit(1);
+                    }
+                    nextToken(); // Consume ')'
+
+                    if (currentToken.type == DELIM_SEMCOL) {
+                        nextToken(); // Consume ';'
+                    } else {
+                        printf("Syntax error: Expected ';' after 'meanwhile' loop\n");
+                        exit(1);
+                    }
+                } else {
+                    printf("Syntax error: Expected '(' after 'meanwhile'\n");
+                    exit(1);
+                }
+            } else {
+                printf("Syntax error: Expected 'meanwhile' after 'do' block\n");
+                exit(1);
+            }
+        } else {
+            printf("Syntax error: Expected '{' after 'do'\n");
+            exit(1);
+        }
+    }
+    return node;
+}
+
+ASTNode* parseInputStmt() {
+    // <input_stmt> ::= “input” DELIM_O_PAREN <input> DELIM_C_PAREN DELIM_SEMCOL
+    ASTNode* node = newNode("<input_stmt>");
+    if (strcmp(currentToken.value, "input") == 0) {
+        ASTNode* inputNode = newNode("input"); // Include terminal symbol "input"
+        node->left = inputNode;
+        nextToken();  // Consume "input"
+        if (currentToken.type == DELIM_O_PAREN) {
+            ASTNode* openParen = newNode("("); // Include terminal symbol '('
+            inputNode->right = openParen;
+            nextToken();  // Consume '('            
+            openParen->left = parseInput();  // Parse <input>
+            if (currentToken.type == DELIM_C_PAREN) {
+                ASTNode* closeParen = newNode(")"); // Include terminal symbol ')'
+                openParen->right = closeParen;
+                nextToken();  // Consume ')'
+                if (currentToken.type == DELIM_SEMCOL) {
+                    ASTNode* semicolonNode = newNode(";"); // Include terminal symbol ';'
+                    closeParen->right = semicolonNode;
+                    nextToken();  // Consume ';'
+                    return node;
+                }
+            } else {
+                printf("Syntax error: Missing closing parenthesis\n");
+                exit(1);
+            }
+        } else {
+            printf("Syntax error: Missing opening parenthesis\n");
+            exit(1);
+        }
+    }
+    printf("Syntax error: Invalid input statement\n");
+    exit(1);
+}
+
+ASTNode* parseOutputStmt() {
+    // <output_stmt> ::= “out” DELIM_O_PAREN <output> DELIM_C_PAREN DELIM_SEMCOL
+    ASTNode* node = newNode("<output_stmt>");
+    if (strcmp(currentToken.value, "out") == 0) {
+        ASTNode* outNode = newNode("out"); // Include terminal symbol "out"
+        node->left = outNode;
+        nextToken();  // Consume "out"
+        if (currentToken.type == DELIM_O_PAREN) {
+            ASTNode* openParen = newNode("("); // Include terminal symbol '('
+            outNode->right = openParen;
+            nextToken();  // Consume '('            
+            openParen->left = parseOutput();  // Parse <output>
+            if (currentToken.type == DELIM_C_PAREN) {
+                ASTNode* closeParen = newNode(")"); // Include terminal symbol ')'
+                openParen->right = closeParen;
+                nextToken();  // Consume ')'
+                if (currentToken.type == DELIM_SEMCOL) {
+                    ASTNode* semicolonNode = newNode(";"); // Include terminal symbol ';'
+                    closeParen->right = semicolonNode;
+                    nextToken();  // Consume ';'
+                    return node;
+                }
+            } else {
+                printf("Syntax error: Missing closing parenthesis\n");
+                exit(1);
+            }
+        } else {
+            printf("Syntax error: Missing opening parenthesis\n");
+            exit(1);
+        }
+    }
+    printf("Syntax error: Invalid output statement\n");
+    exit(1);
+}
+
+ASTNode* parseInput() {
+    // <input> ::= CONSTANT_TXTFS { DELIM_COMMA [ "&" <identifier> ] }
+    ASTNode* node = newNode("<input>");
+    if (currentToken.type == CONSTANT_TXTFS) {
+        node->left = newNode(currentToken.value);  // Add CONSTANT_TXTFS
+        nextToken();  // Consume CONSTANT_TXTFS
+
+        ASTNode* current = node;
+        while (currentToken.type == DELIM_COMMA) {
+            ASTNode* commaNode = newNode(","); // Include DELIM_COMMA in the parse tree
+            current->right = commaNode;
+            current = commaNode;
+
+            nextToken();  // Consume ','
+            if (strcmp(currentToken.value, "&") == 0) {
+                ASTNode* andNode = newNode("&");
+                commaNode->right = andNode;
+                nextToken();  // Consume '&'
+                if (currentToken.type == IDENTIFIER) {
+                    andNode->left = newNode(currentToken.value);
+                    nextToken();  // Consume IDENTIFIER
+                } else {
+                    printf("Syntax error: Expected identifier after '&'\n");
+                    exit(1);
+                }
+            } else if (currentToken.type == IDENTIFIER) {
+                ASTNode* idNode = newNode(currentToken.value);
+                commaNode->right = idNode;
+                nextToken();  // Consume IDENTIFIER
+            } else {
+                printf("Syntax error: Expected '&' or identifier after ','\n");
+                exit(1);
+            }
+        }
+        return node;
+    }
+    printf("Syntax error: Invalid input\n");
+    exit(1);
+}
+
+ASTNode* parseOutput() {
+    // <output> ::= CONSTANT_TEXT | CONSTANT_TXTFS { DELIM_COMMA <expr> }
+    ASTNode* node = newNode("<output>");
+    if (currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_TXTFS) {
+        node->left = newNode(currentToken.value);  // Add CONSTANT_TEXT or CONSTANT_TXTFS
+        nextToken();  // Consume CONSTANT_TEXT or CONSTANT_TXTFS
+
+        ASTNode* current = node;
+        while (currentToken.type == DELIM_COMMA) {
+            ASTNode* commaNode = newNode(","); // Include DELIM_COMMA in the parse tree
+            current->right = commaNode;
+            nextToken();  // Consume ','
+            commaNode->left = parseExpr();  // Parse <expr>
+            current = commaNode;
+        }
+        return node;
+    }
+    printf("Syntax error: Invalid output\n");
+    exit(1);
+}
+
+void parse(FILE* file) {
+    nextToken();
+    ASTNode *ast = parseProgram();
+    printf("See parse_tree.txt for parse tree.");
+    
+    printParseTree(ast, 0, file);
+    printf("\n");
 }

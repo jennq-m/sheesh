@@ -2,7 +2,7 @@
 #define CHECKRESERVEDWORD_H
 
 //Finite State Machine for Reserved Words
-int checkReservedWord(const char *sheeshLexeme) {
+TokenType checkReservedWord(const char *sheeshLexeme) {
     int currChar = 0;
 
     switch(sheeshLexeme[currChar++]) {
@@ -20,7 +20,7 @@ int checkReservedWord(const char *sheeshLexeme) {
                                                 case 's':
                                                     switch(sheeshLexeme[currChar++]) {
                                                         case '\0':
-                                                            return 1;
+                                                            return ALWAYS;
                                                     }
                                             }
                                     }
@@ -37,7 +37,7 @@ int checkReservedWord(const char *sheeshLexeme) {
                         case 'p':
                             switch(sheeshLexeme[currChar++]) {
                                 case '\0':
-                                    return 1;
+                                    return CAP;
                             }
                     }
                 
@@ -48,7 +48,7 @@ int checkReservedWord(const char *sheeshLexeme) {
                                 case 't':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return 1;
+                                            return CONT;
                                     }
                             }
                     }
@@ -67,7 +67,7 @@ int checkReservedWord(const char *sheeshLexeme) {
                                         case 'p':
                                             switch(sheeshLexeme[currChar++]) {
                                                 case '\0':
-                                                    return 1;
+                                                    return NOCAP;
                                             }
                                     }
                             }
@@ -91,7 +91,7 @@ int checkReservedWord(const char *sheeshLexeme) {
                                                         case 'r':
                                                             switch(sheeshLexeme[currChar++]) {
                                                                 case '\0':
-                                                                    return 1;
+                                                                    return TOPTIER;
                                                             }
                                                     }
                                             }

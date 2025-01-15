@@ -1,9 +1,8 @@
-#ifndef CHECKKEYWORD_H
-#define CHECKKEYWORD_H
-#include "lex.h"
+#ifndef CHECKKEYWORDCOPY_H
+#define CHECKKEYWORDCOPY_H
 
 //Finite State Machine for Keyword
-TokenType checkKeyword(const char *sheeshLexeme) {
+int checkKeywordCopy(const char *sheeshLexeme) {
     int currChar = 0;
 
     switch (sheeshLexeme[currChar++]) {
@@ -21,7 +20,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                 case 'e':
                                                     switch(sheeshLexeme[currChar++]) {
                                                         case '\0':
-                                                            return BOUNCE;
+                                                            return 1;
                                                     } 
                                             }   
                                     }     
@@ -39,7 +38,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                         case 'r':
                             switch(sheeshLexeme[currChar++]) {
                                 case '\0':
-                                    return CAR;
+                                    return 1;
                             } 
                     }
             }
@@ -52,7 +51,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                 case 'o':
                     switch(sheeshLexeme[currChar++]) {
                         case '\0':
-                            return DO;
+                            return 1;
                     }
                     break; 
                 
@@ -65,7 +64,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                         case 't':
                                             switch(sheeshLexeme[currChar++]) {
                                                 case '\0':
-                                                    return DRIFT;
+                                                    return 1;
                                             } 
                                     }
                             }
@@ -86,7 +85,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                         case 'y':
                                             switch(sheeshLexeme[currChar++]) {
                                                 case '\0':
-                                                    return EMPTY;
+                                                    return 1;
                                             } 
                                     }
                             }
@@ -96,7 +95,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                 case 'x':
                     switch(sheeshLexeme[currChar++]) {
                         case '\0':
-                            return EX;
+                            return 1;
 
                         case 't':
                             switch(sheeshLexeme[currChar++]) {
@@ -105,7 +104,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                         case 'a':
                                             switch(sheeshLexeme[currChar++]) {
                                                 case '\0':
-                                                    return EXTRA;
+                                                    return 1;
                                             }
                                     }
                             }
@@ -124,7 +123,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                 case 'p':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return FLIP;
+                                            return 1;
                                     }
                             }
                     }
@@ -141,7 +140,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                 case 'n':
                                                     switch(sheeshLexeme[currChar++]) {
                                                         case '\0':
-                                                            return FROZEN;
+                                                            return 1;
                                                     }
                                             }
                                     }
@@ -164,7 +163,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                         case 'p':
                                             switch(sheeshLexeme[currChar++]) {
                                                 case '\0':
-                                                    return GROUP;
+                                                    return 1;
                                             }
                                     }   
                             }   
@@ -179,7 +178,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                 case 'f':
                     switch(sheeshLexeme[currChar++]) {
                         case '\0':
-                            return IF;
+                            return 1;
                     }
                     break;
                 
@@ -192,7 +191,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                         case 't':
                                             switch(sheeshLexeme[currChar++]) {
                                                 case '\0':
-                                                    return INPUT;
+                                                    return 1;
                                             }
                                     }
                             }
@@ -211,7 +210,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                 case 'p':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return JUMP;    
+                                            return 1;    
                                     }
                             }   
                     } 
@@ -231,7 +230,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                         case 't':
                                             switch(sheeshLexeme[currChar++]) {
                                                 case '\0':
-                                                    return LEGIT;
+                                                    return 1;
                                             }
                                     }
                             }
@@ -249,7 +248,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                 case 'd':
                                                     switch(sheeshLexeme[currChar++]) {
                                                         case '\0':
-                                                            return LOCKED;
+                                                            return 1;
                                                     }
                                             }
                                             break;
@@ -259,7 +258,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                 case 'n':
                                                     switch(sheeshLexeme[currChar++]) {
                                                         case '\0':
-                                                            return LOCKIN;
+                                                            return 1;
                                                     }
                                             }
                                     }
@@ -271,7 +270,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                 case 'g':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return LONG;
+                                            return 1;
                                     }
                             }
                     }
@@ -299,7 +298,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                                         case 'e':
                                                                             switch(sheeshLexeme[currChar++]) {
                                                                                 case '\0':
-                                                                                    return MEANWHILE;
+                                                                                    return 1;
                                                                             }
                                                                     }
                                                             }
@@ -330,7 +329,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                                 case 'e':
                                                                     switch(sheeshLexeme[currChar++]) {
                                                                         case '\0':
-                                                                            return NICKNAME;
+                                                                            return 1;
                                                                     }
                                                             }
                                                     }
@@ -345,7 +344,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                         case 'm':
                             switch(sheeshLexeme[currChar++]) {
                                 case '\0':
-                                    return NUM;
+                                    return 1;
                             }
                     }
             }
@@ -362,7 +361,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                 case 'n':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return OPEN;
+                                            return 1;
                                     }
                             }
                     }
@@ -377,7 +376,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                         case 'r':
                                             switch(sheeshLexeme[currChar++]) {
                                                 case '\0':
-                                                    return OTHER;
+                                                    return 1;
 
                                                 case 'w':
                                                     switch(sheeshLexeme[currChar++]) {
@@ -388,7 +387,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                                         case 'e':
                                                                             switch(sheeshLexeme[currChar++]) {
                                                                                 case '\0':
-                                                                                    return OTHERWISE;
+                                                                                    return 1;
                                                                             }
                                                                     }
                                                             }
@@ -403,7 +402,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                 case 't':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return OUT;
+                                            return 1;
                                     }
                             }
                     }
@@ -414,7 +413,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                         case 't':
                             switch(sheeshLexeme[currChar++]) {
                                 case '\0':
-                                    return OUT;
+                                    return 1;
 
                                 case 's':
                                     switch(sheeshLexeme[currChar++]) {
@@ -425,7 +424,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                         case 'e':
                                                             switch(sheeshLexeme[currChar++]) {
                                                                 case '\0':
-                                                                    return OUTSIDE;
+                                                                    return 1;
                                                             }
                                                     }
                                             }
@@ -439,7 +438,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                 case 't':
                                                     switch(sheeshLexeme[currChar++]) {
                                                         case '\0':
-                                                            return OUTPUT;
+                                                            return 1;
                                                     }
                                             }
                                     }
@@ -455,7 +454,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                 case 'l':
                     switch(sheeshLexeme[currChar++]) {
                         case '\0':
-                            return PL;
+                            return 1;
 
                         case 'a':
                             switch(sheeshLexeme[currChar++]) {
@@ -470,7 +469,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                                 case 't':
                                                                     switch(sheeshLexeme[currChar++]) {
                                                                         case '\0':
-                                                                            return PLAYLIST;
+                                                                            return 1;
                                                                     }
                                                             }
                                                     }
@@ -490,7 +489,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                         case 'p':
                             switch(sheeshLexeme[currChar++]) {
                                 case '\0':
-                                    return REP;
+                                    return 1;
 
                                 case 'e':
                                     switch(sheeshLexeme[currChar++]) {
@@ -499,7 +498,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                 case 't':
                                                     switch(sheeshLexeme[currChar++]) {
                                                         case '\0':
-                                                            return REPEAT;
+                                                            return 1;
                                                     }
                                             }
                                     }
@@ -527,7 +526,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                                 case 'o':
                                                                     switch(sheeshLexeme[currChar++]) {
                                                                         case '\0':
-                                                                            return SCENARIO;
+                                                                            return 1;
                                                                     }
                                                             }
                                                     }
@@ -546,7 +545,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                         case 't':
                                             switch(sheeshLexeme[currChar++]) {
                                                 case '\0':
-                                                    return SHORT;
+                                                    return 1;
                                             }
                                     }
                             }
@@ -568,7 +567,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                                 case 'd':
                                                                     switch(sheeshLexeme[currChar++]) {
                                                                         case '\0':
-                                                                            return STANDARD;
+                                                                            return 1;
                                                                     }
                                                             }
                                                     }
@@ -582,7 +581,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                 case 'p':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return STOP;
+                                            return 1;
                                     }
                             }
                     }
@@ -600,7 +599,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                 case 'm':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return TEAM;
+                                            return 1;
                                     }
                             }
                             break;
@@ -610,7 +609,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                 case 't':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return TEXT;
+                                            return 1;
                                     }
                             }
                     }
@@ -628,7 +627,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                 case 'e':
                                     switch(sheeshLexeme[currChar++]) {
                                         case '\0':
-                                            return VIBE;
+                                            return 1;
                                     }
                             }
                     }

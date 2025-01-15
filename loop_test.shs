@@ -1,0 +1,7 @@
+toptier() {
+    rep (num a = 1; a > 1; a++) {
+            do {
+                test = test;
+            } meanwhile (i++);
+    }
+}

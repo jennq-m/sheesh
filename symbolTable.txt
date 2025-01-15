@@ -1,17 +1,15 @@
 Lexical Analysis of syntax.shs:
 
-Line 1: Lexeme: a               Token: IDENTIFIER
-Line 1: Lexeme: +               Token: ARITHMETIC_OPE
-Line 1: Lexeme: b               Token: IDENTIFIER
-Line 1: Lexeme: ;               Token: DELIMITER_SEMICOLON
+Line 1: Lexeme: toptier         Token: toptier
+Line 1: Lexeme: (               Token: DELIM_O_PAREN
+Line 1: Lexeme: )               Token: DELIM_C_PAREN
+Line 1: Lexeme: {               Token: DELIM_O_BRACE
+Line 2: Lexeme: -               Token: -
 Line 2: Lexeme: 5               Token: CONSTANT_NUM
-Line 2: Lexeme: +               Token: ARITHMETIC_OPE
-Line 2: Lexeme: 1               Token: CONSTANT_NUM
-Line 2: Lexeme: *               Token: ARITHMETIC_OPE
-Line 2: Lexeme: 2               Token: CONSTANT_NUM
-Line 2: Lexeme: ;               Token: DELIMITER_SEMICOLON
-Line 3: Lexeme: int             Token: IDENTIFIER
-Line 3: Lexeme: hello           Token: IDENTIFIER
-Line 3: Lexeme: =               Token: ASSIGNMENT_OPE
-Line 3: Lexeme: 25              Token: CONSTANT_NUM
-Line 3: Lexeme: ;               Token: DELIMITER_SEMICOLON
+Line 2: Lexeme: ;               Token: DELIM_SEMCOL
+Line 3: Lexeme: +               Token: +
+Line 3: Lexeme: 1               Token: CONSTANT_NUM
+Line 3: Lexeme: ;               Token: DELIM_SEMCOL
+Line 4: Lexeme: 2               Token: CONSTANT_NUM
+Line 4: Lexeme: ;               Token: DELIM_SEMCOL
+Line 5: Lexeme: }               Token: DELIM_C_BRACE

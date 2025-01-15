@@ -8,7 +8,6 @@ typedef enum {
     IDENTIFIER, 
     KEYWORD, 
     RESERVED_WORD, 
-    CONSTANT, 
     NOISE_WORD, 
     COMMENT, 
     ARITHMETIC_OPE, 
@@ -16,21 +15,65 @@ typedef enum {
     LOGICAL_OPE, 
     UNARY_OPE, 
     RELATIONAL_OPE, 
-    DELIMITER_COMMA, 
-    DELIMITER_SEMICOLON, 
-    DELIMITER_QUOTATION, 
-    DELIMITER_O_PARENTHESIS, 
-    DELIMITER_C_PARENTHESIS, 
-    DELIMITER_O_BRACE, 
-    DELIMITER_C_BRACE, 
-    DELIMITER_O_BRACKET, 
-    DELIMITER_C_BRACKET, 
+    DELIM_COMMA, 
+    DELIM_SEMCOL, 
+    DELIM_QUOTATION, 
+    DELIM_O_PAREN, 
+    DELIM_C_PAREN, 
+    DELIM_O_BRACE, 
+    DELIM_C_BRACE, 
+    DELIM_O_BRCKT, 
+    DELIM_C_BRCKT, 
     INVALID, 
     CONSTANT_NUM, 
     CONSTANT_DRIFT, 
     CONSTANT_TEXT, 
-    CONSTANDRESERVED, 
-    CONSTANT_VIBE
+    CONSTANT_TXTFS,
+    CONSTANT_VIBE,
+    CONSTANT_LEGIT,
+    BOUNCE,
+    CAR,
+    DO,
+    DRIFT,
+    EMPTY,
+    EX,
+    FLIP,
+    FROZEN,
+    GROUP,
+    IF,
+    INPUT,
+    JUMP,
+    LEGIT,
+    LOCKED,
+    LOCKIN,
+    LONG,
+    MEANWHILE,
+    NICKNAME,
+    NUM,
+    OPEN,
+    OTHER,
+    OUT,
+    OUTSIDE,
+    PL,
+    REP,
+    SCENARIO,
+    SHORT,
+    STANDARD,
+    STOP,
+    TEAM,
+    TEXT,
+    VIBE,
+    ALWAYS,
+    CAP,
+    CONT,
+    NOCAP,
+    PLAYLIST,
+    REPEAT,
+    TOPTIER,
+    OUTPUT,
+    TOP,
+    EXTRA,
+    OTHERWISE
 } TokenType;
 
 //Holding attributes of TOKEN
@@ -49,8 +92,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshLineNum);
 
 //Declaration of Function Prototype
 int checkFilename(int argc, char *argv);
-int checkKeyword(const char *sheeshLexeme);
-int checkReservedWord(const char *sheeshLexeme);
 int checkNoiseWord(const char *sheeshLexeme);
 int checkAssignment(const char *sheeshLexeme);
 int checkLogical(const char *sheeshLexeme);
@@ -60,6 +101,7 @@ int checkRelational(const char *sheeshLexeme);
 void nextToken();
 void parse();
 
+
 char *typeToString(TokenType type) {
     switch (type) {
         case IDENTIFIER: 
@@ -68,10 +110,6 @@ char *typeToString(TokenType type) {
             return "KEYWORD";
         case RESERVED_WORD: 
             return "RESERVED_WORD";
-        case CONSTANT: 
-            return "CONSTANT";
-        case CONSTANDRESERVED: 
-            return "CONSTANDRESERVED";
         case NOISE_WORD: 
             return "NOISE_WORD";
         case COMMENT: 
@@ -86,30 +124,98 @@ char *typeToString(TokenType type) {
             return "UNARY_OPE";
         case RELATIONAL_OPE: 
             return "RELATIONAL_OPE";
-        case DELIMITER_COMMA:
-            return "DELIMITER_COMMA";
-        case DELIMITER_SEMICOLON:
-            return "DELIMITER_SEMICOLON";
-        case DELIMITER_O_PARENTHESIS:
-            return "DELIMITER_O_PARENTHESIS";
-        case DELIMITER_C_PARENTHESIS:
-            return "DELIMITER_C_PARENTHESIS";
-        case DELIMITER_O_BRACKET:
-            return "DELIMITER_O_BRACKET";
-        case DELIMITER_C_BRACKET:
-            return "DELIMITER_C_BRACKET";
-        case DELIMITER_O_BRACE:
-            return "DELIMITER_O_BRACE";
-        case DELIMITER_C_BRACE:
-            return "DELIMITER_C_BRACE";
+        case DELIM_COMMA:
+            return "DELIM_COMMA";
+        case DELIM_SEMCOL:
+            return "DELIM_SEMCOL";
+        case DELIM_O_PAREN:
+            return "DELIM_O_PAREN";
+        case DELIM_C_PAREN:
+            return "DELIM_C_PAREN";
+        case DELIM_O_BRCKT:
+            return "DELIM_O_BRCKT";
+        case DELIM_C_BRCKT:
+            return "DELIM_C_BRCKT";
+        case DELIM_O_BRACE:
+            return "DELIM_O_BRACE";
+        case DELIM_C_BRACE:
+            return "DELIM_C_BRACE";
         case CONSTANT_NUM: 
             return "CONSTANT_NUM";
         case CONSTANT_DRIFT: 
             return "CONSTANT_DRIFT";
         case CONSTANT_TEXT: 
             return "CONSTANT_TEXT";
+        case CONSTANT_TXTFS: 
+            return "CONSTANT_TXTFS";
         case CONSTANT_VIBE:
             return "CONSTANT_VIBE";
+        case CONSTANT_LEGIT:
+            return "CONSTANT_LEGIT";
+        case BOUNCE:    
+            case CAR:       
+            case DO:        
+            case DRIFT:     
+            case EMPTY:     
+            case EX:        
+            case FLIP:      
+            case FROZEN:    
+            case GROUP:     
+            case IF:        
+            case INPUT:     
+            case JUMP:      
+            case LEGIT:     
+            case LOCKED:    
+            case LOCKIN:    
+            case LONG:      
+            case MEANWHILE: 
+            case NICKNAME:  
+            case NUM:       
+            return "NUM";
+            case OPEN:      
+            return "OPEN";
+            case OTHER:   
+            return "OTHER";  
+            case OUT:      
+            return "OUT"; 
+            case OUTSIDE:
+            return "OUTSIDE";   
+            case PL:        
+            return "PL";
+            case REP:   
+            return "REP";    
+            case SCENARIO:
+            return "SCENARIO";  
+            case SHORT:     
+            return "SHORT";
+            case STANDARD: 
+            return "STANDARD"; 
+            case STOP:      
+            return "STOP";
+            case TEAM:    
+            return "TEAM";  
+            case TEXT:    
+            return "TEXT";  
+            case VIBE:    
+            return "VIBE";  
+            case PLAYLIST:
+            return "PLAYLIST";  
+            case REPEAT:    
+            return "REPEAT";
+            case OUTPUT:    
+            return "OUTPUT";
+            case EXTRA:     
+            return "EXTRA";
+            case OTHERWISE:
+            return "OTHERWISE"; 
+        case ALWAYS:    
+            return "ALWAYS";
+        case CONT:
+            return "CONT";
+        case TOPTIER:
+            return "TOPTIER";
+        case TOP: 
+            return "TOPTIER";
         case INVALID: 
             return "INVALID";
         default: 
