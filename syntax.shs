@@ -33,5 +33,4 @@ toptier() {
     vibe a += 1;
     identifier++;
     ++identifier;
-    ++cap;
 }

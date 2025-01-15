@@ -777,6 +777,7 @@ ASTNode* parsePrimary() {
         ASTNode *identifierNode = newNode(currentToken.value);
         nextToken(); // Consume the identifier
 
+        //Pass post-increment values
         if (currentToken.type == UNARY_OPE) {
             previousToken();
             identifierNode->left = parseUnaryVal();
@@ -797,7 +798,7 @@ ASTNode* parsePrimary() {
         return primaryNode;
     }
 
-    // Handle parenthesized expressions
+    //Handle parenthesized expressions
     if (currentToken.type == DELIM_O_PAREN) {
         printf("Parsing parenthesized expression\n");
         nextToken(); // Consume '('
@@ -811,7 +812,10 @@ ASTNode* parsePrimary() {
         primaryNode->left = exprNode;
         return primaryNode;
         
-    }  else if (strcmp(currentToken.value, "!") == 0 || strcmp(currentToken.value, "++") == 0 || strcmp(currentToken.value, "--") == 0) {
+    }  
+    
+    //Handle not operator
+    if (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "!") == 0) {
         printf("Parsing unary operator: %s\n", currentToken.value);
         ASTNode *opNode = newNode(currentToken.value); // Create a node for the unary operator
         nextToken(); // Consume the unary operator
@@ -832,6 +836,14 @@ ASTNode* parsePrimary() {
             exit(1);
         }
     }
+    
+    //Pass pre-increment values
+    if (currentToken.type == UNARY_OPE) {
+        primaryNode->left = parseUnaryVal();
+
+        return primaryNode;
+    }
+
 
     printf("Syntax error at Line %d: Invalid <primary_expr>. Current token: %s (Type: %d)\n", currentToken.sheeshLine, currentToken.value, currentToken.type);
     exit(1);

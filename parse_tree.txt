@@ -343,10 +343,9 @@ program(
                                                                                     addsub_expr(
                                                                                         <multdiv_expr>(
                                                                                             <primary>(
-                                                                                                ++(
-                                                                                                    <ident_expr>(
-                                                                                                        i
-                                                                                                    )
+                                                                                                <unary_val>(
+                                                                                                    ++
+                                                                                                    i
                                                                                                 )
                                                                                             )
                                                                                         )
@@ -769,27 +768,9 @@ program(
                                                                                                                                                             addsub_expr(
                                                                                                                                                                 <multdiv_expr>(
                                                                                                                                                                     <primary>(
-                                                                                                                                                                        ++(
-                                                                                                                                                                            <ident_expr>(
-                                                                                                                                                                                identifier
-                                                                                                                                                                            )
-                                                                                                                                                                        )
-                                                                                                                                                                    )
-                                                                                                                                                                )
-                                                                                                                                                            )
-                                                                                                                                                        )
-                                                                                                                                                    )
-                                                                                                                                                )
-                                                                                                                                                <expr>(
-                                                                                                                                                    and_expr(
-                                                                                                                                                        equality_expr(
-                                                                                                                                                            relational_expr(
-                                                                                                                                                                addsub_expr(
-                                                                                                                                                                    <multdiv_expr>(
-                                                                                                                                                                        <primary>(
-                                                                                                                                                                            ++(
-                                                                                                                                                                                cap
-                                                                                                                                                                            )
+                                                                                                                                                                        <unary_val>(
+                                                                                                                                                                            ++
+                                                                                                                                                                            identifier
                                                                                                                                                                         )
                                                                                                                                                                     )
                                                                                                                                                                 )
