@@ -233,19 +233,9 @@ program(
                                                                                                                 )
                                                                                                             )
                                                                                                         )
-                                                                                                        <expr>(
-                                                                                                            and_expr(
-                                                                                                                equality_expr(
-                                                                                                                    relational_expr(
-                                                                                                                        addsub_expr(
-                                                                                                                            <multdiv_expr>(
-                                                                                                                                <primary>(
-                                                                                                                                    b
-                                                                                                                                )
-                                                                                                                            )
-                                                                                                                        )
-                                                                                                                    )
-                                                                                                                )
+                                                                                                        <multdiv_expr>(
+                                                                                                            <primary>(
+                                                                                                                b
                                                                                                             )
                                                                                                         )
                                                                                                     )
@@ -278,19 +268,9 @@ program(
                                                                                                                     )
                                                                                                                 )
                                                                                                             )
-                                                                                                            <expr>(
-                                                                                                                and_expr(
-                                                                                                                    equality_expr(
-                                                                                                                        relational_expr(
-                                                                                                                            addsub_expr(
-                                                                                                                                <multdiv_expr>(
-                                                                                                                                    <primary>(
-                                                                                                                                        b
-                                                                                                                                    )
-                                                                                                                                )
-                                                                                                                            )
-                                                                                                                        )
-                                                                                                                    )
+                                                                                                            <multdiv_expr>(
+                                                                                                                <primary>(
+                                                                                                                    b
                                                                                                                 )
                                                                                                             )
                                                                                                         )
@@ -423,19 +403,9 @@ program(
                                                                                                                                                 )
                                                                                                                                             )
                                                                                                                                         )
-                                                                                                                                        <expr>(
-                                                                                                                                            and_expr(
-                                                                                                                                                equality_expr(
-                                                                                                                                                    relational_expr(
-                                                                                                                                                        addsub_expr(
-                                                                                                                                                            <multdiv_expr>(
-                                                                                                                                                                <primary>(
-                                                                                                                                                                    y
-                                                                                                                                                                )
-                                                                                                                                                            )
-                                                                                                                                                        )
-                                                                                                                                                    )
-                                                                                                                                                )
+                                                                                                                                        <multdiv_expr>(
+                                                                                                                                            <primary>(
+                                                                                                                                                y
                                                                                                                                             )
                                                                                                                                         )
                                                                                                                                     )
@@ -474,21 +444,11 @@ program(
                                                                                                                                                     )
                                                                                                                                                 )
                                                                                                                                             )
-                                                                                                                                            <expr>(
-                                                                                                                                                and_expr(
-                                                                                                                                                    equality_expr(
-                                                                                                                                                        relational_expr(
-                                                                                                                                                            addsub_expr(
-                                                                                                                                                                <multdiv_expr>(
-                                                                                                                                                                    <primary>(
-                                                                                                                                                                        literal(
-                                                                                                                                                                            num_val(
-                                                                                                                                                                                5
-                                                                                                                                                                            )
-                                                                                                                                                                        )
-                                                                                                                                                                    )
-                                                                                                                                                                )
-                                                                                                                                                            )
+                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                <primary>(
+                                                                                                                                                    literal(
+                                                                                                                                                        num_val(
+                                                                                                                                                            5
                                                                                                                                                         )
                                                                                                                                                     )
                                                                                                                                                 )
@@ -555,22 +515,10 @@ program(
                                                                                                                                                                     )
                                                                                                                                                                 )
                                                                                                                                                             )
-                                                                                                                                                            <expr>(
-                                                                                                                                                                and_expr(
-                                                                                                                                                                    equality_expr(
-                                                                                                                                                                        relational_expr(
-                                                                                                                                                                            addsub_expr(
-                                                                                                                                                                                <multdiv_expr>(
-                                                                                                                                                                                    <primary>(
-                                                                                                                                                                                        literal(
-                                                                                                                                                                                            drift_val(
-                                                                                                                                                                                                49.51
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
-                                                                                                                                                                                    )
-                                                                                                                                                                                )
-                                                                                                                                                                            )
-                                                                                                                                                                        )
+                                                                                                                                                            <primary>(
+                                                                                                                                                                literal(
+                                                                                                                                                                    drift_val(
+                                                                                                                                                                        49.51
                                                                                                                                                                     )
                                                                                                                                                                 )
                                                                                                                                                             )
@@ -616,21 +564,11 @@ program(
                                                                                                                                                                     )
                                                                                                                                                                 )
                                                                                                                                                             )
-                                                                                                                                                            <expr>(
-                                                                                                                                                                and_expr(
-                                                                                                                                                                    equality_expr(
-                                                                                                                                                                        relational_expr(
-                                                                                                                                                                            addsub_expr(
-                                                                                                                                                                                <multdiv_expr>(
-                                                                                                                                                                                    <primary>(
-                                                                                                                                                                                        literal(
-                                                                                                                                                                                            num_val(
-                                                                                                                                                                                                2
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
-                                                                                                                                                                                    )
-                                                                                                                                                                                )
-                                                                                                                                                                            )
+                                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                                <primary>(
+                                                                                                                                                                    literal(
+                                                                                                                                                                        num_val(
+                                                                                                                                                                            2
                                                                                                                                                                         )
                                                                                                                                                                     )
                                                                                                                                                                 )
@@ -771,6 +709,65 @@ program(
                                                                                                                                                                         <unary_val>(
                                                                                                                                                                             ++
                                                                                                                                                                             identifier
+                                                                                                                                                                        )
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                            )
+                                                                                                                                                        )
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                                <expr>(
+                                                                                                                                                    and_expr(
+                                                                                                                                                        equality_expr(
+                                                                                                                                                            relational_expr(
+                                                                                                                                                                addsub_expr(
+                                                                                                                                                                    <multdiv_expr>(
+                                                                                                                                                                        <primary>(
+                                                                                                                                                                            =(
+                                                                                                                                                                                x
+                                                                                                                                                                                <expr>(
+                                                                                                                                                                                    and_expr(
+                                                                                                                                                                                        equality_expr(
+                                                                                                                                                                                            relational_expr(
+                                                                                                                                                                                                -(
+                                                                                                                                                                                                    +(
+                                                                                                                                                                                                        addsub_expr(
+                                                                                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                                                                                <primary>(
+                                                                                                                                                                                                                    y
+                                                                                                                                                                                                                )
+                                                                                                                                                                                                            )
+                                                                                                                                                                                                        )
+                                                                                                                                                                                                        <multdiv_expr>(
+                                                                                                                                                                                                            <primary>(
+                                                                                                                                                                                                                literal(
+                                                                                                                                                                                                                    num_val(
+                                                                                                                                                                                                                        54
+                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                )
+                                                                                                                                                                                                            )
+                                                                                                                                                                                                        )
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    *(
+                                                                                                                                                                                                        <multdiv_expr>(
+                                                                                                                                                                                                            <primary>(
+                                                                                                                                                                                                                z
+                                                                                                                                                                                                            )
+                                                                                                                                                                                                        )
+                                                                                                                                                                                                        <primary>(
+                                                                                                                                                                                                            literal(
+                                                                                                                                                                                                                num_val(
+                                                                                                                                                                                                                    5
+                                                                                                                                                                                                                )
+                                                                                                                                                                                                            )
+                                                                                                                                                                                                        )
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                )
+                                                                                                                                                                                            )
+                                                                                                                                                                                        )
+                                                                                                                                                                                    )
+                                                                                                                                                                                )
+                                                                                                                                                                            )
                                                                                                                                                                         )
                                                                                                                                                                     )
                                                                                                                                                                 )

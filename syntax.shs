@@ -33,4 +33,6 @@ toptier() {
     vibe a += 1;
     identifier++;
     ++identifier;
+    x = y + 54 - z * 5;
+    a = ( 8 + n ( c * f ) == 5);
 }
