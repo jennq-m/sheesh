@@ -1297,21 +1297,25 @@ ASTNode* parseDecStmt() {
     printf("Parse Dec Statement\n");
     ASTNode *stmtNode = newNode("<dec_stmt>");
     
+    // Parse the data type (e.g., num, drift, etc.)
     ASTNode *dtNode = parseDataType();  
     stmtNode->left = dtNode;
 
+    // Parse the variable list (e.g., a, b, ...)
     ASTNode *varListNode = parseVarList();  
-    stmtNode->right = varListNode;
+    dtNode->right = varListNode;  // Attach the variable list to the right of the data type
 
+    // Ensure the semicolon is present at the end of the declaration
     if (currentToken.type == DELIM_SEMCOL) {
-        nextToken();
+        nextToken();  // Consume the semicolon
     } else {
-        printf("SYNTAX ERROR LINE %d: Expected ';' in <dec_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        printf("Syntax error: Missing semicolon in declaration statement\n");
         exit(1);
     }
 
     return stmtNode;
 }
+
 
 ASTNode* parseDataType() {
     // <data_type> ::= "num" | "drift" | "vibe" | "text" | "short" | "long" | "legit"
@@ -1356,46 +1360,51 @@ ASTNode* parseInitialization() {
 ASTNode* parseVarList() {
     printf("Parse Variable List\n");
     ASTNode *varListNode = newNode("<var_list>");
-    ASTNode *headNode = NULL;
-    ASTNode *currentNode = NULL; 
+    ASTNode *headNode = NULL;  // Start of the variable list
+    ASTNode *currentNode = NULL;  // Pointer to the current node in the list
 
     while (currentToken.type == IDENTIFIER || currentToken.type == DELIM_COMMA) {
-        if (currentToken.type == DELIM_COMMA) {
-            currentNode->left = newNode(currentToken.value);
-            nextToken();
-        }
-
         if (currentToken.type == IDENTIFIER) {
+            // Create a node for the identifier
             ASTNode *idNode = newNode(currentToken.value);
-            nextToken();
+            nextToken();  // Consume the identifier
 
-            if (currentToken.type == ASSIGNMENT_OPE && strcmp(currentToken.value, "=") == 0) {
-                ASTNode *assignNode = newNode(currentToken.value);
-                nextToken();
-                ASTNode *exprNode = parseExpr(); 
-                assignNode->left = idNode;
-                assignNode->right = exprNode;
-                idNode = assignNode;
+            // Check if there's an initialization (e.g., a = 1)
+            ASTNode *varNode = idNode; // Default: variable without initialization
+            if (currentToken.type == ASSIGNMENT_OPE) {
+                ASTNode *assignNode = newNode(currentToken.value); // Node for '='
+                nextToken(); // Consume '='
+                ASTNode *exprNode = parseExpr(); // Parse the expression
+                assignNode->left = idNode;      // Identifier on the left
+                assignNode->right = exprNode;  // Expression on the right
+                varNode = assignNode; // Replace varNode with the assignment subtree
             }
 
-            if (headNode == NULL) {
-                headNode = idNode;
+            // Add the variable or assignment subtree to the list
+            if (!headNode) {
+                headNode = varNode; // First variable in the list
                 currentNode = headNode;
             } else {
-                currentNode->right = idNode;
-                currentNode = idNode;
+                // Create a comma node and link it
+                ASTNode *commaNode = newNode(",");
+                currentNode->right = commaNode;
+                commaNode->right = varNode; // Link the variable to the comma
+                currentNode = varNode;      // Move to the newly added node
             }
+        } else if (currentToken.type == DELIM_COMMA) {
+            nextToken();  // Consume the comma, as it's explicitly handled above
         }
     }
 
     if (!headNode) {
-        printf("SYNTAX ERROR LINE %d: Invalid <var_list>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
+        printf("Syntax error: Invalid variable list\n");
         exit(1);
     }
 
-    varListNode->left = headNode;
+    varListNode->left = headNode;  // Set the first variable as the leftmost child of the var_list
     return varListNode;
 }
+
 
 ASTNode* parseAssignStmt() {
     if (currentToken.type == IDENTIFIER) {

@@ -8,7 +8,6 @@ toptier() {
 
     num a, b;
     num a, b = 1;
-    num a = 1, b = 1;
    
     1.5;
     +2.77;
