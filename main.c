@@ -926,7 +926,6 @@ ASTNode* parseRelationalExpr() {
         nextToken();
         opNode->left = node;
 
-        // Parse the right operand
         opNode->right = parseAddSubExpr();
         if (!opNode->right) {
             printf("SYNTAX ERROR LINE %d: Expected addsub_expr. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
@@ -957,7 +956,7 @@ ASTNode* parseAddSubExpr() {
         opNode->right = parseMultDivExpr();
         if (!opNode->right) {
             printf("SYNTAX ERROR LINE %d: Expected multdiv_expr. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);  // Exit if right operand is invalid
+            exit(1);
         }
 
         node = opNode;
@@ -999,13 +998,11 @@ ASTNode* parsePrimary() {
 
     ASTNode *primaryNode = newNode("<primary>");
 
-    // Handle semicolons explicitly
     if (currentToken.type == DELIM_SEMCOL) {
-        printf("Syntax error: Unexpected ';' while parsing <primary_expr>\n");
+            printf("SYNTAX ERROR LINE %d: Unexpected ';' while parsing primary expression.\n", currentToken.sheeshLine);
         exit(1);
     }
 
-    // Handle literals or values
     if (currentToken.type == CONSTANT_NUM || currentToken.type == CONSTANT_DRIFT 
         || currentToken.type == CONSTANT_VIBE || currentToken.type == CONSTANT_TEXT 
         || currentToken.type == CONSTANT_LEGIT || (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
@@ -1015,25 +1012,22 @@ ASTNode* parsePrimary() {
         return primaryNode;
     }
 
-    // Handle identifiers
     if (currentToken.type == IDENTIFIER) {
         printf("Parsing identifier: %s\n", currentToken.value);
         ASTNode *identifierNode = newNode(currentToken.value);
-        nextToken(); // Consume the identifier
+        nextToken();
 
-        //Pass post-increment values
         if (currentToken.type == UNARY_OPE) {
             previousToken();
             identifierNode->left = parseUnaryVal();
         }
 
-        // Check for assignment operator
         if (currentToken.type == ASSIGNMENT_OPE) {
             printf("Found assignment operator: %s\n", currentToken.value);
-            ASTNode *assignNode = newNode(currentToken.value); // Assignment operator node
-            nextToken(); // Consume '='
+            ASTNode *assignNode = newNode(currentToken.value);
+            nextToken();
             assignNode->left = identifierNode;
-            assignNode->right = parseExpr(); // Parse the right-hand side
+            assignNode->right = parseExpr();
             primaryNode->left = assignNode;
             return primaryNode;
         }
@@ -1042,54 +1036,52 @@ ASTNode* parsePrimary() {
         return primaryNode;
     }
 
-    //Handle parenthesized expressions
     if (currentToken.type == DELIM_O_PAREN) {
         printf("Parsing parenthesized expression\n");
-        nextToken(); // Consume '('
+        nextToken();
         ASTNode *exprNode = parseExpr();
 
         if (currentToken.type != DELIM_C_PAREN) {
-            printf("Syntax error: Missing closing parenthesis\n");
+            printf("SYNTAX ERROR LINE %d: Expected ')'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
-        nextToken(); // Consume ')'
+        nextToken();
         primaryNode->left = exprNode;
         return primaryNode;
         
     }  
     
-    //Handle not operator
     if (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "!") == 0) {
         printf("Parsing unary operator: %s\n", currentToken.value);
-        ASTNode *opNode = newNode(currentToken.value); // Create a node for the unary operator
-        nextToken(); // Consume the unary operator
+        ASTNode *opNode = newNode(currentToken.value);
+        nextToken();
 
         if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
             printf("Unary operator applied to: %s\n", currentToken.value);
             opNode->right = parseIdentExpr();
             primaryNode->left = opNode;
+
             return primaryNode;
         } else if (currentToken.type == CONSTANT_LEGIT) {
             printf("Unary operator applied to: %s\n", currentToken.value);
             opNode->right = newNode(currentToken.value);
             primaryNode->left = opNode;
             nextToken();
+
             return primaryNode;
         } else {
-            printf("Syntax error: Expected identifier (/identifier expression) or CONSTANT_LEGIT after '%s'\n", opNode->value);
+            printf("SYNTAX ERROR LINE %d: Expected identifier or CONSTANT_LEGIT. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
     }
     
-    //Pass pre-increment values
     if (currentToken.type == UNARY_OPE) {
         primaryNode->left = parseUnaryVal();
 
         return primaryNode;
     }
 
-
-    printf("Syntax error at Line %d: Invalid <primary_expr>. Current token: %s (Type: %d)\n", currentToken.sheeshLine, currentToken.value, currentToken.type);
+    printf("SYNTAX ERROR LINE %d: Invalid <primary_expr>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
@@ -1102,8 +1094,7 @@ ASTNode* parseLiteral() {
 
     ASTNode *node = newNode("literal");
 
-    if (currentToken.type == ARITHMETIC_OPE && 
-        (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
+    if (currentToken.type == ARITHMETIC_OPE && (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
             nextToken();
 
             if (currentToken.type == CONSTANT_NUM || currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
@@ -1122,13 +1113,13 @@ ASTNode* parseLiteral() {
         }
     
     if (currentToken.type == CONSTANT_NUM) {
-            node->left = parseNumVal();
+        node->left = parseNumVal();
 
-            return node;
+        return node;
     } else if (currentToken.type == CONSTANT_DRIFT) {
-            node->left = parseDriftVal();
+        node->left = parseDriftVal();
             
-            return node;
+        return node;
     } else if (currentToken.type == CONSTANT_VIBE || currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_LEGIT) {
         node->left = newNode(currentToken.value);
         nextToken();
@@ -1136,27 +1127,30 @@ ASTNode* parseLiteral() {
         return node;
     }
 
-    printf("Syntax error at Line %s: Invalid <literal>\n", currentToken.sheeshLine);
+    if (currentToken.type == INVALID) {
+        printf("SYNTAX ERROR LINE %d: Unexpected end of input. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    }
+
+    printf("SYNTAX ERROR LINE %d: Invalid <literal>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
 ASTNode* parseNumVal() {
-    ASTNode *signNode = parseSign(); // Parse optional sign
+    ASTNode *signNode = parseSign();
 
     if (currentToken.type == CONSTANT_NUM) {
-        // Handle numeric constant
-        ASTNode *numNode = newNode("num_val");
-        numNode->left = newNode(currentToken.value); // Add constant
-        nextToken(); // Consume constant
+        ASTNode *numNode = newNode("<num_val>");
+        numNode->left = newNode(currentToken.value);
+        nextToken();
 
         if (signNode) {
-            ASTNode *node = newNode("num_val");
+            ASTNode *node = newNode("<num_val>");
             node->left = signNode;
             node->right = numNode;
             return node;
         }
         return numNode;
-
     } else if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
         // Handle identifier or parenthesized expression
         ASTNode *exprNode;
@@ -1169,9 +1163,12 @@ ASTNode* parseNumVal() {
             return node;
         }
         return exprNode;
+    } else {
+        printf("SYNTAX ERROR LINE %d: Expected a constant numeric value for <num_val>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
     }
 
-    printf("Syntax error: Invalid <num_val>\n");
+    printf("SYNTAX ERROR LINE %d: Invalid <num_val>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
