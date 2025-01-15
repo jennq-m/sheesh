@@ -2,6 +2,10 @@ toptier() {
     input("%d ", &a);
     //out("value is %d %d %d", a, b, c);
 
+     if (a > 5) {
+        out("hi");
+    }
+
     num a, b;
     num a, b = 1;
     num a = 1, b = 1;
