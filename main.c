@@ -499,8 +499,8 @@ ASTNode* parseInitialization();
 ASTNode* parseRepLoop();
 ASTNode* parseLoopInitial();
 ASTNode* parseUpdStmt();
-ASTNode* MWLoop();
-ASTNode* DMWLoop();
+ASTNode* parseMwLoop();
+ASTNode* parseDmwLoop();
 
 
 void nextToken() {
@@ -1297,13 +1297,13 @@ ASTNode* parseIterativeStmt() {
         loopNode->left = parseRepLoop();
         node->left = loopNode;
     } else if (currentToken.type == KEYWORD && strcmp(currentToken.value, "do") == 0) {
+        ASTNode *loopNode = newNode("dmw_loop");
+        // Add parsing logic for mw_loop
+        node->left = parseDmwLoop();
+    } else if (currentToken.type == KEYWORD && (strcmp(currentToken.value, "meanwhile") == 0 || strcmp(currentToken.value, "while") == 0)) {
         ASTNode *loopNode = newNode("mw_loop");
         // Add parsing logic for mw_loop
-        node->left = loopNode;
-    } else if (currentToken.type == KEYWORD && (strcmp(currentToken.value, "meanwhile") == 0 || strcmp(currentToken.value, "while") == 0)) {
-        ASTNode *loopNode = newNode("dmw_loop");
-        // Add parsing logic for dmw_loop
-        node->left = loopNode;
+        node->left = parseMwLoop();
     } else {
         printf("Syntax error: Invalid iterative statement\n");
         exit(1);
@@ -1411,6 +1411,109 @@ ASTNode* parseUpdStmt() {
     return NULL;
 }
 
+ASTNode* parseMwLoop() {
+    ASTNode* node = newNode("<mw_loop>");
+    printf("Parsing 'meanwhile' loop. Current token: %s\n", currentToken.value);
+
+    if (currentToken.type == KEYWORD && strcmp(currentToken.value, "meanwhile") == 0) {
+        nextToken(); // Consume "meanwhile"
+        printf("Consumed 'meanwhile'. Next token: %s\n", currentToken.value);
+
+        if (currentToken.type == DELIM_O_PAREN) {
+            nextToken(); // Consume '('
+            printf("Consumed '('. Parsing condition expression.\n");
+
+            node->left = parseExpr(); // Parse the condition expression
+            printf("Parsed condition expression. Next token: %s\n", currentToken.value);
+
+            if (currentToken.type != DELIM_C_PAREN) {
+                printf("Syntax error: Expected ')' after 'meanwhile' condition. Found: %s\n", currentToken.value);
+                exit(1);
+            }
+            nextToken(); // Consume ')'
+            printf("Consumed ')'. Next token: %s\n", currentToken.value);
+
+            if (currentToken.type == DELIM_O_BRACE) {
+                nextToken(); // Consume '{'
+                printf("Consumed '{'. Parsing loop body.\n");
+
+                node->right = parseBody(); // Parse the body of the loop
+                printf("Parsed loop body. Next token: %s\n", currentToken.value);
+
+                if (currentToken.type != DELIM_C_BRACE) {
+                    printf("Syntax error: Expected '}' to close 'meanwhile' loop body. Found: %s\n", currentToken.value);
+                    exit(1);
+                }
+                nextToken(); // Consume '}'
+                printf("Consumed '}'. Next token: %s\n", currentToken.value);
+            } else {
+                printf("Syntax error: Expected '{' after 'meanwhile' condition. Found: %s\n", currentToken.value);
+                exit(1);
+            }
+        } else {
+            printf("Syntax error: Expected '(' after 'meanwhile'. Found: %s\n", currentToken.value);
+            exit(1);
+        }
+    } else {
+        printf("Syntax error: Invalid loop start. Expected 'meanwhile'. Found: %s\n", currentToken.value);
+        exit(1);
+    }
+
+    return node;
+}
+
+
+ASTNode* parseDmwLoop() {
+    ASTNode* node = newNode("<dmw_loop>");
+    printf("Parsing 'do-meanwhile' loop\n");
+
+    if (currentToken.type == KEYWORD && strcmp(currentToken.value, "do") == 0) {
+        nextToken(); // Consume "do"
+
+        if (currentToken.type == DELIM_O_BRACE) {
+            nextToken(); // Consume '{'
+            node->left = parseBody(); // Parse the body of the loop
+
+            if (currentToken.type != DELIM_C_BRACE) {
+                printf("Syntax error: Expected '}' to close 'do' block\n");
+                exit(1);
+            }
+            nextToken(); // Consume '}'
+
+            if (currentToken.type == KEYWORD && strcmp(currentToken.value, "meanwhile") == 0) {
+                nextToken(); // Consume "meanwhile"
+
+                if (currentToken.type == DELIM_O_PAREN) {
+                    nextToken(); // Consume '('
+                    node->right = parseExpr(); // Parse the condition expression
+
+                    if (currentToken.type != DELIM_C_PAREN) {
+                        printf("Syntax error: Expected ')' after 'meanwhile' condition\n");
+                        exit(1);
+                    }
+                    nextToken(); // Consume ')'
+
+                    if (currentToken.type == DELIM_SEMCOL) {
+                        nextToken(); // Consume ';'
+                    } else {
+                        printf("Syntax error: Expected ';' after 'meanwhile' loop\n");
+                        exit(1);
+                    }
+                } else {
+                    printf("Syntax error: Expected '(' after 'meanwhile'\n");
+                    exit(1);
+                }
+            } else {
+                printf("Syntax error: Expected 'meanwhile' after 'do' block\n");
+                exit(1);
+            }
+        } else {
+            printf("Syntax error: Expected '{' after 'do'\n");
+            exit(1);
+        }
+    }
+    return node;
+}
 
 void parse(FILE* file) {
     nextToken();

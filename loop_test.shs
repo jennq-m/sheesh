@@ -1,5 +1,8 @@
 toptier() {
-    rep (num i=0; i < 10; i++) {
-        i += 1;
-    }
+    do {
+      i++;
+      meanwhile (i > j) {
+        j++;
+      }
+} meanwhile (i < 5);
 }
