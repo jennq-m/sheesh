@@ -810,7 +810,7 @@ ASTNode* parseExpr() {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
-        opNode->right = parseExpr();
+        opNode->right = parseAndExpr();
         node = opNode;
     }
     return node;
@@ -824,7 +824,7 @@ ASTNode* parseAndExpr() {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
-        opNode->right = parseExpr();
+        opNode->right = parseEqualityExpr();
         node = opNode;
     }
     return node;
@@ -838,7 +838,7 @@ ASTNode* parseEqualityExpr() {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
-        opNode->right = parseExpr();
+        opNode->right = parseRelationalExpr();
         return opNode;
     }
     return node;
@@ -852,7 +852,7 @@ ASTNode* parseRelationalExpr() {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
-        opNode->right = parseExpr();
+        opNode->right = parseAddSubExpr();
         return opNode;
     }
     return node;
@@ -868,7 +868,7 @@ ASTNode* parseAddSubExpr() {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
-        opNode->right = parseExpr();
+        opNode->right = parseMultDivExpr();
         node = opNode;
     }
     return node;
@@ -883,11 +883,12 @@ ASTNode* parseMultDivExpr() {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
-        opNode->right = parseExpr();
+        opNode->right = parsePrimary();
         node = opNode;
     }
     return node;
 }
+
 ASTNode* parsePrimary() {
     printf("Entering parsePrimary. Current token: %s (Type: %d, Line: %d)\n", currentToken.value, currentToken.type, currentToken.sheeshLine);
 

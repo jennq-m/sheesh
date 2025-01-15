@@ -36,4 +36,12 @@ toptier() {
     a += 1;
     a = b;
     a = 8;
+
+    rep (num a = 1; a > 1; a++) {
+        meanwhile (i > 10) {
+            do {
+                test = test;
+            } meanwhile (i < 10);
+        }
+    }
 }
