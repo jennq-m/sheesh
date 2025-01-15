@@ -25,12 +25,13 @@ program(
                             addsub_expr(
                                 <multdiv_expr>(
                                     <primary>(
-                                        +(
-                                            <primary>(
-                                                literal(
-                                                    drift_val(
-                                                        2.77
-                                                    )
+                                        literal(
+                                            drift_val(
+                                                sign(
+                                                    +
+                                                )
+                                                drift_val(
+                                                    2.77
                                                 )
                                             )
                                         )
@@ -101,12 +102,13 @@ program(
                                             addsub_expr(
                                                 <multdiv_expr>(
                                                     <primary>(
-                                                        +(
-                                                            <primary>(
-                                                                literal(
-                                                                    num_val(
-                                                                        89
-                                                                    )
+                                                        literal(
+                                                            num_val(
+                                                                sign(
+                                                                    +
+                                                                )
+                                                                num_val(
+                                                                    89
                                                                 )
                                                             )
                                                         )
@@ -511,9 +513,14 @@ program(
                                                                                                             addsub_expr(
                                                                                                                 <multdiv_expr>(
                                                                                                                     <primary>(
-                                                                                                                        +(
-                                                                                                                            <primary>(
-                                                                                                                                identifier
+                                                                                                                        literal(
+                                                                                                                            num_val(
+                                                                                                                                sign(
+                                                                                                                                    +
+                                                                                                                                )
+                                                                                                                                <ident_expr>(
+                                                                                                                                    identifier
+                                                                                                                                )
                                                                                                                             )
                                                                                                                         )
                                                                                                                     )
@@ -529,8 +536,11 @@ program(
                                                                                                                 addsub_expr(
                                                                                                                     <multdiv_expr>(
                                                                                                                         <primary>(
-                                                                                                                            +(
-                                                                                                                                <primary>(
+                                                                                                                            literal(
+                                                                                                                                num_val(
+                                                                                                                                    sign(
+                                                                                                                                        +
+                                                                                                                                    )
                                                                                                                                     <expr>(
                                                                                                                                         and_expr(
                                                                                                                                             equality_expr(
@@ -586,8 +596,11 @@ program(
                                                                                                                     addsub_expr(
                                                                                                                         <multdiv_expr>(
                                                                                                                             <primary>(
-                                                                                                                                -(
-                                                                                                                                    <primary>(
+                                                                                                                                literal(
+                                                                                                                                    num_val(
+                                                                                                                                        sign(
+                                                                                                                                            -
+                                                                                                                                        )
                                                                                                                                         <expr>(
                                                                                                                                             and_expr(
                                                                                                                                                 equality_expr(
@@ -759,6 +772,23 @@ program(
                                                                                                                                                                         ++(
                                                                                                                                                                             <ident_expr>(
                                                                                                                                                                                 identifier
+                                                                                                                                                                            )
+                                                                                                                                                                        )
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                            )
+                                                                                                                                                        )
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                                <expr>(
+                                                                                                                                                    and_expr(
+                                                                                                                                                        equality_expr(
+                                                                                                                                                            relational_expr(
+                                                                                                                                                                addsub_expr(
+                                                                                                                                                                    <multdiv_expr>(
+                                                                                                                                                                        <primary>(
+                                                                                                                                                                            ++(
+                                                                                                                                                                                cap
                                                                                                                                                                             )
                                                                                                                                                                         )
                                                                                                                                                                     )

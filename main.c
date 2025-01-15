@@ -761,21 +761,11 @@ ASTNode* parsePrimary() {
         exit(1);
     }
 
-    // Handle unary '+' or '-' operators
-    if (currentToken.type == ARITHMETIC_OPE &&
-        (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
-        printf("Parsing unary operator: %s\n", currentToken.value);
-        ASTNode *opNode = newNode(currentToken.value); // Create a node for the unary operator
-        nextToken(); // Consume the unary operator
-
-        opNode->right = parsePrimary(); // Parse the primary expression it applies to
-        primaryNode->left = opNode;
-        return primaryNode;
-    }
-
     // Handle literals or values
-    if (currentToken.type == CONSTANT_NUM || currentToken.type == CONSTANT_DRIFT ||
-        currentToken.type == CONSTANT_VIBE || currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_LEGIT) {
+    if (currentToken.type == CONSTANT_NUM || currentToken.type == CONSTANT_DRIFT 
+        || currentToken.type == CONSTANT_VIBE || currentToken.type == CONSTANT_TEXT 
+        || currentToken.type == CONSTANT_LEGIT || (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
+            
         printf("Parsing literal: %s\n", currentToken.value);
         primaryNode->left = parseLiteral();
         return primaryNode;
@@ -860,7 +850,7 @@ ASTNode* parseLiteral() {
         (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
             nextToken();
 
-            if (currentToken.type == CONSTANT_NUM || currentToken.type == IDENTIFIER) {
+            if (currentToken.type == CONSTANT_NUM || currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
                 previousToken();
                 node->left = parseNumVal();
 

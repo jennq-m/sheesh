@@ -134,4 +134,7 @@ Line 34: Lexeme: ;               Token: DELIM_SEMCOL
 Line 35: Lexeme: ++              Token: ++
 Line 35: Lexeme: identifier      Token: IDENTIFIER
 Line 35: Lexeme: ;               Token: DELIM_SEMCOL
-Line 36: Lexeme: }               Token: DELIM_C_BRACE
+Line 36: Lexeme: ++              Token: ++
+Line 36: Lexeme: cap             Token: CONSTANT_LEGIT
+Line 36: Lexeme: ;               Token: DELIM_SEMCOL
+Line 37: Lexeme: }               Token: DELIM_C_BRACE
