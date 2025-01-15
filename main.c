@@ -625,6 +625,14 @@ ASTNode* parseStmts() {
                 current->right = declNode;  // Chain subsequent statements
             }
             current = declNode;  // Move to the latest statement
+        } else if (strcmp(currentToken.value, "rep") == 0 || strcmp(currentToken.value, "meanwhile") == 0 || strcmp(currentToken.value, "while") == 0 || strcmp(currentToken.value, "do") == 0) {
+            ASTNode *iterativeNode = parseIterativeStmt();  // Parse a declaration statement
+            if (!node) {
+                node = iterativeNode;  // First statement becomes the root
+            } else {
+                current->right = iterativeNode;  // Chain subsequent statements
+            }
+            current = iterativeNode;  // Move to the latest statement
         } else {
             // Handle other statements (e.g., expression statements)
             ASTNode *stmt = parseExprStmt();  // Parse a single statement
@@ -1276,32 +1284,80 @@ ASTNode* parseVarList() {
 //     exit(1);
 // }
 
+ASTNode* parseRepLoop();
+
 ASTNode* parseIterativeStmt() {
-    if (currentToken.type == KEYWORD && strcmp(currentToken.value, "rep") == 0) {
-        ASTNode *node = newNode("rep_stmt");
-        nextToken();
-        if (currentToken.type == DELIM_O_PAREN) {
-            nextToken();
-            if (currentToken.type != DELIM_C_PAREN) {
-                node->left = parseExpr();
-            }
-            if (currentToken.type == DELIM_C_PAREN) {
-                nextToken();
-                if (currentToken.type == DELIM_O_BRACE) {
-                    nextToken();
-                    node->right = parseBody();
-                    if (currentToken.type == DELIM_C_BRACE) {
-                        nextToken();
-                        return node;
-                    }
-                }
-            }
-        }
-        printf("Syntax error: Invalid rep statement\n");
-        exit(1);
+    ASTNode* node = newNode("<iterative_stmt");
+    printf("Entering iterative statements\n");
+
+     if (currentToken.type == KEYWORD && strcmp(currentToken.value, "rep") == 0) {
+        ASTNode *loopNode = newNode("rep_stmt");
+        loopNode->left = parseRepLoop();
     }
-    printf("Syntax error: Expected iterative statement\n");
-    exit(1);
+
+    // if (currentToken.type == KEYWORD && strcmp(currentToken.value, "rep") == 0) {
+    //     ASTNode *node = newNode("rep_stmt");
+    //     nextToken();
+    //     if (currentToken.type == DELIM_O_PAREN) {
+    //         nextToken();
+    //         if (currentToken.type != DELIM_C_PAREN) {
+    //             node->left = parseExpr();
+    //         }
+    //         if (currentToken.type == DELIM_C_PAREN) {
+    //             nextToken();
+    //             if (currentToken.type == DELIM_O_BRACE) {
+    //                 nextToken();
+    //                 node->right = parseBody();
+    //                 if (currentToken.type == DELIM_C_BRACE) {
+    //                     nextToken();
+    //                     return node;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     printf("Syntax error: Invalid rep statement\n");
+    //     exit(1);
+    // }
+    // printf("Syntax error: Expected iterative statement\n");
+    // exit(1);
+}
+
+ASTNode* parseRepLoop() {
+    ASTNode* node = newNode("<rep_loop>");
+
+    if (currentToken.type == KEYWORD && strcmp(currentToken.value, "rep") == 0) {
+        printf("%s\n", node->value);
+
+        nextToken();
+    }
+
+    // if (currentToken.type == KEYWORD && strcmp(currentToken.value, "rep") == 0) {
+    //     ASTNode *node = newNode("rep_stmt");
+    //     nextToken();
+    //     if (currentToken.type == DELIM_O_PAREN) {
+    //         nextToken();
+    //         if (currentToken.type != DELIM_C_PAREN) {
+    //             node->left = parseExpr();
+    //         }
+    //         if (currentToken.type == DELIM_C_PAREN) {
+    //             nextToken();
+    //             if (currentToken.type == DELIM_O_BRACE) {
+    //                 nextToken();
+    //                 node->right = parseBody();
+    //                 if (currentToken.type == DELIM_C_BRACE) {
+    //                     nextToken();
+    //                     return node;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     printf("Syntax error: Invalid rep statement\n");
+    //     exit(1);
+    // }
+    // printf("Syntax error: Expected iterative statement\n");
+    // exit(1);
+
+    printf("Entered iterative stmt");
 }
 
 void parse(FILE* file) {
