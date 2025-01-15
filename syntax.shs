@@ -1,7 +1,10 @@
 toptier() {
     input("%d ", &a);
     //out("value is %d %d %d", a, b, c);
-    
+
+    num a, b;
+    num a, b = 1;
+    num a = 1, b = 1;
    
     1.5;
     +2.77;
@@ -31,12 +34,11 @@ toptier() {
     legit a = nocap;
     drift initialization = 5.5;
     a += 1;
-    vibe a += 1;
     x = y + 54 - z * 5;
     a = (8+n*(c*f) == 5);
     a += 1;
     a = b;
-    a = 8;
+    a = 8; 
 
     rep (num a = 1; a > 1; a++) {
         meanwhile (i > 10) {

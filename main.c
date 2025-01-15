@@ -1221,37 +1221,26 @@ ASTNode* parseIdentExpr() {
 }
 
 ASTNode* parseDecStmt() {
-    // <dec_stmt> ::= <data_type> ( IDENTIFIER | <initialization> | IDENTIFIER <var_list> | <initialization> <var_list>) DELIM_SEMCOL
     printf("Parse Dec Statement\n");
     ASTNode *stmtNode = newNode("<dec_stmt>");
-    ASTNode *dtNode = parseDataType();
-    stmtNode->left = dtNode;  // Set data type as the left child of the stmtNode
     
+    // Parse the data type (e.g., num, drift, etc.)
+    ASTNode *dtNode = parseDataType();  
+    stmtNode->left = dtNode;
 
-    if (currentToken.type == IDENTIFIER) {
-        printf("Found IDENTIFIER: %s\n", currentToken.value);
+    // Parse the variable list (e.g., a, b, ... )
+    ASTNode *varListNode = parseVarList();  
+    stmtNode->right = varListNode;  // Attach the variable list to the right of the data type
 
-        // Enter parseInitialization to handle IDENTIFIER = <expr> or IDENTIFIER
-        ASTNode *initNode = parseInitialization();
-        stmtNode->right = initNode;  // Attach initialization subtree
-
-        if (currentToken.type == DELIM_COMMA) {
-            // Case: IDENTIFIER <var_list> or IDENTIFIER = <expr> <var_list>
-            ASTNode *varListNode = parseVarList();
-            initNode->right->right = varListNode;  // Attach variable list subtree
-        }
-
-        if (currentToken.type == DELIM_SEMCOL) {
-            nextToken();  // Consume semicolon
-            return stmtNode;
-        } else {
-            printf("Syntax error: Missing semicolon in declaration\n");
-            exit(1);
-        }
+    // Ensure the semicolon is present at the end of the declaration
+    if (currentToken.type == DELIM_SEMCOL) {
+        nextToken();  // Consume the semicolon
+    } else {
+        printf("Syntax error: Missing semicolon in declaration statement\n");
+        exit(1);
     }
 
-    printf("Syntax error: Invalid declaration statement\n");
-    exit(1);
+    return stmtNode;
 }
 
 
@@ -1272,84 +1261,75 @@ ASTNode* parseDataType() {
     exit(1);
 }
 
-
-
 ASTNode* parseInitialization() {
     printf("Enter parseInitialization\n");
     ASTNode* initNode = newNode("<initialization>");
 
-    printf("Token Type: %d, Token Value: %s\n", currentToken.type, currentToken.value);
-
     if (currentToken.type == IDENTIFIER) {
         ASTNode* idNode = newNode(currentToken.value);
-        printf("Identifier: %s\n", currentToken.value);
         nextToken();  // Consume the identifier
 
-        printf("Token Type: %d, Token Value: %s\n", currentToken.type, currentToken.value);
-
+        // Check for initialization (e.g., a = 10)
         if (currentToken.type == ASSIGNMENT_OPE) {
-            ASTNode* assignNode = newNode(currentToken.value);  // Create a node for the assignment operator
-
-            nextToken();  // Consume '='
-            printf("Enter ASSIGNMENT_OPE check in parseInitialization\n");
-            ASTNode* exprNode = parseExpr();  // Ensure parseExpr can correctly handle the expression
-            printf("Expression: %s\n", exprNode->value);
-            initNode->left = assignNode;  // Set the assignment node on the right of the initialization node
-            initNode->right = exprNode;
-
-            return initNode;
-        } else {
-            initNode->left = idNode;  // In case there's no assignment operator, treat IDENTIFIER as a variable
-            return initNode;
+            ASTNode* assignNode = newNode(currentToken.value); // Node for '='
+            nextToken(); // Consume '='
+            ASTNode* exprNode = parseExpr(); // Parse the expression
+            assignNode->left = idNode;
+            assignNode->right = exprNode;
+            idNode = assignNode; // Replace idNode with the assignment subtree
         }
+
+        initNode->left = idNode;
+        return initNode;
     }
 
-    printf("Syntax error at Line %d: Invalid initialization. Expected '=' followed by an expression.\n", currentToken.sheeshLine);
+    printf("Syntax error: Invalid initialization. Expected '=' followed by an expression.\n");
     exit(1);
 }
-
 ASTNode* parseVarList() {
-    // <var_list> ::= (DELIM_COMMA (IDENTIFIER | <initialization>))+ 
+    printf("Parse Variable List\n");
     ASTNode *varListNode = newNode("<var_list>");
-    ASTNode *headNode = NULL;  // Track the first node in the list
-    ASTNode *currentNode = NULL;  // Track the current node in the list
+    ASTNode *headNode = NULL;  // Start of the variable list
+    ASTNode *currentNode = NULL;  // Pointer to the current node in the list
 
     while (currentToken.type == IDENTIFIER || currentToken.type == DELIM_COMMA) {
         if (currentToken.type == DELIM_COMMA) {
+            currentNode->left = newNode(currentToken.value);
             nextToken();  // Consume the comma
         }
-        
-        ASTNode *node = NULL;
 
         if (currentToken.type == IDENTIFIER) {
-            // Case: IDENTIFIER (not initialization)
+            // Create a node for the identifier
             ASTNode *idNode = newNode(currentToken.value);
-            nextToken();  // Consume identifier
+            nextToken();  // Consume the identifier
 
-            // Check for initialization
+            // Check if there's an initialization (e.g., b = 10)
             if (currentToken.type == ASSIGNMENT_OPE && strcmp(currentToken.value, "=") == 0) {
-                idNode->left = newNode(currentToken.value);
-                nextToken();  // Consume '='
-                ASTNode *exprNode = parseExpr();
-                idNode->right = exprNode;  // Set the expression on the right of the identifier
+                ASTNode *assignNode = newNode(currentToken.value); // Node for '='
+                nextToken(); // Consume '='
+                ASTNode *exprNode = parseExpr(); // Parse the expression
+                assignNode->left = idNode;
+                assignNode->right = exprNode;
+                idNode = assignNode; // Replace idNode with the assignment subtree
             }
 
-            
-
-            node = idNode;
-        }
-
-        // Add the node to the list
-        if (headNode == NULL) {
-            headNode = node;  // First node in the list
-            currentNode = headNode;
-        } else {
-            currentNode->right = node;  // Append subsequent nodes
-            currentNode = node;  // Move to the newly added node
+            // Add the identifier or assignment node to the list
+            if (headNode == NULL) {
+                headNode = idNode; // First variable in the list
+                currentNode = headNode;
+            } else {
+                currentNode->right = idNode; // Append to the list
+                currentNode = idNode; // Move to the newly added node
+            }
         }
     }
 
-    varListNode->left = headNode;  // Set the head node as the left child of the var_list
+    if (!headNode) {
+        printf("Syntax error: Invalid variable list\n");
+        exit(1);
+    }
+
+    varListNode->left = headNode;  // Set the first variable as the leftmost child of the var_list
     return varListNode;
 }
 
