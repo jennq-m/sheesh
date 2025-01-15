@@ -617,6 +617,7 @@ ASTNode* parseStmts() {
     ASTNode *node = NULL;  // Root for statements
     ASTNode *current = NULL;
 
+    printf("TOKEEEEEN %s", currentToken.type);
     while (currentToken.type != DELIM_C_BRACE && currentToken.type != INVALID) {
         // Check for a declaration statement first (i.e., when we encounter a data type like "num")
         if (strcmp(currentToken.value, "num") == 0 || strcmp(currentToken.value, "drift") == 0 || 
@@ -631,6 +632,17 @@ ASTNode* parseStmts() {
                 current->right = declNode;  // Chain subsequent statements
             }
             current = declNode;  // Move to the latest statement
+            printf("log1");
+        } else if (currentToken.type == IDENTIFIER) {
+            ASTNode *assignNode = parseAssignStmt();
+            if (!node) {
+                node = assignNode;
+            } else {
+                current->right = assignNode;
+            }
+            current = assignNode;
+            printf("log2");
+
         } else if (strcmp(currentToken.value, "rep") == 0 || strcmp(currentToken.value, "meanwhile") == 0 || strcmp(currentToken.value, "while") == 0 || strcmp(currentToken.value, "do") == 0) {
             ASTNode *iterativeNode = parseIterativeStmt();  // Parse a declaration statement
             if (!node) {
@@ -639,6 +651,7 @@ ASTNode* parseStmts() {
                 current->right = iterativeNode;  // Chain subsequent statements
             }
             current = iterativeNode;  // Move to the latest statement
+            printf("log3");
         } else {
             // Handle other statements (e.g., expression statements)
             ASTNode *stmt = parseExprStmt();  // Parse a single statement
@@ -648,6 +661,7 @@ ASTNode* parseStmts() {
                 current->right = stmt;  // Chain subsequent statements
             }
             current = stmt;  // Move to the latest statement
+            printf("log4");
         }
 
         // Consume the token for the next statement

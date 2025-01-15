@@ -1,31 +1,21 @@
-Lexical Analysis of loop_test.shs:
+Lexical Analysis of syntax.shs:
 
 Line 1: Lexeme: toptier         Token: toptier
 Line 1: Lexeme: (               Token: DELIM_O_PAREN
 Line 1: Lexeme: )               Token: DELIM_C_PAREN
 Line 1: Lexeme: {               Token: DELIM_O_BRACE
-Line 2: Lexeme: do              Token: do             
-Line 2: Lexeme: {               Token: DELIM_O_BRACE
+Line 2: Lexeme: y               Token: IDENTIFIER
+Line 2: Lexeme: =               Token: =
+Line 2: Lexeme: 10              Token: CONSTANT_NUM
+Line 2: Lexeme: ;               Token: DELIM_SEMCOL
+Line 3: Lexeme: num             Token: num            
 Line 3: Lexeme: i               Token: IDENTIFIER
-Line 3: Lexeme: ++              Token: ++
+Line 3: Lexeme: =               Token: =
+Line 3: Lexeme: 0               Token: CONSTANT_NUM
 Line 3: Lexeme: ;               Token: DELIM_SEMCOL
-Line 4: Lexeme: meanwhile       Token: meanwhile      
-Line 4: Lexeme: (               Token: DELIM_O_PAREN
-Line 4: Lexeme: i               Token: IDENTIFIER
-Line 4: Lexeme: >               Token: >
-Line 4: Lexeme: j               Token: IDENTIFIER
-Line 4: Lexeme: )               Token: DELIM_C_PAREN
-Line 4: Lexeme: {               Token: DELIM_O_BRACE
-Line 5: Lexeme: j               Token: IDENTIFIER
-Line 5: Lexeme: ++              Token: ++
-Line 5: Lexeme: ;               Token: DELIM_SEMCOL
-Line 6: Lexeme: }               Token: DELIM_C_BRACE
-Line 7: Lexeme: }               Token: DELIM_C_BRACE
-Line 7: Lexeme: meanwhile       Token: meanwhile      
-Line 7: Lexeme: (               Token: DELIM_O_PAREN
-Line 7: Lexeme: i               Token: IDENTIFIER
-Line 7: Lexeme: <               Token: <
-Line 7: Lexeme: 5               Token: CONSTANT_NUM
-Line 7: Lexeme: )               Token: DELIM_C_PAREN
-Line 7: Lexeme: ;               Token: DELIM_SEMCOL
-Line 8: Lexeme: }               Token: DELIM_C_BRACE
+Line 4: Lexeme: drift           Token: drift          
+Line 4: Lexeme: x               Token: IDENTIFIER
+Line 4: Lexeme: =               Token: =
+Line 4: Lexeme: 5               Token: CONSTANT_NUM
+Line 4: Lexeme: ;               Token: DELIM_SEMCOL
+Line 5: Lexeme: }               Token: DELIM_C_BRACE
