@@ -712,43 +712,52 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
 
 ASTNode* parseProgram() {
     printf("Entering parseProgram\n");
+
+    if (currentToken.type != TOPTIER) {
+        printf("SYNTAX ERROR LINE %d: Expected toptier keyword. Skipping tokens until keyword is found.\n", currentToken.sheeshLine);
+        nextToken(); 
+        return NULL;
+    }
+
     if (currentToken.type == TOPTIER) {
         printf("Matched toptier\n");
         ASTNode *node = newNode("<program>");
         nextToken();
+
         if (currentToken.type == DELIM_O_PAREN) {
             printf("Matched opening parenthesis\n");
             nextToken();
+
             if (currentToken.type == DELIM_C_PAREN) {
                 printf("Matched closing parenthesis\n");
                 nextToken();
+
                 if (currentToken.type == DELIM_O_BRACE) {
                     printf("Matched opening brace\n");
                     nextToken();
                     node->left = parseBody();
+
                     if (currentToken.type == DELIM_C_BRACE) {
                         printf("Matched closing brace\n");
                         nextToken();
+
                         return node;
                     } else {
-                        printf("Syntax error: Missing closing brace\n");
+                        printf("SYNTAX ERROR LINE %d: Expected '}'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                     }
                 } else {
-                    printf("Syntax error: Missing opening brace\n");
+                    printf("SYNTAX ERROR LINE %d: Expected '{'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 }
             } else {
-                printf("Syntax error: Missing closing parenthesis\n");
+                printf("SYNTAX ERROR LINE %d: Expected ')'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             }
         } else {
-            printf("Syntax error: Missing opening parenthesis\n");
+            printf("SYNTAX ERROR LINE %d: Expected '('. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
         }
-    } else {
-        printf("Syntax error: Missing toptier keyword\n");
-    }
+    } 
     printf("Syntax error: Invalid program structure\n");
     exit(1);
 }
-
 
 ASTNode* parseBody() {
     printf("Entering parseBody\n");
