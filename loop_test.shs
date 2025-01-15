@@ -3,6 +3,9 @@ toptier() {
       i++;
       meanwhile (i > j) {
         j++;
+        rep (i = 1; i < x; i++) {
+          i++;
+        }
       }
 } meanwhile (i < 5);
 }
