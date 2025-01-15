@@ -635,7 +635,10 @@ ASTNode* parseLoopInitial();
 ASTNode* parseUpdStmt();
 ASTNode* parseMwLoop();
 ASTNode* parseDmwLoop();
-
+ASTNode* parseInputStmt();
+ASTNode* parseInput();
+ASTNode* parseOutputStmt();
+ASTNode* parseOutput();
 
 void nextToken() {
     if (currentIndex < tokenCount) {
@@ -745,73 +748,59 @@ ASTNode* parseBody() {
     node->left = parseStmts();
     return node;
 }
-
 ASTNode* parseStmts() {
     printf("Entering parseStmts\n");
     ASTNode *node = NULL;  // Root for statements
     ASTNode *current = NULL;
 
     while (currentToken.type != DELIM_C_BRACE && currentToken.type != INVALID) {
-        // Check for a declaration statement first (i.e., when we encounter a data type like "num")
-        if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT || currentToken.type == SHORT
-        || currentToken.type == LONG || currentToken.type == LEGIT) {
-            
-            ASTNode *declNode = parseDecStmt();  // Parse a declaration statement
-            if (!node) {
-                node = declNode;  // First statement becomes the root
-            } else {
-                current->right = declNode;  // Chain subsequent statements
-            }
-            current = declNode;  // Move to the latest statement
-            
-        } else if (currentToken.type == IDENTIFIER) {
+        ASTNode *stmt = NULL;
 
+        // Check for declaration statements
+        if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT ||
+            currentToken.type == SHORT || currentToken.type == LONG || currentToken.type == LEGIT) {
+            stmt = parseDecStmt();
+
+        // Check for assignment statements
+        } else if (currentToken.type == IDENTIFIER) {
             nextToken();
             if (currentToken.type == ASSIGNMENT_OPE) {
                 previousToken();
-                ASTNode *assignNode = parseAssignStmt();
-                if (!node) {
-                    node = assignNode;
-                } else {
-                    current->right = assignNode;
-                }
-                current = assignNode;
-                
+                stmt = parseAssignStmt();
             } else {
                 previousToken();
-                // Handle other statements (e.g., expression statements)
-                ASTNode *stmt = parseExprStmt();  // Parse a single statement
-                if (!node) {
-                    node = stmt;  // First statement becomes the root
-                } else {
-                    current->right = stmt;  // Chain subsequent statements
-                }
-                current = stmt;  // Move to the latest statement
+                stmt = parseExprStmt();
             }
 
+        // Check for iterative statements
         } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
-            ASTNode *iterativeNode = parseIterativeStmt();  // Parse a declaration statement
-            if (!node) {
-                node = iterativeNode;  // First statement becomes the root
-            } else {
-                current->right = iterativeNode;  // Chain subsequent statements
-            }
-            current = iterativeNode;  // Move to the latest statement
+            stmt = parseIterativeStmt();
+
+        // Check for input statements
+        } else if (strcmp(currentToken.value, "input") == 0) {
+            stmt = parseInputStmt();
+
+        // Check for output statements
+        } else if (strcmp(currentToken.value, "out") == 0) {
+            stmt = parseOutputStmt();
+
+        // Handle other statements (e.g., expression statements)
         } else {
-            // Handle other statements (e.g., expression statements)
-            ASTNode *stmt = parseExprStmt();  // Parse a single statement
-            if (!node) {
-                node = stmt;  // First statement becomes the root
-            } else {
-                current->right = stmt;  // Chain subsequent statements
-            }
-            current = stmt;  // Move to the latest statement
+            stmt = parseExprStmt();
         }
 
-        // Consume the token for the next statement
+        // Chain the parsed statement into the statement list
+        if (!node) {
+            node = stmt;  // First statement becomes the root
+        } else {
+            current->right = stmt;  // Chain subsequent statements
+        }
+        current = stmt;  // Move to the latest statement
     }
+
     return node;
 }
+
 
 
 ASTNode* parseExprStmt() {
@@ -1668,6 +1657,137 @@ ASTNode* parseDmwLoop() {
         }
     }
     return node;
+}
+
+ASTNode* parseInputStmt() {
+    // <input_stmt> ::= “input” DELIM_O_PAREN <input> DELIM_C_PAREN DELIM_SEMCOL
+    ASTNode* node = newNode("<input_stmt>");
+    if (strcmp(currentToken.value, "input") == 0) {
+        ASTNode* inputNode = newNode("input"); // Include terminal symbol "input"
+        node->left = inputNode;
+        nextToken();  // Consume "input"
+        if (currentToken.type == DELIM_O_PAREN) {
+            ASTNode* openParen = newNode("("); // Include terminal symbol '('
+            inputNode->right = openParen;
+            nextToken();  // Consume '('            
+            openParen->left = parseInput();  // Parse <input>
+            if (currentToken.type == DELIM_C_PAREN) {
+                ASTNode* closeParen = newNode(")"); // Include terminal symbol ')'
+                openParen->right = closeParen;
+                nextToken();  // Consume ')'
+                if (currentToken.type == DELIM_SEMCOL) {
+                    ASTNode* semicolonNode = newNode(";"); // Include terminal symbol ';'
+                    closeParen->right = semicolonNode;
+                    nextToken();  // Consume ';'
+                    return node;
+                }
+            } else {
+                printf("Syntax error: Missing closing parenthesis\n");
+                exit(1);
+            }
+        } else {
+            printf("Syntax error: Missing opening parenthesis\n");
+            exit(1);
+        }
+    }
+    printf("Syntax error: Invalid input statement\n");
+    exit(1);
+}
+
+ASTNode* parseOutputStmt() {
+    // <output_stmt> ::= “out” DELIM_O_PAREN <output> DELIM_C_PAREN DELIM_SEMCOL
+    ASTNode* node = newNode("<output_stmt>");
+    if (strcmp(currentToken.value, "out") == 0) {
+        ASTNode* outNode = newNode("out"); // Include terminal symbol "out"
+        node->left = outNode;
+        nextToken();  // Consume "out"
+        if (currentToken.type == DELIM_O_PAREN) {
+            ASTNode* openParen = newNode("("); // Include terminal symbol '('
+            outNode->right = openParen;
+            nextToken();  // Consume '('            
+            openParen->left = parseOutput();  // Parse <output>
+            if (currentToken.type == DELIM_C_PAREN) {
+                ASTNode* closeParen = newNode(")"); // Include terminal symbol ')'
+                openParen->right = closeParen;
+                nextToken();  // Consume ')'
+                if (currentToken.type == DELIM_SEMCOL) {
+                    ASTNode* semicolonNode = newNode(";"); // Include terminal symbol ';'
+                    closeParen->right = semicolonNode;
+                    nextToken();  // Consume ';'
+                    return node;
+                }
+            } else {
+                printf("Syntax error: Missing closing parenthesis\n");
+                exit(1);
+            }
+        } else {
+            printf("Syntax error: Missing opening parenthesis\n");
+            exit(1);
+        }
+    }
+    printf("Syntax error: Invalid output statement\n");
+    exit(1);
+}
+
+ASTNode* parseInput() {
+    // <input> ::= CONSTANT_TXTFS { DELIM_COMMA [ "&" <identifier> ] }
+    ASTNode* node = newNode("<input>");
+    if (currentToken.type == CONSTANT_TXTFS) {
+        node->left = newNode(currentToken.value);  // Add CONSTANT_TXTFS
+        nextToken();  // Consume CONSTANT_TXTFS
+
+        ASTNode* current = node;
+        while (currentToken.type == DELIM_COMMA) {
+            ASTNode* commaNode = newNode(","); // Include DELIM_COMMA in the parse tree
+            current->right = commaNode;
+            current = commaNode;
+
+            nextToken();  // Consume ','
+            if (strcmp(currentToken.value, "&") == 0) {
+                ASTNode* andNode = newNode("&");
+                commaNode->right = andNode;
+                nextToken();  // Consume '&'
+                if (currentToken.type == IDENTIFIER) {
+                    andNode->left = newNode(currentToken.value);
+                    nextToken();  // Consume IDENTIFIER
+                } else {
+                    printf("Syntax error: Expected identifier after '&'\n");
+                    exit(1);
+                }
+            } else if (currentToken.type == IDENTIFIER) {
+                ASTNode* idNode = newNode(currentToken.value);
+                commaNode->right = idNode;
+                nextToken();  // Consume IDENTIFIER
+            } else {
+                printf("Syntax error: Expected '&' or identifier after ','\n");
+                exit(1);
+            }
+        }
+        return node;
+    }
+    printf("Syntax error: Invalid input\n");
+    exit(1);
+}
+
+ASTNode* parseOutput() {
+    // <output> ::= CONSTANT_TEXT | CONSTANT_TXTFS { DELIM_COMMA <expr> }
+    ASTNode* node = newNode("<output>");
+    if (currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_TXTFS) {
+        node->left = newNode(currentToken.value);  // Add CONSTANT_TEXT or CONSTANT_TXTFS
+        nextToken();  // Consume CONSTANT_TEXT or CONSTANT_TXTFS
+
+        ASTNode* current = node;
+        while (currentToken.type == DELIM_COMMA) {
+            ASTNode* commaNode = newNode(","); // Include DELIM_COMMA in the parse tree
+            current->right = commaNode;
+            nextToken();  // Consume ','
+            commaNode->left = parseExpr();  // Parse <expr>
+            current = commaNode;
+        }
+        return node;
+    }
+    printf("Syntax error: Invalid output\n");
+    exit(1);
 }
 
 void parse(FILE* file) {
