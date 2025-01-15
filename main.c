@@ -787,6 +787,11 @@ ASTNode* parsePrimary() {
         ASTNode *identifierNode = newNode(currentToken.value);
         nextToken(); // Consume the identifier
 
+        if (currentToken.type == UNARY_OPE) {
+            previousToken();
+            identifierNode->left = parseUnaryVal();
+        }
+
         // Check for assignment operator
         if (currentToken.type == ASSIGNMENT_OPE) {
             printf("Found assignment operator: %s\n", currentToken.value);
