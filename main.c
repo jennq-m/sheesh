@@ -701,8 +701,6 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
     }
 }
 
-
-
 ASTNode* parseProgram() {
     printf("Entering parseProgram\n");
 
@@ -754,7 +752,7 @@ ASTNode* parseProgram() {
 
 ASTNode* parseBody() {
     printf("Entering parseBody\n");
-    ASTNode *node = newNode("body");
+    ASTNode *node = newNode("<body");
 
     node->left = parseStmts();
     return node;
@@ -860,7 +858,7 @@ ASTNode* parseExpr() {
 
 ASTNode* parseAndExpr() {
     printf("Checking <parseAndExpr>...\n");
-    ASTNode *node = newNode("and_expr");
+    ASTNode *node = newNode("<and_expr>");
     node->left = parseEqualityExpr();
 
     if (!node->left) {
@@ -886,7 +884,7 @@ ASTNode* parseAndExpr() {
 
 ASTNode* parseEqualityExpr() {
     printf("Checking <parseEqualityExpr>...\n");
-    ASTNode *node = newNode("equality_expr");
+    ASTNode *node = newNode("<equality_expr>");
     node->left = parseRelationalExpr();
 
     if (!node->left) {
@@ -912,7 +910,7 @@ ASTNode* parseEqualityExpr() {
 
 ASTNode* parseRelationalExpr() {
     printf("Checking <parseRelationalExpr>...\n");
-    ASTNode *node = newNode("relational_expr");
+    ASTNode *node = newNode("<relational_expr>");
     node->left = parseAddSubExpr();
     
     if (!node->left) {
@@ -940,7 +938,7 @@ ASTNode* parseRelationalExpr() {
 
 ASTNode* parseAddSubExpr() {
     printf("Checking <parseAddSubExpr>...\n");
-    ASTNode *node = newNode("addsub_expr");
+    ASTNode *node = newNode("<addsub_expr>");
     node->left = parseMultDivExpr();
 
     if (!node->left) {
@@ -1092,7 +1090,7 @@ ASTNode* parseLiteral() {
 
     printf("Entering parseLiteral. Current token: %s (Type: %d, Line: %d)\n", currentToken.value, currentToken.type, currentToken.sheeshLine);
 
-    ASTNode *node = newNode("literal");
+    ASTNode *node = newNode("<literal>");
 
     if (currentToken.type == ARITHMETIC_OPE && (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
             nextToken();

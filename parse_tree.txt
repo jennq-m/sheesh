@@ -1,5 +1,5 @@
 <program>(
-    body(
+    <body(
         <iterative_stmt>(
             <rep_loop>(
                 rep
@@ -320,9 +320,7 @@
                     )
                 )
                 <dec_stmt>(
-                    <data_type>(
-                        num
-                    )
+                    <stmts>
                     <iterative_stmt>(
                         <mw_loop>(
                             and_expr(
@@ -351,7 +349,7 @@
                                     )
                                 )
                             )
-                            body(
+                            <body(
                                 <output_stmt>(
                                     out(
                                         ((
@@ -364,34 +362,15 @@
                                         )
                                     )
                                     and_expr(
-                                        equality_expr(
-                                            relational_expr(
-                                                addsub_expr(
-                                                    <multdiv_expr>(
-                                                        <primary>(
-                                                            i(
-                                                                <unary_val>(
-                                                                    i
-                                                                    ++
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
+                                        <stmts>
                                     )
                                 )
                             )
                         )
                         <dec_stmt>(
-                            <data_type>(
-                                num
-                            )
+                            <stmts>
                             <dec_stmt>(
-                                <data_type>(
-                                    num
-                                )
+                                <stmts>
                                 <iterative_stmt>(
                                     <mw_loop>(
                                         and_expr(
@@ -420,7 +399,7 @@
                                                 )
                                             )
                                         )
-                                        body(
+                                        <body(
                                             <output_stmt>(
                                                 out(
                                                     ((
@@ -448,26 +427,7 @@
                                                     )
                                                 )
                                                 <assign_stmt>(
-                                                    =(
-                                                        j
-                                                        and_expr(
-                                                            equality_expr(
-                                                                relational_expr(
-                                                                    addsub_expr(
-                                                                        <multdiv_expr>(
-                                                                            <primary>(
-                                                                                literal(
-                                                                                    <num_val>(
-                                                                                        0
-                                                                                    )
-                                                                                )
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
+                                                    <stmts>
                                                     <iterative_stmt>(
                                                         <mw_loop>(
                                                             and_expr(
@@ -496,7 +456,7 @@
                                                                     )
                                                                 )
                                                             )
-                                                            body(
+                                                            <body(
                                                                 <output_stmt>(
                                                                     out(
                                                                         ((
@@ -524,43 +484,13 @@
                                                                         )
                                                                     )
                                                                     and_expr(
-                                                                        equality_expr(
-                                                                            relational_expr(
-                                                                                addsub_expr(
-                                                                                    <multdiv_expr>(
-                                                                                        <primary>(
-                                                                                            j(
-                                                                                                <unary_val>(
-                                                                                                    j
-                                                                                                    ++
-                                                                                                )
-                                                                                            )
-                                                                                        )
-                                                                                    )
-                                                                                )
-                                                                            )
-                                                                        )
+                                                                        <stmts>
                                                                     )
                                                                 )
                                                             )
                                                         )
                                                         and_expr(
-                                                            equality_expr(
-                                                                relational_expr(
-                                                                    addsub_expr(
-                                                                        <multdiv_expr>(
-                                                                            <primary>(
-                                                                                i(
-                                                                                    <unary_val>(
-                                                                                        i
-                                                                                        ++
-                                                                                    )
-                                                                                )
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
+                                                            <stmts>
                                                         )
                                                     )
                                                 )
@@ -568,12 +498,10 @@
                                         )
                                     )
                                     <dec_stmt>(
-                                        <data_type>(
-                                            num
-                                        )
+                                        <stmts>
                                         <iterative_stmt>(
                                             <dmw_loop>(
-                                                body(
+                                                <body(
                                                     <output_stmt>(
                                                         out(
                                                             ((
@@ -586,22 +514,7 @@
                                                             )
                                                         )
                                                         and_expr(
-                                                            equality_expr(
-                                                                relational_expr(
-                                                                    addsub_expr(
-                                                                        <multdiv_expr>(
-                                                                            <primary>(
-                                                                                i(
-                                                                                    <unary_val>(
-                                                                                        i
-                                                                                        ++
-                                                                                    )
-                                                                                )
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
+                                                            <stmts>
                                                         )
                                                     )
                                                 )
@@ -633,16 +546,12 @@
                                                 )
                                             )
                                             <dec_stmt>(
-                                                <data_type>(
-                                                    num
-                                                )
+                                                <stmts>
                                                 <dec_stmt>(
-                                                    <data_type>(
-                                                        num
-                                                    )
+                                                    <stmts>
                                                     <iterative_stmt>(
                                                         <dmw_loop>(
-                                                            body(
+                                                            <body(
                                                                 <output_stmt>(
                                                                     out(
                                                                         ((
@@ -655,29 +564,10 @@
                                                                         )
                                                                     )
                                                                     <assign_stmt>(
-                                                                        =(
-                                                                            j
-                                                                            and_expr(
-                                                                                equality_expr(
-                                                                                    relational_expr(
-                                                                                        addsub_expr(
-                                                                                            <multdiv_expr>(
-                                                                                                <primary>(
-                                                                                                    literal(
-                                                                                                        <num_val>(
-                                                                                                            0
-                                                                                                        )
-                                                                                                    )
-                                                                                                )
-                                                                                            )
-                                                                                        )
-                                                                                    )
-                                                                                )
-                                                                            )
-                                                                        )
+                                                                        <stmts>
                                                                         <iterative_stmt>(
                                                                             <dmw_loop>(
-                                                                                body(
+                                                                                <body(
                                                                                     <output_stmt>(
                                                                                         out(
                                                                                             ((
@@ -690,22 +580,7 @@
                                                                                             )
                                                                                         )
                                                                                         and_expr(
-                                                                                            equality_expr(
-                                                                                                relational_expr(
-                                                                                                    addsub_expr(
-                                                                                                        <multdiv_expr>(
-                                                                                                            <primary>(
-                                                                                                                j(
-                                                                                                                    <unary_val>(
-                                                                                                                        j
-                                                                                                                        ++
-                                                                                                                    )
-                                                                                                                )
-                                                                                                            )
-                                                                                                        )
-                                                                                                    )
-                                                                                                )
-                                                                                            )
+                                                                                            <stmts>
                                                                                         )
                                                                                     )
                                                                                 )
@@ -737,22 +612,7 @@
                                                                                 )
                                                                             )
                                                                             and_expr(
-                                                                                equality_expr(
-                                                                                    relational_expr(
-                                                                                        addsub_expr(
-                                                                                            <multdiv_expr>(
-                                                                                                <primary>(
-                                                                                                    i(
-                                                                                                        <unary_val>(
-                                                                                                            i
-                                                                                                            ++
-                                                                                                        )
-                                                                                                    )
-                                                                                                )
-                                                                                            )
-                                                                                        )
-                                                                                    )
-                                                                                )
+                                                                                <stmts>
                                                                             )
                                                                         )
                                                                     )
@@ -888,27 +748,12 @@
                                                                                             )
                                                                                         )
                                                                                     )
-                                                                                    body(
+                                                                                    <body(
                                                                                         <iterative_stmt>(
                                                                                             <dmw_loop>(
-                                                                                                body(
+                                                                                                <body(
                                                                                                     <assign_stmt>(
-                                                                                                        =(
-                                                                                                            test
-                                                                                                            and_expr(
-                                                                                                                equality_expr(
-                                                                                                                    relational_expr(
-                                                                                                                        addsub_expr(
-                                                                                                                            <multdiv_expr>(
-                                                                                                                                <primary>(
-                                                                                                                                    test
-                                                                                                                                )
-                                                                                                                            )
-                                                                                                                        )
-                                                                                                                    )
-                                                                                                                )
-                                                                                                            )
-                                                                                                        )
+                                                                                                        <stmts>
                                                                                                     )
                                                                                                 )
                                                                                                 and_expr(
