@@ -771,7 +771,6 @@ ASTNode* parseStmts() {
         if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT ||
             currentToken.type == SHORT || currentToken.type == LONG || currentToken.type == LEGIT) {
             stmt = parseDecStmt();
-
         } else if (currentToken.type == IDENTIFIER) {
             nextToken();
             if (currentToken.type == ASSIGNMENT_OPE) {
@@ -781,7 +780,6 @@ ASTNode* parseStmts() {
                 previousToken();
                 stmt = parseExprStmt();
             }
-
         } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
             stmt = parseIterativeStmt();
         } else if (currentToken.type == INPUT) {
@@ -816,29 +814,47 @@ ASTNode* parseStmts() {
 
 ASTNode* parseExprStmt() {
     printf("Entering parseExprStmt\n");
-    ASTNode *node = parseExpr(); // Parse the expression (e.g., -5)
+    ASTNode *node = parseExpr();
     if (currentToken.type == DELIM_SEMCOL) {
         printf("Matched semicolon\n");
-        nextToken(); // Consume the semicolon
+        nextToken();
     } else {
-        printf("Syntax error: Missing semicolon\n");
+        printf("SYNTAX ERROR LINE %d: Expected ';'. Encountered token %s instead.\n", currentToken.sheeshLine, currentToken.value);
         exit(1);
     }
     return node;
 }
 
-
 ASTNode* parseExpr() {
     printf("Entering parseExpr. Current token: %s (Type: %d, Line: %d)\n", currentToken.value, currentToken.type, currentToken.sheeshLine);
-    ASTNode *node = newNode("<expr>");
-    node->left = parseAndExpr();
+    ASTNode *node = NULL;
+
+    node = parseAndExpr();
+    if (!node) {
+        printf("SYNTAX ERROR LINE %d: Invalid expression. Expected 'and' expression. Encountered token %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    }
+
     while (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "||") == 0) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
+        
+        if (currentToken.type != IDENTIFIER && currentToken.type != CONSTANT_DRIFT && currentToken.type != CONSTANT_LEGIT && currentToken.type != CONSTANT_NUM 
+        && currentToken.type != CONSTANT_TEXT && currentToken.type != CONSTANT_TXTFS && currentToken.type != CONSTANT_VIBE && currentToken.type != DELIM_O_PAREN 
+        && currentToken.type != LOGICAL_OPE) {
+            printf("SYNTAX ERROR LINE %d: Invalid token after '||' operator. Expected expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
+        }
+
         opNode->left = node;
         opNode->right = parseAndExpr();
+        if (!opNode->right) {
+            printf("SYNTAX ERROR LINE %d: Invalid expression after '||' operator. Expected right operand. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
+        }
         node = opNode;
     }
+
     return node;
 }
 
@@ -846,11 +862,23 @@ ASTNode* parseAndExpr() {
     printf("Checking <parseAndExpr>...\n");
     ASTNode *node = newNode("and_expr");
     node->left = parseEqualityExpr();
+
+    if (!node->left) {
+        printf("SYNTAX ERROR LINE %d: Invalid expression in 'and' expression. Expected equality expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    }
+
     while (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "&&") == 0) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
         opNode->right = parseEqualityExpr();
+
+        if (!opNode->right) {
+            printf("SYNTAX ERROR LINE %d: Expected equality expression after '&&'. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
+        }
+
         node = opNode;
     }
     return node;
@@ -860,11 +888,23 @@ ASTNode* parseEqualityExpr() {
     printf("Checking <parseEqualityExpr>...\n");
     ASTNode *node = newNode("equality_expr");
     node->left = parseRelationalExpr();
+
+    if (!node->left) {
+        printf("SYNTAX ERROR LINE %d: Expected relational expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    }
+
     if (currentToken.type == RELATIONAL_OPE && (strcmp(currentToken.value, "==") == 0 || strcmp(currentToken.value, "!=") == 0)) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
         opNode->left = node;
         opNode->right = parseRelationalExpr();
+
+        if (!opNode->right) {
+            printf("SYNTAX ERROR LINE %d: Expected relational expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
+        }
+
         return opNode;
     }
     return node;
