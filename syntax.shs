@@ -1,47 +1,6 @@
 toptier() {
-    1.5;
-    +2.77;
-    5.5;
-    10;
-    20;
-    +89;
-    nocap;
-    cap;
-    'c';
-    "cat";
-    identifier;
-    !test;
-    (a+b);
-    (a + b);
-    (1.5);
-    ++i;
-    !test;
-    !cap;
-    !nocap;
-    !(x+y);
-    !(5+5);
-    +identifier;
-    +(89.70 * 49.51);
-    -(5 - 2);
-    integer = 10;
-    drift a;
-    legit a = nocap;
-    drift initialization = 5.5;
-    a += 1;
-    vibe a += 1;
-    identifier++;
-    ++identifier;
-    x = y + 54 - z * 5;
-    a = (8+n*(c*f) == 5);
-    a += 1;
-    a = b;
-    a = 8;
-
-    rep (num a = 1; a > 1; a++) {
-        meanwhile (i > 10) {
-            do {
-                test = test;
-            } meanwhile (i < 10);
-        }
-    }
+    input("%d ", &a);
+    //out("value is %d %d %d", a, b, c);
+    
+   
 }
