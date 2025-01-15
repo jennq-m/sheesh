@@ -640,15 +640,24 @@ ASTNode* parseInput();
 ASTNode* parseOutputStmt();
 ASTNode* parseOutput();
 
+
 void nextToken() {
-    if (currentIndex < tokenCount) {
+    while (currentIndex < tokenCount) {
         currentToken = allTokens[currentIndex++];
         printf("Next token: %s (%d)\n", currentToken.value, currentToken.type);
-    } else {
-        printf("End of token stream\n");
-        currentToken.value = NULL;
-        currentToken.type = INVALID;
+
+        // Skip tokens of type COMMENT
+        if (currentToken.type != COMMENT) {
+            return; // Exit the loop if it's not a COMMENT
+        } else {
+            printf("Skipping comment: %s\n", currentToken.value);
+        }
     }
+
+    // If we reach here, we've hit the end of the token stream
+    printf("End of token stream\n");
+    currentToken.value = NULL;
+    currentToken.type = INVALID;
 }
 
 void previousToken() {
@@ -748,6 +757,7 @@ ASTNode* parseBody() {
     node->left = parseStmts();
     return node;
 }
+
 ASTNode* parseStmts() {
     printf("Entering parseStmts\n");
     ASTNode *node = NULL;  // Root for statements

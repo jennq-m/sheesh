@@ -1,10 +1,8 @@
 toptier() {
-<<<<<<< HEAD
     input("%d ", &a);
     //out("value is %d %d %d", a, b, c);
     
    
-=======
     1.5;
     +2.77;
     5.5;
@@ -47,5 +45,4 @@ toptier() {
             } meanwhile (i < 10);
         }
     }
->>>>>>> f8d447ee1b4e16e388f1c453e803ee4fb981e7c7
 }
