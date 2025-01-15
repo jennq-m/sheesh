@@ -760,15 +760,22 @@ ASTNode* parseBody() {
 
 ASTNode* parseStmts() {
     printf("Entering parseStmts\n");
-    ASTNode *node = NULL;
+    ASTNode *node = NULL;  // Root for statements
     ASTNode *current = NULL;
 
     while (currentToken.type != DELIM_C_BRACE && currentToken.type != INVALID) {
         ASTNode *stmt = NULL;
 
-        if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT ||
+        // Check for conditional statements (if, if_other, ex_if)
+        if (strcmp(currentToken.value, "if") == 0) {
+            stmt = parseCondStmt();  // Parse the conditional statement (if, if_other, ex_if)
+
+        // Check for declaration statements
+        } else if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT ||
             currentToken.type == SHORT || currentToken.type == LONG || currentToken.type == LEGIT) {
             stmt = parseDecStmt();
+
+        // Check for assignment statements
         } else if (currentToken.type == IDENTIFIER) {
             nextToken();
             if (currentToken.type == ASSIGNMENT_OPE) {
@@ -778,37 +785,36 @@ ASTNode* parseStmts() {
                 previousToken();
                 stmt = parseExprStmt();
             }
+
+        // Check for iterative statements
         } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
             stmt = parseIterativeStmt();
-        } else if (currentToken.type == INPUT) {
+
+        // Check for input statements
+        } else if (strcmp(currentToken.value, "input") == 0) {
             stmt = parseInputStmt();
-        } else if (currentToken.type == OUT || currentToken.type == OUTPUT) {
+
+        // Check for output statements
+        } else if (strcmp(currentToken.value, "out") == 0) {
             stmt = parseOutputStmt();
+
+        // Handle other statements (e.g., expression statements)
         } else {
             stmt = parseExprStmt();
         }
 
-        if (!stmt) {
-            printf("SYNTAX ERROR LINE %d: Unexpected token encountered. Got %s. Skipping tokens until stmt is found..\n", currentToken.sheeshLine, currentToken.value);
-            nextToken();
-            continue;
-        }
-
+        // Chain the parsed statement into the statement list
         if (!node) {
-            node = stmt;
+            node = stmt;  // First statement becomes the root
         } else {
-            current->right = stmt;
+            current->right = stmt;  // Chain subsequent statements
         }
-        
-        current = stmt;
+        current = stmt;  // Move to the latest statement
     }
-
-        if (currentToken.type == INVALID) {
-            printf("SYNTAX ERROR LINE %d: Encountered INVALID token %s. Terminating program...\n", currentToken.sheeshLine, currentToken.value);
-        }
 
     return node;
 }
+
 
 ASTNode* parseExprStmt() {
     printf("Entering parseExprStmt\n");
@@ -1420,6 +1426,109 @@ ASTNode* parseAssignStmt() {
     }
 
     printf("SYNTAX ERROR LINE %d: Invalid <assign_stmt>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
+    exit(1);
+}
+
+ASTNode* parseIfStmt() {
+    if (strcmp(currentToken.value, "if") == 0) {
+        ASTNode *node = newNode("if_stmt");
+
+        // Debug print to check token after 'if'
+        printf("Current token after 'if': %s\n", currentToken.value);
+        nextToken();  // Consume 'if'
+
+        // Debug print to check token after consuming 'if'
+        printf("Current token after consuming 'if': %s\n", currentToken.value);
+
+        // Lookahead for opening parenthesis
+        if (currentToken.type == DELIM_O_PAREN) {
+            printf("Found opening parenthesis '('\n");
+            nextToken();  // Consume '('
+
+            node->left = parseExpr();  // Parse the condition expression
+
+            if (currentToken.type == DELIM_C_PAREN) {
+                printf("Found closing parenthesis ')'\n");
+                nextToken();  // Consume ')'
+
+                // Look for opening brace '{'
+                if (currentToken.type == DELIM_O_BRACE) {
+                    nextToken();  // Consume '{'
+                    node->right = parseBody();  // Parse the body of the if statement
+
+                    // Ensure the body ends with closing brace '}'
+                    if (currentToken.type == DELIM_C_BRACE) {
+                        nextToken();  // Consume '}'
+                        return node;
+                    } else {
+                        printf("Syntax error: Missing closing brace for if body\n");
+                        exit(1);
+                    }
+                } else {
+                    printf("Syntax error: Missing opening brace for if body\n");
+                    exit(1);
+                }
+            } else {
+                printf("Syntax error: Missing closing parenthesis for condition\n");
+                exit(1);
+            }
+        } else {
+            printf("Syntax error: Missing opening parenthesis for condition\n");
+            exit(1);
+        }
+    }
+
+    printf("Syntax error: Invalid if statement\n");
+    exit(1);
+}
+
+
+
+
+ASTNode* parseIfOtherStmt(ASTNode *ifNode) {
+    // Check for the "other" keyword
+    if (strcmp(currentToken.value, "other") == 0) {
+        nextToken();  // Consume 'other'
+
+        // Parse the body of the other block
+        if (currentToken.type == DELIM_O_BRACE) {
+            nextToken();  // Consume '{'
+            ASTNode *otherBody = parseBody();  // Parse the body of the 'other' block
+
+            // Attach the other block as a right child of the ifNode
+            ifNode->right = otherBody;
+
+            // Check for closing brace
+            if (currentToken.type == DELIM_C_BRACE) {
+                nextToken();  // Consume '}'
+                return ifNode;
+            }
+        }
+    }
+
+    // Syntax error if not found
+    printf("Syntax error: Invalid other statement\n");
+    exit(1);
+}
+
+ASTNode* parseCondStmt() {
+    printf("Entering CondStmt\n");
+
+    // Check for "if" statement
+    if (strcmp(currentToken.value, "if") == 0) {
+        // Parse the "if" statement
+        ASTNode *ifNode = parseIfStmt();  // Parse the standard if statement
+
+        // After parsing the if statement, check if 'other' follows
+        if (strcmp(currentToken.value, "other") == 0) {
+            return parseIfOtherStmt(ifNode);  // Parse the 'other' block and chain it to the if statement
+        }
+
+        return ifNode;  // Return the parsed if statement if no 'other' is found
+    }
+
+    // If none of the above conditions matched, print an error
+    printf("Syntax error: Expected conditional statement (if, if_other, ex_if)\n");
     exit(1);
 }
 
