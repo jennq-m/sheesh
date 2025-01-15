@@ -1203,21 +1203,19 @@ ASTNode* parseDriftVal() {
             return node;
         }
         return driftNode;
-
     } else if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
-        // Handle identifier or parenthesized expression
         ASTNode *exprNode;
         if (currentToken.type == IDENTIFIER) {
-            exprNode = parseIdentExpr(); // Parse identifier expression
+            exprNode = parseIdentExpr();
         } else {
-            nextToken(); // Consume '('
-            exprNode = parseExpr(); // Parse expression inside parentheses
+            nextToken();
+            exprNode = parseExpr();
 
             if (currentToken.type != DELIM_C_PAREN) {
                 printf("Syntax error: Missing closing parenthesis in <num_val>\n");
                 exit(1);
             }
-            nextToken(); // Consume ')'
+            nextToken();
         }
 
         if (signNode) {
@@ -1229,15 +1227,13 @@ ASTNode* parseDriftVal() {
         return exprNode;
     }
 
-
-    printf("Syntax error: Invalid <drift_val>\n");
+    printf("SYNTAX ERROR LINE %d: Invalid <drift_val>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
 
 ASTNode* parseUnaryVal() {
     if (currentToken.type == UNARY_OPE) {
-        // Handle prefix unary operators (e.g., ++identifier or --identifier)
         ASTNode *node = newNode("<unary_val>");
         node->left = newNode(currentToken.value);
         nextToken();
@@ -1247,30 +1243,26 @@ ASTNode* parseUnaryVal() {
             nextToken();
             return node;
         } else {
-            printf("Syntax error: Expected identifier after unary operator\n");
+            printf("SYNTAX ERROR LINE %d: Expected identifier after unary operator Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
     } else if (currentToken.type == IDENTIFIER) {
-        // Handle identifier
         ASTNode *identifierNode = newNode(currentToken.value);
         nextToken();
 
-        // Check for post-increment or post-decrement (e.g., identifier++)
         if (currentToken.type == UNARY_OPE &&
             (strcmp(currentToken.value, "++") == 0 || strcmp(currentToken.value, "--") == 0)) {
             ASTNode *node = newNode("<unary_val>");
             node->left = identifierNode;
-            node->right = newNode(currentToken.value); // Add the ++ or -- token as a node
-            nextToken(); // Consume the ++ or -- token
+            node->right = newNode(currentToken.value);
+            nextToken();
             return node;
         }
 
-        // If no post-increment or post-decrement, return the identifier node
         return identifierNode;
     }
 
-    // If none of the above cases matched, it's a syntax error
-    printf("Syntax error: Invalid unary value\n");
+    printf("SYNTAX ERROR LINE %d: Invalid <unary_val>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
@@ -1278,23 +1270,23 @@ ASTNode* parseIdentExpr() {
     ASTNode *node = newNode("<ident_expr>");
 
     if (currentToken.type == IDENTIFIER) {
-        node->left = newNode(currentToken.value); // Add identifier node
-        nextToken(); // Consume identifier
+        node->left = newNode(currentToken.value);
+        nextToken();
         return node;
     } else if (currentToken.type == DELIM_O_PAREN) {
-        nextToken(); // Consume opening parenthesis
-        ASTNode *exprNode = parseExpr(); // Parse the expression inside the parenthesis
+        nextToken();
+        ASTNode *exprNode = parseExpr();
 
         if (currentToken.type != DELIM_C_PAREN) {
-            printf("Syntax error at Line %d: Missing closing parenthesis in <ident_expr>\n", currentToken.sheeshLine);
+            printf("SYNTAX ERROR LINE %d: Expected ')' in <ident_expr>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
 
-        nextToken(); // Consume closing parenthesis
-        return exprNode; // Return the parsed expression node
+        nextToken();
+        return exprNode;
     }
 
-    printf("Syntax error: Invalid <ident_expr>\n");
+    printf("SYNTAX ERROR LINE %d: Invalid <ident_expr>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
@@ -1302,27 +1294,21 @@ ASTNode* parseDecStmt() {
     printf("Parse Dec Statement\n");
     ASTNode *stmtNode = newNode("<dec_stmt>");
     
-    // Parse the data type (e.g., num, drift, etc.)
     ASTNode *dtNode = parseDataType();  
     stmtNode->left = dtNode;
 
-    // Parse the variable list (e.g., a, b, ... )
     ASTNode *varListNode = parseVarList();  
-    stmtNode->right = varListNode;  // Attach the variable list to the right of the data type
+    stmtNode->right = varListNode;
 
-    // Ensure the semicolon is present at the end of the declaration
     if (currentToken.type == DELIM_SEMCOL) {
-        nextToken();  // Consume the semicolon
+        nextToken();
     } else {
-        printf("Syntax error: Missing semicolon in declaration statement\n");
+        printf("SYNTAX ERROR LINE %d: Expected ';' in <dec_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
         exit(1);
     }
 
     return stmtNode;
 }
-
-
-
 
 ASTNode* parseDataType() {
     // <data_type> ::= "num" | "drift" | "vibe" | "text" | "short" | "long" | "legit"
@@ -1331,11 +1317,11 @@ ASTNode* parseDataType() {
     if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT || currentToken.type == SHORT
         || currentToken.type == LONG || currentToken.type == LEGIT) {
         dtNode->left = newNode(currentToken.value);
-        nextToken();  // Consume the data type
+        nextToken();
         return dtNode;
     }
 
-    printf("Syntax error: Invalid data type\n");
+    printf("SYNTAX ERROR LINE %d: Invalid data type. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
@@ -1345,164 +1331,100 @@ ASTNode* parseInitialization() {
 
     if (currentToken.type == IDENTIFIER) {
         ASTNode* idNode = newNode(currentToken.value);
-        nextToken();  // Consume the identifier
+        nextToken();
 
-        // Check for initialization (e.g., a = 10)
         if (currentToken.type == ASSIGNMENT_OPE) {
-            ASTNode* assignNode = newNode(currentToken.value); // Node for '='
-            nextToken(); // Consume '='
-            ASTNode* exprNode = parseExpr(); // Parse the expression
+            ASTNode* assignNode = newNode(currentToken.value);
+            nextToken();
+            ASTNode* exprNode = parseExpr();
             assignNode->left = idNode;
             assignNode->right = exprNode;
-            idNode = assignNode; // Replace idNode with the assignment subtree
+            idNode = assignNode;
         }
 
         initNode->left = idNode;
         return initNode;
     }
 
-    printf("Syntax error: Invalid initialization. Expected '=' followed by an expression.\n");
+    printf("SYNTAX ERROR LINE %d: Invalid <initialization>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
+
 ASTNode* parseVarList() {
     printf("Parse Variable List\n");
     ASTNode *varListNode = newNode("<var_list>");
-    ASTNode *headNode = NULL;  // Start of the variable list
-    ASTNode *currentNode = NULL;  // Pointer to the current node in the list
+    ASTNode *headNode = NULL;
+    ASTNode *currentNode = NULL; 
 
     while (currentToken.type == IDENTIFIER || currentToken.type == DELIM_COMMA) {
         if (currentToken.type == DELIM_COMMA) {
             currentNode->left = newNode(currentToken.value);
-            nextToken();  // Consume the comma
+            nextToken();
         }
 
         if (currentToken.type == IDENTIFIER) {
-            // Create a node for the identifier
             ASTNode *idNode = newNode(currentToken.value);
-            nextToken();  // Consume the identifier
+            nextToken();
 
-            // Check if there's an initialization (e.g., b = 10)
             if (currentToken.type == ASSIGNMENT_OPE && strcmp(currentToken.value, "=") == 0) {
-                ASTNode *assignNode = newNode(currentToken.value); // Node for '='
-                nextToken(); // Consume '='
-                ASTNode *exprNode = parseExpr(); // Parse the expression
+                ASTNode *assignNode = newNode(currentToken.value);
+                nextToken();
+                ASTNode *exprNode = parseExpr(); 
                 assignNode->left = idNode;
                 assignNode->right = exprNode;
-                idNode = assignNode; // Replace idNode with the assignment subtree
+                idNode = assignNode;
             }
 
-            // Add the identifier or assignment node to the list
             if (headNode == NULL) {
-                headNode = idNode; // First variable in the list
+                headNode = idNode;
                 currentNode = headNode;
             } else {
-                currentNode->right = idNode; // Append to the list
-                currentNode = idNode; // Move to the newly added node
+                currentNode->right = idNode;
+                currentNode = idNode;
             }
         }
     }
 
     if (!headNode) {
-        printf("Syntax error: Invalid variable list\n");
+        printf("SYNTAX ERROR LINE %d: Invalid <var_list>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
         exit(1);
     }
 
-    varListNode->left = headNode;  // Set the first variable as the leftmost child of the var_list
+    varListNode->left = headNode;
     return varListNode;
 }
-
-
-// ASTNode* parseUnaryOp() {
-//     // <unary_op>   		::= 	‘++’ | ‘--’
-
-//     if (currentToken.type == UNARY_OPE) {
-//         ASTNode *node = newNode("<unary_op>"); 
-//         node->left = newNode(currentToken.value);
-//         nextToken();
-
-//         return node;
-//     }
-
-//     return NULL;
-// }
-// ASTNode* parseDecStmt() {
-//     if (currentToken.type == IDENTIFIER) {
-//         ASTNode *node = newNode("dec_stmt");
-//         node->left = newNode(currentToken.value);
-//         nextToken();
-//         if (currentToken.type == ASSIGNMENT_OPE) {
-//             nextToken();
-//             node->right = parseExpr();
-//         }
-//         if (currentToken.type != DELIM_SEMCOL) {
-//             printf("Syntax error: Missing semicolon in declaration\n");
-//             exit(1);
-//         }
-//         nextToken();
-//         return node;
-//     }
-//     printf("Syntax error: Invalid declaration statement\n");
-//     exit(1);
-// }
 
 ASTNode* parseAssignStmt() {
     if (currentToken.type == IDENTIFIER) {
         ASTNode *node = newNode("<assign_stmt>");
-        node->left = newNode(currentToken.value); // LHS: the identifier
+        node->left = newNode(currentToken.value);
         nextToken();
 
-        // Check for assignment operator, including compound assignments
         if (currentToken.type == ASSIGNMENT_OPE) {
-            ASTNode *operatorNode = newNode(currentToken.value); // Assignment operator node
-            operatorNode->left = node->left; // Connect the identifier to the operator node
-            nextToken(); // Consume the operator
+            ASTNode *operatorNode = newNode(currentToken.value);
+            operatorNode->left = node->left;
+            nextToken();
 
-            // Parse the RHS expression
             operatorNode->right = parseExpr();
-            node->left = operatorNode; // Assign the operator node as the main content of the assignment statement
+            node->left = operatorNode;
         } else {
-            printf("Syntax error: Expected assignment operator\n");
+        printf("SYNTAX ERROR LINE %d: Expected assignment operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
 
-        // Ensure the statement ends with a semicolon
         if (currentToken.type != DELIM_SEMCOL) {
-            printf("Syntax error: Missing semicolon in assignment\n");
+            printf("SYNTAX ERROR LINE %d: Expected ';' in <assign_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
-        nextToken(); // Consume the semicolon
+
+        nextToken();
+
         return node;
     }
-    printf("Syntax error: Invalid assignment statement\n");
+
+    printf("SYNTAX ERROR LINE %d: Invalid <assign_stmt>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
-
-// ASTNode* parseCondStmt() {
-//     if (currentToken.type == KEYWORD && strcmp(currentToken.value, "if") == 0) {
-//         ASTNode *node = newNode("if_stmt");
-//         nextToken();
-//         if (currentToken.type == DELIM_O_PAREN) {
-//             nextToken();
-//             node->left = parseExpr();
-//             if (currentToken.type == DELIM_C_PAREN) {
-//                 nextToken();
-//                 if (currentToken.type == DELIM_O_BRACE) {
-//                     nextToken();
-//                     node->right = parseBody();
-//                     if (currentToken.type == DELIM_C_BRACE) {
-//                         nextToken();
-//                         return node;
-//                     }
-//                 }
-//             }
-//         }
-//         printf("Syntax error: Invalid if statement\n");
-//         exit(1);
-//     }
-//     printf("Syntax error: Expected if statement\n");
-//     exit(1);
-// }
-
 
 ASTNode* parseIterativeStmt() {
     printf("Entering iterative statements\n");
@@ -1513,14 +1435,12 @@ ASTNode* parseIterativeStmt() {
         node->left = parseRepLoop();
     } else if (currentToken.type == DO) {
         ASTNode *loopNode = newNode("dmw_loop");
-        // Add parsing logic for mw_loop
         node->left = parseDmwLoop();
     } else if (currentToken.type == MEANWHILE) {
         ASTNode *loopNode = newNode("mw_loop");
-        // Add parsing logic for mw_loop
         node->left = parseMwLoop();
     } else {
-        printf("Syntax error: Invalid iterative statement\n");
+        printf("SYNTAX ERROR LINE %d: Invalid iterative statement. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
         exit(1);
     }
 
@@ -1533,44 +1453,46 @@ ASTNode* parseRepLoop() {
     if (currentToken.type == REP) {
         ASTNode* loopNode = newNode(currentToken.value);
         node->left = loopNode;
-        nextToken();  // Consume 'rep'
+        nextToken();
 
         if (currentToken.type == DELIM_O_PAREN) {
-            nextToken();  // Consume '('
+            nextToken();
+            
             ASTNode* initialNode = parseLoopInitial();
             node->right = initialNode;
-                ASTNode *exprNode = parseExpr();
-                initialNode->right = exprNode;
+            ASTNode *exprNode = parseExpr();
+            initialNode->right = exprNode;
 
                 if (currentToken.type == DELIM_SEMCOL) {
-                    nextToken();  // Consume ';'
+                    nextToken();
                     ASTNode *updNode = parseUpdStmt();
                     exprNode->right = updNode;
 
                     if (currentToken.type == DELIM_C_PAREN) {
-                        nextToken();  // Consume ')'
+                        nextToken();
                         if (currentToken.type == DELIM_O_BRACE) {
-                            nextToken();  // Consume '{'
+                            nextToken();
                             ASTNode* loopBody = parseStmts();
                             updNode->right = loopBody;
 
                             if (currentToken.type == DELIM_C_BRACE) {
-                                nextToken();  // Consume '}'
+                                nextToken();
+
                                 return node;
                             } else {
-                                printf("Syntax error: Missing closing brace '}' in loop body\n");
+                                printf("SYNTAX ERROR LINE %d: Expected '}' for loop body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                                 exit(1);
                             }
                         } else {
-                            printf("Syntax error: Missing opening brace '{' for loop body\n");
+                            printf("SYNTAX ERROR LINE %d: Expected '{' for loop <body>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                             exit(1);
                         }
                     } else {
-                        printf("Syntax error: Missing closing parenthesis ')' after update statement\n");
+                        printf("SYNTAX ERROR LINE %d: Expected ')' after <upd_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                         exit(1);
                     }
                 } else {
-                    printf("Syntax error: Missing semicolon ';' after expression\n");
+                    printf("SYNTAX ERROR LINE %d: Expected ';' after <loop_initial>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                     exit(1);
                 }
         } else {
@@ -1591,7 +1513,7 @@ ASTNode* parseLoopInitial() {
     } else if (currentToken.type == IDENTIFIER) {
         node->left = parseAssignStmt();
     } else {
-        printf("Syntax error: Invalid loop initial statement\n");
+        printf("SYNTAX ERROR LINE %d: Invalid <loop_initial> statement. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
         exit(1);
     }
 
@@ -1603,19 +1525,16 @@ ASTNode* parseUpdStmt() {
     ASTNode* node = newNode("<upd_stmt>");
 
     if (currentToken.type == UNARY_OPE) {
-        // Parse unary operation
         node->left = parseUnaryVal();
         return node;
     } 
 
     if (currentToken.type == IDENTIFIER) {
-        // Hand over parsing to `parseExpr` for full context resolution
         node->left = parseExpr();
         return node;
     }
 
-    // Error handling for invalid update statements
-    printf("Syntax error: Invalid update statement\n");
+    printf("SYNTAX ERROR LINE %d: Invalid <upd_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 
     return NULL;
@@ -1626,99 +1545,100 @@ ASTNode* parseMwLoop() {
     printf("Parsing 'meanwhile' loop. Current token: %s\n", currentToken.value);
 
     if (currentToken.type == MEANWHILE) {
-        nextToken(); // Consume "meanwhile"
+        nextToken();
         printf("Consumed 'meanwhile'. Next token: %s\n", currentToken.value);
 
         if (currentToken.type == DELIM_O_PAREN) {
-            nextToken(); // Consume '('
+            nextToken();
             printf("Consumed '('. Parsing condition expression.\n");
 
-            node->left = parseExpr(); // Parse the condition expression
+            node->left = parseExpr(); 
             printf("Parsed condition expression. Next token: %s\n", currentToken.value);
 
             if (currentToken.type != DELIM_C_PAREN) {
-                printf("Syntax error: Expected ')' after 'meanwhile' condition. Found: %s\n", currentToken.value);
+                printf("SYNTAX ERROR LINE %d: Expected ')' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
-            nextToken(); // Consume ')'
+
+            nextToken();
             printf("Consumed ')'. Next token: %s\n", currentToken.value);
 
             if (currentToken.type == DELIM_O_BRACE) {
-                nextToken(); // Consume '{'
+                nextToken();
                 printf("Consumed '{'. Parsing loop body.\n");
 
-                node->right = parseBody(); // Parse the body of the loop
+                node->right = parseBody();
                 printf("Parsed loop body. Next token: %s\n", currentToken.value);
 
                 if (currentToken.type != DELIM_C_BRACE) {
-                    printf("Syntax error: Expected '}' to close 'meanwhile' loop body. Found: %s\n", currentToken.value);
+                    printf("SYNTAX ERROR LINE %d: Expected '}' to close <mw_loop> body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                     exit(1);
                 }
-                nextToken(); // Consume '}'
+                
+                nextToken();
                 printf("Consumed '}'. Next token: %s\n", currentToken.value);
             } else {
-                printf("Syntax error: Expected '{' after 'meanwhile' condition. Found: %s\n", currentToken.value);
+                printf("SYNTAX ERROR LINE %d: Expected '{' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
         } else {
-            printf("Syntax error: Expected '(' after 'meanwhile'. Found: %s\n", currentToken.value);
+            printf("SYNTAX ERROR LINE %d: Expected '(' after meanwhile. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
     } else {
-        printf("Syntax error: Invalid loop start. Expected 'meanwhile'. Found: %s\n", currentToken.value);
+        printf("SYNTAX ERROR LINE %d: Expected 'meanwhile'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
         exit(1);
     }
 
     return node;
 }
 
-
 ASTNode* parseDmwLoop() {
     ASTNode* node = newNode("<dmw_loop>");
     printf("Parsing 'do-meanwhile' loop\n");
 
     if (strcmp(currentToken.value, "do") == 0) {
-        nextToken(); // Consume "do"
+        nextToken();
 
         if (currentToken.type == DELIM_O_BRACE) {
-            nextToken(); // Consume '{'
-            node->left = parseBody(); // Parse the body of the loop
+            nextToken();
+            node->left = parseBody(); 
 
             if (currentToken.type != DELIM_C_BRACE) {
-                printf("Syntax error: Expected '}' to close 'do' block\n");
+                printf("SYNTAX ERROR LINE %d: Expected '}' to close the block. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
-            nextToken(); // Consume '}'
+            nextToken(); 
 
             if (currentToken.type == MEANWHILE) {
-                nextToken(); // Consume "meanwhile"
+                nextToken();
 
                 if (currentToken.type == DELIM_O_PAREN) {
-                    nextToken(); // Consume '('
-                    node->right = parseExpr(); // Parse the condition expression
+                    nextToken();
+                    node->right = parseExpr();
 
                     if (currentToken.type != DELIM_C_PAREN) {
-                        printf("Syntax error: Expected ')' after 'meanwhile' condition\n");
+                        printf("SYNTAX ERROR LINE %d: Expected ')' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                         exit(1);
                     }
-                    nextToken(); // Consume ')'
+                    nextToken();
 
                     if (currentToken.type == DELIM_SEMCOL) {
-                        nextToken(); // Consume ';'
+                        nextToken();
                     } else {
-                        printf("Syntax error: Expected ';' after 'meanwhile' loop\n");
+                        printf("SYNTAX ERROR LINE %d: Expected ';' after meanwhile loop. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                         exit(1);
                     }
                 } else {
-                    printf("Syntax error: Expected '(' after 'meanwhile'\n");
+                    printf("SYNTAX ERROR LINE %d: Expected '(' after meanwhile. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                     exit(1);
                 }
             } else {
-                printf("Syntax error: Expected 'meanwhile' after 'do' block\n");
+                printf("SYNTAX ERROR LINE %d: Expected meanwhile after do block. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
         } else {
-            printf("Syntax error: Expected '{' after 'do'\n");
+            printf("SYNTAX ERROR LINE %d: Expected '{' after do. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
     }
@@ -1726,37 +1646,41 @@ ASTNode* parseDmwLoop() {
 }
 
 ASTNode* parseInputStmt() {
-    // <input_stmt> ::= “input” DELIM_O_PAREN <input> DELIM_C_PAREN DELIM_SEMCOL
     ASTNode* node = newNode("<input_stmt>");
     if (strcmp(currentToken.value, "input") == 0) {
-        ASTNode* inputNode = newNode("input"); // Include terminal symbol "input"
+        ASTNode* inputNode = newNode("input");
         node->left = inputNode;
-        nextToken();  // Consume "input"
+        nextToken();
+
         if (currentToken.type == DELIM_O_PAREN) {
-            ASTNode* openParen = newNode("("); // Include terminal symbol '('
+            ASTNode* openParen = newNode("(");
             inputNode->right = openParen;
-            nextToken();  // Consume '('            
-            openParen->left = parseInput();  // Parse <input>
+            nextToken();       
+            openParen->left = parseInput();
+
             if (currentToken.type == DELIM_C_PAREN) {
-                ASTNode* closeParen = newNode(")"); // Include terminal symbol ')'
+                ASTNode* closeParen = newNode(")");
                 openParen->right = closeParen;
-                nextToken();  // Consume ')'
+                nextToken();
+                
                 if (currentToken.type == DELIM_SEMCOL) {
-                    ASTNode* semicolonNode = newNode(";"); // Include terminal symbol ';'
+                    ASTNode* semicolonNode = newNode(";");
                     closeParen->right = semicolonNode;
-                    nextToken();  // Consume ';'
+                    nextToken();
+
                     return node;
                 }
             } else {
-                printf("Syntax error: Missing closing parenthesis\n");
+                printf("SYNTAX ERROR LINE %d: Expected ')' in <input_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
         } else {
-            printf("Syntax error: Missing opening parenthesis\n");
+            printf("SYNTAX ERROR LINE %d: Expected '(' in <input_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
     }
-    printf("Syntax error: Invalid input statement\n");
+
+    printf("SYNTAX ERROR LINE %d: Invalid <input_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
@@ -1764,34 +1688,38 @@ ASTNode* parseOutputStmt() {
     // <output_stmt> ::= “out” DELIM_O_PAREN <output> DELIM_C_PAREN DELIM_SEMCOL
     ASTNode* node = newNode("<output_stmt>");
     if (strcmp(currentToken.value, "out") == 0) {
-        ASTNode* outNode = newNode("out"); // Include terminal symbol "out"
+        ASTNode* outNode = newNode("out");
         node->left = outNode;
-        nextToken();  // Consume "out"
+        nextToken();
+        
         if (currentToken.type == DELIM_O_PAREN) {
-            ASTNode* openParen = newNode("("); // Include terminal symbol '('
+            ASTNode* openParen = newNode("("); 
             outNode->right = openParen;
-            nextToken();  // Consume '('            
-            openParen->left = parseOutput();  // Parse <output>
+            nextToken();         
+            openParen->left = parseOutput();
+
             if (currentToken.type == DELIM_C_PAREN) {
-                ASTNode* closeParen = newNode(")"); // Include terminal symbol ')'
+                ASTNode* closeParen = newNode(")");
                 openParen->right = closeParen;
-                nextToken();  // Consume ')'
+                nextToken();
+                
                 if (currentToken.type == DELIM_SEMCOL) {
-                    ASTNode* semicolonNode = newNode(";"); // Include terminal symbol ';'
+                    ASTNode* semicolonNode = newNode(";");
                     closeParen->right = semicolonNode;
-                    nextToken();  // Consume ';'
+                    nextToken();
                     return node;
                 }
             } else {
-                printf("Syntax error: Missing closing parenthesis\n");
+                printf("SYNTAX ERROR LINE %d: Expected ')' in <output_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
         } else {
-            printf("Syntax error: Missing opening parenthesis\n");
+            printf("SYNTAX ERROR LINE %d: Expected '(' in <output_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
     }
-    printf("Syntax error: Invalid output statement\n");
+    
+    printf("SYNTAX ERROR LINE %d: Invalid <output_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
@@ -1799,39 +1727,40 @@ ASTNode* parseInput() {
     // <input> ::= CONSTANT_TXTFS { DELIM_COMMA [ "&" <identifier> ] }
     ASTNode* node = newNode("<input>");
     if (currentToken.type == CONSTANT_TXTFS) {
-        node->left = newNode(currentToken.value);  // Add CONSTANT_TXTFS
-        nextToken();  // Consume CONSTANT_TXTFS
+        node->left = newNode(currentToken.value);
+        nextToken();
 
         ASTNode* current = node;
         while (currentToken.type == DELIM_COMMA) {
-            ASTNode* commaNode = newNode(","); // Include DELIM_COMMA in the parse tree
+            ASTNode* commaNode = newNode(",");
             current->right = commaNode;
             current = commaNode;
 
-            nextToken();  // Consume ','
+            nextToken();
             if (strcmp(currentToken.value, "&") == 0) {
                 ASTNode* andNode = newNode("&");
                 commaNode->right = andNode;
-                nextToken();  // Consume '&'
+                nextToken();
                 if (currentToken.type == IDENTIFIER) {
                     andNode->left = newNode(currentToken.value);
-                    nextToken();  // Consume IDENTIFIER
+                    nextToken();
                 } else {
-                    printf("Syntax error: Expected identifier after '&'\n");
+                printf("SYNTAX ERROR LINE %d: Expected identifier after '&'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                     exit(1);
                 }
             } else if (currentToken.type == IDENTIFIER) {
                 ASTNode* idNode = newNode(currentToken.value);
                 commaNode->right = idNode;
-                nextToken();  // Consume IDENTIFIER
+                nextToken();
             } else {
-                printf("Syntax error: Expected '&' or identifier after ','\n");
+                printf("SYNTAX ERROR LINE %d: Expected '&' or identifier after ','. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
         }
         return node;
     }
-    printf("Syntax error: Invalid input\n");
+
+    printf("SYNTAX ERROR LINE %d: Invalid input.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
@@ -1839,20 +1768,21 @@ ASTNode* parseOutput() {
     // <output> ::= CONSTANT_TEXT | CONSTANT_TXTFS { DELIM_COMMA <expr> }
     ASTNode* node = newNode("<output>");
     if (currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_TXTFS) {
-        node->left = newNode(currentToken.value);  // Add CONSTANT_TEXT or CONSTANT_TXTFS
-        nextToken();  // Consume CONSTANT_TEXT or CONSTANT_TXTFS
+        node->left = newNode(currentToken.value);
+        nextToken();
 
         ASTNode* current = node;
         while (currentToken.type == DELIM_COMMA) {
-            ASTNode* commaNode = newNode(","); // Include DELIM_COMMA in the parse tree
+            ASTNode* commaNode = newNode(",");
             current->right = commaNode;
-            nextToken();  // Consume ','
-            commaNode->left = parseExpr();  // Parse <expr>
+            nextToken();
+            commaNode->left = parseExpr();
             current = commaNode;
         }
         return node;
     }
-    printf("Syntax error: Invalid output\n");
+
+    printf("SYNTAX ERROR LINE %d: Invalid output.\n", currentToken.sheeshLine, currentToken.value);
     exit(1);
 }
 
