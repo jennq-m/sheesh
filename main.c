@@ -1150,12 +1150,11 @@ ASTNode* parseNumVal() {
         }
         return numNode;
     } else if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
-        // Handle identifier or parenthesized expression
         ASTNode *exprNode;
-        exprNode = parseIdentExpr(); // Parse identifier expression
+        exprNode = parseIdentExpr();
 
         if (signNode) {
-            ASTNode *node = newNode("num_val");
+            ASTNode *node = newNode("<num_val>");
             node->left = signNode;
             node->right = exprNode;
             return node;
@@ -1176,7 +1175,7 @@ ASTNode* parseSign() {
 
     if (currentToken.type == ARITHMETIC_OPE && 
        (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
-        ASTNode *node = newNode("sign"); 
+        ASTNode *node = newNode("<sign>"); 
         node->left = newNode(currentToken.value);
         nextToken();
 
@@ -1190,12 +1189,12 @@ ASTNode* parseDriftVal() {
     ASTNode *signNode = parseSign();
 
     if (currentToken.type == CONSTANT_DRIFT) {
-        ASTNode *driftNode = newNode("drift_val");
+        ASTNode *driftNode = newNode("<drift_val>");
         driftNode->left = newNode(currentToken.value);
         nextToken();
 
         if (signNode) {
-            ASTNode *node = newNode("drift_val");
+            ASTNode *node = newNode("<drift_val>");
             node->left = signNode;
             node->right = driftNode;
             return node;
@@ -1217,7 +1216,7 @@ ASTNode* parseDriftVal() {
         }
 
         if (signNode) {
-            ASTNode *node = newNode("drift_val");
+            ASTNode *node = newNode("<drift_val>");
             node->left = signNode;
             node->right = exprNode;
             return node;
@@ -1429,13 +1428,13 @@ ASTNode* parseIterativeStmt() {
     ASTNode* node = newNode("<iterative_stmt>");
 
     if (currentToken.type == REP) {
-        ASTNode *loopNode = newNode("rep_loop");
+        ASTNode *loopNode = newNode("<rep_loop>");
         node->left = parseRepLoop();
     } else if (currentToken.type == DO) {
-        ASTNode *loopNode = newNode("dmw_loop");
+        ASTNode *loopNode = newNode("<dmw_loop>");
         node->left = parseDmwLoop();
     } else if (currentToken.type == MEANWHILE) {
-        ASTNode *loopNode = newNode("mw_loop");
+        ASTNode *loopNode = newNode("<mw_loop>");
         node->left = parseMwLoop();
     } else {
         printf("SYNTAX ERROR LINE %d: Invalid iterative statement. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
@@ -1646,7 +1645,7 @@ ASTNode* parseDmwLoop() {
 ASTNode* parseInputStmt() {
     ASTNode* node = newNode("<input_stmt>");
     if (strcmp(currentToken.value, "input") == 0) {
-        ASTNode* inputNode = newNode("input");
+        ASTNode* inputNode = newNode("<input>");
         node->left = inputNode;
         nextToken();
 
@@ -1686,7 +1685,7 @@ ASTNode* parseOutputStmt() {
     // <output_stmt> ::= “out” DELIM_O_PAREN <output> DELIM_C_PAREN DELIM_SEMCOL
     ASTNode* node = newNode("<output_stmt>");
     if (strcmp(currentToken.value, "out") == 0) {
-        ASTNode* outNode = newNode("out");
+        ASTNode* outNode = newNode("<out>");
         node->left = outNode;
         nextToken();
         
