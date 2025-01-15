@@ -820,6 +820,7 @@ ASTNode* parsePrimary() {
         nextToken(); // Consume ')'
         primaryNode->left = exprNode;
         return primaryNode;
+        
     }  else if (strcmp(currentToken.value, "!") == 0 || strcmp(currentToken.value, "++") == 0 || strcmp(currentToken.value, "--") == 0) {
         printf("Parsing unary operator: %s\n", currentToken.value);
         ASTNode *opNode = newNode(currentToken.value); // Create a node for the unary operator
@@ -913,18 +914,7 @@ ASTNode* parseNumVal() {
     } else if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
         // Handle identifier or parenthesized expression
         ASTNode *exprNode;
-        if (currentToken.type == IDENTIFIER) {
-            exprNode = parseIdentExpr(); // Parse identifier expression
-        } else {
-            nextToken(); // Consume '('
-            exprNode = parseExpr(); // Parse expression inside parentheses
-
-            if (currentToken.type != DELIM_C_PAREN) {
-                printf("Syntax error: Missing closing parenthesis in <num_val>\n");
-                exit(1);
-            }
-            nextToken(); // Consume ')'
-        }
+        exprNode = parseIdentExpr(); // Parse identifier expression
 
         if (signNode) {
             ASTNode *node = newNode("num_val");

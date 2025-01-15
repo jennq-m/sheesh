@@ -749,6 +749,25 @@ program(
                                                                                                                                                     )
                                                                                                                                                 )
                                                                                                                                             )
+                                                                                                                                            <expr>(
+                                                                                                                                                and_expr(
+                                                                                                                                                    equality_expr(
+                                                                                                                                                        relational_expr(
+                                                                                                                                                            addsub_expr(
+                                                                                                                                                                <multdiv_expr>(
+                                                                                                                                                                    <primary>(
+                                                                                                                                                                        ++(
+                                                                                                                                                                            <ident_expr>(
+                                                                                                                                                                                identifier
+                                                                                                                                                                            )
+                                                                                                                                                                        )
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                            )
+                                                                                                                                                        )
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                            )
                                                                                                                                         )
                                                                                                                                     )
                                                                                                                                 )
