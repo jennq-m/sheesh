@@ -1442,8 +1442,8 @@ ASTNode* parseIterativeStmt() {
     ASTNode* node = newNode("<iterative_stmt>");
 
     if (currentToken.type == REP) {
-        ASTNode *loopNode = parseRepLoop();
-        node->left = loopNode;
+        ASTNode *loopNode = newNode("rep_loop");
+        node->left = parseRepLoop();
     } else if (currentToken.type == DO) {
         ASTNode *loopNode = newNode("dmw_loop");
         // Add parsing logic for mw_loop
@@ -1521,7 +1521,6 @@ ASTNode* parseLoopInitial() {
     if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT || currentToken.type == SHORT
         || currentToken.type == LONG || currentToken.type == LEGIT) {
         node->left = parseDecStmt();
-        nextToken();  // Consume the data type
     } else if (currentToken.type == IDENTIFIER) {
         node->left = parseAssignStmt();
     } else {
