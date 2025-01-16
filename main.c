@@ -704,8 +704,6 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
 }
 
 ASTNode* parseProgram() {
-    printf("Entering parseProgram\n");
-
     if (currentToken.type != TOPTIER) {
         printf("SYNTAX ERROR LINE %d: Expected toptier keyword. Skipping tokens until keyword is found.\n", currentToken.sheeshLine);
         nextToken(); 
@@ -713,25 +711,25 @@ ASTNode* parseProgram() {
     }
 
     if (currentToken.type == TOPTIER) {
-        printf("Matched toptier\n");
         ASTNode *node = newNode("<program>");
+        node->left = newNode(currentToken.value);
         nextToken();
 
         if (currentToken.type == DELIM_O_PAREN) {
-            printf("Matched opening parenthesis\n");
+            node->right = newNode(currentToken.value);
             nextToken();
 
             if (currentToken.type == DELIM_C_PAREN) {
-                printf("Matched closing parenthesis\n");
+                node->left->left = newNode(currentToken.value);
                 nextToken();
 
                 if (currentToken.type == DELIM_O_BRACE) {
-                    printf("Matched opening brace\n");
+                    node->left->right = newNode(currentToken.value);
                     nextToken();
-                    node->left = parseBody();
+                    node->right->left = parseBody();
 
                     if (currentToken.type == DELIM_C_BRACE) {
-                        printf("Matched closing brace\n");
+                        node->right->right = newNode(currentToken.value);
                         nextToken();
 
                         return node;
@@ -748,13 +746,14 @@ ASTNode* parseProgram() {
             printf("SYNTAX ERROR LINE %d: Expected '('. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
         }
     } 
-    printf("Syntax error: Invalid program structure\n");
+
+    printf("SYNTAX ERROR LINE %d: Invalid program structure.\n", currentToken.sheeshLine);
     exit(1);
 }
 
 ASTNode* parseBody() {
     printf("Entering parseBody\n");
-    ASTNode *node = newNode("<body");
+    ASTNode *node = newNode("<body>");
 
     node->left = parseStmts();
     return node;
