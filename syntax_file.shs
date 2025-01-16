@@ -118,17 +118,8 @@ toptier() {
 
     // Declaration Statement
     num count;
-    count = 0;
     drift decimal = 89.70;
-    decimal = 90.5;
     num count = number;
-    count = number + 1;
     drift math_grade, science_grade, english_grade;
-    math_grade = 97.5;
-    science_grade = 95.5;
-    english_grade = math_grade;
-    drift math_grade = 97.5, science_grade = 95.5, english_grade = math_grade;
-    english_graade = 99.9;
     drift a, b = 10;
-    a = 0;
 }
