@@ -1439,7 +1439,7 @@ ASTNode* parseAssignStmt() {
 
 ASTNode* parseIfStmt() {
     if (strcmp(currentToken.value, "if") == 0) {
-        ASTNode *node = newNode("if_stmt");
+        ASTNode *node = newNode("<if_stmt>");
 
         // Debug print to check token after 'if'
         printf("Current token after 'if': %s\n", currentToken.value);
@@ -1490,46 +1490,39 @@ ASTNode* parseIfStmt() {
     exit(1);
 }
 
+ASTNode* parseIfOtherStmt(ASTNode *node) {
+    if (currentToken.type == OTHER) {
+        nextToken();
 
-
-
-ASTNode* parseIfOtherStmt(ASTNode *ifNode) {
-    // Check for the "other" keyword
-    if (strcmp(currentToken.value, "other") == 0) {
-        nextToken();  // Consume 'other'
-
-        // Parse the body of the other block
         if (currentToken.type == DELIM_O_BRACE) {
-            nextToken();  // Consume '{'
-            ASTNode *otherBody = parseBody();  // Parse the body of the 'other' block
+            nextToken();
+            ASTNode *otherBody = parseBody();
 
-            // Attach the other block as a right child of the ifNode
-            ifNode->right = otherBody;
+            node->right = otherBody;
 
-            // Check for closing brace
             if (currentToken.type == DELIM_C_BRACE) {
-                nextToken();  // Consume '}'
-                return ifNode;
+                nextToken();
+                return node;
             }
         }
     }
 
-    // Syntax error if not found
     printf("Syntax error: Invalid other statement\n");
     exit(1);
 }
 
 ASTNode* parseCondStmt() {
-    printf("Entering CondStmt\n");
+    ASTNode* node = newNode("<condi_stmt>");
 
     if (currentToken.type == IF) {
         ASTNode *ifNode = parseIfStmt();
+        node->left = ifNode;
 
         if (currentToken.type == OTHER) {
-            return parseIfOtherStmt(ifNode);
+            return parseIfOtherStmt(node);
         }
 
-        return ifNode; 
+        return node; 
     }
 
     printf("Syntax error: Expected conditional statement (if, if_other, ex_if)\n");
