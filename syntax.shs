@@ -1,4 +1,14 @@
 toptier() {
+    input("%d ", &a);
+    //out("value is %d %d %d", a, b, c);
+
+     if (a > 5) {
+        out("hi");
+    }
+
+    num a, b;
+    num a, b = 1;
+   
     1.5;
     +2.77;
     5.5;
@@ -27,12 +37,11 @@ toptier() {
     legit a = nocap;
     drift initialization = 5.5;
     a += 1;
-    vibe a += 1;
     x = y + 54 - z * 5;
     a = (8+n*(c*f) == 5);
     a += 1;
     a = b;
-    a = 8;
+    a = 8; 
 
     rep (num a = 1; a > 1; a++) {
         meanwhile (i > 10) {
@@ -41,4 +50,18 @@ toptier() {
             } meanwhile (i < 10);
         }
     }
+
+    input("%d", &age);
+    input("%f", &float_a);
+    input("%s", &vibe_a);
+    input("%c", &letter);
+
+    out("String");
+    out("%d", identifier);
+    out("Num: %d", integer);
+
+    out("Age: %d", age);
+    out("Float: %f", float_a);
+    out("Text: %s", text_a);
+    out("Letter: %c", letter);
 }

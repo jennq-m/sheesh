@@ -1,7 +1,61 @@
 toptier() {
+    rep (num a = 0; a < 5; a++) {
+      out("%d", a);
+    }
+
+    rep (num i = 0; i < 5; i++) {
+        out("%d", i);
+        rep (num j = 0; j < 5; j++) {
+            out("%d", j);
+        }
+    }
+
+    num i = 0;
+
+    meanwhile (i < 5) {
+        out("string test");
+        i++;
+    }
+
+    num i = 0;
+    num j;
+
+    meanwhile (i < 5) {
+        out("%d", identifier);
+        j = 0;
+        meanwhile (j < 5) {
+                out("J: %d", j);
+                j++;
+        }
+        i++;
+    }
+
+    num i = 0;
+
+    do {
+        out("Test Output");
+        i++;
+    } meanwhile (i < 5);
+
+    num i = 0;
+    num j = 0;
+
+    do {
+        out("This is an output statement");
+        j = 0;
+        do {
+                out("OUTPUT");
+                j++;
+        } meanwhile (j < 5);
+        i++;
+    } meanwhile (i < 5);
+
+
     rep (num a = 1; a > 1; a++) {
+        meanwhile (i > 10) {
             do {
                 test = test;
-            } meanwhile (i++);
+            } meanwhile (i < 10);
+        }
     }
 }

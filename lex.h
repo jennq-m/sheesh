@@ -101,7 +101,6 @@ int checkRelational(const char *sheeshLexeme);
 void nextToken();
 void parse();
 
-
 char *typeToString(TokenType type) {
     switch (type) {
         case IDENTIFIER: 
@@ -153,60 +152,78 @@ char *typeToString(TokenType type) {
         case CONSTANT_LEGIT:
             return "CONSTANT_LEGIT";
         case BOUNCE:    
-            case CAR:       
-            case DO:        
-            case DRIFT:     
-            case EMPTY:     
-            case EX:        
-            case FLIP:      
-            case FROZEN:    
-            case GROUP:     
-            case IF:        
-            case INPUT:     
-            case JUMP:      
-            case LEGIT:     
-            case LOCKED:    
-            case LOCKIN:    
-            case LONG:      
-            case MEANWHILE: 
-            case NICKNAME:  
-            case NUM:       
+            return "BOUNCE";
+        case CAR:       
+            return "CAR";
+        case DO:        
+            return "DO";
+        case DRIFT:     
+            return "DRIFT";
+        case EMPTY:     
+            return "EMPTY";
+        case EX:        
+            return "EX";
+        case FLIP:      
+            return "FLIP";
+        case FROZEN:    
+            return "FROZEN";
+        case GROUP:     
+            return "GROUP";
+        case IF:        
+            return "IF";
+        case INPUT:     
+            return "INPUT";
+        case JUMP:      
+            return "JUMP";
+        case LEGIT:     
+            return "LEGIT";
+        case LOCKED:    
+            return "LOCKED";
+        case LOCKIN:    
+            return "LOCKIN";
+        case LONG:      
+            return "LONG";
+        case MEANWHILE: 
+            return "MEANWHILE";
+        case NICKNAME:  
+            return "NICKNAME";
+        case NUM:       
             return "NUM";
-            case OPEN:      
+        case OPEN:      
             return "OPEN";
-            case OTHER:   
+        case OTHER:   
             return "OTHER";  
-            case OUT:      
+        case OUT:      
             return "OUT"; 
-            case OUTSIDE:
+        case OUTSIDE:
             return "OUTSIDE";   
-            case PL:        
+        case PL:        
             return "PL";
-            case REP:   
+        case REP:   
             return "REP";    
-            case SCENARIO:
+        case SCENARIO:
             return "SCENARIO";  
-            case SHORT:     
+        case SHORT:     
             return "SHORT";
-            case STANDARD: 
+        case STANDARD: 
             return "STANDARD"; 
-            case STOP:      
+        case STOP:      
             return "STOP";
-            case TEAM:    
+        case TEAM:    
             return "TEAM";  
-            case TEXT:    
+        case TEXT:    
             return "TEXT";  
-            case VIBE:    
+        case VIBE:    
             return "VIBE";  
-            case PLAYLIST:
+        case PLAYLIST:
             return "PLAYLIST";  
-            case REPEAT:    
+        case REPEAT:    
             return "REPEAT";
-            case OUTPUT:    
+        case OUTPUT:    
             return "OUTPUT";
-            case EXTRA:     
+        case EXTRA:     
             return "EXTRA";
-            case OTHERWISE:
+        case OTHERWISE:
             return "OTHERWISE"; 
         case ALWAYS:    
             return "ALWAYS";
