@@ -768,50 +768,47 @@ ASTNode* parseStmts() {
     while (currentToken.type != DELIM_C_BRACE && currentToken.type != INVALID) {
         ASTNode *stmt = NULL;
 
-        // Check for conditional statements (if, if_other, ex_if)
-        if (strcmp(currentToken.value, "if") == 0) {
-            stmt = parseCondStmt();  // Parse the conditional statement (if, if_other, ex_if)
-
-        // Check for declaration statements
+        if (currentToken.type == IF) {
+            stmt = newNode("<stmts>");
+            stmt->left = parseCondStmt();
         } else if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT ||
             currentToken.type == SHORT || currentToken.type == LONG || currentToken.type == LEGIT) {
-            stmt = parseDecStmt();
-
-        // Check for assignment statements
+            stmt = newNode("<stmts>");
+            stmt->left = parseDecStmt();
         } else if (currentToken.type == IDENTIFIER) {
             nextToken();
             if (currentToken.type == ASSIGNMENT_OPE) {
                 previousToken();
-                stmt = parseAssignStmt();
+                stmt = newNode("<stmts>");
+                stmt->left = parseAssignStmt();
             } else {
                 previousToken();
-                stmt = parseExprStmt();
+                stmt = newNode("<stmts>");
+                stmt->left = parseExprStmt();
             }
 
-        // Check for iterative statements
         } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
-            stmt = parseIterativeStmt();
+            stmt = newNode("<stmts>");
+                stmt->left = parseIterativeStmt();
 
-        // Check for input statements
-        } else if (strcmp(currentToken.value, "input") == 0) {
-            stmt = parseInputStmt();
+        } else if (currentToken.type == INPUT) {
+            stmt = newNode("<stmts>");
+                stmt->left = parseInputStmt();
 
-        // Check for output statements
-        } else if (strcmp(currentToken.value, "out") == 0) {
-            stmt = parseOutputStmt();
-
-        // Handle other statements (e.g., expression statements)
+        } else if (currentToken.type == OUT || currentToken.type == OUTPUT) {
+            stmt = newNode("<stmts>");
+            stmt->left = parseOutputStmt();
         } else {
-            stmt = parseExprStmt();
+            stmt = newNode("<stmts>");
+            stmt->left = parseExprStmt();
         }
 
-        // Chain the parsed statement into the statement list
         if (!node) {
-            node = stmt;  // First statement becomes the root
+            node = stmt;
         } else {
-            current->right = stmt;  // Chain subsequent statements
+            current->right = stmt;
         }
-        current = stmt;  // Move to the latest statement
+        current = stmt;
     }
 
     return node;
@@ -1525,20 +1522,16 @@ ASTNode* parseIfOtherStmt(ASTNode *ifNode) {
 ASTNode* parseCondStmt() {
     printf("Entering CondStmt\n");
 
-    // Check for "if" statement
-    if (strcmp(currentToken.value, "if") == 0) {
-        // Parse the "if" statement
-        ASTNode *ifNode = parseIfStmt();  // Parse the standard if statement
+    if (currentToken.type == IF) {
+        ASTNode *ifNode = parseIfStmt();
 
-        // After parsing the if statement, check if 'other' follows
-        if (strcmp(currentToken.value, "other") == 0) {
-            return parseIfOtherStmt(ifNode);  // Parse the 'other' block and chain it to the if statement
+        if (currentToken.type == OTHER) {
+            return parseIfOtherStmt(ifNode);
         }
 
-        return ifNode;  // Return the parsed if statement if no 'other' is found
+        return ifNode; 
     }
 
-    // If none of the above conditions matched, print an error
     printf("Syntax error: Expected conditional statement (if, if_other, ex_if)\n");
     exit(1);
 }
@@ -1714,7 +1707,7 @@ ASTNode* parseDmwLoop() {
     ASTNode* node = newNode("<dmw_loop>");
     printf("Parsing 'do-meanwhile' loop\n");
 
-    if (strcmp(currentToken.value, "do") == 0) {
+    if (currentToken.type == DO) {
         nextToken();
 
         if (currentToken.type == DELIM_O_BRACE) {
@@ -1764,7 +1757,7 @@ ASTNode* parseDmwLoop() {
 
 ASTNode* parseInputStmt() {
     ASTNode* node = newNode("<input_stmt>");
-    if (strcmp(currentToken.value, "input") == 0) {
+    if (currentToken.type == INPUT) {
         ASTNode* inputNode = newNode("<input>");
         node->left = inputNode;
         nextToken();
@@ -1804,7 +1797,7 @@ ASTNode* parseInputStmt() {
 ASTNode* parseOutputStmt() {
     // <output_stmt> ::= “out” DELIM_O_PAREN <output> DELIM_C_PAREN DELIM_SEMCOL
     ASTNode* node = newNode("<output_stmt>");
-    if (strcmp(currentToken.value, "out") == 0) {
+    if (currentToken.type == OUT || currentToken.type == OUTPUT) {
         ASTNode* outNode = newNode("<out>");
         node->left = outNode;
         nextToken();
