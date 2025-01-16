@@ -7,7 +7,7 @@
         <body>(
             <stmts>(
                 <input_stmt>(
-                    <input>(
+                    input(
                         ((
                             <input>(
                                 "%d"
@@ -25,7 +25,7 @@
                 )
                 <stmts>(
                     <input_stmt>(
-                        <input>(
+                        input(
                             ((
                                 <input>(
                                     "%f"
@@ -43,7 +43,7 @@
                     )
                     <stmts>(
                         <input_stmt>(
-                            <input>(
+                            input(
                                 ((
                                     <input>(
                                         "%s"
@@ -61,7 +61,7 @@
                         )
                         <stmts>(
                             <input_stmt>(
-                                <input>(
+                                input(
                                     ((
                                         <input>(
                                             "%c"
@@ -79,7 +79,7 @@
                             )
                             <stmts>(
                                 <output_stmt>(
-                                    <out>(
+                                    out(
                                         ((
                                             <output>(
                                                 "String"
@@ -92,7 +92,7 @@
                                 )
                                 <stmts>(
                                     <output_stmt>(
-                                        <out>(
+                                        out(
                                             ((
                                                 <output>(
                                                     "%d"
@@ -120,7 +120,7 @@
                                     )
                                     <stmts>(
                                         <output_stmt>(
-                                            <out>(
+                                            out(
                                                 ((
                                                     <output>(
                                                         "Num: %d"
@@ -148,7 +148,7 @@
                                         )
                                         <stmts>(
                                             <output_stmt>(
-                                                <out>(
+                                                out(
                                                     ((
                                                         <output>(
                                                             "Age: %d"
@@ -176,7 +176,7 @@
                                             )
                                             <stmts>(
                                                 <output_stmt>(
-                                                    <out>(
+                                                    out(
                                                         ((
                                                             <output>(
                                                                 "Float: %f"
@@ -204,7 +204,7 @@
                                                 )
                                                 <stmts>(
                                                     <output_stmt>(
-                                                        <out>(
+                                                        out(
                                                             ((
                                                                 <output>(
                                                                     "Text: %s"
@@ -232,7 +232,7 @@
                                                     )
                                                     <stmts>(
                                                         <output_stmt>(
-                                                            <out>(
+                                                            out(
                                                                 ((
                                                                     <output>(
                                                                         "Letter: %c"
@@ -583,7 +583,7 @@
                                                                                                             <body>(
                                                                                                                 <stmts>(
                                                                                                                     <output_stmt>(
-                                                                                                                        <out>(
+                                                                                                                        out(
                                                                                                                             ((
                                                                                                                                 <output>(
                                                                                                                                     "GWA is very high!"
@@ -660,7 +660,7 @@
                                                                                                                                 <body>(
                                                                                                                                     <stmts>(
                                                                                                                                         <output_stmt>(
-                                                                                                                                            <out>(
+                                                                                                                                            out(
                                                                                                                                                 ((
                                                                                                                                                     <output>(
                                                                                                                                                         "%d"
@@ -726,7 +726,7 @@
                                                                                                                     <body>(
                                                                                                                         <stmts>(
                                                                                                                             <output_stmt>(
-                                                                                                                                <out>(
+                                                                                                                                out(
                                                                                                                                     ((
                                                                                                                                         <output>(
                                                                                                                                             "You won!"
@@ -743,7 +743,7 @@
                                                                                                                 <body>(
                                                                                                                     <stmts>(
                                                                                                                         <output_stmt>(
-                                                                                                                            <out>(
+                                                                                                                            out(
                                                                                                                                 ((
                                                                                                                                     <output>(
                                                                                                                                         "You lost!"
@@ -819,7 +819,7 @@
                                                                                                                                         <body>(
                                                                                                                                             <stmts>(
                                                                                                                                                 <output_stmt>(
-                                                                                                                                                    <out>(
+                                                                                                                                                    out(
                                                                                                                                                         ((
                                                                                                                                                             <output>(
                                                                                                                                                                 "You've won for more than 10 times!"
@@ -836,7 +836,7 @@
                                                                                                                                     <body>(
                                                                                                                                         <stmts>(
                                                                                                                                             <output_stmt>(
-                                                                                                                                                <out>(
+                                                                                                                                                out(
                                                                                                                                                     ((
                                                                                                                                                         <output>(
                                                                                                                                                             "You have only won for 10 times!"
@@ -856,7 +856,7 @@
                                                                                                                     <body>(
                                                                                                                         <stmts>(
                                                                                                                             <output_stmt>(
-                                                                                                                                <out>(
+                                                                                                                                out(
                                                                                                                                     ((
                                                                                                                                         <output>(
                                                                                                                                             "You lost!"
@@ -948,7 +948,7 @@
                                                                                                                                         )
                                                                                                                                         <stmts>(
                                                                                                                                             <output_stmt>(
-                                                                                                                                                <out>(
+                                                                                                                                                out(
                                                                                                                                                     ((
                                                                                                                                                         <output>(
                                                                                                                                                             "%d"
@@ -1058,7 +1058,7 @@
                                                                                                                                             )
                                                                                                                                             <stmts>(
                                                                                                                                                 <output_stmt>(
-                                                                                                                                                    <out>(
+                                                                                                                                                    out(
                                                                                                                                                         ((
                                                                                                                                                             <output>(
                                                                                                                                                                 "%d"
@@ -1162,7 +1162,7 @@
                                                                                                                                                                         )
                                                                                                                                                                         <stmts>(
                                                                                                                                                                             <output_stmt>(
-                                                                                                                                                                                <out>(
+                                                                                                                                                                                out(
                                                                                                                                                                                     ((
                                                                                                                                                                                         <output>(
                                                                                                                                                                                             "%d"
@@ -1261,7 +1261,7 @@
                                                                                                                                         <body>(
                                                                                                                                             <stmts>(
                                                                                                                                                 <output_stmt>(
-                                                                                                                                                    <out>(
+                                                                                                                                                    out(
                                                                                                                                                         ((
                                                                                                                                                             <output>(
                                                                                                                                                                 "string test"
@@ -1365,7 +1365,7 @@
                                                                                                                                                     <body>(
                                                                                                                                                         <stmts>(
                                                                                                                                                             <output_stmt>(
-                                                                                                                                                                <out>(
+                                                                                                                                                                out(
                                                                                                                                                                     ((
                                                                                                                                                                         <output>(
                                                                                                                                                                             "%d"
@@ -1446,7 +1446,7 @@
                                                                                                                                                                             <body>(
                                                                                                                                                                                 <stmts>(
                                                                                                                                                                                     <output_stmt>(
-                                                                                                                                                                                        <out>(
+                                                                                                                                                                                        out(
                                                                                                                                                                                             ((
                                                                                                                                                                                                 <output>(
                                                                                                                                                                                                     "J: %d"
@@ -1556,7 +1556,7 @@
                                                                                                                                                             <body>(
                                                                                                                                                                 <stmts>(
                                                                                                                                                                     <output_stmt>(
-                                                                                                                                                                        <out>(
+                                                                                                                                                                        out(
                                                                                                                                                                             ((
                                                                                                                                                                                 <output>(
                                                                                                                                                                                     "Test Output"
@@ -1679,7 +1679,7 @@
                                                                                                                                                                         <body>(
                                                                                                                                                                             <stmts>(
                                                                                                                                                                                 <output_stmt>(
-                                                                                                                                                                                    <out>(
+                                                                                                                                                                                    out(
                                                                                                                                                                                         ((
                                                                                                                                                                                             <output>(
                                                                                                                                                                                                 "This is an output statement"
@@ -1719,7 +1719,7 @@
                                                                                                                                                                                                 <body>(
                                                                                                                                                                                                     <stmts>(
                                                                                                                                                                                                         <output_stmt>(
-                                                                                                                                                                                                            <out>(
+                                                                                                                                                                                                            out(
                                                                                                                                                                                                                 ((
                                                                                                                                                                                                                     <output>(
                                                                                                                                                                                                                         "OUTPUT"

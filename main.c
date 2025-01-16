@@ -1698,7 +1698,7 @@ ASTNode* parseDmwLoop() {
 ASTNode* parseInputStmt() {
     ASTNode* node = newNode("<input_stmt>");
     if (currentToken.type == INPUT) {
-        ASTNode* inputNode = newNode("<input>");
+        ASTNode* inputNode = newNode("input");
         node->left = inputNode;
         nextToken();
 
@@ -1738,7 +1738,7 @@ ASTNode* parseOutputStmt() {
     // <output_stmt> ::= “out” DELIM_O_PAREN <output> DELIM_C_PAREN DELIM_SEMCOL
     ASTNode* node = newNode("<output_stmt>");
     if (currentToken.type == OUT || currentToken.type == OUTPUT) {
-        ASTNode* outNode = newNode("<out>");
+        ASTNode* outNode = newNode(currentToken.value);
         node->left = outNode;
         nextToken();
         
