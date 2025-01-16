@@ -679,27 +679,28 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
     for (int i = 0; i < indent; i++) {
         fprintf(file, "    ");
     }
+    fprintf(file, "%s", node->value);
 
     if (node->left || node->right) {
-        fprintf(file, "%s(\n", node->value);
+        fprintf(file, "(\n");
 
         if (node->left) {
             printParseTree(node->left, indent + 1, file);
         }
 
         if (node->right) {
-            printParseTree(node->right, indent + 1, file);
+            printParseTree(node->right, indent, file);
         }
 
         for (int i = 0; i < indent; i++) {
             fprintf(file, "    ");
         }
-        
         fprintf(file, ")\n");
     } else {
-        fprintf(file, "%s\n", node->value);
+        fprintf(file, "\n");
     }
 }
+
 
 ASTNode* parseProgram() {
     if (currentToken.type != TOPTIER) {
@@ -1213,7 +1214,6 @@ ASTNode* parseDriftVal() {
     exit(1);
 }
 
-
 ASTNode* parseUnaryVal() {
     if (currentToken.type == UNARY_OPE) {
         ASTNode *node = newNode("<unary_val>");
@@ -1652,35 +1652,45 @@ ASTNode* parseMwLoop() {
     ASTNode* node = newNode("<mw_loop>");
 
     if (currentToken.type == MEANWHILE) {
+        node->left = newNode(currentToken.value);
         nextToken();
 
         if (currentToken.type == DELIM_O_PAREN) {
+            node->right = newNode(currentToken.value);
             nextToken();
 
-            node->left = parseExpr(); 
+            node->right->left = parseExpr(); 
 
             if (currentToken.type != DELIM_C_PAREN) {
                 printf("SYNTAX ERROR LINE %d: Expected ')' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
 
+            node->right->right = newNode(currentToken.value);
             nextToken();
 
             if (currentToken.type == DELIM_O_BRACE) {
-                nextToken();
+            ASTNode* braceNode = newNode(currentToken.value);
+            nextToken();
 
-                node->right = parseBody();
+            node->right->right->left = braceNode;
+            braceNode->left = parseBody();  // Parse the body and assign to left child
 
-                if (currentToken.type != DELIM_C_BRACE) {
-                    printf("SYNTAX ERROR LINE %d: Expected '}' to close <mw_loop> body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-                    exit(1);
-                }
-                
-                nextToken();
-            } else {
-                printf("SYNTAX ERROR LINE %d: Expected '{' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            if (currentToken.type != DELIM_C_BRACE) {
+                printf("SYNTAX ERROR LINE %d: Expected '}' to close <mw_loop> body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
+
+            ASTNode* closingBraceNode = newNode(currentToken.value);  // Closing brace node
+            braceNode->right = closingBraceNode;  // Attach the closing brace as the right child of body
+
+            node->right->right->right = braceNode;  // Attach the body node to the while loop's node
+            nextToken();  // Move to the next token after closing brace
+        } else {
+            printf("SYNTAX ERROR LINE %d: Expected '{' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
+        }
+
         } else {
             printf("SYNTAX ERROR LINE %d: Expected '(' after meanwhile. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
