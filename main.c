@@ -1273,21 +1273,23 @@ ASTNode* parseIdentExpr() {
 }
 
 ASTNode* parseDecStmt() {
+
+    // <dec_stmt> 		::= 	<data_type> ( <initialization> |  IDENTIFIER <var_list> | <initialization> <var_list>) DELIM_SEMCOL
+
+
     ASTNode* stmtNode = newNode("<dec_stmt>");
     printf("Parsing Declaration Statement\n");
 
-    // Parse <data_type>
     ASTNode* dtNode = parseDataType();
     stmtNode->left = dtNode;
 
-    // Parse IDENTIFIER or <initialization>
     if (currentToken.type == IDENTIFIER) {
-        ASTNode* firstVar = parseInitialization(); // Handles IDENTIFIER or <initialization>
+
+        ASTNode* firstVar = parseInitialization(); 
         stmtNode->right = firstVar;
 
-        // Check if there's a <var_list>
         if (currentToken.type == DELIM_COMMA) {
-            ASTNode* varListNode = parseVarList(firstVar); // Parse the rest of the list
+            ASTNode* varListNode = parseVarList(firstVar); 
             stmtNode->right = varListNode;
         }
     } else {
@@ -1295,9 +1297,8 @@ ASTNode* parseDecStmt() {
         exit(1);
     }
 
-    // Ensure the declaration ends with a semicolon
     if (currentToken.type == DELIM_SEMCOL) {
-        nextToken(); // Consume the semicolon
+        nextToken(); 
     } else {
         printf("Syntax error: Missing semicolon at the end of declaration statement\n");
         exit(1);
@@ -1307,34 +1308,34 @@ ASTNode* parseDecStmt() {
 }
 
 ASTNode* parseVarList(ASTNode* firstVar) {
-    ASTNode* currentNode = firstVar; // Start with the first parsed variable or initialization
+    ASTNode* currentNode = firstVar; 
 
     while (currentToken.type == DELIM_COMMA) {
-        nextToken(); // Consume the comma
+        nextToken(); 
 
         if (currentToken.type == IDENTIFIER) {
-            ASTNode* nextVarNode = parseInitialization(); // Parse the next variable or initialization
+            ASTNode* nextVarNode = parseInitialization(); 
 
-            // Link the current node to the next as the right child
             currentNode->right = nextVarNode; 
 
-            currentNode = nextVarNode; // Move to the next node to extend the tree
+            currentNode = nextVarNode; 
         } else {
             printf("Syntax error: Expected an identifier or initialization after ','\n");
             exit(1);
         }
     }
 
-    return firstVar; // Return the final constructed <var_list>
+    return firstVar; 
 }
 
 ASTNode* parseDataType() {
+
     if (currentToken.type == NUM || currentToken.type == DRIFT || currentToken.type == VIBE || 
         currentToken.type == TEXT || currentToken.type == SHORT || 
         currentToken.type == LONG || currentToken.type == LEGIT) {
         ASTNode* dtNode = newNode("<data_type>");
-        dtNode->left = newNode(currentToken.value); // Store the actual data type
-        nextToken(); // Consume the data type token
+        dtNode->left = newNode(currentToken.value);
+        nextToken(); 
         return dtNode;
     }
 
@@ -1343,22 +1344,21 @@ ASTNode* parseDataType() {
 }
 
 ASTNode* parseInitialization() {
+
     ASTNode* initNode = newNode("<initialization>");
     
     if (currentToken.type == IDENTIFIER) {
-        ASTNode* idNode = newNode(currentToken.value); // Store the identifier
-        nextToken(); // Consume the identifier
+        ASTNode* idNode = newNode(currentToken.value);
+        nextToken(); 
 
         if (currentToken.type == ASSIGNMENT_OPE) {
-            ASTNode* assignNode = newNode(currentToken.value); // Store '='
-            nextToken(); // Consume '='
-
-            ASTNode* exprNode = parseExpr(); // Parse the expression
+            ASTNode* assignNode = newNode(currentToken.value); 
+            nextToken(); 
+            ASTNode* exprNode = parseExpr(); 
             assignNode->left = idNode;
             assignNode->right = exprNode;
             initNode->left = assignNode;
         } else {
-            // If there's no '=', treat it as an uninitialized identifier
             initNode->left = idNode;
         }
     } else {
@@ -1371,6 +1371,10 @@ ASTNode* parseInitialization() {
 
 
 ASTNode* parseAssignStmt() {
+
+    //<assign_stmt> 	::=   	IDENTIFIER ASSIGNMENT_OPE <expr> DELIM_SEMCOL
+
+
     if (currentToken.type == IDENTIFIER) {
         ASTNode *node = newNode("<assign_stmt>");
         node->left = newNode(currentToken.value);
@@ -1489,6 +1493,9 @@ ASTNode* parseIfOtherStmt(ASTNode *node) {
 }
 
 ASTNode* parseCondStmt() {
+
+    //<condi_stmt>  	::= 	<if_stmt>  |  <if_other_stmt>  | <ex_if_stmt> 
+
     ASTNode* node = newNode("<condi_stmt>");
 
     if (currentToken.type == IF) {
