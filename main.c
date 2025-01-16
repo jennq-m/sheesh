@@ -1736,6 +1736,12 @@ ASTNode* parseUpdStmt() {
     } 
 
     if (currentToken.type == IDENTIFIER) {
+        nextToken();
+        if (currentToken.type == UNARY_OPE) {
+            previousToken();
+            node->left = parseUnaryVal();
+            return node;
+        } 
         node->left = parseExpr();
         return node;
     }

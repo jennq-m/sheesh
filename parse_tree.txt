@@ -1063,25 +1063,9 @@
                             )
                         ;(
                         <upd_stmt>(
-                            <expr>(
-                                <and_expr>(
-                                    <equality_expr>(
-                                        <relational_expr>(
-                                            <addsub_expr>(
-                                                <multdiv_expr>(
-                                                    <primary>(
-                                                        a(
-                                                            <unary_val>(
-                                                                a
-                                                            ++
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
+                            <unary_val>(
+                                a
+                            ++
                             )
                         )(
                         {(
@@ -1191,25 +1175,9 @@
                             )
                         ;(
                         <upd_stmt>(
-                            <expr>(
-                                <and_expr>(
-                                    <equality_expr>(
-                                        <relational_expr>(
-                                            <addsub_expr>(
-                                                <multdiv_expr>(
-                                                    <primary>(
-                                                        i(
-                                                            <unary_val>(
-                                                                i
-                                                            ++
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
+                            <unary_val>(
+                                i
+                            ++
                             )
                         )(
                         {(
@@ -2423,25 +2391,9 @@
                             )
                         ;(
                         <upd_stmt>(
-                            <expr>(
-                                <and_expr>(
-                                    <equality_expr>(
-                                        <relational_expr>(
-                                            <addsub_expr>(
-                                                <multdiv_expr>(
-                                                    <primary>(
-                                                        a(
-                                                            <unary_val>(
-                                                                a
-                                                            ++
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
+                            <unary_val>(
+                                a
+                            ++
                             )
                         )(
                         {(
