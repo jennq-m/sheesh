@@ -1698,7 +1698,7 @@ ASTNode* parseDmwLoop() {
 ASTNode* parseInputStmt() {
     ASTNode* node = newNode("<input_stmt>");
     if (currentToken.type == INPUT) {
-        ASTNode* inputNode = newNode("input");
+        ASTNode* inputNode = newNode(currentToken.value);
         node->left = inputNode;
         nextToken();
 
