@@ -688,6 +688,7 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
         if (node->left) {
             printParseTree(node->left, indent + 1, file);
         }
+
         if (node->right) {
             printParseTree(node->right, indent + 1, file);
         }
@@ -695,6 +696,7 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
         for (int i = 0; i < indent; i++) {
             fprintf(file, "    ");
         }
+        
         fprintf(file, ")\n");
     } else {
         fprintf(file, "%s\n", node->value);
