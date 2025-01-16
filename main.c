@@ -1418,22 +1418,33 @@ ASTNode* parseAssignStmt() {
 ASTNode* parseIfStmt() {
     if (strcmp(currentToken.value, "if") == 0) {
         ASTNode *node = newNode("<if_stmt>");
+        
+        node->left = newNode(currentToken.value);
         nextToken(); 
 
         if (currentToken.type == DELIM_O_PAREN) {
+            ASTNode *conditionNode = newNode(currentToken.value);
             nextToken();
 
-            node->left = parseExpr();
+            conditionNode->left = parseExpr();
 
             if (currentToken.type == DELIM_C_PAREN) {
+                conditionNode->right = newNode(currentToken.value);
                 nextToken();
 
+                node->right = conditionNode;
+
                 if (currentToken.type == DELIM_O_BRACE) {
+                    ASTNode *bodyNode = newNode(currentToken.value);
                     nextToken();
-                    node->right = parseBody();
+
+                    bodyNode->left = parseBody();
 
                     if (currentToken.type == DELIM_C_BRACE) {
+                        bodyNode->right = newNode(currentToken.value);
                         nextToken();
+
+                        conditionNode->right->right = bodyNode;
                         return node;
                     } else {
                         printf("SYNTAX ERROR LINE %d: Expected '}' in if body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
