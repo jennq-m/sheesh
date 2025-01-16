@@ -1674,7 +1674,7 @@ ASTNode* parseRepLoop() {
                         closeParenNode->right = openBraceNode;
                         nextToken();
 
-                        ASTNode* loopBody = parseStmts();
+                        ASTNode* loopBody = parseBody();
                         openBraceNode->right = loopBody;
 
                         if (currentToken.type == DELIM_C_BRACE) {
