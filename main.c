@@ -1533,53 +1533,43 @@ ASTNode* parseRepLoop() {
     ASTNode* node = newNode("<rep_loop>");
 
     if (currentToken.type == REP) {
-        // Add "rep" keyword as the left child
         ASTNode* loopNode = newNode(currentToken.value);
         node->left = loopNode;
         nextToken();
 
         if (currentToken.type == DELIM_O_PAREN) {
-            // Add "(" as the right child of "<rep_loop>"
             ASTNode* parenNode = newNode(currentToken.value);
             loopNode->left = parenNode;
             nextToken();
 
-            // Parse loop initialization
             ASTNode* initialNode = parseLoopInitial();
             parenNode->left = initialNode;
 
-            // Parse condition expression
             ASTNode* exprNode = parseExpr();
             parenNode->right = exprNode;
 
             if (currentToken.type == DELIM_SEMCOL) {
-                // Add ";" to separate initialization and update statement
                 ASTNode* semicolonNode = newNode(currentToken.value);
                 exprNode->right = semicolonNode;
                 nextToken();
 
-                // Parse update statement
                 ASTNode* updNode = parseUpdStmt();
                 semicolonNode->right = updNode;
 
                 if (currentToken.type == DELIM_C_PAREN) {
-                    // Add ")" to close the loop header
                     ASTNode* closeParenNode = newNode(currentToken.value);
                     updNode->right = closeParenNode;
                     nextToken();
 
                     if (currentToken.type == DELIM_O_BRACE) {
-                        // Add "{" for the loop body
                         ASTNode* openBraceNode = newNode(currentToken.value);
                         closeParenNode->right = openBraceNode;
                         nextToken();
 
-                        // Parse loop body
                         ASTNode* loopBody = parseStmts();
                         openBraceNode->right = loopBody;
 
                         if (currentToken.type == DELIM_C_BRACE) {
-                            // Add "}" to close the loop body
                             ASTNode* closeBraceNode = newNode(currentToken.value);
                             loopBody->right = closeBraceNode;
                             nextToken();
@@ -1674,18 +1664,18 @@ ASTNode* parseMwLoop() {
             nextToken();
 
             node->right->right->left = braceNode;
-            braceNode->left = parseBody();  // Parse the body and assign to left child
+            braceNode->left = parseBody();
 
             if (currentToken.type != DELIM_C_BRACE) {
                 printf("SYNTAX ERROR LINE %d: Expected '}' to close <mw_loop> body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
 
-            ASTNode* closingBraceNode = newNode(currentToken.value);  // Closing brace node
-            braceNode->right = closingBraceNode;  // Attach the closing brace as the right child of body
+            ASTNode* closingBraceNode = newNode(currentToken.value); 
+            braceNode->right = closingBraceNode;
 
-            node->right->right->right = braceNode;  // Attach the body node to the while loop's node
-            nextToken();  // Move to the next token after closing brace
+            node->right->right->right = braceNode;
+            nextToken();
         } else {
             printf("SYNTAX ERROR LINE %d: Expected '{' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
@@ -1707,32 +1697,44 @@ ASTNode* parseDmwLoop() {
     ASTNode* node = newNode("<dmw_loop>");
 
     if (currentToken.type == DO) {
+        node->left = newNode(currentToken.value);
         nextToken();
 
         if (currentToken.type == DELIM_O_BRACE) {
+            ASTNode* braceNode = newNode(currentToken.value);
+            node->right = braceNode;
             nextToken();
-            node->left = parseBody(); 
+            braceNode->left = parseBody();
 
             if (currentToken.type != DELIM_C_BRACE) {
                 printf("SYNTAX ERROR LINE %d: Expected '}' to close the block. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
-            nextToken(); 
+
+            braceNode->right = newNode(currentToken.value);
+            nextToken();
 
             if (currentToken.type == MEANWHILE) {
+                braceNode->right->left = newNode(currentToken.value);
                 nextToken();
 
                 if (currentToken.type == DELIM_O_PAREN) {
+                    braceNode->right->left->left = newNode(currentToken.value);
                     nextToken();
-                    node->right = parseExpr();
+
+                    ASTNode* exprNode = parseExpr();
+                    braceNode->right->left->right = exprNode;
 
                     if (currentToken.type != DELIM_C_PAREN) {
                         printf("SYNTAX ERROR LINE %d: Expected ')' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                         exit(1);
                     }
+
+                    exprNode->right = newNode(currentToken.value);
                     nextToken();
 
                     if (currentToken.type == DELIM_SEMCOL) {
+                        exprNode->right->left = newNode(currentToken.value);
                         nextToken();
                     } else {
                         printf("SYNTAX ERROR LINE %d: Expected ';' after meanwhile loop. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
