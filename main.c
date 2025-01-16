@@ -1273,107 +1273,100 @@ ASTNode* parseIdentExpr() {
 }
 
 ASTNode* parseDecStmt() {
-    ASTNode *stmtNode = newNode("<dec_stmt>");
-    
-    ASTNode *dtNode = parseDataType();  
+    ASTNode* stmtNode = newNode("<dec_stmt>");
+    printf("Parsing Declaration Statement\n");
+
+    // Parse <data_type>
+    ASTNode* dtNode = parseDataType();
     stmtNode->left = dtNode;
 
-    ASTNode *varListNode = parseVarList();  
-    dtNode->right = varListNode;
+    // Parse IDENTIFIER or <initialization>
+    if (currentToken.type == IDENTIFIER) {
+        ASTNode* firstVar = parseInitialization(); // Handles IDENTIFIER or <initialization>
+        stmtNode->right = firstVar;
 
-    if (currentToken.type == DELIM_SEMCOL) {
-        ASTNode* semicolonNode = newNode(currentToken.value);
-        varListNode->right = semicolonNode;
-        nextToken();
+        // Check if there's a <var_list>
+        if (currentToken.type == DELIM_COMMA) {
+            ASTNode* varListNode = parseVarList(firstVar); // Parse the rest of the list
+            stmtNode->right = varListNode;
+        }
     } else {
-        printf("SYNTAX ERROR LINE %d: Expected ';' in <dec)stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        printf("Syntax error: Expected an identifier or initialization after data type\n");
+        exit(1);
+    }
+
+    // Ensure the declaration ends with a semicolon
+    if (currentToken.type == DELIM_SEMCOL) {
+        nextToken(); // Consume the semicolon
+    } else {
+        printf("Syntax error: Missing semicolon at the end of declaration statement\n");
         exit(1);
     }
 
     return stmtNode;
 }
 
+ASTNode* parseVarList(ASTNode* firstVar) {
+    ASTNode* currentNode = firstVar; // Start with the first parsed variable or initialization
+
+    while (currentToken.type == DELIM_COMMA) {
+        nextToken(); // Consume the comma
+
+        if (currentToken.type == IDENTIFIER) {
+            ASTNode* nextVarNode = parseInitialization(); // Parse the next variable or initialization
+
+            // Link the current node to the next as the right child
+            currentNode->right = nextVarNode; 
+
+            currentNode = nextVarNode; // Move to the next node to extend the tree
+        } else {
+            printf("Syntax error: Expected an identifier or initialization after ','\n");
+            exit(1);
+        }
+    }
+
+    return firstVar; // Return the final constructed <var_list>
+}
 
 ASTNode* parseDataType() {
-    // <data_type> ::= "num" | "drift" | "vibe" | "text" | "short" | "long" | "legit"
-    ASTNode* dtNode = newNode("<data_type>");
-
-    if (currentToken.type == NUM || currentToken.type == VIBE || currentToken.type == DRIFT || currentToken.type == TEXT || currentToken.type == SHORT
-        || currentToken.type == LONG || currentToken.type == LEGIT) {
-        dtNode->left = newNode(currentToken.value);
-        nextToken();
+    if (currentToken.type == NUM || currentToken.type == DRIFT || currentToken.type == VIBE || 
+        currentToken.type == TEXT || currentToken.type == SHORT || 
+        currentToken.type == LONG || currentToken.type == LEGIT) {
+        ASTNode* dtNode = newNode("<data_type>");
+        dtNode->left = newNode(currentToken.value); // Store the actual data type
+        nextToken(); // Consume the data type token
         return dtNode;
     }
 
-    printf("SYNTAX ERROR LINE %d: Invalid data type. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
+    printf("Syntax error: Invalid data type\n");
     exit(1);
 }
 
 ASTNode* parseInitialization() {
     ASTNode* initNode = newNode("<initialization>");
-
+    
     if (currentToken.type == IDENTIFIER) {
-        ASTNode* idNode = newNode(currentToken.value);
-        nextToken();
+        ASTNode* idNode = newNode(currentToken.value); // Store the identifier
+        nextToken(); // Consume the identifier
 
         if (currentToken.type == ASSIGNMENT_OPE) {
-            ASTNode* assignNode = newNode(currentToken.value);
-            nextToken();
-            ASTNode* exprNode = parseExpr();
+            ASTNode* assignNode = newNode(currentToken.value); // Store '='
+            nextToken(); // Consume '='
+
+            ASTNode* exprNode = parseExpr(); // Parse the expression
             assignNode->left = idNode;
             assignNode->right = exprNode;
-            idNode = assignNode;
+            initNode->left = assignNode;
+        } else {
+            // If there's no '=', treat it as an uninitialized identifier
+            initNode->left = idNode;
         }
-
-        initNode->left = idNode;
-        return initNode;
-    }
-
-    printf("SYNTAX ERROR LINE %d: Invalid <initialization>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
-    exit(1);
-}
-
-ASTNode* parseVarList() {
-    ASTNode *varListNode = newNode("<var_list>");
-    ASTNode *headNode = NULL;
-    ASTNode *currentNode = NULL;
-
-    while (currentToken.type == IDENTIFIER || currentToken.type == DELIM_COMMA) {
-        if (currentToken.type == IDENTIFIER) {
-            ASTNode *idNode = newNode(currentToken.value);
-            nextToken();
-
-            ASTNode *varNode = idNode; 
-            if (currentToken.type == ASSIGNMENT_OPE) {
-                ASTNode *assignNode = newNode(currentToken.value);
-                nextToken();
-                ASTNode *exprNode = parseExpr(); 
-                assignNode->left = idNode;
-                assignNode->right = exprNode;
-                varNode = assignNode;
-            }
-
-            if (!headNode) {
-                headNode = varNode;
-                currentNode = headNode;
-            } else {
-                ASTNode *commaNode = newNode(",");
-                currentNode->right = commaNode;
-                commaNode->right = varNode;
-                currentNode = varNode;
-            }
-        } else if (currentToken.type == DELIM_COMMA) {
-            nextToken();
-        }
-    }
-
-    if (!headNode) {
-        printf("SYNTAX ERROR LINE %d: Invalid <var_list>", currentToken.sheeshLine, currentToken.value);
+    } else {
+        printf("Syntax error: Expected an identifier in initialization\n");
         exit(1);
     }
 
-    varListNode->left = headNode;
-    return varListNode;
+    return initNode;
 }
 
 

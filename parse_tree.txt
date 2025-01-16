@@ -1007,20 +1007,20 @@
                                 <dec_stmt>(
                                     <data_type>(
                                         num
-                                    <var_list>(
-                                        =(
-                                            a
-                                        <expr>(
-                                            <and_expr>(
-                                                <equality_expr>(
-                                                    <relational_expr>(
-                                                        <addsub_expr>(
-                                                            <multdiv_expr>(
-                                                                <primary>(
-                                                                    <literal>(
-                                                                        <num_val>(
-                                                                            0
-                                                                        )
+                                    )
+                                <initialization>(
+                                    =(
+                                        a
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                <relational_expr>(
+                                                    <addsub_expr>(
+                                                        <multdiv_expr>(
+                                                            <primary>(
+                                                                <literal>(
+                                                                    <num_val>(
+                                                                        0
                                                                     )
                                                                 )
                                                             )
@@ -1029,10 +1029,9 @@
                                                 )
                                             )
                                         )
-                                        )
-                                    ;
                                     )
                                     )
+                                )
                                 )
                             )
                         <expr>(
@@ -1136,20 +1135,20 @@
                                 <dec_stmt>(
                                     <data_type>(
                                         num
-                                    <var_list>(
-                                        =(
-                                            i
-                                        <expr>(
-                                            <and_expr>(
-                                                <equality_expr>(
-                                                    <relational_expr>(
-                                                        <addsub_expr>(
-                                                            <multdiv_expr>(
-                                                                <primary>(
-                                                                    <literal>(
-                                                                        <num_val>(
-                                                                            0
-                                                                        )
+                                    )
+                                <initialization>(
+                                    =(
+                                        i
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                <relational_expr>(
+                                                    <addsub_expr>(
+                                                        <multdiv_expr>(
+                                                            <primary>(
+                                                                <literal>(
+                                                                    <num_val>(
+                                                                        0
                                                                     )
                                                                 )
                                                             )
@@ -1158,10 +1157,9 @@
                                                 )
                                             )
                                         )
-                                        )
-                                    ;
                                     )
                                     )
+                                )
                                 )
                             )
                         <expr>(
@@ -1260,20 +1258,20 @@
             <dec_stmt>(
                 <data_type>(
                     num
-                <var_list>(
-                    =(
-                        i
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                <literal>(
-                                                    <num_val>(
-                                                        0
-                                                    )
+                )
+            <initialization>(
+                =(
+                    i
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <num_val>(
+                                                    0
                                                 )
                                             )
                                         )
@@ -1282,10 +1280,9 @@
                             )
                         )
                     )
-                    )
-                ;
                 )
                 )
+            )
             )
         <stmts>(
             <iterative_stmt>(
@@ -1417,20 +1414,20 @@
             <dec_stmt>(
                 <data_type>(
                     num
-                <var_list>(
-                    =(
-                        i
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                <literal>(
-                                                    <num_val>(
-                                                        0
-                                                    )
+                )
+            <initialization>(
+                =(
+                    i
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <num_val>(
+                                                    0
                                                 )
                                             )
                                         )
@@ -1439,20 +1436,18 @@
                             )
                         )
                     )
-                    )
-                ;
                 )
                 )
+            )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     num
-                <var_list>(
-                    j
-                ;
                 )
-                )
+            <initialization>(
+                j
+            )
             )
         <stmts>(
             <iterative_stmt>(
@@ -1994,20 +1989,20 @@
             <dec_stmt>(
                 <data_type>(
                     num
-                <var_list>(
-                    =(
-                        i
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                <literal>(
-                                                    <num_val>(
-                                                        0
-                                                    )
+                )
+            <initialization>(
+                =(
+                    i
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <num_val>(
+                                                    0
                                                 )
                                             )
                                         )
@@ -2016,10 +2011,9 @@
                             )
                         )
                     )
-                    )
-                ;
                 )
                 )
+            )
             )
         <stmts>(
             <iterative_stmt>(
@@ -2110,20 +2104,20 @@
             <dec_stmt>(
                 <data_type>(
                     num
-                <var_list>(
-                    =(
-                        i
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                <literal>(
-                                                    <num_val>(
-                                                        0
-                                                    )
+                )
+            <initialization>(
+                =(
+                    i
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <num_val>(
+                                                    0
                                                 )
                                             )
                                         )
@@ -2132,29 +2126,28 @@
                             )
                         )
                     )
-                    )
-                ;
                 )
                 )
+            )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     num
-                <var_list>(
-                    =(
-                        j
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                <literal>(
-                                                    <num_val>(
-                                                        0
-                                                    )
+                )
+            <initialization>(
+                =(
+                    j
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <num_val>(
+                                                    0
                                                 )
                                             )
                                         )
@@ -2163,10 +2156,9 @@
                             )
                         )
                     )
-                    )
-                ;
                 )
                 )
+            )
             )
         <stmts>(
             <iterative_stmt>(
@@ -2375,20 +2367,20 @@
                                 <dec_stmt>(
                                     <data_type>(
                                         num
-                                    <var_list>(
-                                        =(
-                                            a
-                                        <expr>(
-                                            <and_expr>(
-                                                <equality_expr>(
-                                                    <relational_expr>(
-                                                        <addsub_expr>(
-                                                            <multdiv_expr>(
-                                                                <primary>(
-                                                                    <literal>(
-                                                                        <num_val>(
-                                                                            1
-                                                                        )
+                                    )
+                                <initialization>(
+                                    =(
+                                        a
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                <relational_expr>(
+                                                    <addsub_expr>(
+                                                        <multdiv_expr>(
+                                                            <primary>(
+                                                                <literal>(
+                                                                    <num_val>(
+                                                                        1
                                                                     )
                                                                 )
                                                             )
@@ -2397,10 +2389,9 @@
                                                 )
                                             )
                                         )
-                                        )
-                                    ;
                                     )
                                     )
+                                )
                                 )
                             )
                         <expr>(
@@ -2657,30 +2648,29 @@
             <dec_stmt>(
                 <data_type>(
                     num
-                <var_list>(
-                    count
-                ;
                 )
-                )
+            <initialization>(
+                count
+            )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     drift
-                <var_list>(
-                    =(
-                        decimal
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                <literal>(
-                                                    <drift_val>(
-                                                        89.70
-                                                    )
+                )
+            <initialization>(
+                =(
+                    decimal
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <drift_val>(
+                                                    89.70
                                                 )
                                             )
                                         )
@@ -2689,76 +2679,69 @@
                             )
                         )
                     )
-                    )
-                ;
                 )
                 )
+            )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     num
-                <var_list>(
-                    =(
-                        count
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                number
-                                            )
+                )
+            <initialization>(
+                =(
+                    count
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            number
                                         )
                                     )
                                 )
                             )
                         )
                     )
-                    )
-                ;
                 )
                 )
+            )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     drift
-                <var_list>(
-                    math_grade(
-                    ,(
-                    science_grade(
-                    ,(
-                    english_grade
-                    )
-                    )
-                    )
-                    )
-                ;
                 )
-                )
+            <initialization>(
+                math_grade
+            <initialization>(
+                science_grade
+            <initialization>(
+                english_grade
+            )
+            )
+            )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     drift
-                <var_list>(
-                    a(
-                    ,(
-                    =(
-                        b
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                <literal>(
-                                                    <num_val>(
-                                                        10
-                                                    )
+                )
+            <initialization>(
+                =(
+                    math_grade
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <drift_val>(
+                                                    97.5
                                                 )
                                             )
                                         )
@@ -2767,12 +2750,53 @@
                             )
                         )
                     )
-                    )
-                    )
-                    )
-                ;
                 )
                 )
+            <initialization>(
+                =(
+                    science_grade
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <drift_val>(
+                                                    95.5
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                )
+            <initialization>(
+                =(
+                    english_grade
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            math_grade
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                )
+            )
+            )
+            )
             )
         )
         )
