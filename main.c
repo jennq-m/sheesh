@@ -484,12 +484,12 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
     temp[tempMarker] = '\0'; // Null-terminate the lexeme
 
     TokenType keyword = checkKeyword(temp);
-    Token token; // Declare the Token structure
+    Token token; 
 
     TokenType reservedWord = checkReservedWord(temp);
     Token rwToken;
 
-    if (keyword) { // If keyword is valid
+    if (keyword) { 
         switch (keyword) {
             case BOUNCE:    token = newToken(temp, BOUNCE, sheeshColumn); break;
             case CAR:       token = newToken(temp, CAR, sheeshColumn); break;
@@ -534,66 +534,66 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %-15s\n", token.sheeshLine, token.value, typeToString(token.type));
     }   else if (reservedWord) {
         TokenType reservedWord = checkReservedWord(temp);
-    Token rwToken; // Declare the Token structure
+        Token rwToken; // Declare the Token structure
 
-    if (reservedWord) { // If keyword is valid
-        switch (reservedWord) {
-            case ALWAYS:    rwToken = newToken(temp, ALWAYS, sheeshColumn); break;
-            case CAP:       rwToken = newToken(temp, CONSTANT_LEGIT, sheeshColumn); break;
-            case CONT:        rwToken = newToken(temp, CONT, sheeshColumn); break;
-            case NOCAP:       rwToken = newToken(temp, CONSTANT_LEGIT, sheeshColumn); break;
-            case TOPTIER:     rwToken = newToken(temp, TOPTIER, sheeshColumn); break;
-            case TOP:       rwToken = newToken(temp, TOPTIER, sheeshColumn); break;
-            default:        rwToken = newToken(temp, IDENTIFIER, sheeshColumn); break;
-        }
-        
-        fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", rwToken.sheeshLine, rwToken.value, typeToString(rwToken.type));
+        if (reservedWord) { // If keyword is valid
+            switch (reservedWord) {
+                case ALWAYS:    rwToken = newToken(temp, ALWAYS, sheeshColumn); break;
+                case CAP:       rwToken = newToken(temp, CONSTANT_LEGIT, sheeshColumn); break;
+                case CONT:        rwToken = newToken(temp, CONT, sheeshColumn); break;
+                case NOCAP:       rwToken = newToken(temp, CONSTANT_LEGIT, sheeshColumn); break;
+                case TOPTIER:     rwToken = newToken(temp, TOPTIER, sheeshColumn); break;
+                case TOP:       rwToken = newToken(temp, TOPTIER, sheeshColumn); break;
+                default:        rwToken = newToken(temp, IDENTIFIER, sheeshColumn); break;
+            }
+            
+            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", rwToken.sheeshLine, rwToken.value, typeToString(rwToken.type));
 
+            }
+                } else if (checkNoiseWord(temp)) {
+                    Token token = newToken(temp, NOISE_WORD, sheeshColumn);
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                    
+                } else if (checkIdentifier(temp)) {
+                    Token token = newToken(temp, IDENTIFIER, sheeshColumn);  
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                    
+                } else {
+                    Token token = newToken(temp, INVALID, sheeshColumn);  
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                    
+                }
+                
+                tempMarker = 0;  
+                continue;
+            }
+
+            if (isdigit(sheeshLine[i]) || sheeshLine[i] == '.') {
+                temp[tempMarker++] = sheeshLine[i];
+            } else if (isspace(sheeshLine[i])) {
+                if (tempMarker > 0) {
+                    temp[tempMarker] = '\0'; 
+                    Token token = sheeshLexer(temp, sheeshColumn); 
+                    fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
+                    tempMarker = 0;  
+                }
+            } else {
+                continue;
+            }
         }
-            } else if (checkNoiseWord(temp)) {
-                Token token = newToken(temp, NOISE_WORD, sheeshColumn);
+
+        if (tempMarker > 0) {
+            temp[tempMarker] = '\0';
+            if (stringLiteral || characterConstant) {
+                Token token = newToken(temp, DELIM_QUOTATION, sheeshColumn);
+                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: DELIM_QUOTATION\n", token.sheeshLine, token.value);
+                
+            } else {
+                Token token = sheeshLexer(temp, sheeshColumn);
                 fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
                 
-            } else if (checkIdentifier(temp)) {
-                Token token = newToken(temp, IDENTIFIER, sheeshColumn);  
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                 
-            } else {
-                Token token = newToken(temp, INVALID, sheeshColumn);  
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                 
             }
-            
-            tempMarker = 0;  
-            continue;
         }
-
-        if (isdigit(sheeshLine[i]) || sheeshLine[i] == '.') {
-            temp[tempMarker++] = sheeshLine[i];
-        } else if (isspace(sheeshLine[i])) {
-            if (tempMarker > 0) {
-                temp[tempMarker] = '\0'; 
-                Token token = sheeshLexer(temp, sheeshColumn); 
-                fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-                tempMarker = 0;  
-            }
-        } else {
-            continue;
-        }
-    }
-
-    if (tempMarker > 0) {
-        temp[tempMarker] = '\0';
-        if (stringLiteral || characterConstant) {
-            Token token = newToken(temp, DELIM_QUOTATION, sheeshColumn);
-            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: DELIM_QUOTATION\n", token.sheeshLine, token.value);
-            
-        } else {
-            Token token = sheeshLexer(temp, sheeshColumn);
-            fprintf(outputSheesh, "Line %d: Lexeme: %-15s Token: %s\n", token.sheeshLine, token.value, typeToString(token.type));
-            
-        }
-    }
 }
 
 typedef struct ASTNode {
@@ -603,6 +603,7 @@ typedef struct ASTNode {
 
 int tokenCount;
 Token currentToken;
+TokenType mapStringToTokenType(const char* tokenStr);
 int currentIndex = 0;
 
 ASTNode* parseProgram();
@@ -640,6 +641,116 @@ ASTNode* parseOutputStmt();
 ASTNode* parseOutput();
 
 
+void initializeParser(const char* symbolTablePath) {
+    FILE* symbolTable = fopen(symbolTablePath, "r");
+    if (!symbolTable) {
+        printf("Error opening symbol table file\n");
+        exit(1);
+    }
+
+    char line[1024];
+    int lineNum;
+    char lexeme[256];
+    char tokenTypeStr[256];
+    
+    while (fgets(line, sizeof(line), symbolTable)) {
+        if (sscanf(line, "Line %d: Lexeme: %s Token: %s", &lineNum, lexeme, tokenTypeStr) == 3) {
+            Token token;
+            token.value = strdup(lexeme);
+            token.type = mapStringToTokenType(tokenTypeStr);
+            token.sheeshLine = lineNum;
+            allTokens[tokenCount++] = token;
+        }
+    }
+
+    fclose(symbolTable);
+    currentIndex = 0;
+    if (tokenCount > 0) {
+        currentToken = allTokens[0];
+    }
+}
+
+TokenType mapStringToTokenType(const char* tokenStr) {
+    if (strcmp(tokenStr, "IDENTIFIER") == 0) return IDENTIFIER;
+    if (strcmp(tokenStr, "KEYWORD") == 0) return KEYWORD;
+    if (strcmp(tokenStr, "RESERVED_WORD") == 0) return RESERVED_WORD;
+    if (strcmp(tokenStr, "NOISE_WORD") == 0) return NOISE_WORD;
+    if (strcmp(tokenStr, "COMMENT") == 0) return COMMENT;
+    if (strcmp(tokenStr, "ARITHMETIC_OPE") == 0) return ARITHMETIC_OPE;
+    if (strcmp(tokenStr, "ASSIGNMENT_OPE") == 0) return ASSIGNMENT_OPE;
+    if (strcmp(tokenStr, "LOGICAL_OPE") == 0) return LOGICAL_OPE;
+    if (strcmp(tokenStr, "UNARY_OPE") == 0) return UNARY_OPE;
+    if (strcmp(tokenStr, "RELATIONAL_OPE") == 0) return RELATIONAL_OPE;
+    if (strcmp(tokenStr, "DELIM_COMMA") == 0) return DELIM_COMMA;
+    if (strcmp(tokenStr, "DELIM_SEMCOL") == 0) return DELIM_SEMCOL;
+    if (strcmp(tokenStr, "DELIM_QUOTATION") == 0) return DELIM_QUOTATION;
+    if (strcmp(tokenStr, "DELIM_O_PAREN") == 0) return DELIM_O_PAREN;
+    if (strcmp(tokenStr, "DELIM_C_PAREN") == 0) return DELIM_C_PAREN;
+    if (strcmp(tokenStr, "DELIM_O_BRACE") == 0) return DELIM_O_BRACE;
+    if (strcmp(tokenStr, "DELIM_C_BRACE") == 0) return DELIM_C_BRACE;
+    if (strcmp(tokenStr, "DELIM_O_BRCKT") == 0) return DELIM_O_BRCKT;
+    if (strcmp(tokenStr, "DELIM_C_BRCKT") == 0) return DELIM_C_BRCKT;
+    if (strcmp(tokenStr, "INVALID") == 0) return INVALID;
+    if (strcmp(tokenStr, "CONSTANT_NUM") == 0) return CONSTANT_NUM;
+    if (strcmp(tokenStr, "CONSTANT_DRIFT") == 0) return CONSTANT_DRIFT;
+    if (strcmp(tokenStr, "CONSTANT_TEXT") == 0) return CONSTANT_TEXT;
+    if (strcmp(tokenStr, "CONSTANT_TXTFS") == 0) return CONSTANT_TXTFS;
+    if (strcmp(tokenStr, "CONSTANT_VIBE") == 0) return CONSTANT_VIBE;
+    if (strcmp(tokenStr, "CONSTANT_LEGIT") == 0) return CONSTANT_LEGIT;
+    if (strcmp(tokenStr, "BOUNCE") == 0) return BOUNCE;
+    if (strcmp(tokenStr, "CAR") == 0) return CAR;
+    if (strcmp(tokenStr, "DO") == 0) return DO;
+    if (strcmp(tokenStr, "DRIFT") == 0) return DRIFT;
+    if (strcmp(tokenStr, "EMPTY") == 0) return EMPTY;
+    if (strcmp(tokenStr, "EX") == 0) return EX;
+    if (strcmp(tokenStr, "FLIP") == 0) return FLIP;
+    if (strcmp(tokenStr, "FROZEN") == 0) return FROZEN;
+    if (strcmp(tokenStr, "GROUP") == 0) return GROUP;
+    if (strcmp(tokenStr, "IF") == 0) return IF;
+    if (strcmp(tokenStr, "INPUT") == 0) return INPUT;
+    if (strcmp(tokenStr, "JUMP") == 0) return JUMP;
+    if (strcmp(tokenStr, "LEGIT") == 0) return LEGIT;
+    if (strcmp(tokenStr, "LOCKED") == 0) return LOCKED;
+    if (strcmp(tokenStr, "LOCKIN") == 0) return LOCKIN;
+    if (strcmp(tokenStr, "LONG") == 0) return LONG;
+    if (strcmp(tokenStr, "MEANWHILE") == 0) return MEANWHILE;
+    if (strcmp(tokenStr, "NICKNAME") == 0) return NICKNAME;
+    if (strcmp(tokenStr, "NUM") == 0) return NUM;
+    if (strcmp(tokenStr, "OPEN") == 0) return OPEN;
+    if (strcmp(tokenStr, "OTHER") == 0) return OTHER;
+    if (strcmp(tokenStr, "OUT") == 0) return OUT;
+    if (strcmp(tokenStr, "OUTSIDE") == 0) return OUTSIDE;
+    if (strcmp(tokenStr, "PL") == 0) return PL;
+    if (strcmp(tokenStr, "REP") == 0) return REP;
+    if (strcmp(tokenStr, "SCENARIO") == 0) return SCENARIO;
+    if (strcmp(tokenStr, "SHORT") == 0) return SHORT;
+    if (strcmp(tokenStr, "STANDARD") == 0) return STANDARD;
+    if (strcmp(tokenStr, "STOP") == 0) return STOP;
+    if (strcmp(tokenStr, "TEAM") == 0) return TEAM;
+    if (strcmp(tokenStr, "TEXT") == 0) return TEXT;
+    if (strcmp(tokenStr, "VIBE") == 0) return VIBE;
+    if (strcmp(tokenStr, "ALWAYS") == 0) return ALWAYS;
+    if (strcmp(tokenStr, "CAP") == 0) return CAP;
+    if (strcmp(tokenStr, "CONT") == 0) return CONT;
+    if (strcmp(tokenStr, "NOCAP") == 0) return NOCAP;
+    if (strcmp(tokenStr, "PLAYLIST") == 0) return PLAYLIST;
+    if (strcmp(tokenStr, "REPEAT") == 0) return REPEAT;
+    if (strcmp(tokenStr, "TOPTIER") == 0) return TOPTIER;
+    if (strcmp(tokenStr, "TOP") == 0) return TOP;
+    if (strcmp(tokenStr, "EXTRA") == 0) return EXTRA;
+    if (strcmp(tokenStr, "OTHERWISE") == 0) return OTHERWISE;
+    return INVALID;
+}
+
+
+ASTNode* newNode(const char *value) {
+    ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+    node->value = strdup(value);
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
 void nextToken() {
     while (currentIndex < tokenCount) {
         currentToken = allTokens[currentIndex++];
@@ -663,14 +774,6 @@ void previousToken() {
     } else {
         printf("Already at the start of the token stream\n");
     }
-}
-
-ASTNode* newNode(const char *value) {
-    ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
-    node->value = strdup(value);
-    node->left = NULL;
-    node->right = NULL;
-    return node;
 }
 
 void printParseTree(ASTNode *node, int indent, FILE *file) {
@@ -1903,10 +2006,11 @@ ASTNode* parseOutput() {
 }
 
 void parse(FILE* file) {
+    initializeParser("symbol_table.txt");
     nextToken();
-    ASTNode *ast = parseProgram();
+    ASTNode* root = parseProgram();
     printf("See parse_tree.txt for parse tree.");
     
-    printParseTree(ast, 0, file);
+    printParseTree(root, 0, file);
     printf("\n");
 }
