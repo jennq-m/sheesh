@@ -812,9 +812,11 @@ ASTNode* parseStmts() {
 }
 
 ASTNode* parseExprStmt() {
-    ASTNode *node = parseExpr();
+    ASTNode *node = newNode("<expr_stmt>");
+    node->left = parseExpr();
 
     if (currentToken.type == DELIM_SEMCOL) {
+        node->right = newNode(currentToken.value);
         nextToken();
     } else {
         printf("SYNTAX ERROR LINE %d: Expected ';'. Encountered token %s instead.\n", currentToken.sheeshLine, currentToken.value);
@@ -824,9 +826,9 @@ ASTNode* parseExprStmt() {
 }
 
 ASTNode* parseExpr() {
-    ASTNode *node = NULL;
+    ASTNode* node = newNode("<expr>");
+    node->left = parseAndExpr();
 
-    node = parseAndExpr();
     if (!node) {
         printf("SYNTAX ERROR LINE %d: Invalid expression. Expected 'and' expression. Encountered token %s instead.\n", currentToken.sheeshLine, currentToken.value);
         exit(1);
@@ -1386,6 +1388,14 @@ ASTNode* parseAssignStmt() {
 
             operatorNode->right = parseExpr();
             node->left = operatorNode;
+
+            if (currentToken.type == DELIM_SEMCOL) {
+                ASTNode* semicolonNode = newNode(currentToken.value);
+                node->right = semicolonNode;
+                nextToken();
+                return node;
+            }
+            
         } else {
         printf("SYNTAX ERROR LINE %d: Expected assignment operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
@@ -1703,18 +1713,18 @@ ASTNode* parseInputStmt() {
         nextToken();
 
         if (currentToken.type == DELIM_O_PAREN) {
-            ASTNode* openParen = newNode("(");
+            ASTNode* openParen = newNode(currentToken.value);
             inputNode->right = openParen;
             nextToken();       
             openParen->left = parseInput();
 
             if (currentToken.type == DELIM_C_PAREN) {
-                ASTNode* closeParen = newNode(")");
+                ASTNode* closeParen = newNode(currentToken.value);
                 openParen->right = closeParen;
                 nextToken();
                 
                 if (currentToken.type == DELIM_SEMCOL) {
-                    ASTNode* semicolonNode = newNode(";");
+                    ASTNode* semicolonNode = newNode(currentToken.value);
                     closeParen->right = semicolonNode;
                     nextToken();
 
