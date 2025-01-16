@@ -1282,6 +1282,8 @@ ASTNode* parseDecStmt() {
     dtNode->right = varListNode;
 
     if (currentToken.type == DELIM_SEMCOL) {
+        ASTNode* semicolonNode = newNode(currentToken.value);
+        varListNode->right = semicolonNode;
         nextToken();
     } else {
         printf("SYNTAX ERROR LINE %d: Expected ';' in <dec)stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
@@ -1531,58 +1533,84 @@ ASTNode* parseRepLoop() {
     ASTNode* node = newNode("<rep_loop>");
 
     if (currentToken.type == REP) {
+        // Add "rep" keyword as the left child
         ASTNode* loopNode = newNode(currentToken.value);
         node->left = loopNode;
         nextToken();
 
         if (currentToken.type == DELIM_O_PAREN) {
+            // Add "(" as the right child of "<rep_loop>"
+            ASTNode* parenNode = newNode(currentToken.value);
+            loopNode->left = parenNode;
             nextToken();
-            
+
+            // Parse loop initialization
             ASTNode* initialNode = parseLoopInitial();
-            node->right = initialNode;
-            ASTNode *exprNode = parseExpr();
-            initialNode->right = exprNode;
+            parenNode->left = initialNode;
 
-                if (currentToken.type == DELIM_SEMCOL) {
+            // Parse condition expression
+            ASTNode* exprNode = parseExpr();
+            parenNode->right = exprNode;
+
+            if (currentToken.type == DELIM_SEMCOL) {
+                // Add ";" to separate initialization and update statement
+                ASTNode* semicolonNode = newNode(currentToken.value);
+                exprNode->right = semicolonNode;
+                nextToken();
+
+                // Parse update statement
+                ASTNode* updNode = parseUpdStmt();
+                semicolonNode->right = updNode;
+
+                if (currentToken.type == DELIM_C_PAREN) {
+                    // Add ")" to close the loop header
+                    ASTNode* closeParenNode = newNode(currentToken.value);
+                    updNode->right = closeParenNode;
                     nextToken();
-                    ASTNode *updNode = parseUpdStmt();
-                    exprNode->right = updNode;
 
-                    if (currentToken.type == DELIM_C_PAREN) {
+                    if (currentToken.type == DELIM_O_BRACE) {
+                        // Add "{" for the loop body
+                        ASTNode* openBraceNode = newNode(currentToken.value);
+                        closeParenNode->right = openBraceNode;
                         nextToken();
-                        if (currentToken.type == DELIM_O_BRACE) {
+
+                        // Parse loop body
+                        ASTNode* loopBody = parseStmts();
+                        openBraceNode->right = loopBody;
+
+                        if (currentToken.type == DELIM_C_BRACE) {
+                            // Add "}" to close the loop body
+                            ASTNode* closeBraceNode = newNode(currentToken.value);
+                            loopBody->right = closeBraceNode;
                             nextToken();
-                            ASTNode* loopBody = parseStmts();
-                            updNode->right = loopBody;
 
-                            if (currentToken.type == DELIM_C_BRACE) {
-                                nextToken();
-
-                                return node;
-                            } else {
-                                printf("SYNTAX ERROR LINE %d: Expected '}' for loop body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-                                exit(1);
-                            }
+                            return node;
                         } else {
-                            printf("SYNTAX ERROR LINE %d: Expected '{' for loop <body>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                            printf("SYNTAX ERROR LINE %d: Expected '}' for loop body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                             exit(1);
                         }
                     } else {
-                        printf("SYNTAX ERROR LINE %d: Expected ')' after <upd_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                        printf("SYNTAX ERROR LINE %d: Expected '{' for loop body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                         exit(1);
                     }
                 } else {
-                    printf("SYNTAX ERROR LINE %d: Expected ';' after <loop_initial>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                    printf("SYNTAX ERROR LINE %d: Expected ')' after <upd_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                     exit(1);
                 }
+            } else {
+                printf("SYNTAX ERROR LINE %d: Expected ';' after <loop_initial>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                exit(1);
+            }
         } else {
-            printf("SYNTAX ERROR LINE %d: Expected '(' after rep. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            printf("SYNTAX ERROR LINE %d: Expected '(' after 'rep'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
     }
 
-    return NULL;
+    printf("SYNTAX ERROR LINE %d: Invalid <rep_loop>\n", currentToken.sheeshLine);
+    exit(1);
 }
+
 
 ASTNode* parseLoopInitial() {
     ASTNode* node = newNode("<loop_initial>");

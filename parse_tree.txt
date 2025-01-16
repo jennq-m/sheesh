@@ -775,7 +775,61 @@
                                                                                                             )
                                                                                                         )
                                                                                                         <stmts>(
-                                                                                                            <if_other_stmt>(
+                                                                                                            <condi_stmt>(
+                                                                                                                <if_stmt>(
+                                                                                                                    if
+                                                                                                                    ((
+                                                                                                                        <expr>(
+                                                                                                                            <and_expr>(
+                                                                                                                                ==(
+                                                                                                                                    <equality_expr>(
+                                                                                                                                        <relational_expr>(
+                                                                                                                                            <addsub_expr>(
+                                                                                                                                                <multdiv_expr>(
+                                                                                                                                                    <primary>(
+                                                                                                                                                        win
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                            )
+                                                                                                                                        )
+                                                                                                                                    )
+                                                                                                                                    <relational_expr>(
+                                                                                                                                        <addsub_expr>(
+                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                <primary>(
+                                                                                                                                                    <literal>(
+                                                                                                                                                        nocap
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                            )
+                                                                                                                                        )
+                                                                                                                                    )
+                                                                                                                                )
+                                                                                                                            )
+                                                                                                                        )
+                                                                                                                        )(
+                                                                                                                            {(
+                                                                                                                                <body>(
+                                                                                                                                    <stmts>(
+                                                                                                                                        <output_stmt>(
+                                                                                                                                            out(
+                                                                                                                                                ((
+                                                                                                                                                    <output>(
+                                                                                                                                                        "You won!"
+                                                                                                                                                    )
+                                                                                                                                                    )(
+                                                                                                                                                        ;
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                            )
+                                                                                                                                        )
+                                                                                                                                    )
+                                                                                                                                )
+                                                                                                                                }
+                                                                                                                            )
+                                                                                                                        )
+                                                                                                                    )
+                                                                                                                )
                                                                                                                 <body>(
                                                                                                                     <stmts>(
                                                                                                                         <output_stmt>(
@@ -794,7 +848,121 @@
                                                                                                                 )
                                                                                                             )
                                                                                                             <stmts>(
-                                                                                                                <if_other_stmt>(
+                                                                                                                <condi_stmt>(
+                                                                                                                    <if_stmt>(
+                                                                                                                        if
+                                                                                                                        ((
+                                                                                                                            <expr>(
+                                                                                                                                <and_expr>(
+                                                                                                                                    ==(
+                                                                                                                                        <equality_expr>(
+                                                                                                                                            <relational_expr>(
+                                                                                                                                                <addsub_expr>(
+                                                                                                                                                    <multdiv_expr>(
+                                                                                                                                                        <primary>(
+                                                                                                                                                            win
+                                                                                                                                                        )
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                            )
+                                                                                                                                        )
+                                                                                                                                        <relational_expr>(
+                                                                                                                                            <addsub_expr>(
+                                                                                                                                                <multdiv_expr>(
+                                                                                                                                                    <primary>(
+                                                                                                                                                        <literal>(
+                                                                                                                                                            nocap
+                                                                                                                                                        )
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                            )
+                                                                                                                                        )
+                                                                                                                                    )
+                                                                                                                                )
+                                                                                                                            )
+                                                                                                                            )(
+                                                                                                                                {(
+                                                                                                                                    <body>(
+                                                                                                                                        <stmts>(
+                                                                                                                                            <condi_stmt>(
+                                                                                                                                                <if_stmt>(
+                                                                                                                                                    if
+                                                                                                                                                    ((
+                                                                                                                                                        <expr>(
+                                                                                                                                                            <and_expr>(
+                                                                                                                                                                <equality_expr>(
+                                                                                                                                                                    >(
+                                                                                                                                                                        <relational_expr>(
+                                                                                                                                                                            <addsub_expr>(
+                                                                                                                                                                                <multdiv_expr>(
+                                                                                                                                                                                    <primary>(
+                                                                                                                                                                                        num_win
+                                                                                                                                                                                    )
+                                                                                                                                                                                )
+                                                                                                                                                                            )
+                                                                                                                                                                        )
+                                                                                                                                                                        <addsub_expr>(
+                                                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                                                <primary>(
+                                                                                                                                                                                    <literal>(
+                                                                                                                                                                                        <num_val>(
+                                                                                                                                                                                            10
+                                                                                                                                                                                        )
+                                                                                                                                                                                    )
+                                                                                                                                                                                )
+                                                                                                                                                                            )
+                                                                                                                                                                        )
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                            )
+                                                                                                                                                        )
+                                                                                                                                                        )(
+                                                                                                                                                            {(
+                                                                                                                                                                <body>(
+                                                                                                                                                                    <stmts>(
+                                                                                                                                                                        <output_stmt>(
+                                                                                                                                                                            out(
+                                                                                                                                                                                ((
+                                                                                                                                                                                    <output>(
+                                                                                                                                                                                        "You've won for more than 10 times!"
+                                                                                                                                                                                    )
+                                                                                                                                                                                    )(
+                                                                                                                                                                                        ;
+                                                                                                                                                                                    )
+                                                                                                                                                                                )
+                                                                                                                                                                            )
+                                                                                                                                                                        )
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                                }
+                                                                                                                                                            )
+                                                                                                                                                        )
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                                <body>(
+                                                                                                                                                    <stmts>(
+                                                                                                                                                        <output_stmt>(
+                                                                                                                                                            out(
+                                                                                                                                                                ((
+                                                                                                                                                                    <output>(
+                                                                                                                                                                        "You have only won for 10 times!"
+                                                                                                                                                                    )
+                                                                                                                                                                    )(
+                                                                                                                                                                        ;
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                            )
+                                                                                                                                                        )
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                            )
+                                                                                                                                        )
+                                                                                                                                    )
+                                                                                                                                    }
+                                                                                                                                )
+                                                                                                                            )
+                                                                                                                        )
+                                                                                                                    )
                                                                                                                     <body>(
                                                                                                                         <stmts>(
                                                                                                                             <output_stmt>(
@@ -815,100 +983,25 @@
                                                                                                                 <stmts>(
                                                                                                                     <iterative_stmt>(
                                                                                                                         <rep_loop>(
-                                                                                                                            rep
-                                                                                                                            <loop_initial>(
-                                                                                                                                <dec_stmt>(
-                                                                                                                                    <data_type>(
-                                                                                                                                        num
-                                                                                                                                        <var_list>(
-                                                                                                                                            =(
-                                                                                                                                                a
-                                                                                                                                                <expr>(
-                                                                                                                                                    <and_expr>(
-                                                                                                                                                        <equality_expr>(
-                                                                                                                                                            <relational_expr>(
-                                                                                                                                                                <addsub_expr>(
-                                                                                                                                                                    <multdiv_expr>(
-                                                                                                                                                                        <primary>(
-                                                                                                                                                                            <literal>(
-                                                                                                                                                                                <num_val>(
-                                                                                                                                                                                    0
-                                                                                                                                                                                )
-                                                                                                                                                                            )
-                                                                                                                                                                        )
-                                                                                                                                                                    )
-                                                                                                                                                                )
-                                                                                                                                                            )
-                                                                                                                                                        )
-                                                                                                                                                    )
-                                                                                                                                                )
-                                                                                                                                            )
-                                                                                                                                        )
-                                                                                                                                    )
-                                                                                                                                )
-                                                                                                                                <expr>(
-                                                                                                                                    <and_expr>(
-                                                                                                                                        <equality_expr>(
-                                                                                                                                            <(
-                                                                                                                                                <relational_expr>(
-                                                                                                                                                    <addsub_expr>(
-                                                                                                                                                        <multdiv_expr>(
-                                                                                                                                                            <primary>(
-                                                                                                                                                                a
-                                                                                                                                                            )
-                                                                                                                                                        )
-                                                                                                                                                    )
-                                                                                                                                                )
-                                                                                                                                                <addsub_expr>(
-                                                                                                                                                    <multdiv_expr>(
-                                                                                                                                                        <primary>(
-                                                                                                                                                            <literal>(
-                                                                                                                                                                <num_val>(
-                                                                                                                                                                    5
-                                                                                                                                                                )
-                                                                                                                                                            )
-                                                                                                                                                        )
-                                                                                                                                                    )
-                                                                                                                                                )
-                                                                                                                                            )
-                                                                                                                                        )
-                                                                                                                                    )
-                                                                                                                                    <upd_stmt>(
-                                                                                                                                        <expr>(
-                                                                                                                                            <and_expr>(
-                                                                                                                                                <equality_expr>(
-                                                                                                                                                    <relational_expr>(
-                                                                                                                                                        <addsub_expr>(
-                                                                                                                                                            <multdiv_expr>(
-                                                                                                                                                                <primary>(
-                                                                                                                                                                    a(
-                                                                                                                                                                        <unary_val>(
-                                                                                                                                                                            a
-                                                                                                                                                                            ++
-                                                                                                                                                                        )
-                                                                                                                                                                    )
-                                                                                                                                                                )
-                                                                                                                                                            )
-                                                                                                                                                        )
-                                                                                                                                                    )
-                                                                                                                                                )
-                                                                                                                                            )
-                                                                                                                                        )
-                                                                                                                                        <stmts>(
-                                                                                                                                            <output_stmt>(
-                                                                                                                                                out(
-                                                                                                                                                    ((
-                                                                                                                                                        <output>(
-                                                                                                                                                            "%d"
-                                                                                                                                                            ,(
-                                                                                                                                                                <expr>(
-                                                                                                                                                                    <and_expr>(
-                                                                                                                                                                        <equality_expr>(
-                                                                                                                                                                            <relational_expr>(
-                                                                                                                                                                                <addsub_expr>(
-                                                                                                                                                                                    <multdiv_expr>(
-                                                                                                                                                                                        <primary>(
-                                                                                                                                                                                            a
+                                                                                                                            rep(
+                                                                                                                                ((
+                                                                                                                                    <loop_initial>(
+                                                                                                                                        <dec_stmt>(
+                                                                                                                                            <data_type>(
+                                                                                                                                                num
+                                                                                                                                                <var_list>(
+                                                                                                                                                    =(
+                                                                                                                                                        a
+                                                                                                                                                        <expr>(
+                                                                                                                                                            <and_expr>(
+                                                                                                                                                                <equality_expr>(
+                                                                                                                                                                    <relational_expr>(
+                                                                                                                                                                        <addsub_expr>(
+                                                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                                                <primary>(
+                                                                                                                                                                                    <literal>(
+                                                                                                                                                                                        <num_val>(
+                                                                                                                                                                                            0
                                                                                                                                                                                         )
                                                                                                                                                                                     )
                                                                                                                                                                                 )
@@ -918,48 +1011,8 @@
                                                                                                                                                                 )
                                                                                                                                                             )
                                                                                                                                                         )
-                                                                                                                                                        )(
-                                                                                                                                                            ;
-                                                                                                                                                        )
                                                                                                                                                     )
-                                                                                                                                                )
-                                                                                                                                            )
-                                                                                                                                        )
-                                                                                                                                    )
-                                                                                                                                )
-                                                                                                                            )
-                                                                                                                        )
-                                                                                                                    )
-                                                                                                                    <stmts>(
-                                                                                                                        <iterative_stmt>(
-                                                                                                                            <rep_loop>(
-                                                                                                                                rep
-                                                                                                                                <loop_initial>(
-                                                                                                                                    <dec_stmt>(
-                                                                                                                                        <data_type>(
-                                                                                                                                            num
-                                                                                                                                            <var_list>(
-                                                                                                                                                =(
-                                                                                                                                                    i
-                                                                                                                                                    <expr>(
-                                                                                                                                                        <and_expr>(
-                                                                                                                                                            <equality_expr>(
-                                                                                                                                                                <relational_expr>(
-                                                                                                                                                                    <addsub_expr>(
-                                                                                                                                                                        <multdiv_expr>(
-                                                                                                                                                                            <primary>(
-                                                                                                                                                                                <literal>(
-                                                                                                                                                                                    <num_val>(
-                                                                                                                                                                                        0
-                                                                                                                                                                                    )
-                                                                                                                                                                                )
-                                                                                                                                                                            )
-                                                                                                                                                                        )
-                                                                                                                                                                    )
-                                                                                                                                                                )
-                                                                                                                                                            )
-                                                                                                                                                        )
-                                                                                                                                                    )
+                                                                                                                                                    ;
                                                                                                                                                 )
                                                                                                                                             )
                                                                                                                                         )
@@ -972,7 +1025,7 @@
                                                                                                                                                         <addsub_expr>(
                                                                                                                                                             <multdiv_expr>(
                                                                                                                                                                 <primary>(
-                                                                                                                                                                    i
+                                                                                                                                                                    a
                                                                                                                                                                 )
                                                                                                                                                             )
                                                                                                                                                         )
@@ -991,19 +1044,127 @@
                                                                                                                                                 )
                                                                                                                                             )
                                                                                                                                         )
-                                                                                                                                        <upd_stmt>(
-                                                                                                                                            <expr>(
-                                                                                                                                                <and_expr>(
-                                                                                                                                                    <equality_expr>(
+                                                                                                                                        ;(
+                                                                                                                                            <upd_stmt>(
+                                                                                                                                                <expr>(
+                                                                                                                                                    <and_expr>(
+                                                                                                                                                        <equality_expr>(
+                                                                                                                                                            <relational_expr>(
+                                                                                                                                                                <addsub_expr>(
+                                                                                                                                                                    <multdiv_expr>(
+                                                                                                                                                                        <primary>(
+                                                                                                                                                                            a(
+                                                                                                                                                                                <unary_val>(
+                                                                                                                                                                                    a
+                                                                                                                                                                                    ++
+                                                                                                                                                                                )
+                                                                                                                                                                            )
+                                                                                                                                                                        )
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                            )
+                                                                                                                                                        )
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                                )(
+                                                                                                                                                    {(
+                                                                                                                                                        <stmts>(
+                                                                                                                                                            <output_stmt>(
+                                                                                                                                                                out(
+                                                                                                                                                                    ((
+                                                                                                                                                                        <output>(
+                                                                                                                                                                            "%d"
+                                                                                                                                                                            ,(
+                                                                                                                                                                                <expr>(
+                                                                                                                                                                                    <and_expr>(
+                                                                                                                                                                                        <equality_expr>(
+                                                                                                                                                                                            <relational_expr>(
+                                                                                                                                                                                                <addsub_expr>(
+                                                                                                                                                                                                    <multdiv_expr>(
+                                                                                                                                                                                                        <primary>(
+                                                                                                                                                                                                            a
+                                                                                                                                                                                                        )
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                )
+                                                                                                                                                                                            )
+                                                                                                                                                                                        )
+                                                                                                                                                                                    )
+                                                                                                                                                                                )
+                                                                                                                                                                            )
+                                                                                                                                                                        )
+                                                                                                                                                                        )(
+                                                                                                                                                                            ;
+                                                                                                                                                                        )
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                            )
+                                                                                                                                                            }
+                                                                                                                                                        )
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                            )
+                                                                                                                                        )
+                                                                                                                                    )
+                                                                                                                                )
+                                                                                                                            )
+                                                                                                                        )
+                                                                                                                    )
+                                                                                                                    <stmts>(
+                                                                                                                        <iterative_stmt>(
+                                                                                                                            <rep_loop>(
+                                                                                                                                rep(
+                                                                                                                                    ((
+                                                                                                                                        <loop_initial>(
+                                                                                                                                            <dec_stmt>(
+                                                                                                                                                <data_type>(
+                                                                                                                                                    num
+                                                                                                                                                    <var_list>(
+                                                                                                                                                        =(
+                                                                                                                                                            i
+                                                                                                                                                            <expr>(
+                                                                                                                                                                <and_expr>(
+                                                                                                                                                                    <equality_expr>(
+                                                                                                                                                                        <relational_expr>(
+                                                                                                                                                                            <addsub_expr>(
+                                                                                                                                                                                <multdiv_expr>(
+                                                                                                                                                                                    <primary>(
+                                                                                                                                                                                        <literal>(
+                                                                                                                                                                                            <num_val>(
+                                                                                                                                                                                                0
+                                                                                                                                                                                            )
+                                                                                                                                                                                        )
+                                                                                                                                                                                    )
+                                                                                                                                                                                )
+                                                                                                                                                                            )
+                                                                                                                                                                        )
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                            )
+                                                                                                                                                        )
+                                                                                                                                                        ;
+                                                                                                                                                    )
+                                                                                                                                                )
+                                                                                                                                            )
+                                                                                                                                        )
+                                                                                                                                        <expr>(
+                                                                                                                                            <and_expr>(
+                                                                                                                                                <equality_expr>(
+                                                                                                                                                    <(
                                                                                                                                                         <relational_expr>(
                                                                                                                                                             <addsub_expr>(
                                                                                                                                                                 <multdiv_expr>(
                                                                                                                                                                     <primary>(
-                                                                                                                                                                        i(
-                                                                                                                                                                            <unary_val>(
-                                                                                                                                                                                i
-                                                                                                                                                                                ++
-                                                                                                                                                                            )
+                                                                                                                                                                        i
+                                                                                                                                                                    )
+                                                                                                                                                                )
+                                                                                                                                                            )
+                                                                                                                                                        )
+                                                                                                                                                        <addsub_expr>(
+                                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                                <primary>(
+                                                                                                                                                                    <literal>(
+                                                                                                                                                                        <num_val>(
+                                                                                                                                                                            5
                                                                                                                                                                         )
                                                                                                                                                                     )
                                                                                                                                                                 )
@@ -1012,58 +1173,45 @@
                                                                                                                                                     )
                                                                                                                                                 )
                                                                                                                                             )
-                                                                                                                                            <stmts>(
-                                                                                                                                                <output_stmt>(
-                                                                                                                                                    out(
-                                                                                                                                                        ((
-                                                                                                                                                            <output>(
-                                                                                                                                                                "%d"
-                                                                                                                                                                ,(
-                                                                                                                                                                    <expr>(
-                                                                                                                                                                        <and_expr>(
-                                                                                                                                                                            <equality_expr>(
-                                                                                                                                                                                <relational_expr>(
-                                                                                                                                                                                    <addsub_expr>(
-                                                                                                                                                                                        <multdiv_expr>(
-                                                                                                                                                                                            <primary>(
-                                                                                                                                                                                                i
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
+                                                                                                                                            ;(
+                                                                                                                                                <upd_stmt>(
+                                                                                                                                                    <expr>(
+                                                                                                                                                        <and_expr>(
+                                                                                                                                                            <equality_expr>(
+                                                                                                                                                                <relational_expr>(
+                                                                                                                                                                    <addsub_expr>(
+                                                                                                                                                                        <multdiv_expr>(
+                                                                                                                                                                            <primary>(
+                                                                                                                                                                                i(
+                                                                                                                                                                                    <unary_val>(
+                                                                                                                                                                                        i
+                                                                                                                                                                                        ++
                                                                                                                                                                                     )
                                                                                                                                                                                 )
                                                                                                                                                                             )
                                                                                                                                                                         )
                                                                                                                                                                     )
                                                                                                                                                                 )
-                                                                                                                                                            )
-                                                                                                                                                            )(
-                                                                                                                                                                ;
                                                                                                                                                             )
                                                                                                                                                         )
                                                                                                                                                     )
-                                                                                                                                                )
-                                                                                                                                                <stmts>(
-                                                                                                                                                    <iterative_stmt>(
-                                                                                                                                                        <rep_loop>(
-                                                                                                                                                            rep
-                                                                                                                                                            <loop_initial>(
-                                                                                                                                                                <dec_stmt>(
-                                                                                                                                                                    <data_type>(
-                                                                                                                                                                        num
-                                                                                                                                                                        <var_list>(
-                                                                                                                                                                            =(
-                                                                                                                                                                                j
-                                                                                                                                                                                <expr>(
-                                                                                                                                                                                    <and_expr>(
-                                                                                                                                                                                        <equality_expr>(
-                                                                                                                                                                                            <relational_expr>(
-                                                                                                                                                                                                <addsub_expr>(
-                                                                                                                                                                                                    <multdiv_expr>(
-                                                                                                                                                                                                        <primary>(
-                                                                                                                                                                                                            <literal>(
-                                                                                                                                                                                                                <num_val>(
-                                                                                                                                                                                                                    0
-                                                                                                                                                                                                                )
+                                                                                                                                                    )(
+                                                                                                                                                        {(
+                                                                                                                                                            <stmts>(
+                                                                                                                                                                <output_stmt>(
+                                                                                                                                                                    out(
+                                                                                                                                                                        ((
+                                                                                                                                                                            <output>(
+                                                                                                                                                                                "%d"
+                                                                                                                                                                                ,(
+                                                                                                                                                                                    <expr>(
+                                                                                                                                                                                        <and_expr>(
+                                                                                                                                                                                            <equality_expr>(
+                                                                                                                                                                                                <relational_expr>(
+                                                                                                                                                                                                    <addsub_expr>(
+                                                                                                                                                                                                        <multdiv_expr>(
+                                                                                                                                                                                                            <primary>(
+                                                                                                                                                                                                                i
                                                                                                                                                                                                             )
                                                                                                                                                                                                         )
                                                                                                                                                                                                     )
@@ -1073,90 +1221,13 @@
                                                                                                                                                                                     )
                                                                                                                                                                                 )
                                                                                                                                                                             )
-                                                                                                                                                                        )
-                                                                                                                                                                    )
-                                                                                                                                                                )
-                                                                                                                                                                <expr>(
-                                                                                                                                                                    <and_expr>(
-                                                                                                                                                                        <equality_expr>(
-                                                                                                                                                                            <(
-                                                                                                                                                                                <relational_expr>(
-                                                                                                                                                                                    <addsub_expr>(
-                                                                                                                                                                                        <multdiv_expr>(
-                                                                                                                                                                                            <primary>(
-                                                                                                                                                                                                j
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
-                                                                                                                                                                                    )
-                                                                                                                                                                                )
-                                                                                                                                                                                <addsub_expr>(
-                                                                                                                                                                                    <multdiv_expr>(
-                                                                                                                                                                                        <primary>(
-                                                                                                                                                                                            <literal>(
-                                                                                                                                                                                                <num_val>(
-                                                                                                                                                                                                    5
-                                                                                                                                                                                                )
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
-                                                                                                                                                                                    )
-                                                                                                                                                                                )
-                                                                                                                                                                            )
-                                                                                                                                                                        )
-                                                                                                                                                                    )
-                                                                                                                                                                    <upd_stmt>(
-                                                                                                                                                                        <expr>(
-                                                                                                                                                                            <and_expr>(
-                                                                                                                                                                                <equality_expr>(
-                                                                                                                                                                                    <relational_expr>(
-                                                                                                                                                                                        <addsub_expr>(
-                                                                                                                                                                                            <multdiv_expr>(
-                                                                                                                                                                                                <primary>(
-                                                                                                                                                                                                    j(
-                                                                                                                                                                                                        <unary_val>(
-                                                                                                                                                                                                            j
-                                                                                                                                                                                                            ++
-                                                                                                                                                                                                        )
-                                                                                                                                                                                                    )
-                                                                                                                                                                                                )
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
-                                                                                                                                                                                    )
-                                                                                                                                                                                )
-                                                                                                                                                                            )
-                                                                                                                                                                        )
-                                                                                                                                                                        <stmts>(
-                                                                                                                                                                            <output_stmt>(
-                                                                                                                                                                                out(
-                                                                                                                                                                                    ((
-                                                                                                                                                                                        <output>(
-                                                                                                                                                                                            "%d"
-                                                                                                                                                                                            ,(
-                                                                                                                                                                                                <expr>(
-                                                                                                                                                                                                    <and_expr>(
-                                                                                                                                                                                                        <equality_expr>(
-                                                                                                                                                                                                            <relational_expr>(
-                                                                                                                                                                                                                <addsub_expr>(
-                                                                                                                                                                                                                    <multdiv_expr>(
-                                                                                                                                                                                                                        <primary>(
-                                                                                                                                                                                                                            j
-                                                                                                                                                                                                                        )
-                                                                                                                                                                                                                    )
-                                                                                                                                                                                                                )
-                                                                                                                                                                                                            )
-                                                                                                                                                                                                        )
-                                                                                                                                                                                                    )
-                                                                                                                                                                                                )
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
-                                                                                                                                                                                        )(
-                                                                                                                                                                                            ;
-                                                                                                                                                                                        )
-                                                                                                                                                                                    )
-                                                                                                                                                                                )
+                                                                                                                                                                            )(
+                                                                                                                                                                                ;
                                                                                                                                                                             )
                                                                                                                                                                         )
                                                                                                                                                                     )
                                                                                                                                                                 )
+                                                                                                                                                                }
                                                                                                                                                             )
                                                                                                                                                         )
                                                                                                                                                     )
@@ -1194,6 +1265,7 @@
                                                                                                                                                 )
                                                                                                                                             )
                                                                                                                                         )
+                                                                                                                                        ;
                                                                                                                                     )
                                                                                                                                 )
                                                                                                                             )
@@ -1298,6 +1370,7 @@
                                                                                                                                                         )
                                                                                                                                                     )
                                                                                                                                                 )
+                                                                                                                                                ;
                                                                                                                                             )
                                                                                                                                         )
                                                                                                                                     )
@@ -1307,6 +1380,7 @@
                                                                                                                                                 num
                                                                                                                                                 <var_list>(
                                                                                                                                                     j
+                                                                                                                                                    ;
                                                                                                                                                 )
                                                                                                                                             )
                                                                                                                                         )
@@ -1547,6 +1621,7 @@
                                                                                                                                                                     )
                                                                                                                                                                 )
                                                                                                                                                             )
+                                                                                                                                                            ;
                                                                                                                                                         )
                                                                                                                                                     )
                                                                                                                                                 )
@@ -1651,6 +1726,7 @@
                                                                                                                                                                             )
                                                                                                                                                                         )
                                                                                                                                                                     )
+                                                                                                                                                                    ;
                                                                                                                                                                 )
                                                                                                                                                             )
                                                                                                                                                         )
@@ -1681,6 +1757,7 @@
                                                                                                                                                                                 )
                                                                                                                                                                             )
                                                                                                                                                                         )
+                                                                                                                                                                        ;
                                                                                                                                                                     )
                                                                                                                                                                 )
                                                                                                                                                             )
@@ -1863,14 +1940,69 @@
                                                                                                                                                                 <stmts>(
                                                                                                                                                                     <iterative_stmt>(
                                                                                                                                                                         <rep_loop>(
-                                                                                                                                                                            rep
-                                                                                                                                                                            <loop_initial>(
-                                                                                                                                                                                <dec_stmt>(
-                                                                                                                                                                                    <data_type>(
-                                                                                                                                                                                        num
-                                                                                                                                                                                        <var_list>(
-                                                                                                                                                                                            =(
-                                                                                                                                                                                                a
+                                                                                                                                                                            rep(
+                                                                                                                                                                                ((
+                                                                                                                                                                                    <loop_initial>(
+                                                                                                                                                                                        <dec_stmt>(
+                                                                                                                                                                                            <data_type>(
+                                                                                                                                                                                                num
+                                                                                                                                                                                                <var_list>(
+                                                                                                                                                                                                    =(
+                                                                                                                                                                                                        a
+                                                                                                                                                                                                        <expr>(
+                                                                                                                                                                                                            <and_expr>(
+                                                                                                                                                                                                                <equality_expr>(
+                                                                                                                                                                                                                    <relational_expr>(
+                                                                                                                                                                                                                        <addsub_expr>(
+                                                                                                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                                                                                                <primary>(
+                                                                                                                                                                                                                                    <literal>(
+                                                                                                                                                                                                                                        <num_val>(
+                                                                                                                                                                                                                                            1
+                                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                )
+                                                                                                                                                                                                            )
+                                                                                                                                                                                                        )
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ;
+                                                                                                                                                                                                )
+                                                                                                                                                                                            )
+                                                                                                                                                                                        )
+                                                                                                                                                                                    )
+                                                                                                                                                                                    <expr>(
+                                                                                                                                                                                        <and_expr>(
+                                                                                                                                                                                            <equality_expr>(
+                                                                                                                                                                                                >(
+                                                                                                                                                                                                    <relational_expr>(
+                                                                                                                                                                                                        <addsub_expr>(
+                                                                                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                                                                                <primary>(
+                                                                                                                                                                                                                    a
+                                                                                                                                                                                                                )
+                                                                                                                                                                                                            )
+                                                                                                                                                                                                        )
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    <addsub_expr>(
+                                                                                                                                                                                                        <multdiv_expr>(
+                                                                                                                                                                                                            <primary>(
+                                                                                                                                                                                                                <literal>(
+                                                                                                                                                                                                                    <num_val>(
+                                                                                                                                                                                                                        1
+                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                )
+                                                                                                                                                                                                            )
+                                                                                                                                                                                                        )
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                )
+                                                                                                                                                                                            )
+                                                                                                                                                                                        )
+                                                                                                                                                                                        ;(
+                                                                                                                                                                                            <upd_stmt>(
                                                                                                                                                                                                 <expr>(
                                                                                                                                                                                                     <and_expr>(
                                                                                                                                                                                                         <equality_expr>(
@@ -1878,9 +2010,10 @@
                                                                                                                                                                                                                 <addsub_expr>(
                                                                                                                                                                                                                     <multdiv_expr>(
                                                                                                                                                                                                                         <primary>(
-                                                                                                                                                                                                                            <literal>(
-                                                                                                                                                                                                                                <num_val>(
-                                                                                                                                                                                                                                    1
+                                                                                                                                                                                                                            a(
+                                                                                                                                                                                                                                <unary_val>(
+                                                                                                                                                                                                                                    a
+                                                                                                                                                                                                                                    ++
                                                                                                                                                                                                                                 )
                                                                                                                                                                                                                             )
                                                                                                                                                                                                                         )
@@ -1890,122 +2023,15 @@
                                                                                                                                                                                                         )
                                                                                                                                                                                                     )
                                                                                                                                                                                                 )
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
-                                                                                                                                                                                    )
-                                                                                                                                                                                )
-                                                                                                                                                                                <expr>(
-                                                                                                                                                                                    <and_expr>(
-                                                                                                                                                                                        <equality_expr>(
-                                                                                                                                                                                            >(
-                                                                                                                                                                                                <relational_expr>(
-                                                                                                                                                                                                    <addsub_expr>(
-                                                                                                                                                                                                        <multdiv_expr>(
-                                                                                                                                                                                                            <primary>(
-                                                                                                                                                                                                                a
-                                                                                                                                                                                                            )
-                                                                                                                                                                                                        )
-                                                                                                                                                                                                    )
-                                                                                                                                                                                                )
-                                                                                                                                                                                                <addsub_expr>(
-                                                                                                                                                                                                    <multdiv_expr>(
-                                                                                                                                                                                                        <primary>(
-                                                                                                                                                                                                            <literal>(
-                                                                                                                                                                                                                <num_val>(
-                                                                                                                                                                                                                    1
-                                                                                                                                                                                                                )
-                                                                                                                                                                                                            )
-                                                                                                                                                                                                        )
-                                                                                                                                                                                                    )
-                                                                                                                                                                                                )
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
-                                                                                                                                                                                    )
-                                                                                                                                                                                    <upd_stmt>(
-                                                                                                                                                                                        <expr>(
-                                                                                                                                                                                            <and_expr>(
-                                                                                                                                                                                                <equality_expr>(
-                                                                                                                                                                                                    <relational_expr>(
-                                                                                                                                                                                                        <addsub_expr>(
-                                                                                                                                                                                                            <multdiv_expr>(
-                                                                                                                                                                                                                <primary>(
-                                                                                                                                                                                                                    a(
-                                                                                                                                                                                                                        <unary_val>(
-                                                                                                                                                                                                                            a
-                                                                                                                                                                                                                            ++
-                                                                                                                                                                                                                        )
-                                                                                                                                                                                                                    )
-                                                                                                                                                                                                                )
-                                                                                                                                                                                                            )
-                                                                                                                                                                                                        )
-                                                                                                                                                                                                    )
-                                                                                                                                                                                                )
-                                                                                                                                                                                            )
-                                                                                                                                                                                        )
-                                                                                                                                                                                        <stmts>(
-                                                                                                                                                                                            <iterative_stmt>(
-                                                                                                                                                                                                <mw_loop>(
-                                                                                                                                                                                                    <expr>(
-                                                                                                                                                                                                        <and_expr>(
-                                                                                                                                                                                                            <equality_expr>(
-                                                                                                                                                                                                                >(
-                                                                                                                                                                                                                    <relational_expr>(
-                                                                                                                                                                                                                        <addsub_expr>(
-                                                                                                                                                                                                                            <multdiv_expr>(
-                                                                                                                                                                                                                                <primary>(
-                                                                                                                                                                                                                                    i
-                                                                                                                                                                                                                                )
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                        )
-                                                                                                                                                                                                                    )
-                                                                                                                                                                                                                    <addsub_expr>(
-                                                                                                                                                                                                                        <multdiv_expr>(
-                                                                                                                                                                                                                            <primary>(
-                                                                                                                                                                                                                                <literal>(
-                                                                                                                                                                                                                                    <num_val>(
-                                                                                                                                                                                                                                        10
-                                                                                                                                                                                                                                    )
-                                                                                                                                                                                                                                )
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                        )
-                                                                                                                                                                                                                    )
-                                                                                                                                                                                                                )
-                                                                                                                                                                                                            )
-                                                                                                                                                                                                        )
-                                                                                                                                                                                                    )
-                                                                                                                                                                                                    <body>(
+                                                                                                                                                                                                )(
+                                                                                                                                                                                                    {(
                                                                                                                                                                                                         <stmts>(
                                                                                                                                                                                                             <iterative_stmt>(
-                                                                                                                                                                                                                <dmw_loop>(
-                                                                                                                                                                                                                    <body>(
-                                                                                                                                                                                                                        <stmts>(
-                                                                                                                                                                                                                            <assign_stmt>(
-                                                                                                                                                                                                                                =(
-                                                                                                                                                                                                                                    test
-                                                                                                                                                                                                                                    <expr>(
-                                                                                                                                                                                                                                        <and_expr>(
-                                                                                                                                                                                                                                            <equality_expr>(
-                                                                                                                                                                                                                                                <relational_expr>(
-                                                                                                                                                                                                                                                    <addsub_expr>(
-                                                                                                                                                                                                                                                        <multdiv_expr>(
-                                                                                                                                                                                                                                                            <primary>(
-                                                                                                                                                                                                                                                                test
-                                                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                                                        )
-                                                                                                                                                                                                                                                    )
-                                                                                                                                                                                                                                                )
-                                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                                        )
-                                                                                                                                                                                                                                    )
-                                                                                                                                                                                                                                )
-                                                                                                                                                                                                                                ;
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                        )
-                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                <mw_loop>(
                                                                                                                                                                                                                     <expr>(
                                                                                                                                                                                                                         <and_expr>(
                                                                                                                                                                                                                             <equality_expr>(
-                                                                                                                                                                                                                                <(
+                                                                                                                                                                                                                                >(
                                                                                                                                                                                                                                     <relational_expr>(
                                                                                                                                                                                                                                         <addsub_expr>(
                                                                                                                                                                                                                                             <multdiv_expr>(
@@ -2030,8 +2056,70 @@
                                                                                                                                                                                                                             )
                                                                                                                                                                                                                         )
                                                                                                                                                                                                                     )
+                                                                                                                                                                                                                    <body>(
+                                                                                                                                                                                                                        <stmts>(
+                                                                                                                                                                                                                            <iterative_stmt>(
+                                                                                                                                                                                                                                <dmw_loop>(
+                                                                                                                                                                                                                                    <body>(
+                                                                                                                                                                                                                                        <stmts>(
+                                                                                                                                                                                                                                            <assign_stmt>(
+                                                                                                                                                                                                                                                =(
+                                                                                                                                                                                                                                                    test
+                                                                                                                                                                                                                                                    <expr>(
+                                                                                                                                                                                                                                                        <and_expr>(
+                                                                                                                                                                                                                                                            <equality_expr>(
+                                                                                                                                                                                                                                                                <relational_expr>(
+                                                                                                                                                                                                                                                                    <addsub_expr>(
+                                                                                                                                                                                                                                                                        <multdiv_expr>(
+                                                                                                                                                                                                                                                                            <primary>(
+                                                                                                                                                                                                                                                                                test
+                                                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                                ;
+                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                                    <expr>(
+                                                                                                                                                                                                                                        <and_expr>(
+                                                                                                                                                                                                                                            <equality_expr>(
+                                                                                                                                                                                                                                                <(
+                                                                                                                                                                                                                                                    <relational_expr>(
+                                                                                                                                                                                                                                                        <addsub_expr>(
+                                                                                                                                                                                                                                                            <multdiv_expr>(
+                                                                                                                                                                                                                                                                <primary>(
+                                                                                                                                                                                                                                                                    i
+                                                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                                                    <addsub_expr>(
+                                                                                                                                                                                                                                                        <multdiv_expr>(
+                                                                                                                                                                                                                                                            <primary>(
+                                                                                                                                                                                                                                                                <literal>(
+                                                                                                                                                                                                                                                                    <num_val>(
+                                                                                                                                                                                                                                                                        10
+                                                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                    )
                                                                                                                                                                                                                 )
                                                                                                                                                                                                             )
+                                                                                                                                                                                                            }
                                                                                                                                                                                                         )
                                                                                                                                                                                                     )
                                                                                                                                                                                                 )
@@ -2048,6 +2136,7 @@
                                                                                                                                                                                 num
                                                                                                                                                                                 <var_list>(
                                                                                                                                                                                     count
+                                                                                                                                                                                    ;
                                                                                                                                                                                 )
                                                                                                                                                                             )
                                                                                                                                                                         )
@@ -2078,6 +2167,7 @@
                                                                                                                                                                                                 )
                                                                                                                                                                                             )
                                                                                                                                                                                         )
+                                                                                                                                                                                        ;
                                                                                                                                                                                     )
                                                                                                                                                                                 )
                                                                                                                                                                             )
@@ -2104,6 +2194,7 @@
                                                                                                                                                                                                     )
                                                                                                                                                                                                 )
                                                                                                                                                                                             )
+                                                                                                                                                                                            ;
                                                                                                                                                                                         )
                                                                                                                                                                                     )
                                                                                                                                                                                 )
@@ -2121,6 +2212,7 @@
                                                                                                                                                                                                         )
                                                                                                                                                                                                     )
                                                                                                                                                                                                 )
+                                                                                                                                                                                                ;
                                                                                                                                                                                             )
                                                                                                                                                                                         )
                                                                                                                                                                                     )
@@ -2155,6 +2247,7 @@
                                                                                                                                                                                                             )
                                                                                                                                                                                                         )
                                                                                                                                                                                                     )
+                                                                                                                                                                                                    ;
                                                                                                                                                                                                 )
                                                                                                                                                                                             )
                                                                                                                                                                                         )
