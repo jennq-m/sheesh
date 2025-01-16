@@ -1472,15 +1472,19 @@ ASTNode* parseIfStmt() {
 
 ASTNode* parseIfOtherStmt(ASTNode *node) {
     if (currentToken.type == OTHER) {
+        node->right = newNode("<other>");
+        node->right->left = newNode(currentToken.value);
         nextToken();
 
         if (currentToken.type == DELIM_O_BRACE) {
+            node->right->left->right = newNode(currentToken.value);
             nextToken();
             ASTNode *otherBody = parseBody();
 
-            node->right = otherBody;
+            node->right->right = otherBody;
 
             if (currentToken.type == DELIM_C_BRACE) {
+                node->right->right->right = newNode(currentToken.value);
                 nextToken();
                 return node;
             }
@@ -1499,6 +1503,7 @@ ASTNode* parseCondStmt() {
         node->left = ifNode;
 
         if (currentToken.type == OTHER) {
+            ifNode = newNode("<if_other_stmt");
             return parseIfOtherStmt(node);
         }
 
