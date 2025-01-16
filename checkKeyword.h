@@ -1,6 +1,6 @@
 #ifndef CHECKKEYWORD_H
 #define CHECKKEYWORD_H
-#include "lex.h"
+#include "lexer.h"
 
 //Finite State Machine for Keyword
 TokenType checkKeyword(const char *sheeshLexeme) {
