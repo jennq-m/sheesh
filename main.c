@@ -760,8 +760,7 @@ ASTNode* parseBody() {
 }
 
 ASTNode* parseStmts() {
-    printf("Entering parseStmts\n");
-    ASTNode *node = NULL;  // Root for statements
+    ASTNode *node = NULL; 
     ASTNode *current = NULL;
 
     while (currentToken.type != DELIM_C_BRACE && currentToken.type != INVALID) {
@@ -785,21 +784,23 @@ ASTNode* parseStmts() {
                 stmt = newNode("<stmts>");
                 stmt->left = parseExprStmt();
             }
-
         } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
             stmt = newNode("<stmts>");
                 stmt->left = parseIterativeStmt();
-
         } else if (currentToken.type == INPUT) {
             stmt = newNode("<stmts>");
                 stmt->left = parseInputStmt();
-
         } else if (currentToken.type == OUT || currentToken.type == OUTPUT) {
             stmt = newNode("<stmts>");
             stmt->left = parseOutputStmt();
         } else {
             stmt = newNode("<stmts>");
             stmt->left = parseExprStmt();
+        }
+
+        if (currentToken.type == INVALID) {
+            printf("SYNTAX ERROR LINE %d: Encountered invalid token %s.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
         }
 
         if (!node) {
@@ -815,10 +816,9 @@ ASTNode* parseStmts() {
 
 
 ASTNode* parseExprStmt() {
-    printf("Entering parseExprStmt\n");
     ASTNode *node = parseExpr();
+
     if (currentToken.type == DELIM_SEMCOL) {
-        printf("Matched semicolon\n");
         nextToken();
     } else {
         printf("SYNTAX ERROR LINE %d: Expected ';'. Encountered token %s instead.\n", currentToken.sheeshLine, currentToken.value);
