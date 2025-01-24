@@ -1421,7 +1421,7 @@
                                     )
                                 )
                             <stmts>(
-                                <expr_stmt>(
+                                <assign_stmt>(
                                     <expr>(
                                         <and_expr>(
                                             <equality_expr>(
@@ -1465,7 +1465,7 @@
                                 )
                             )
                         <stmts>(
-                            <expr_stmt>(
+                            <assign_stmt>(
                                 <expr>(
                                     <and_expr>(
                                         <equality_expr>(
@@ -1695,7 +1695,7 @@
                                                         )
                                                     )
                                                 <stmts>(
-                                                    <expr_stmt>(
+                                                    <assign_stmt>(
                                                         <expr>(
                                                             <and_expr>(
                                                                 <equality_expr>(
@@ -1756,7 +1756,7 @@
                                                     )
                                                 )
                                             <stmts>(
-                                                <expr_stmt>(
+                                                <assign_stmt>(
                                                     <expr>(
                                                         <and_expr>(
                                                             <equality_expr>(
@@ -1789,7 +1789,7 @@
                                     )
                                 )
                             <stmts>(
-                                <expr_stmt>(
+                                <assign_stmt>(
                                     <expr>(
                                         <and_expr>(
                                             <equality_expr>(
@@ -1944,7 +1944,7 @@
                                                     )
                                                 )
                                             <stmts>(
-                                                <expr_stmt>(
+                                                <assign_stmt>(
                                                     <expr>(
                                                         <and_expr>(
                                                             <equality_expr>(
@@ -2005,7 +2005,7 @@
                                                 )
                                             )
                                         <stmts>(
-                                            <expr_stmt>(
+                                            <assign_stmt>(
                                                 <expr>(
                                                     <and_expr>(
                                                         <equality_expr>(
@@ -2038,7 +2038,7 @@
                                 )
                             )
                         <stmts>(
-                            <expr_stmt>(
+                            <assign_stmt>(
                                 <expr>(
                                     <and_expr>(
                                         <equality_expr>(
@@ -2122,7 +2122,7 @@
                                 )
                             )
                         <stmts>(
-                            <expr_stmt>(
+                            <assign_stmt>(
                                 <expr>(
                                     <and_expr>(
                                         <equality_expr>(
@@ -2312,7 +2312,7 @@
                                                 )
                                             )
                                         <stmts>(
-                                            <expr_stmt>(
+                                            <assign_stmt>(
                                                 <expr>(
                                                     <and_expr>(
                                                         <equality_expr>(
@@ -2378,7 +2378,7 @@
                                 )
                             )
                         <stmts>(
-                            <expr_stmt>(
+                            <assign_stmt>(
                                 <expr>(
                                     <and_expr>(
                                         <equality_expr>(

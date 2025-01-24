@@ -282,17 +282,6 @@ ASTNode* parseStmts() {
             currentToken.type == SHORT || currentToken.type == LONG || currentToken.type == LEGIT) {
             stmt = newNode("<stmts>");
             stmt->left = parseDecStmt();
-        } else if (currentToken.type == IDENTIFIER) {
-            nextToken();
-            if (currentToken.type == ASSIGNMENT_OPE) {
-                previousToken();
-                stmt = newNode("<stmts>");
-                stmt->left = parseAssignStmt();
-            } else {
-                previousToken();
-                stmt = newNode("<stmts>");
-                stmt->left = parseExprStmt();
-            }
         } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
             stmt = newNode("<stmts>");
                 stmt->left = parseIterativeStmt();
@@ -304,7 +293,7 @@ ASTNode* parseStmts() {
             stmt->left = parseOutputStmt();
         } else {
             stmt = newNode("<stmts>");
-            stmt->left = parseExprStmt();
+            stmt->left = parseAssignStmt();
         }
 
         if (currentToken.type == INVALID) {
@@ -320,20 +309,6 @@ ASTNode* parseStmts() {
         current = stmt;
     }
 
-    return node;
-}
-
-ASTNode* parseExprStmt() {
-    ASTNode *node = newNode("<expr_stmt>");
-    node->left = parseExpr();
-
-    if (currentToken.type == DELIM_SEMCOL) {
-        node->right = newNode(currentToken.value);
-        nextToken();
-    } else {
-        printf("SYNTAX ERROR LINE %d: Expected ';'. Encountered token %s instead.\n", currentToken.sheeshLine, currentToken.value);
-        exit(1);
-    }
     return node;
 }
 
@@ -883,21 +858,21 @@ ASTNode* parseInitialization() {
 
 ASTNode* parseAssignStmt() {
 
-    //<assign_stmt> 	::=   	IDENTIFIER ASSIGNMENT_OPE <expr> DELIM_SEMCOL
+    //<assign_stmt> 	::=   	(IDENTIFIER ASSIGNMENT_OPE <expr> | <expr>) DELIM_SEMCOL
 
+    ASTNode *node = newNode("<assign_stmt>");
 
     if (currentToken.type == IDENTIFIER) {
-        ASTNode *node = newNode("<assign_stmt>");
         node->left = newNode(currentToken.value);
         nextToken();
 
         if (currentToken.type == ASSIGNMENT_OPE) {
-            ASTNode *operatorNode = newNode(currentToken.value);
-            operatorNode->left = node->left;
+            ASTNode *assignmentNode = newNode(currentToken.value);
+            assignmentNode->left = node->left;
             nextToken();
 
-            operatorNode->right = parseExpr();
-            node->left = operatorNode;
+            assignmentNode->right = parseExpr();
+            node->left = assignmentNode;
 
             if (currentToken.type == DELIM_SEMCOL) {
                 ASTNode* semicolonNode = newNode(currentToken.value);
@@ -905,20 +880,40 @@ ASTNode* parseAssignStmt() {
                 nextToken();
                 return node;
             }
+            else {
+                printf("SYNTAX ERROR LINE %d: Expected assignment operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                exit(1);
+            }
             
         } else {
-        printf("SYNTAX ERROR LINE %d: Expected assignment operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            previousToken();
+            node->left = parseExpr();
+
+            if (currentToken.type == DELIM_SEMCOL) {
+                ASTNode* semicolonNode = newNode(currentToken.value);
+                node->right = semicolonNode;
+                nextToken();
+                return node;
+            }
+            else {
+                printf("SYNTAX ERROR LINE %d: Expected assignment operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                exit(1);
+            }
+        }
+    }
+    else {
+        node->left = parseExpr();
+
+        if (currentToken.type == DELIM_SEMCOL) {
+            ASTNode* semicolonNode = newNode(currentToken.value);
+            node->right = semicolonNode;
+            nextToken();
+            return node;
+        }
+        else {
+            printf("SYNTAX ERROR LINE %d: Expected assignment operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
-
-        if (currentToken.type != DELIM_SEMCOL) {
-            printf("SYNTAX ERROR LINE %d: Expected ';' in <assign_stmt>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
-        }
-
-        nextToken();
-
-        return node;
     }
 
     printf("SYNTAX ERROR LINE %d: Invalid <assign_stmt>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
