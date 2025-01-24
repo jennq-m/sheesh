@@ -881,7 +881,7 @@ ASTNode* parseAssignStmt() {
                 return node;
             }
             else {
-                printf("SYNTAX ERROR LINE %d: Expected assignment operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                printf("SYNTAX ERROR LINE %d: Expected ';'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
             
@@ -896,7 +896,7 @@ ASTNode* parseAssignStmt() {
                 return node;
             }
             else {
-                printf("SYNTAX ERROR LINE %d: Expected assignment operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                printf("SYNTAX ERROR LINE %d: Expected ';'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
         }
@@ -911,7 +911,7 @@ ASTNode* parseAssignStmt() {
             return node;
         }
         else {
-            printf("SYNTAX ERROR LINE %d: Expected assignment operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            printf("SYNTAX ERROR LINE %d: Expected ';'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
     }
