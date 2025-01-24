@@ -525,4 +525,6 @@ Line 124: Lexeme: english_grade   Token: IDENTIFIER
 Line 124: Lexeme: =               Token: =
 Line 124: Lexeme: math_grade      Token: IDENTIFIER
 Line 124: Lexeme: ;               Token: DELIM_SEMCOL
-Line 125: Lexeme: }               Token: DELIM_C_BRACE
+Line 126: Lexeme: i               Token: IDENTIFIER
+Line 126: Lexeme: ++              Token: ++
+Line 127: Lexeme: }               Token: DELIM_C_BRACE

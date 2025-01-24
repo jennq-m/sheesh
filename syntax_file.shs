@@ -122,6 +122,4 @@ toptier() {
     num count = number;
     drift math_grade, science_grade, english_grade;
     drift math_grade = 97.5, science_grade = 95.5, english_grade = math_grade;
-
-    i++
 }
