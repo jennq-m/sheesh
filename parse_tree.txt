@@ -1,0 +1,52 @@
+<program>(
+    toptier(
+        )
+    {
+    )
+((
+    <body>(
+        <stmts>(
+            <dec_stmt>(
+                <data_type>(
+                    drift
+                )
+            <initialization>(
+                =(
+                    initialization
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <drift_val>(
+                                                    7.5
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                )
+            )
+            )
+        <stmts>(
+            <dec_stmt>(
+                <data_type>(
+                    num
+                )
+            <initialization>(
+                test
+            )
+            )
+        )
+        )
+    )
+}
+)
+)
