@@ -4,11 +4,3 @@ Line 1: Lexeme: toptier         Token: TOPTIER
 Line 1: Lexeme: (               Token: DELIM_O_PAREN
 Line 1: Lexeme: )               Token: DELIM_C_PAREN
 Line 1: Lexeme: {               Token: DELIM_O_BRACE
-Line 2: Lexeme: input           Token: INPUT          
-Line 2: Lexeme: (               Token: DELIM_O_PAREN
-Line 2: Lexeme: "%c"            Token: CONSTANT_TXTFS
-Line 2: Lexeme: ,               Token: DELIM_COMMA
-Line 2: Lexeme: letter          Token: IDENTIFIER
-Line 2: Lexeme: )               Token: DELIM_C_PAREN
-Line 2: Lexeme: ;               Token: DELIM_SEMCOL
-Line 3: Lexeme: }               Token: DELIM_C_BRACE

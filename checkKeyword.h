@@ -388,7 +388,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                                                                         case 'e':
                                                                             switch(sheeshLexeme[currChar++]) {
                                                                                 case '\0':
-                                                                                    return OTHERWISE;
+                                                                                    return OTHER;
                                                                             }
                                                                     }
                                                             }

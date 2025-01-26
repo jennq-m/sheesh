@@ -111,7 +111,7 @@ TokenType mapStringToTokenType(const char* tokenStr) {
     if (strcmp(tokenStr, "DO") == 0) return DO;
     if (strcmp(tokenStr, "DRIFT") == 0) return DRIFT;
     if (strcmp(tokenStr, "EMPTY") == 0) return EMPTY;
-    if (strcmp(tokenStr, "EX") == 0) return EX;
+    if (strcmp(tokenStr, "EX") == 0) return EXTRA;
     if (strcmp(tokenStr, "FLIP") == 0) return FLIP;
     if (strcmp(tokenStr, "FROZEN") == 0) return FROZEN;
     if (strcmp(tokenStr, "GROUP") == 0) return GROUP;
@@ -126,8 +126,7 @@ TokenType mapStringToTokenType(const char* tokenStr) {
     if (strcmp(tokenStr, "NICKNAME") == 0) return NICKNAME;
     if (strcmp(tokenStr, "NUM") == 0) return NUM;
     if (strcmp(tokenStr, "OPEN") == 0) return OPEN;
-    if (strcmp(tokenStr, "OTHER") == 0) return OTHER;
-    if (strcmp(tokenStr, "OUT") == 0) return OUT;
+    if (strcmp(tokenStr, "OUT") == 0) return OUTSIDE;
     if (strcmp(tokenStr, "OUTSIDE") == 0) return OUTSIDE;
     if (strcmp(tokenStr, "PL") == 0) return PL;
     if (strcmp(tokenStr, "REP") == 0) return REP;
@@ -145,9 +144,10 @@ TokenType mapStringToTokenType(const char* tokenStr) {
     if (strcmp(tokenStr, "PLAYLIST") == 0) return PLAYLIST;
     if (strcmp(tokenStr, "REPEAT") == 0) return REPEAT;
     if (strcmp(tokenStr, "TOPTIER") == 0) return TOPTIER;
-    if (strcmp(tokenStr, "TOP") == 0) return TOP;
+    if (strcmp(tokenStr, "TOP") == 0) return TOPTIER;
     if (strcmp(tokenStr, "EXTRA") == 0) return EXTRA;
-    if (strcmp(tokenStr, "OTHERWISE") == 0) return OTHERWISE;
+    if (strcmp(tokenStr, "OTHER") == 0) return OTHER;
+    if (strcmp(tokenStr, "OTHERWISE") == 0) return OTHER;
     return INVALID;
 }
 
@@ -324,15 +324,19 @@ ASTNode* parseProgram() {
                         return node;
                     } else {
                         printf("SYNTAX ERROR LINE %d: Expected '}'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                        exit(1);
                     }
                 } else {
                     printf("SYNTAX ERROR LINE %d: Expected '{'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                    exit(1);
                 }
             } else {
                 printf("SYNTAX ERROR LINE %d: Expected ')'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                exit(1);
             }
         } else {
             printf("SYNTAX ERROR LINE %d: Expected '('. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
         }
     } 
 
@@ -1526,6 +1530,12 @@ ASTNode* parseOutput() {
             ASTNode* commaNode = newNode(",");
             current->right = commaNode;
             nextToken();
+            
+            if (currentToken.type == INVALID) {
+                printf("SYNTAX ERROR LINE %d: Invalid <output_stmt>. Expected expr.\n", currentToken.sheeshLine, currentToken.value);
+                exit(1);
+            }
+
             commaNode->left = parseExpr();
             current = commaNode;
         }

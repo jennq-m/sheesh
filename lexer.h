@@ -69,9 +69,9 @@ typedef enum {
     NOCAP,
     PLAYLIST,
     REPEAT,
+    TOP,
     TOPTIER,
     OUTPUT,
-    TOP,
     EXTRA,
     OTHERWISE
 } TokenType;
@@ -162,7 +162,7 @@ char *typeToString(TokenType type) {
         case EMPTY:     
             return "EMPTY";
         case EX:        
-            return "EX";
+            return "EXTRA";
         case FLIP:      
             return "FLIP";
         case FROZEN:    
@@ -194,7 +194,7 @@ char *typeToString(TokenType type) {
         case OTHER:   
             return "OTHER";  
         case OUT:      
-            return "OUT"; 
+            return "OUTPUT"; 
         case OUTSIDE:
             return "OUTSIDE";   
         case PL:        
@@ -224,7 +224,7 @@ char *typeToString(TokenType type) {
         case EXTRA:     
             return "EXTRA";
         case OTHERWISE:
-            return "OTHERWISE"; 
+            return "OTHER"; 
         case ALWAYS:    
             return "ALWAYS";
         case CONT:

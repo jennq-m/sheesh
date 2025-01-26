@@ -82,6 +82,8 @@ TokenType checkReservedWord(const char *sheeshLexeme) {
                     switch(sheeshLexeme[currChar++]) {
                         case 'p':
                             switch(sheeshLexeme[currChar++]) {
+                                case '\0':
+                                    return TOPTIER;
                                 case 't':
                                     switch(sheeshLexeme[currChar++]) {
                                         case 'i':
