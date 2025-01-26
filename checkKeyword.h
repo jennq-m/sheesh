@@ -96,7 +96,7 @@ TokenType checkKeyword(const char *sheeshLexeme) {
                 case 'x':
                     switch(sheeshLexeme[currChar++]) {
                         case '\0':
-                            return EX;
+                            return EXTRA;
 
                         case 't':
                             switch(sheeshLexeme[currChar++]) {
