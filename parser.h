@@ -270,23 +270,23 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
     fprintf(file, "%s", node->value);
 
     if (node->left || node->right) {
-        fprintf(file, "(\n");
-
         if (node->left) {
+            fprintf(file, "(\n");
             printParseTree(node->left, indent + 1, file);
+            fprintf(file, ")\n");
         }
 
         if (node->right) {
+            fprintf(file, "\n");
             printParseTree(node->right, indent, file);
+            fprintf(file, "\n");
         }
 
         for (int i = 0; i < indent; i++) {
             fprintf(file, "    ");
         }
-        fprintf(file, ")\n");
-    } else {
-        fprintf(file, "\n");
-    }
+         
+    } 
 }
 
 
@@ -1056,25 +1056,24 @@ ASTNode* parseIfStmt() {
             ASTNode *conditionNode = newNode(tokenTypeToString(currentToken.type));
             nextToken();
 
-            conditionNode->left = parseExpr();
+            node->left->right = conditionNode;
+            conditionNode->right = parseExpr();
 
             if (currentToken.type == DELIM_C_PAREN) {
-                conditionNode->right = newNode(tokenTypeToString(currentToken.type));
+                conditionNode->right->right = newNode(tokenTypeToString(currentToken.type));
                 nextToken();
-
-                node->right = conditionNode;
 
                 if (currentToken.type == DELIM_O_BRACE) {
                     ASTNode *bodyNode = newNode(tokenTypeToString(currentToken.type));
                     nextToken();
 
-                    bodyNode->left = parseBody();
+                    bodyNode->right = parseBody();
 
                     if (currentToken.type == DELIM_C_BRACE) {
-                        bodyNode->right = newNode(tokenTypeToString(currentToken.type));
+                        bodyNode->right->right = newNode(tokenTypeToString(currentToken.type));
                         nextToken();
 
-                        conditionNode->right->right = bodyNode;
+                        conditionNode->right->right->right = bodyNode;
                         return node;
                     } else {
                         printf("SYNTAX ERROR LINE %d: Expected '}' in if body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
