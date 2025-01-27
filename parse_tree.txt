@@ -775,64 +775,39 @@ DELIM_O_PAREN(
                 )
             )
         <stmts>(
-            <condi_stmt>(
-                <if_other_stmt>(
-                    <if_stmt>(
-                        IF
-                    DELIM_O_PAREN(
-                        <expr>(
-                            <and_expr>(
-                                ==(
-                                    <equality_expr>(
-                                        <relational_expr>(
-                                            <addsub_expr>(
-                                                <multdiv_expr>(
-                                                    <primary>(
-                                                        IDENTIFIER
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                <literal>(
-                                                    CONSTANT_LEGIT
+            <if_other_stmt>(
+                <if_stmt>(
+                    IF
+                DELIM_O_PAREN(
+                    <expr>(
+                        <and_expr>(
+                            ==(
+                                <equality_expr>(
+                                    <relational_expr>(
+                                        <addsub_expr>(
+                                            <multdiv_expr>(
+                                                <primary>(
+                                                    IDENTIFIER
                                                 )
                                             )
                                         )
                                     )
                                 )
-                                )
-                            )
-                        )
-                    DELIM_C_PAREN(
-                    DELIM_O_BRACE(
-                        <body>(
-                            <stmts>(
-                                <output_stmt>(
-                                    OUT(
-                                    ((
-                                        <output>(
-                                            CONSTANT_TEXT
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                CONSTANT_LEGIT
+                                            )
                                         )
-                                    )(
-                                    ;
-                                    )
-                                    )
                                     )
                                 )
                             )
+                            )
                         )
-                    DELIM_C_BRACE
                     )
-                    )
-                    )
-                    )
-                <other_stmt>(
-                    OTHER
+                DELIM_C_PAREN(
                 DELIM_O_BRACE(
                     <body>(
                         <stmts>(
@@ -854,148 +829,144 @@ DELIM_O_PAREN(
                 )
                 )
                 )
-            )
-        <stmts>(
-            <condi_stmt>(
-                <if_other_stmt>(
-                    <if_stmt>(
-                        IF
-                    DELIM_O_PAREN(
-                        <expr>(
-                            <and_expr>(
-                                ==(
-                                    <equality_expr>(
-                                        <relational_expr>(
-                                            <addsub_expr>(
-                                                <multdiv_expr>(
-                                                    <primary>(
-                                                        IDENTIFIER
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                <literal>(
-                                                    CONSTANT_LEGIT
-                                                )
-                                            )
-                                        )
-                                    )
+                )
+            <other_stmt>(
+                OTHER
+            DELIM_O_BRACE(
+                <body>(
+                    <stmts>(
+                        <output_stmt>(
+                            OUT(
+                            ((
+                                <output>(
+                                    CONSTANT_TEXT
                                 )
-                                )
+                            )(
+                            ;
+                            )
+                            )
                             )
                         )
-                    DELIM_C_PAREN(
-                    DELIM_O_BRACE(
-                        <body>(
-                            <stmts>(
-                                <condi_stmt>(
-                                    <if_other_stmt>(
-                                        <if_stmt>(
-                                            IF
-                                        DELIM_O_PAREN(
-                                            <expr>(
-                                                <and_expr>(
-                                                    <equality_expr>(
-                                                        >(
-                                                            <relational_expr>(
-                                                                <addsub_expr>(
-                                                                    <multdiv_expr>(
-                                                                        <primary>(
-                                                                            IDENTIFIER
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
+                    )
+                )
+            DELIM_C_BRACE
+            )
+            )
+            )
+        <stmts>(
+            <if_other_stmt>(
+                <if_stmt>(
+                    IF
+                DELIM_O_PAREN(
+                    <expr>(
+                        <and_expr>(
+                            ==(
+                                <equality_expr>(
+                                    <relational_expr>(
+                                        <addsub_expr>(
+                                            <multdiv_expr>(
+                                                <primary>(
+                                                    IDENTIFIER
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                CONSTANT_LEGIT
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            )
+                        )
+                    )
+                DELIM_C_PAREN(
+                DELIM_O_BRACE(
+                    <body>(
+                        <stmts>(
+                            <if_other_stmt>(
+                                <if_stmt>(
+                                    IF
+                                DELIM_O_PAREN(
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                >(
+                                                    <relational_expr>(
                                                         <addsub_expr>(
                                                             <multdiv_expr>(
                                                                 <primary>(
-                                                                    <literal>(
-                                                                        <num_val>(
-                                                                            CONSTANT_NUM
-                                                                        )
-                                                                    )
+                                                                    IDENTIFIER
                                                                 )
                                                             )
                                                         )
-                                                        )
                                                     )
-                                                )
-                                            )
-                                        DELIM_C_PAREN(
-                                        DELIM_O_BRACE(
-                                            <body>(
-                                                <stmts>(
-                                                    <output_stmt>(
-                                                        OUT(
-                                                        ((
-                                                            <output>(
-                                                                CONSTANT_TEXT
+                                                <addsub_expr>(
+                                                    <multdiv_expr>(
+                                                        <primary>(
+                                                            <literal>(
+                                                                <num_val>(
+                                                                    CONSTANT_NUM
+                                                                )
                                                             )
-                                                        )(
-                                                        ;
-                                                        )
-                                                        )
                                                         )
                                                     )
                                                 )
-                                            )
-                                        DELIM_C_BRACE
-                                        )
-                                        )
-                                        )
-                                        )
-                                    <other_stmt>(
-                                        OTHER
-                                    DELIM_O_BRACE(
-                                        <body>(
-                                            <stmts>(
-                                                <output_stmt>(
-                                                    OUT(
-                                                    ((
-                                                        <output>(
-                                                            CONSTANT_TEXT
-                                                        )
-                                                    )(
-                                                    ;
-                                                    )
-                                                    )
-                                                    )
                                                 )
                                             )
                                         )
-                                    DELIM_C_BRACE
                                     )
+                                DELIM_C_PAREN(
+                                DELIM_O_BRACE(
+                                    <body>(
+                                        <stmts>(
+                                            <output_stmt>(
+                                                OUT(
+                                                ((
+                                                    <output>(
+                                                        CONSTANT_TEXT
+                                                    )
+                                                )(
+                                                ;
+                                                )
+                                                )
+                                                )
+                                            )
+                                        )
                                     )
+                                DELIM_C_BRACE
+                                )
+                                )
+                                )
+                                )
+                            <other_stmt>(
+                                OTHER
+                            DELIM_O_BRACE(
+                                <body>(
+                                    <stmts>(
+                                        <output_stmt>(
+                                            OUT(
+                                            ((
+                                                <output>(
+                                                    CONSTANT_TEXT
+                                                )
+                                            )(
+                                            ;
+                                            )
+                                            )
+                                            )
+                                        )
                                     )
                                 )
+                            DELIM_C_BRACE
                             )
-                        )
-                    DELIM_C_BRACE
-                    )
-                    )
-                    )
-                    )
-                <other_stmt>(
-                    OTHER
-                DELIM_O_BRACE(
-                    <body>(
-                        <stmts>(
-                            <output_stmt>(
-                                OUT(
-                                ((
-                                    <output>(
-                                        CONSTANT_TEXT
-                                    )
-                                )(
-                                ;
-                                )
-                                )
-                                )
+                            )
                             )
                         )
                     )
@@ -1003,6 +974,29 @@ DELIM_O_PAREN(
                 )
                 )
                 )
+                )
+            <other_stmt>(
+                OTHER
+            DELIM_O_BRACE(
+                <body>(
+                    <stmts>(
+                        <output_stmt>(
+                            OUT(
+                            ((
+                                <output>(
+                                    CONSTANT_TEXT
+                                )
+                            )(
+                            ;
+                            )
+                            )
+                            )
+                        )
+                    )
+                )
+            DELIM_C_BRACE
+            )
+            )
             )
         <stmts>(
             <iterative_stmt>(
