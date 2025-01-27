@@ -1,7 +1,6 @@
 toptier() {
-    rep (i = 0; i > 10; i += i+1) {
-
-    }
+    this || that;
+    this && that;
     // Input Statements
     input("%d", &age);
     input("%f", &float_a);

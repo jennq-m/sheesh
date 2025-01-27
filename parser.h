@@ -270,12 +270,13 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
     fprintf(file, "%s", node->value);
 
     if (node->left || node->right) {
-        if (node->left) {
+        
+        if (node->left)  {
             fprintf(file, "(\n");
             printParseTree(node->left, indent + 1, file);
             fprintf(file, ")\n");
         }
-
+        
         if (node->right) {
             fprintf(file, "\n");
             printParseTree(node->right, indent, file);
@@ -401,12 +402,14 @@ ASTNode* parseStmts() {
 
 ASTNode* parseExpr() {
     ASTNode* node = newNode("<expr>");
-    node->left = parseAndExpr();
+    ASTNode* andNode = parseAndExpr();  
 
-    if (!node) {
+    if (!andNode) {
         printf("SYNTAX ERROR LINE %d: Invalid expression. Expected 'and' expression. Encountered token %s instead.\n", currentToken.sheeshLine, currentToken.value);
         exit(1);
     }
+
+    node->left = andNode;
 
     while (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "||") == 0) {
         ASTNode *opNode = newNode(currentToken.value);
@@ -419,14 +422,16 @@ ASTNode* parseExpr() {
             exit(1);
         }
 
-        opNode->left = node;
-        opNode->right = parseAndExpr();
+        ASTNode* newAndNode = parseAndExpr();
 
-        if (!opNode->right) {
+        if (!newAndNode) {
             printf("SYNTAX ERROR LINE %d: Invalid expression after '||' operator. Expected right operand. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
-        node = opNode;
+
+        node->left = opNode;
+        opNode->left = andNode;
+        andNode->right = newAndNode;
     }
 
     return node;
@@ -434,12 +439,14 @@ ASTNode* parseExpr() {
 
 ASTNode* parseAndExpr() {
     ASTNode *node = newNode("<and_expr>");
-    node->left = parseEqualityExpr();
+    ASTNode *equalityNode = parseEqualityExpr();
 
-    if (!node->left) {
+    if (!equalityNode) {
         printf("SYNTAX ERROR LINE %d: Invalid expression in 'and' expression. Expected equality expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
         exit(1);
     }
+
+    node->left = equalityNode;
 
     while (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "&&") == 0) {
         ASTNode *opNode = newNode(currentToken.value);
@@ -452,15 +459,16 @@ ASTNode* parseAndExpr() {
             exit(1);
         }
 
-        opNode->left = node;
-        opNode->right = parseEqualityExpr();
+        ASTNode *newEqualityNode = parseEqualityExpr();
 
-        if (!opNode->right) {
+        if (!newEqualityNode) {
             printf("SYNTAX ERROR LINE %d: Expected equality expression after '&&'. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
 
-        node = opNode;
+        node->left = opNode;
+        opNode->left = equalityNode;
+        equalityNode->right = newEqualityNode;
     }
     return node;
 }
