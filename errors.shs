@@ -1,3 +1,15 @@
 toptier() {
-    
+    if (test) {
+        test = test;
+    } ex (test) {
+        test = test;
+    } ex (test) {
+        test = test;
+    } other {
+        if (test) {
+            hello;
+        } other {
+            hello;
+        }
+    } 
 }

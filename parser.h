@@ -1133,6 +1133,68 @@ ASTNode* parseIfOtherStmt(ASTNode *ifOtherNode) {
     }
 }
 
+ASTNode* parseExStmt() {
+    if (currentToken.type == EX) {
+        ASTNode *node = newNode("<ex_stmt>");
+        node->left = newNode(tokenTypeToString(currentToken.type));
+        nextToken();
+
+        if (currentToken.type == DELIM_O_PAREN) {
+            ASTNode *conditionNode = newNode(tokenTypeToString(currentToken.type));
+            nextToken();
+
+            conditionNode->left = parseExpr();
+
+            if (currentToken.type == DELIM_C_PAREN) {
+                conditionNode->right = newNode(tokenTypeToString(currentToken.type));
+                nextToken();
+
+                node->right = conditionNode;
+
+                if (currentToken.type == DELIM_O_BRACE) {
+                    ASTNode *bodyNode = newNode(tokenTypeToString(currentToken.type));
+                    nextToken();
+
+                    bodyNode->left = parseBody();
+
+                    if (currentToken.type == DELIM_C_BRACE) {
+                        bodyNode->right = newNode(tokenTypeToString(currentToken.type));
+                        nextToken();
+
+                        conditionNode->right->right = bodyNode;
+                        return node;
+                    }
+                    printf("SYNTAX ERROR LINE %d: Expected '}' in else-if body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                    exit(1);
+                }
+                printf("SYNTAX ERROR LINE %d: Expected '{' in else-if body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                exit(1);
+            }
+            printf("SYNTAX ERROR LINE %d: Expected ')' for else-if condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            exit(1);
+        }
+        printf("SYNTAX ERROR LINE %d: Expected '(' for else-if condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    }
+    printf("SYNTAX ERROR LINE %d: Invalid <ex_stmt>\n", currentToken.sheeshLine);
+    exit(1);
+}
+
+ASTNode* parseExIfStmt(ASTNode *node) {
+    if (currentToken.type == EX) {
+        node->left = parseExStmt();
+        
+        if (currentToken.type == EX) {
+            node->right = parseExIfStmt(newNode("<ex_if_stmt>"));
+        } else if (currentToken.type == OTHER) {
+            node->right = parseOtherStmt(newNode("<if_other_stmt>"));
+        }
+        
+        return node;
+    }
+    return node;
+}
+
 ASTNode* parseCondStmt() {
     //<condi_stmt>  	::= 	<if_stmt>  |  <if_other_stmt>  | <ex_if_stmt> 
 
@@ -1141,6 +1203,11 @@ ASTNode* parseCondStmt() {
     if (currentToken.type == IF) {
         ASTNode *ifNode = parseIfStmt();
         node->left = ifNode;
+
+        if (currentToken.type == EX) {
+            ifNode = newNode("<ex_if_stmt>");
+            return parseExIfStmt(node);
+        }
 
         if (currentToken.type == OTHER) {
             ASTNode *ifOtherNode = newNode("<if_other_stmt>");
