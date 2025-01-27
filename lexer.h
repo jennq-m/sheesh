@@ -82,7 +82,7 @@ typedef struct {
     int sheeshLine;    
 } Token;
 
-Token allTokens[1000];
+Token allTokens[10000];
 int tokenCount = 0;
 
 Token newToken(const char *value, TokenType type, int sheeshLine);
