@@ -145,4 +145,6 @@ toptier() {
             hello;
         }
     }
+
+    num i, j, k = 0;
 }

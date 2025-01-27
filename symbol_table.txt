@@ -603,4 +603,13 @@ Line 145: Lexeme: hello           Token: IDENTIFIER
 Line 145: Lexeme: ;               Token: DELIM_SEMCOL
 Line 146: Lexeme: }               Token: DELIM_C_BRACE
 Line 147: Lexeme: }               Token: DELIM_C_BRACE
-Line 148: Lexeme: }               Token: DELIM_C_BRACE
+Line 149: Lexeme: num             Token: NUM            
+Line 149: Lexeme: i               Token: IDENTIFIER
+Line 149: Lexeme: ,               Token: DELIM_COMMA
+Line 149: Lexeme: j               Token: IDENTIFIER
+Line 149: Lexeme: ,               Token: DELIM_COMMA
+Line 149: Lexeme: k               Token: IDENTIFIER
+Line 149: Lexeme: =               Token: =
+Line 149: Lexeme: 0               Token: CONSTANT_NUM
+Line 149: Lexeme: ;               Token: DELIM_SEMCOL
+Line 150: Lexeme: }               Token: DELIM_C_BRACE

@@ -960,18 +960,18 @@ ASTNode* parseInitialization() {
     
     if (currentToken.type == IDENTIFIER) {
         ASTNode* idNode = newNode(tokenTypeToString(currentToken.type));
-        nextToken(); 
+        nextToken();
 
         if (currentToken.type == ASSIGNMENT_OPE) {
-            ASTNode* assignNode = newNode(currentToken.value); 
-            nextToken(); 
-            ASTNode* exprNode = parseExpr(); 
-            assignNode->right = idNode;
-            idNode->right = exprNode;
-            initNode->left = assignNode;
-        } else {
-            initNode->right = idNode;
+            ASTNode* assignNode = newNode(currentToken.value);
+            nextToken();
+            ASTNode* exprNode = parseExpr();
+            assignNode->left = idNode;
+            assignNode->right = exprNode;
+            idNode = assignNode;
         }
+
+        initNode->left = idNode;
     } else {
         printf("Syntax error: Expected an identifier in initialization\n");
         exit(1);

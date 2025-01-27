@@ -1019,7 +1019,7 @@
                                 NUM
                             <initialization>(
                                 =(
-                                IDENTIFIER(
+                                    IDENTIFIER
                                 <expr>(
                                     <and_expr>(
                                         <equality_expr>(
@@ -1038,7 +1038,6 @@
                                             )
                                         )
                                     )
-                                )
                                 )
                                 )
                             )
@@ -1135,7 +1134,7 @@
                                 NUM
                             <initialization>(
                                 =(
-                                IDENTIFIER(
+                                    IDENTIFIER
                                 <expr>(
                                     <and_expr>(
                                         <equality_expr>(
@@ -1154,7 +1153,6 @@
                                             )
                                         )
                                     )
-                                )
                                 )
                                 )
                             )
@@ -1238,7 +1236,7 @@
                                                 NUM
                                             <initialization>(
                                                 =(
-                                                IDENTIFIER(
+                                                    IDENTIFIER
                                                 <expr>(
                                                     <and_expr>(
                                                         <equality_expr>(
@@ -1257,7 +1255,6 @@
                                                             )
                                                         )
                                                     )
-                                                )
                                                 )
                                                 )
                                             )
@@ -1363,7 +1360,7 @@
                     NUM
                 <initialization>(
                     =(
-                    IDENTIFIER(
+                        IDENTIFIER
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -1382,7 +1379,6 @@
                                 )
                             )
                         )
-                    )
                     )
                     )
                 )
@@ -1520,7 +1516,7 @@
                     NUM
                 <initialization>(
                     =(
-                    IDENTIFIER(
+                        IDENTIFIER
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -1541,7 +1537,6 @@
                         )
                     )
                     )
-                    )
                 )
                 )
             )
@@ -1550,7 +1545,7 @@
                 <data_type>(
                     NUM
                 <initialization>(
-                IDENTIFIER
+                    IDENTIFIER
                 )
                 )
             )
@@ -2102,7 +2097,7 @@
                     NUM
                 <initialization>(
                     =(
-                    IDENTIFIER(
+                        IDENTIFIER
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -2121,7 +2116,6 @@
                                 )
                             )
                         )
-                    )
                     )
                     )
                 )
@@ -2218,7 +2212,7 @@
                     NUM
                 <initialization>(
                     =(
-                    IDENTIFIER(
+                        IDENTIFIER
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -2237,7 +2231,6 @@
                                 )
                             )
                         )
-                    )
                     )
                     )
                 )
@@ -2249,7 +2242,7 @@
                     NUM
                 <initialization>(
                     =(
-                    IDENTIFIER(
+                        IDENTIFIER
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -2268,7 +2261,6 @@
                                 )
                             )
                         )
-                    )
                     )
                     )
                 )
@@ -2483,7 +2475,7 @@
                                 NUM
                             <initialization>(
                                 =(
-                                IDENTIFIER(
+                                    IDENTIFIER
                                 <expr>(
                                     <and_expr>(
                                         <equality_expr>(
@@ -2502,7 +2494,6 @@
                                             )
                                         )
                                     )
-                                )
                                 )
                                 )
                             )
@@ -2750,7 +2741,7 @@
                 <data_type>(
                     NUM
                 <initialization>(
-                IDENTIFIER
+                    IDENTIFIER
                 )
                 )
             )
@@ -2760,7 +2751,7 @@
                     DRIFT
                 <initialization>(
                     =(
-                    IDENTIFIER(
+                        IDENTIFIER
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -2781,7 +2772,6 @@
                         )
                     )
                     )
-                    )
                 )
                 )
             )
@@ -2791,7 +2781,7 @@
                     NUM
                 <initialization>(
                     =(
-                    IDENTIFIER(
+                        IDENTIFIER
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -2808,7 +2798,6 @@
                         )
                     )
                     )
-                    )
                 )
                 )
             )
@@ -2816,13 +2805,21 @@
             <dec_stmt>(
                 <data_type>(
                     <initialization>(
+                        IDENTIFIER
                     <initialization>(
+                        IDENTIFIER
+                    <initialization>(
+                        IDENTIFIER
+                    )
+                    )
+                    )
+                <initialization>(
                     IDENTIFIER
-                    )
-                    )
                 <initialization>(
+                    IDENTIFIER
                 <initialization>(
-                IDENTIFIER
+                    IDENTIFIER
+                )
                 )
                 )
                 )
@@ -2832,7 +2829,7 @@
                 <data_type>(
                     <initialization>(
                         =(
-                        IDENTIFIER(
+                            IDENTIFIER
                         <expr>(
                             <and_expr>(
                                 <equality_expr>(
@@ -2853,10 +2850,32 @@
                             )
                         )
                         )
+                    <initialization>(
+                        =(
+                            IDENTIFIER
+                        <expr>(
+                            <and_expr>(
+                                <equality_expr>(
+                                    <relational_expr>(
+                                        <addsub_expr>(
+                                            <multdiv_expr>(
+                                                <primary>(
+                                                    <literal>(
+                                                        <drift_val>(
+                                                            CONSTANT_DRIFT
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
                         )
                     <initialization>(
                         =(
-                        IDENTIFIER(
+                            IDENTIFIER
                         <expr>(
                             <and_expr>(
                                 <equality_expr>(
@@ -2873,12 +2892,12 @@
                             )
                         )
                         )
-                        )
+                    )
                     )
                     )
                 <initialization>(
                     =(
-                    IDENTIFIER(
+                        IDENTIFIER
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -2899,10 +2918,32 @@
                         )
                     )
                     )
+                <initialization>(
+                    =(
+                        IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                <literal>(
+                                                    <drift_val>(
+                                                        CONSTANT_DRIFT
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
                     )
                 <initialization>(
                     =(
-                    IDENTIFIER(
+                        IDENTIFIER
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -2919,7 +2960,7 @@
                         )
                     )
                     )
-                    )
+                )
                 )
                 )
                 )
@@ -3327,6 +3368,72 @@
             )
             )
             )
+        <stmts>(
+            <dec_stmt>(
+                <data_type>(
+                    <initialization>(
+                        IDENTIFIER
+                    <initialization>(
+                        IDENTIFIER
+                    <initialization>(
+                        =(
+                            IDENTIFIER
+                        <expr>(
+                            <and_expr>(
+                                <equality_expr>(
+                                    <relational_expr>(
+                                        <addsub_expr>(
+                                            <multdiv_expr>(
+                                                <primary>(
+                                                    <literal>(
+                                                        <num_val>(
+                                                            CONSTANT_NUM
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                        )
+                    )
+                    )
+                    )
+                <initialization>(
+                    IDENTIFIER
+                <initialization>(
+                    IDENTIFIER
+                <initialization>(
+                    =(
+                        IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                <literal>(
+                                                    <num_val>(
+                                                        CONSTANT_NUM
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    )
+                )
+                )
+                )
+                )
+            )
+        )
         )
         )
         )
