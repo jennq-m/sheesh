@@ -1,4 +1,6 @@
 toptier() {
+    average = (math_grade + science_grade + english_grade) / 3;
+    !(true+true);
     (expression);
     this || that;
     this && that;

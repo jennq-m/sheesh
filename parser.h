@@ -895,15 +895,18 @@ ASTNode* parseIdentExpr() {
         nextToken();
         return node;
     } else if (currentToken.type == DELIM_O_PAREN) {
+        ASTNode *parenNode = newNode(tokenTypeToString(currentToken.type));
         nextToken();
         ASTNode *exprNode = parseExpr();
+        parenNode->right = exprNode;
 
         if (currentToken.type != DELIM_C_PAREN) {
             printf("SYNTAX ERROR LINE %d: Expected ')' in <ident_expr>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
 
-        node->left = exprNode;
+        parenNode->right->right = newNode(tokenTypeToString(currentToken.type));
+        node->left = parenNode;
         nextToken();
         return node;
     }
