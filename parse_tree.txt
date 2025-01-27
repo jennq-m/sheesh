@@ -7,166 +7,71 @@ DELIM_O_PAREN(
     <body>(
         <stmts>(
             <condi_stmt>(
-                <ex_stmt>(
-                    EX
-                DELIM_O_PAREN(
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                IDENTIFIER
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                DELIM_C_PAREN(
-                DELIM_O_BRACE(
-                    <body>(
-                        <stmts>(
-                            <assign_stmt>(
-                                =(
-                                    IDENTIFIER
-                                <expr>(
-                                    <and_expr>(
-                                        <equality_expr>(
-                                            <relational_expr>(
-                                                <addsub_expr>(
-                                                    <multdiv_expr>(
-                                                        <primary>(
-                                                            IDENTIFIER
-                                                        )
-                                                    )
+                <ex_if_stmt>(
+                    <if_stmt>(
+                        IF
+                    DELIM_O_PAREN(
+                        <expr>(
+                            <and_expr>(
+                                <equality_expr>(
+                                    <relational_expr>(
+                                        <addsub_expr>(
+                                            <multdiv_expr>(
+                                                <primary>(
+                                                    IDENTIFIER
                                                 )
                                             )
                                         )
                                     )
                                 )
-                                )
-                            DELIM_SEMCOL
                             )
                         )
-                    )
-                DELIM_C_BRACE
-                )
-                )
-                )
-                )
-            <ex_if_stmt>(
-                <ex_stmt>(
-                    EX
-                DELIM_O_PAREN(
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                IDENTIFIER
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                DELIM_C_PAREN(
-                DELIM_O_BRACE(
-                    <body>(
-                        <stmts>(
-                            <assign_stmt>(
-                                =(
-                                    IDENTIFIER
-                                <expr>(
-                                    <and_expr>(
-                                        <equality_expr>(
-                                            <relational_expr>(
-                                                <addsub_expr>(
-                                                    <multdiv_expr>(
-                                                        <primary>(
-                                                            IDENTIFIER
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                                )
-                            DELIM_SEMCOL
-                            )
-                        )
-                    )
-                DELIM_C_BRACE
-                )
-                )
-                )
-                )
-            <other_stmt>(
-                OTHER
-            DELIM_O_BRACE(
-                <body>(
-                    <stmts>(
-                        <if_other_stmt>(
-                            <if_stmt>(
-                                IF
-                            DELIM_O_PAREN(
-                                <expr>(
-                                    <and_expr>(
-                                        <equality_expr>(
-                                            <relational_expr>(
-                                                <addsub_expr>(
-                                                    <multdiv_expr>(
-                                                        <primary>(
-                                                            IDENTIFIER
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            DELIM_C_PAREN(
-                            DELIM_O_BRACE(
-                                <body>(
-                                    <stmts>(
-                                        <assign_stmt>(
-                                            <expr>(
-                                                <and_expr>(
-                                                    <equality_expr>(
-                                                        <relational_expr>(
-                                                            <addsub_expr>(
-                                                                <multdiv_expr>(
-                                                                    <primary>(
-                                                                        IDENTIFIER
-                                                                    )
-                                                                )
+                    DELIM_C_PAREN(
+                    DELIM_O_BRACE(
+                        <body>(
+                            <stmts>(
+                                <assign_stmt>(
+                                    =(
+                                        IDENTIFIER
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                <relational_expr>(
+                                                    <addsub_expr>(
+                                                        <multdiv_expr>(
+                                                            <primary>(
+                                                                IDENTIFIER
                                                             )
                                                         )
                                                     )
                                                 )
                                             )
-                                        DELIM_SEMCOL
                                         )
                                     )
+                                    )
+                                DELIM_SEMCOL
                                 )
-                            DELIM_C_BRACE
                             )
-                            )
-                            )
-                            )
-                        <other_stmt>(
-                            OTHER
-                        DELIM_O_BRACE(
-                            <body>(
-                                <stmts>(
-                                    <assign_stmt>(
+                        )
+                    DELIM_C_BRACE
+                    )
+                    )
+                    )
+                    )
+                <ex_stmt>(
+                    EX
+                <ex_stmt>(
+                    EX
+                <other_stmt>(
+                    OTHER
+                DELIM_O_BRACE(
+                    <body>(
+                        <stmts>(
+                            <condi_stmt>(
+                                <if_other_stmt>(
+                                    <if_stmt>(
+                                        IF
+                                    DELIM_O_PAREN(
                                         <expr>(
                                             <and_expr>(
                                                 <equality_expr>(
@@ -182,20 +87,73 @@ DELIM_O_PAREN(
                                                 )
                                             )
                                         )
-                                    DELIM_SEMCOL
+                                    DELIM_C_PAREN(
+                                    DELIM_O_BRACE(
+                                        <body>(
+                                            <stmts>(
+                                                <assign_stmt>(
+                                                    <expr>(
+                                                        <and_expr>(
+                                                            <equality_expr>(
+                                                                <relational_expr>(
+                                                                    <addsub_expr>(
+                                                                        <multdiv_expr>(
+                                                                            <primary>(
+                                                                                IDENTIFIER
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                DELIM_SEMCOL
+                                                )
+                                            )
+                                        )
+                                    DELIM_C_BRACE
                                     )
+                                    )
+                                    )
+                                    )
+                                <other_stmt>(
+                                    OTHER
+                                DELIM_O_BRACE(
+                                    <body>(
+                                        <stmts>(
+                                            <assign_stmt>(
+                                                <expr>(
+                                                    <and_expr>(
+                                                        <equality_expr>(
+                                                            <relational_expr>(
+                                                                <addsub_expr>(
+                                                                    <multdiv_expr>(
+                                                                        <primary>(
+                                                                            IDENTIFIER
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            DELIM_SEMCOL
+                                            )
+                                        )
+                                    )
+                                DELIM_C_BRACE
+                                )
+                                )
                                 )
                             )
-                        DELIM_C_BRACE
-                        )
-                        )
                         )
                     )
+                DELIM_C_BRACE
                 )
-            DELIM_C_BRACE
-            )
-            )
-            )
+                )
+                )
+                )
+                )
             )
         )
     )

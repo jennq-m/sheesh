@@ -1180,42 +1180,53 @@ ASTNode* parseExStmt() {
     exit(1);
 }
 
-ASTNode* parseExIfStmt(ASTNode *node) {
+ASTNode* parseExIfStmt(ASTNode *exIfNode) {
     if (currentToken.type == EX) {
-        node->left = parseExStmt();
+        ASTNode *exStmtNode = parseExStmt();
         
-        if (currentToken.type == EX) {
-            node->right = parseExIfStmt(newNode("<ex_if_stmt>"));
-        } else if (currentToken.type == OTHER) {
-            node->right = parseOtherStmt(newNode("<if_other_stmt>"));
+        exIfNode->left = exIfNode->left;
+        
+        ASTNode *currentExNode = exStmtNode;
+        exIfNode->right = currentExNode;
+        
+        while (currentToken.type == EX || currentToken.type == OTHER) {
+            if (currentToken.type == EX) {
+                ASTNode *nextExNode = parseExStmt();
+                currentExNode->right = nextExNode;
+                currentExNode = nextExNode;
+            } else if (currentToken.type == OTHER) {
+                currentExNode->right = parseOtherStmt();
+                break;
+            }
         }
         
-        return node;
+        return exIfNode;
     }
-    return node;
+    return exIfNode;
 }
 
 ASTNode* parseCondStmt() {
     //<condi_stmt>  	::= 	<if_stmt>  |  <if_other_stmt>  | <ex_if_stmt> 
-
     ASTNode* node = newNode("<condi_stmt>");
 
     if (currentToken.type == IF) {
         ASTNode *ifNode = parseIfStmt();
-        node->left = ifNode;
 
         if (currentToken.type == EX) {
-            ifNode = newNode("<ex_if_stmt>");
-            return parseExIfStmt(node);
+            ASTNode *exIfNode = newNode("<ex_if_stmt>");
+            exIfNode->left = ifNode;
+            node->left = parseExIfStmt(exIfNode);
+            return node;
         }
 
         if (currentToken.type == OTHER) {
             ASTNode *ifOtherNode = newNode("<if_other_stmt>");
-            node->left = ifOtherNode;
             ifOtherNode->left = ifNode;
-            return parseIfOtherStmt(ifOtherNode);
+            node->left = parseIfOtherStmt(ifOtherNode);
+            return node;
         }
 
+        node->left = ifNode;
         return node; 
     }
 
