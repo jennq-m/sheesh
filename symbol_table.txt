@@ -531,16 +531,4 @@ Line 126: Lexeme: ;               Token: DELIM_SEMCOL
 Line 127: Lexeme: ++              Token: ++
 Line 127: Lexeme: u               Token: IDENTIFIER
 Line 127: Lexeme: ;               Token: DELIM_SEMCOL
-Line 128: Lexeme: ex              Token: EX             
-Line 128: Lexeme: (               Token: DELIM_O_PAREN
-Line 128: Lexeme: )               Token: DELIM_C_PAREN
-Line 128: Lexeme: {               Token: DELIM_O_BRACE
 Line 128: Lexeme: }               Token: DELIM_C_BRACE
-Line 128: Lexeme: ;               Token: DELIM_SEMCOL
-Line 129: Lexeme: extra           Token: EX             
-Line 129: Lexeme: (               Token: DELIM_O_PAREN
-Line 129: Lexeme: )               Token: DELIM_C_PAREN
-Line 129: Lexeme: {               Token: DELIM_O_BRACE
-Line 129: Lexeme: }               Token: DELIM_C_BRACE
-Line 129: Lexeme: ;               Token: DELIM_SEMCOL
-Line 130: Lexeme: }               Token: DELIM_C_BRACE

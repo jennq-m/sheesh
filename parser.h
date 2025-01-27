@@ -1092,38 +1092,45 @@ ASTNode* parseIfStmt() {
 }
 
 ASTNode* parseOtherStmt() {
+    ASTNode *node = newNode("<other_stmt>");
 
-}
+    node->left = newNode(tokenTypeToString(currentToken.type));
+    nextToken(); 
 
-ASTNode* parseIfOtherStmt(ASTNode *node) {
-    if (currentToken.type == OTHER) {
-        node->right = newNode("<other>");
-        node->right->left = newNode(tokenTypeToString(currentToken.type));
+    if (currentToken.type == DELIM_O_BRACE) {
+        ASTNode *otherBody = newNode(tokenTypeToString(currentToken.type));  
         nextToken();
 
-        if (currentToken.type == DELIM_O_BRACE) {
-            node->right->left->right = newNode(tokenTypeToString(currentToken.type));
-            nextToken();    
-            ASTNode *otherBody = parseBody();
+        otherBody->left = parseBody();
 
-            node->right->right = otherBody;
+        if (currentToken.type == DELIM_C_BRACE) {
+            otherBody->right = newNode(tokenTypeToString(currentToken.type));
+            nextToken();
 
-            if (currentToken.type == DELIM_C_BRACE) {
-                node->right->right->right = newNode(tokenTypeToString(currentToken.type));
-                nextToken();
-                return node;
-            }
-
-            printf("SYNTAX ERROR LINE %d: Expected '}' in if-other body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
-        } else {
-            printf("SYNTAX ERROR LINE %d: Expected '{' in if-other body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
+            node->right = otherBody;
+            return node;
         }
-    }
 
-    printf("SYNTAX ERROR LINE %d: Invalid <other> stmt\n", currentToken.sheeshLine);
-    exit(1);
+        printf("SYNTAX ERROR LINE %d: Expected '}' in if-other body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    } else {
+        printf("SYNTAX ERROR LINE %d: Expected '{' in if-other body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    }
+}
+
+ASTNode* parseIfOtherStmt(ASTNode *ifOtherNode) {
+    if (ifOtherNode->left) {
+        if (currentToken.type == OTHER) {
+             ASTNode *otherNode = parseOtherStmt();
+            ifOtherNode->right = otherNode;
+
+            return ifOtherNode;
+        }
+
+        printf("SYNTAX ERROR LINE %d: Invalid <other> stmt\n", currentToken.sheeshLine);
+        exit(1);
+    }
 }
 
 ASTNode* parseCondStmt() {
@@ -1136,8 +1143,10 @@ ASTNode* parseCondStmt() {
         node->left = ifNode;
 
         if (currentToken.type == OTHER) {
-            ifNode = newNode("<if_other_stmt>");
-            return parseIfOtherStmt(node);
+            ASTNode *ifOtherNode = newNode("<if_other_stmt>");
+            node->left = ifOtherNode;
+            ifOtherNode->left = ifNode;
+            return parseIfOtherStmt(ifOtherNode);
         }
 
         return node; 
