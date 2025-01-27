@@ -292,51 +292,57 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
 
 ASTNode* parseProgram() {
     if (currentToken.type != TOPTIER) {
-        printf("SYNTAX ERROR LINE %d: Expected toptier keyword. Skipping tokens until keyword is found.\n", currentToken.sheeshLine);
+        printf("SYNTAX ERROR LINE %d: Expected 'TOPTIER' keyword. Skipping tokens until the keyword is found.\n", currentToken.sheeshLine);
         nextToken(); 
         return NULL;
     }
 
-    if (currentToken.type == TOPTIER) {
-        ASTNode *node = newNode("<program>");
-        node->left = newNode(tokenTypeToString(currentToken.type));
+    ASTNode *programNode = newNode("<program>");
+
+    ASTNode *toptierNode = newNode(tokenTypeToString(currentToken.type));
+    programNode->left = toptierNode;
+    nextToken();
+
+    if (currentToken.type == DELIM_O_PAREN) {
+        ASTNode *openParenNode = newNode(tokenTypeToString(currentToken.type));
+        toptierNode->right = openParenNode;
         nextToken();
 
-        if (currentToken.type == DELIM_O_PAREN) {
-            node->right = newNode(tokenTypeToString(currentToken.type));
+        if (currentToken.type == DELIM_C_PAREN) {
+            ASTNode *closeParenNode = newNode(tokenTypeToString(currentToken.type));
+            openParenNode->right = closeParenNode;
             nextToken();
 
-            if (currentToken.type == DELIM_C_PAREN) {
-                node->left->left = newNode(tokenTypeToString(currentToken.type));
+            if (currentToken.type == DELIM_O_BRACE) {
+                ASTNode *openBraceNode = newNode(tokenTypeToString(currentToken.type));
+                closeParenNode->right = openBraceNode;
                 nextToken();
 
-                if (currentToken.type == DELIM_O_BRACE) {
-                    node->left->right = newNode(tokenTypeToString(currentToken.type));
+                ASTNode *bodyNode = parseBody();
+                openBraceNode->right = bodyNode;
+
+                if (currentToken.type == DELIM_C_BRACE) {
+                    ASTNode *closeBraceNode = newNode(tokenTypeToString(currentToken.type));
+                    bodyNode->right = closeBraceNode;
                     nextToken();
-                    node->right->left = parseBody();
 
-                    if (currentToken.type == DELIM_C_BRACE) {
-                        node->right->right = newNode(tokenTypeToString(currentToken.type));
-                        nextToken();
-
-                        return node;
-                    } else {
-                        printf("SYNTAX ERROR LINE %d: Expected '}'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-                        exit(1);
-                    }
+                    return programNode;
                 } else {
-                    printf("SYNTAX ERROR LINE %d: Expected '{'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                    printf("SYNTAX ERROR LINE %d: Expected '}'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                     exit(1);
                 }
             } else {
-                printf("SYNTAX ERROR LINE %d: Expected ')'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+                printf("SYNTAX ERROR LINE %d: Expected '{'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
         } else {
-            printf("SYNTAX ERROR LINE %d: Expected '('. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            printf("SYNTAX ERROR LINE %d: Expected ')'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
-    } 
+    } else {
+        printf("SYNTAX ERROR LINE %d: Expected '('. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        exit(1);
+    }
 
     printf("SYNTAX ERROR LINE %d: Invalid program structure.\n", currentToken.sheeshLine);
     exit(1);
@@ -348,6 +354,7 @@ ASTNode* parseBody() {
     node->left = parseStmts();
     return node;
 }
+
 ASTNode* parseStmts() {
     ASTNode *node = NULL; 
     ASTNode *current = NULL;
@@ -364,10 +371,10 @@ ASTNode* parseStmts() {
             stmt->left = parseDecStmt();
         } else if (currentToken.type == REP || currentToken.type == MEANWHILE || currentToken.type == DO) {
             stmt = newNode("<stmts>");
-                stmt->left = parseIterativeStmt();
+            stmt->left = parseIterativeStmt();
         } else if (currentToken.type == INPUT) {
             stmt = newNode("<stmts>");
-                stmt->left = parseInputStmt();
+            stmt->left = parseInputStmt();
         } else if (currentToken.type == OUT || currentToken.type == OUTPUT) {
             stmt = newNode("<stmts>");
             stmt->left = parseOutputStmt();
@@ -889,13 +896,12 @@ ASTNode* parseDecStmt() {
     stmtNode->left = dtNode;
 
     if (currentToken.type == IDENTIFIER) {
-
         ASTNode* firstVar = parseInitialization(); 
-        stmtNode->right = firstVar;
+        dtNode->right = firstVar;
 
         if (currentToken.type == DELIM_COMMA) {
             ASTNode* varListNode = parseVarList(firstVar); 
-            stmtNode->right = varListNode;
+            dtNode->left = varListNode;
         }
     } else {
         printf("Syntax error: Expected an identifier or initialization after data type\n");
@@ -960,11 +966,11 @@ ASTNode* parseInitialization() {
             ASTNode* assignNode = newNode(currentToken.value); 
             nextToken(); 
             ASTNode* exprNode = parseExpr(); 
-            assignNode->left = idNode;
-            assignNode->right = exprNode;
+            assignNode->right = idNode;
+            idNode->right = exprNode;
             initNode->left = assignNode;
         } else {
-            initNode->left = idNode;
+            initNode->right = idNode;
         }
     } else {
         printf("Syntax error: Expected an identifier in initialization\n");
@@ -1258,14 +1264,14 @@ ASTNode* parseRepLoop() {
 
         if (currentToken.type == DELIM_O_PAREN) {
             ASTNode* parenNode = newNode(tokenTypeToString(currentToken.type));
-            loopNode->left = parenNode;
+            loopNode->right = parenNode;
             nextToken();
 
             ASTNode* initialNode = parseLoopInitial();
-            parenNode->left = initialNode;
+            parenNode->right = initialNode;
 
             ASTNode* exprNode = parseExpr();
-            parenNode->right = exprNode;
+            initialNode->right = exprNode;
 
             if (currentToken.type == DELIM_SEMCOL) {
                 ASTNode* semicolonNode = newNode(tokenTypeToString(currentToken.type));
@@ -1491,11 +1497,11 @@ ASTNode* parseInputStmt() {
             ASTNode* openParen = newNode(tokenTypeToString(currentToken.type));
             inputNode->right = openParen;
             nextToken();       
-            openParen->left = parseInput();
+            openParen->right = parseInput();
 
             if (currentToken.type == DELIM_C_PAREN) {
                 ASTNode* closeParen = newNode(tokenTypeToString(currentToken.type));
-                openParen->right = closeParen;
+                openParen->right->right = closeParen;
                 nextToken();
                 
                 if (currentToken.type == DELIM_SEMCOL) {
@@ -1531,18 +1537,18 @@ ASTNode* parseOutputStmt() {
         nextToken();
         
         if (currentToken.type == DELIM_O_PAREN) {
-            ASTNode* openParen = newNode("("); 
+            ASTNode* openParen = newNode(tokenTypeToString(currentToken.type));
             outNode->right = openParen;
             nextToken();         
-            openParen->left = parseOutput();
+            openParen->right = parseOutput();
 
             if (currentToken.type == DELIM_C_PAREN) {
-                ASTNode* closeParen = newNode(")");
-                openParen->right = closeParen;
+                ASTNode* closeParen = newNode(tokenTypeToString(currentToken.type));
+                openParen->right->right = closeParen;
                 nextToken();
                 
                 if (currentToken.type == DELIM_SEMCOL) {
-                    ASTNode* semicolonNode = newNode(";");
+                    ASTNode* semicolonNode = newNode(tokenTypeToString(currentToken.type));
                     closeParen->right = semicolonNode;
                     nextToken();
                     return node;
@@ -1573,8 +1579,8 @@ ASTNode* parseInput() {
 
         ASTNode* current = node;
         while (currentToken.type == DELIM_COMMA) {
-            ASTNode* commaNode = newNode(",");
-            current->right = commaNode;
+            ASTNode* commaNode = newNode(tokenTypeToString(currentToken.type));
+            current->left->right = commaNode;
             current = commaNode;
 
             nextToken();
@@ -1583,7 +1589,7 @@ ASTNode* parseInput() {
                 commaNode->right = andNode;
                 nextToken();
                 if (currentToken.type == IDENTIFIER) {
-                    andNode->left = newNode(tokenTypeToString(currentToken.type));
+                    andNode->right = newNode(tokenTypeToString(currentToken.type));
                     nextToken();
                 } else {
                 printf("SYNTAX ERROR LINE %d: Expected identifier after '&'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
@@ -1610,8 +1616,8 @@ ASTNode* parseOutput() {
 
         ASTNode* current = node;
         while (currentToken.type == DELIM_COMMA) {
-            ASTNode* commaNode = newNode(",");
-            current->right = commaNode;
+            ASTNode* commaNode = newNode(tokenTypeToString(currentToken.type));
+            node->left->right = commaNode;
             nextToken();
             
             if (currentToken.type == INVALID) {
@@ -1619,7 +1625,7 @@ ASTNode* parseOutput() {
                 exit(1);
             }
 
-            commaNode->left = parseExpr();
+            commaNode->right = parseExpr();
             current = commaNode;
         }
         return node;
