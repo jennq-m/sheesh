@@ -1107,22 +1107,21 @@ ASTNode* parseExStmt() {
             ASTNode *conditionNode = newNode(tokenTypeToString(currentToken.type));
             nextToken();
 
-            conditionNode->left = parseExpr();
+            node->left->right = conditionNode;
+            conditionNode->right = parseExpr();
 
             if (currentToken.type == DELIM_C_PAREN) {
-                conditionNode->right = newNode(tokenTypeToString(currentToken.type));
+                conditionNode->right->right = newNode(tokenTypeToString(currentToken.type));
                 nextToken();
-
-                node->right = conditionNode;
 
                 if (currentToken.type == DELIM_O_BRACE) {
                     ASTNode *bodyNode = newNode(tokenTypeToString(currentToken.type));
                     nextToken();
 
-                    bodyNode->left = parseBody();
+                    bodyNode->right = parseBody();
 
                     if (currentToken.type == DELIM_C_BRACE) {
-                        bodyNode->right = newNode(tokenTypeToString(currentToken.type));
+                        bodyNode->right->right = newNode(tokenTypeToString(currentToken.type));
                         nextToken();
 
                         conditionNode->right->right = bodyNode;

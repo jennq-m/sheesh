@@ -625,4 +625,11 @@ Line 152: Lexeme: num             Token: NUM
 Line 152: Lexeme: i               Token: IDENTIFIER
 Line 152: Lexeme: ,               Token: DELIM_COMMA
 Line 152: Lexeme: j               Token: IDENTIFIER
-Line 152: Lexeme: =      
+Line 152: Lexeme: =               Token: =
+Line 152: Lexeme: 0               Token: CONSTANT_NUM
+Line 152: Lexeme: ,               Token: DELIM_COMMA
+Line 152: Lexeme: k               Token: IDENTIFIER
+Line 152: Lexeme: =               Token: =
+Line 152: Lexeme: 0               Token: CONSTANT_NUM
+Line 152: Lexeme: ;               Token: DELIM_SEMCOL
+Line 153: Lexeme: }               Token: DELIM_C_BRACE
