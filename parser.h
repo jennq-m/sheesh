@@ -1441,33 +1441,35 @@ ASTNode* parseDmwLoop() {
     ASTNode* node = newNode("<dmw_loop>");
 
     if (currentToken.type == DO) {
-        node->left = newNode(tokenTypeToString(currentToken.type));
+        ASTNode* doNode = newNode(tokenTypeToString(currentToken.type));
+        node->left = doNode;
         nextToken();
 
         if (currentToken.type == DELIM_O_BRACE) {
             ASTNode* braceNode = newNode(tokenTypeToString(currentToken.type));
-            node->right = braceNode;
+            doNode->right = braceNode;
             nextToken();
-            braceNode->left = parseBody();
+            braceNode->right = parseBody();
 
             if (currentToken.type != DELIM_C_BRACE) {
                 printf("SYNTAX ERROR LINE %d: Expected '}' to close the block. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
 
-            braceNode->right = newNode(tokenTypeToString(currentToken.type));
+            braceNode->right->right = newNode(tokenTypeToString(currentToken.type));
             nextToken();
 
             if (currentToken.type == MEANWHILE) {
-                braceNode->right->left = newNode(tokenTypeToString(currentToken.type));
+                ASTNode* mwNode = newNode(tokenTypeToString(currentToken.type));
+                braceNode->right->right->right = mwNode;
                 nextToken();
 
                 if (currentToken.type == DELIM_O_PAREN) {
-                    braceNode->right->left->left = newNode(tokenTypeToString(currentToken.type));
+                    mwNode->right = newNode(tokenTypeToString(currentToken.type));
                     nextToken();
 
                     ASTNode* exprNode = parseExpr();
-                    braceNode->right->left->right = exprNode;
+                    mwNode->right->right = exprNode;
 
                     if (currentToken.type != DELIM_C_PAREN) {
                         printf("SYNTAX ERROR LINE %d: Expected ')' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
@@ -1478,7 +1480,7 @@ ASTNode* parseDmwLoop() {
                     nextToken();
 
                     if (currentToken.type == DELIM_SEMCOL) {
-                        exprNode->right->left = newNode(tokenTypeToString(currentToken.type));
+                        exprNode->right->right = newNode(tokenTypeToString(currentToken.type));
                         nextToken();
                     } else {
                         printf("SYNTAX ERROR LINE %d: Expected ';' after meanwhile loop. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);

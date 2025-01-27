@@ -1122,31 +1122,6 @@
                         <dec_stmt>(
                             <data_type>(
                                 NUM
-                            <initialization>(
-                                =(
-                                    IDENTIFIER(
-                                    <expr>(
-                                        <and_expr>(
-                                            <equality_expr>(
-                                                <relational_expr>(
-                                                    <addsub_expr>(
-                                                        <multdiv_expr>(
-                                                            <primary>(
-                                                                <literal>(
-                                                                    <num_val>(
-                                                                        CONSTANT_NUM
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                    )
-                                )
-                            )
                             )
                         )
                     <expr>(
@@ -1241,31 +1216,6 @@
                         <dec_stmt>(
                             <data_type>(
                                 NUM
-                            <initialization>(
-                                =(
-                                    IDENTIFIER(
-                                    <expr>(
-                                        <and_expr>(
-                                            <equality_expr>(
-                                                <relational_expr>(
-                                                    <addsub_expr>(
-                                                        <multdiv_expr>(
-                                                            <primary>(
-                                                                <literal>(
-                                                                    <num_val>(
-                                                                        CONSTANT_NUM
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                    )
-                                )
-                            )
                             )
                         )
                     <expr>(
@@ -1347,31 +1297,6 @@
                                         <dec_stmt>(
                                             <data_type>(
                                                 NUM
-                                            <initialization>(
-                                                =(
-                                                    IDENTIFIER(
-                                                    <expr>(
-                                                        <and_expr>(
-                                                            <equality_expr>(
-                                                                <relational_expr>(
-                                                                    <addsub_expr>(
-                                                                        <multdiv_expr>(
-                                                                            <primary>(
-                                                                                <literal>(
-                                                                                    <num_val>(
-                                                                                        CONSTANT_NUM
-                                                                                    )
-                                                                                )
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                    )
-                                                )
-                                            )
                                             )
                                         )
                                     <expr>(
@@ -1475,31 +1400,6 @@
             <dec_stmt>(
                 <data_type>(
                     NUM
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    <literal>(
-                                                        <num_val>(
-                                                            CONSTANT_NUM
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                        )
-                    )
-                )
                 )
             )
         <stmts>(
@@ -1590,40 +1490,12 @@
             <dec_stmt>(
                 <data_type>(
                     NUM
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    <literal>(
-                                                        <num_val>(
-                                                            CONSTANT_NUM
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                        )
-                    )
-                )
                 )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     NUM
-                <initialization>(
-                    IDENTIFIER
-                )
                 )
             )
         <stmts>(
@@ -1862,38 +1734,13 @@
             <dec_stmt>(
                 <data_type>(
                     NUM
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    <literal>(
-                                                        <num_val>(
-                                                            CONSTANT_NUM
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                        )
-                    )
-                )
                 )
             )
         <stmts>(
             <iterative_stmt>(
                 <dmw_loop>(
-                    DO
-                DELIM_O_BRACE(
+                    DO(
+                    DELIM_O_BRACE(
                     <body>(
                         <stmts>(
                             <output_stmt>(
@@ -1935,10 +1782,9 @@
                             )
                         )
                         )
-                    )
-                DELIM_C_BRACE(
+                    DELIM_C_BRACE(
                     MEANWHILE(
-                        DELIM_O_PAREN
+                    DELIM_O_PAREN(
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -1967,81 +1813,34 @@
                             )
                         )
                     DELIM_C_PAREN(
-                        DELIM_SEMCOL
+                    DELIM_SEMCOL
                     )
                     )
                     )
-                )
-                )
+                    )
+                    )
+                    )
+                    )
+                    )
                 )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     NUM
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    <literal>(
-                                                        <num_val>(
-                                                            CONSTANT_NUM
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                        )
-                    )
-                )
                 )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     NUM
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    <literal>(
-                                                        <num_val>(
-                                                            CONSTANT_NUM
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                        )
-                    )
-                )
                 )
             )
         <stmts>(
             <iterative_stmt>(
                 <dmw_loop>(
-                    DO
-                DELIM_O_BRACE(
+                    DO(
+                    DELIM_O_BRACE(
                     <body>(
                         <stmts>(
                             <output_stmt>(
@@ -2085,8 +1884,8 @@
                         <stmts>(
                             <iterative_stmt>(
                                 <dmw_loop>(
-                                    DO
-                                DELIM_O_BRACE(
+                                    DO(
+                                    DELIM_O_BRACE(
                                     <body>(
                                         <stmts>(
                                             <output_stmt>(
@@ -2128,10 +1927,9 @@
                                             )
                                         )
                                         )
-                                    )
-                                DELIM_C_BRACE(
+                                    DELIM_C_BRACE(
                                     MEANWHILE(
-                                        DELIM_O_PAREN
+                                    DELIM_O_PAREN(
                                     <expr>(
                                         <and_expr>(
                                             <equality_expr>(
@@ -2160,12 +1958,15 @@
                                             )
                                         )
                                     DELIM_C_PAREN(
-                                        DELIM_SEMCOL
+                                    DELIM_SEMCOL
                                     )
                                     )
                                     )
-                                )
-                                )
+                                    )
+                                    )
+                                    )
+                                    )
+                                    )
                                 )
                             )
                         <stmts>(
@@ -2197,10 +1998,9 @@
                         )
                         )
                         )
-                    )
-                DELIM_C_BRACE(
+                    DELIM_C_BRACE(
                     MEANWHILE(
-                        DELIM_O_PAREN
+                    DELIM_O_PAREN(
                     <expr>(
                         <and_expr>(
                             <equality_expr>(
@@ -2229,12 +2029,15 @@
                             )
                         )
                     DELIM_C_PAREN(
-                        DELIM_SEMCOL
+                    DELIM_SEMCOL
                     )
                     )
                     )
-                )
-                )
+                    )
+                    )
+                    )
+                    )
+                    )
                 )
             )
         <stmts>(
@@ -2246,31 +2049,6 @@
                         <dec_stmt>(
                             <data_type>(
                                 NUM
-                            <initialization>(
-                                =(
-                                    IDENTIFIER(
-                                    <expr>(
-                                        <and_expr>(
-                                            <equality_expr>(
-                                                <relational_expr>(
-                                                    <addsub_expr>(
-                                                        <multdiv_expr>(
-                                                            <primary>(
-                                                                <literal>(
-                                                                    <num_val>(
-                                                                        CONSTANT_NUM
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                    )
-                                )
-                            )
                             )
                         )
                     <expr>(
@@ -2350,8 +2128,8 @@
                                         <stmts>(
                                             <iterative_stmt>(
                                                 <dmw_loop>(
-                                                    DO
-                                                DELIM_O_BRACE(
+                                                    DO(
+                                                    DELIM_O_BRACE(
                                                     <body>(
                                                         <stmts>(
                                                             <assign_stmt>(
@@ -2376,10 +2154,9 @@
                                                             DELIM_SEMCOL
                                                             )
                                                         )
-                                                    )
-                                                DELIM_C_BRACE(
+                                                    DELIM_C_BRACE(
                                                     MEANWHILE(
-                                                        DELIM_O_PAREN
+                                                    DELIM_O_PAREN(
                                                     <expr>(
                                                         <and_expr>(
                                                             <equality_expr>(
@@ -2408,12 +2185,15 @@
                                                             )
                                                         )
                                                     DELIM_C_PAREN(
-                                                        DELIM_SEMCOL
+                                                    DELIM_SEMCOL
                                                     )
                                                     )
                                                     )
-                                                )
-                                                )
+                                                    )
+                                                    )
+                                                    )
+                                                    )
+                                                    )
                                                 )
                                             )
                                         )
@@ -2443,108 +2223,54 @@
             <dec_stmt>(
                 <data_type>(
                     NUM
-                <initialization>(
-                    IDENTIFIER
-                )
                 )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     DRIFT
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    <literal>(
-                                                        <drift_val>(
-                                                            CONSTANT_DRIFT
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                        )
-                    )
-                )
                 )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
                     NUM
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    IDENTIFIER
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                        )
-                    )
-                )
                 )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
-                    <initialization>(
-                        IDENTIFIER
-                    <initialization>(
-                        IDENTIFIER
-                    <initialization>(
-                        IDENTIFIER
+                    <var_list>(
+                        <initialization>(
+                            IDENTIFIER
+                        <initialization>(
+                            IDENTIFIER
+                        <initialization>(
+                            IDENTIFIER
+                        )
+                        )
+                        )
                     )
-                    )
-                    )
-                <initialization>(
-                    IDENTIFIER
-                <initialization>(
-                    IDENTIFIER
-                <initialization>(
-                    IDENTIFIER
-                )
-                )
-                )
                 )
             )
         <stmts>(
             <dec_stmt>(
                 <data_type>(
-                    <initialization>(
-                        =(
-                            IDENTIFIER(
-                            <expr>(
-                                <and_expr>(
-                                    <equality_expr>(
-                                        <relational_expr>(
-                                            <addsub_expr>(
-                                                <multdiv_expr>(
-                                                    <primary>(
-                                                        <literal>(
-                                                            <drift_val>(
-                                                                CONSTANT_DRIFT
+                    <var_list>(
+                        <initialization>(
+                            =(
+                                IDENTIFIER(
+                                <expr>(
+                                    <and_expr>(
+                                        <equality_expr>(
+                                            <relational_expr>(
+                                                <addsub_expr>(
+                                                    <multdiv_expr>(
+                                                        <primary>(
+                                                            <literal>(
+                                                                <drift_val>(
+                                                                    CONSTANT_DRIFT
+                                                                )
                                                             )
                                                         )
                                                     )
@@ -2553,22 +2279,22 @@
                                         )
                                     )
                                 )
+                                )
                             )
-                            )
-                        )
-                    <initialization>(
-                        =(
-                            IDENTIFIER(
-                            <expr>(
-                                <and_expr>(
-                                    <equality_expr>(
-                                        <relational_expr>(
-                                            <addsub_expr>(
-                                                <multdiv_expr>(
-                                                    <primary>(
-                                                        <literal>(
-                                                            <drift_val>(
-                                                                CONSTANT_DRIFT
+                        <initialization>(
+                            =(
+                                IDENTIFIER(
+                                <expr>(
+                                    <and_expr>(
+                                        <equality_expr>(
+                                            <relational_expr>(
+                                                <addsub_expr>(
+                                                    <multdiv_expr>(
+                                                        <primary>(
+                                                            <literal>(
+                                                                <drift_val>(
+                                                                    CONSTANT_DRIFT
+                                                                )
                                                             )
                                                         )
                                                     )
@@ -2577,45 +2303,19 @@
                                         )
                                     )
                                 )
-                            )
-                            )
-                        )
-                    <initialization>(
-                        =(
-                            IDENTIFIER(
-                            <expr>(
-                                <and_expr>(
-                                    <equality_expr>(
-                                        <relational_expr>(
-                                            <addsub_expr>(
-                                                <multdiv_expr>(
-                                                    <primary>(
-                                                        IDENTIFIER
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
                                 )
                             )
-                            )
-                        )
-                    )
-                    )
-                    )
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    <literal>(
-                                                        <drift_val>(
-                                                            CONSTANT_DRIFT
+                        <initialization>(
+                            =(
+                                IDENTIFIER(
+                                <expr>(
+                                    <and_expr>(
+                                        <equality_expr>(
+                                            <relational_expr>(
+                                                <addsub_expr>(
+                                                    <multdiv_expr>(
+                                                        <primary>(
+                                                            IDENTIFIER
                                                         )
                                                     )
                                                 )
@@ -2623,57 +2323,12 @@
                                         )
                                     )
                                 )
-                            )
-                        )
-                        )
-                    )
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    <literal>(
-                                                        <drift_val>(
-                                                            CONSTANT_DRIFT
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
                                 )
                             )
                         )
                         )
-                    )
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    IDENTIFIER
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
                         )
                     )
-                )
-                )
-                )
                 )
             )
         <stmts>(
@@ -3084,23 +2739,23 @@
         <stmts>(
             <dec_stmt>(
                 <data_type>(
-                    <initialization>(
-                        IDENTIFIER
-                    <initialization>(
-                        IDENTIFIER
-                    <initialization>(
-                        =(
-                            IDENTIFIER(
-                            <expr>(
-                                <and_expr>(
-                                    <equality_expr>(
-                                        <relational_expr>(
-                                            <addsub_expr>(
-                                                <multdiv_expr>(
-                                                    <primary>(
-                                                        <literal>(
-                                                            <num_val>(
-                                                                CONSTANT_NUM
+                    <var_list>(
+                        <initialization>(
+                            IDENTIFIER
+                        <initialization>(
+                            =(
+                                IDENTIFIER(
+                                <expr>(
+                                    <and_expr>(
+                                        <equality_expr>(
+                                            <relational_expr>(
+                                                <addsub_expr>(
+                                                    <multdiv_expr>(
+                                                        <primary>(
+                                                            <literal>(
+                                                                <num_val>(
+                                                                    CONSTANT_NUM
+                                                                )
                                                             )
                                                         )
                                                     )
@@ -3109,29 +2764,23 @@
                                         )
                                     )
                                 )
+                                )
                             )
-                            )
-                        )
-                    )
-                    )
-                    )
-                <initialization>(
-                    IDENTIFIER
-                <initialization>(
-                    IDENTIFIER
-                <initialization>(
-                    =(
-                        IDENTIFIER(
-                        <expr>(
-                            <and_expr>(
-                                <equality_expr>(
-                                    <relational_expr>(
-                                        <addsub_expr>(
-                                            <multdiv_expr>(
-                                                <primary>(
-                                                    <literal>(
-                                                        <num_val>(
-                                                            CONSTANT_NUM
+                        <initialization>(
+                            =(
+                                IDENTIFIER(
+                                <expr>(
+                                    <and_expr>(
+                                        <equality_expr>(
+                                            <relational_expr>(
+                                                <addsub_expr>(
+                                                    <multdiv_expr>(
+                                                        <primary>(
+                                                            <literal>(
+                                                                <num_val>(
+                                                                    CONSTANT_NUM
+                                                                )
+                                                            )
                                                         )
                                                     )
                                                 )
@@ -3139,13 +2788,12 @@
                                         )
                                     )
                                 )
+                                )
                             )
                         )
                         )
+                        )
                     )
-                )
-                )
-                )
                 )
             )
         )
