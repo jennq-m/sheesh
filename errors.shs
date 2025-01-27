@@ -1,3 +1,7 @@
 toptier() {
-    
+    if (win == nocap) {
+      out("You won!");
+    } ex (win == cap) {
+        out("You lost!");
+    }
 }
