@@ -474,14 +474,12 @@ ASTNode* parseEqualityExpr() {
         exit(1);
     }
 
-   
-
     if (currentToken.type == RELATIONAL_OPE && (strcmp(currentToken.value, "==") == 0 || strcmp(currentToken.value, "!=") == 0)) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
 
-        if (currentToken.type != IDENTIFIER && currentToken.type != CONSTANT_DRIFT && currentToken.type != CONSTANT_LEGIT && 
-            currentToken.type != CONSTANT_NUM && currentToken.type != CONSTANT_TEXT && currentToken.type != CONSTANT_TXTFS && 
+        if (currentToken.type != IDENTIFIER && currentToken.type != CONSTANT_DRIFT && currentToken.type != CONSTANT_LEGIT &&
+            currentToken.type != CONSTANT_NUM && currentToken.type != CONSTANT_TEXT && currentToken.type != CONSTANT_TXTFS &&
             currentToken.type != CONSTANT_VIBE && currentToken.type != DELIM_O_PAREN) {
             printf("SYNTAX ERROR LINE %d: Invalid token after '&&' operator. Expected expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
@@ -792,15 +790,17 @@ ASTNode* parseDriftVal() {
 
     if (currentToken.type == CONSTANT_DRIFT) {
         ASTNode *driftNode = newNode("<drift_val>");
-        driftNode->left = newNode(tokenTypeToString(currentToken.type));
+        ASTNode* driftNodeValue = newNode(tokenTypeToString(currentToken.type));
+        driftNode->left = driftNodeValue;
         nextToken();
 
         if (signNode) {
             ASTNode *node = newNode("<drift_val>");
             node->left = signNode;
-            node->right = driftNode;
+            signNode->right = driftNodeValue;
             return node;
         }
+
         return driftNode;
     } else if (currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
         ASTNode *exprNode;
@@ -833,11 +833,11 @@ ASTNode* parseDriftVal() {
 ASTNode* parseUnaryVal() {
     if (currentToken.type == UNARY_OPE) {
         ASTNode *node = newNode("<unary_val>");
-        node->left = newNode(tokenTypeToString(currentToken.type));
+        node->left = newNode(currentToken.value);
         nextToken();
 
         if (currentToken.type == IDENTIFIER) {
-            node->right = newNode(tokenTypeToString(currentToken.type));
+            node->left->right = newNode(tokenTypeToString(currentToken.type));
             nextToken();
             return node;
         } else {
@@ -852,7 +852,7 @@ ASTNode* parseUnaryVal() {
             (strcmp(currentToken.value, "++") == 0 || strcmp(currentToken.value, "--") == 0)) {
             ASTNode *node = newNode("<unary_val>");
             node->left = identifierNode;
-            node->right = newNode(tokenTypeToString(currentToken.type));
+            identifierNode->right = newNode(currentToken.value);
             nextToken();
             return node;
         }
@@ -967,7 +967,7 @@ ASTNode* parseInitialization() {
             nextToken();
             ASTNode* exprNode = parseExpr();
             assignNode->left = idNode;
-            assignNode->right = exprNode;
+            assignNode->left->right = exprNode;
             idNode = assignNode;
         }
 
@@ -1353,14 +1353,25 @@ ASTNode* parseUpdStmt() {
     } 
 
     if (currentToken.type == IDENTIFIER) {
+        node->left = newNode(tokenTypeToString(currentToken.type));
+
         nextToken();
         if (currentToken.type == UNARY_OPE) {
             previousToken();
-            node->left = parseUnaryVal();
+            node->left->right = parseUnaryVal();
             return node;
         } 
-        node->left = parseExpr();
-        return node;
+
+        if (currentToken.type == ASSIGNMENT_OPE) {
+            node->left->right = newNode(tokenTypeToString(currentToken.type));
+            nextToken();
+            node->left->right->right = parseExpr();
+            return node;
+        } else {
+            printf("SYNTAX ERROR LINE %d: Expected assignment operator.\n", currentToken.sheeshLine, currentToken.value);
+        }
+        
+        
     }
 
     printf("SYNTAX ERROR LINE %d: Invalid <upd_stmt>. Expected <unary_val> or <expr>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
@@ -1373,39 +1384,40 @@ ASTNode* parseMwLoop() {
     ASTNode* node = newNode("<mw_loop>");
 
     if (currentToken.type == MEANWHILE) {
-        node->left = newNode(tokenTypeToString(currentToken.type));
+        ASTNode *mwNode = newNode(tokenTypeToString(currentToken.type));
+        node->left = mwNode;
         nextToken();
 
         if (currentToken.type == DELIM_O_PAREN) {
-            node->right = newNode(tokenTypeToString(currentToken.type));
+            mwNode->right = newNode(tokenTypeToString(currentToken.type));
             nextToken();
 
-            node->right->left = parseExpr(); 
+            ASTNode* exprNode = parseExpr();
+            mwNode->right->right = exprNode;
 
             if (currentToken.type != DELIM_C_PAREN) {
                 printf("SYNTAX ERROR LINE %d: Expected ')' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                 exit(1);
             }
 
-            node->right->right = newNode(tokenTypeToString(currentToken.type));
+            exprNode->right = newNode(tokenTypeToString(currentToken.type));
             nextToken();
 
             if (currentToken.type == DELIM_O_BRACE) {
                 ASTNode* braceNode = newNode(tokenTypeToString(currentToken.type));
+                exprNode->right->right = braceNode;
                 nextToken();
 
-                node->right->right->left = braceNode;
-                braceNode->left = parseBody();
+                ASTNode* bodyNode = parseBody(); 
+                braceNode->right = bodyNode;
 
                 if (currentToken.type != DELIM_C_BRACE) {
                     printf("SYNTAX ERROR LINE %d: Expected '}' to close <mw_loop> body. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
                     exit(1);
                 }
 
-                ASTNode* closingBraceNode = newNode(tokenTypeToString(currentToken.type)); 
-                braceNode->right = closingBraceNode;
-
-                node->right->right->right = braceNode;
+                ASTNode* closingBraceNode = newNode(tokenTypeToString(currentToken.type));
+                bodyNode->right = closingBraceNode;
                 nextToken();
             } else {
                 printf("SYNTAX ERROR LINE %d: Expected '{' after meanwhile condition. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
@@ -1422,6 +1434,7 @@ ASTNode* parseMwLoop() {
 
     return node;
 }
+
 
 ASTNode* parseDmwLoop() {
     ASTNode* node = newNode("<dmw_loop>");
