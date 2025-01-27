@@ -662,15 +662,18 @@ ASTNode* parsePrimary() {
     }
 
     if (currentToken.type == DELIM_O_PAREN) {
+        ASTNode *parenNode = newNode(tokenTypeToString(currentToken.type));
         nextToken();
         ASTNode *exprNode = parseExpr();
+        parenNode->right = exprNode;
 
         if (currentToken.type != DELIM_C_PAREN) {
             printf("SYNTAX ERROR LINE %d: Expected ')'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
             exit(1);
         }
+        parenNode->right->right = newNode(tokenTypeToString(currentToken.type));
         nextToken();
-        primaryNode->left = exprNode;
+        primaryNode->left = parenNode;
         return primaryNode;
         
     }  

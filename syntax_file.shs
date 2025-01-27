@@ -1,5 +1,5 @@
 toptier() {
-    test += expression;
+    (expression);
     this || that;
     this && that;
     this == that;

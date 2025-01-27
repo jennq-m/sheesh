@@ -6,23 +6,37 @@
     <body>(
         <stmts>(
             <assign_stmt>(
-                +=(
-                    IDENTIFIER
-                    <expr>(
-                        <and_expr>(
-                            <equality_expr>(
-                                <relational_expr>(
-                                    <addsub_expr>(
-                                        <multdiv_expr>(
-                                            <primary>(
-                                                IDENTIFIER)
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            DELIM_O_PAREN
+                                            <expr>(
+                                                <and_expr>(
+                                                    <equality_expr>(
+                                                        <relational_expr>(
+                                                            <addsub_expr>(
+                                                                <multdiv_expr>(
+                                                                    <primary>(
+                                                                        IDENTIFIER)
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+
+                                            DELIM_C_PAREN
+                                            
                                             )
                                         )
                                     )
                                 )
                             )
                         )
-                    
                     )
                 )
 
@@ -734,6 +748,7 @@
                                         <multdiv_expr>(
                                             /(
                                                 <primary>(
+                                                    DELIM_O_PAREN
                                                     <expr>(
                                                         <and_expr>(
                                                             <equality_expr>(
@@ -756,6 +771,9 @@
                                                                 )
                                                             )
                                                         )
+
+                                                    DELIM_C_PAREN
+                                                    
                                                     )
 
                                                 <primary>(
@@ -844,6 +862,7 @@
                                     <addsub_expr>(
                                         <multdiv_expr>(
                                             <primary>(
+                                                DELIM_O_PAREN
                                                 <expr>(
                                                     <and_expr>(
                                                         <equality_expr>(
@@ -866,6 +885,7 @@
                                                                                         IDENTIFIER)
 
                                                                                     <primary>(
+                                                                                        DELIM_O_PAREN
                                                                                         <expr>(
                                                                                             <and_expr>(
                                                                                                 <equality_expr>(
@@ -886,6 +906,9 @@
                                                                                                     )
                                                                                                 )
                                                                                             )
+
+                                                                                        DELIM_C_PAREN
+                                                                                        
                                                                                         )
                                                                                     
                                                                                     )
@@ -912,6 +935,9 @@
                                                             )
                                                         )
                                                     )
+
+                                                DELIM_C_PAREN
+                                                
                                                 )
                                             )
                                         )
