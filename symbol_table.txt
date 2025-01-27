@@ -632,4 +632,16 @@ Line 152: Lexeme: k               Token: IDENTIFIER
 Line 152: Lexeme: =               Token: =
 Line 152: Lexeme: 0               Token: CONSTANT_NUM
 Line 152: Lexeme: ;               Token: DELIM_SEMCOL
-Line 153: Lexeme: }               Token: DELIM_C_BRACE
+Line 154: Lexeme: !               Token: !
+Line 154: Lexeme: (               Token: DELIM_O_PAREN
+Line 154: Lexeme: x               Token: IDENTIFIER
+Line 154: Lexeme: )               Token: DELIM_C_PAREN
+Line 154: Lexeme: ;               Token: DELIM_SEMCOL
+Line 155: Lexeme: -               Token: -
+Line 155: Lexeme: (               Token: DELIM_O_PAREN
+Line 155: Lexeme: x               Token: IDENTIFIER
+Line 155: Lexeme: +               Token: +
+Line 155: Lexeme: y               Token: IDENTIFIER
+Line 155: Lexeme: )               Token: DELIM_C_PAREN
+Line 155: Lexeme: ;               Token: DELIM_SEMCOL
+Line 157: Lexeme: }               Token: DELIM_C_BRACE

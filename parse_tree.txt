@@ -3046,6 +3046,100 @@
                     )
                 )
             )
+
+        <stmts>(
+            <assign_stmt>(
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            !
+                                            <ident_expr>(
+                                                <expr>(
+                                                    <and_expr>(
+                                                        <equality_expr>(
+                                                            <relational_expr>(
+                                                                <addsub_expr>(
+                                                                    <multdiv_expr>(
+                                                                        <primary>(
+                                                                            IDENTIFIER)
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+
+            DELIM_SEMCOL
+            )
+
+        <stmts>(
+            <assign_stmt>(
+                <expr>(
+                    <and_expr>(
+                        <equality_expr>(
+                            <relational_expr>(
+                                <addsub_expr>(
+                                    <multdiv_expr>(
+                                        <primary>(
+                                            <literal>(
+                                                <num_val>(
+                                                    <sign>(
+                                                        -)
+                                                    )
+
+                                                <ident_expr>(
+                                                    <expr>(
+                                                        <and_expr>(
+                                                            <equality_expr>(
+                                                                <relational_expr>(
+                                                                    +(
+                                                                        <addsub_expr>(
+                                                                            <multdiv_expr>(
+                                                                                <primary>(
+                                                                                    IDENTIFIER)
+                                                                                )
+                                                                            )
+                                                                        )
+
+                                                                    <multdiv_expr>(
+                                                                        <primary>(
+                                                                            IDENTIFIER)
+                                                                        )
+                                                                    
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+
+            DELIM_SEMCOL
+            )
+        
+        
         
         
         
