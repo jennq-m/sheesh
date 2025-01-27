@@ -149,5 +149,5 @@ toptier() {
         }
     }
 
-    num i, j, k = 0;
+    num i, j = 0, k = 0;
 }

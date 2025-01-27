@@ -897,7 +897,6 @@ ASTNode* parseDecStmt() {
 
     if (currentToken.type == IDENTIFIER) {
         ASTNode* firstVar = parseInitialization(); 
-        dtNode->right = firstVar;
 
         if (currentToken.type == DELIM_COMMA) {
             ASTNode* varListNode = parseVarList(firstVar); 
@@ -919,6 +918,7 @@ ASTNode* parseDecStmt() {
 }
 
 ASTNode* parseVarList(ASTNode* firstVar) {
+    ASTNode* varListNode = newNode("<var_list>"); 
     ASTNode* currentNode = firstVar; 
 
     while (currentToken.type == DELIM_COMMA) {
@@ -935,8 +935,9 @@ ASTNode* parseVarList(ASTNode* firstVar) {
             exit(1);
         }
     }
-
-    return firstVar; 
+    
+    varListNode->left = firstVar;
+    return varListNode; 
 }
 
 ASTNode* parseDataType() {
