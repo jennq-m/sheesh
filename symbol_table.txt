@@ -607,6 +607,8 @@ Line 149: Lexeme: num             Token: NUM
 Line 149: Lexeme: i               Token: IDENTIFIER
 Line 149: Lexeme: ,               Token: DELIM_COMMA
 Line 149: Lexeme: j               Token: IDENTIFIER
+Line 149: Lexeme: =               Token: =
+Line 149: Lexeme: 0               Token: CONSTANT_NUM
 Line 149: Lexeme: ,               Token: DELIM_COMMA
 Line 149: Lexeme: k               Token: IDENTIFIER
 Line 149: Lexeme: =               Token: =
