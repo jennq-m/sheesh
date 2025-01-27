@@ -1,6 +1,15 @@
 toptier() {
+    (expression);
     this || that;
     this && that;
+    this == that;
+    this >= that;
+    this + that;
+    this * that;
+    !cap;
+    i++;
+    test += expression;
+
     // Input Statements
     input("%d", &age);
     input("%f", &float_a);
