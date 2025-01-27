@@ -6,33 +6,23 @@
     <body>(
         <stmts>(
             <assign_stmt>(
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            <expr>(
-                                                <and_expr>(
-                                                    <equality_expr>(
-                                                        <relational_expr>(
-                                                            <addsub_expr>(
-                                                                <multdiv_expr>(
-                                                                    <primary>(
-                                                                        IDENTIFIER)
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
+                +=(
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                IDENTIFIER)
                                             )
                                         )
                                     )
                                 )
                             )
                         )
+                    
                     )
                 )
 
@@ -276,31 +266,6 @@
                             )
                         )
                     )
-                )
-
-            DELIM_SEMCOL
-            )
-
-        <stmts>(
-            <assign_stmt>(
-                +=(
-                    IDENTIFIER)
-
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            IDENTIFIER)
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                
                 )
 
             DELIM_SEMCOL
@@ -606,18 +571,18 @@
         <stmts>(
             <assign_stmt>(
                 =(
-                    IDENTIFIER)
-
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            <literal>(
-                                                <drift_val>(
-                                                    CONSTANT_DRIFT)
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                <literal>(
+                                                    <drift_val>(
+                                                        CONSTANT_DRIFT)
+                                                    )
                                                 )
                                             )
                                         )
@@ -625,8 +590,8 @@
                                 )
                             )
                         )
+                    
                     )
-                
                 )
 
             DELIM_SEMCOL
@@ -635,23 +600,23 @@
         <stmts>(
             <assign_stmt>(
                 +=(
-                    IDENTIFIER)
-
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            IDENTIFIER)
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                IDENTIFIER)
+                                            )
                                         )
                                     )
                                 )
                             )
                         )
+                    
                     )
-                
                 )
 
             DELIM_SEMCOL
@@ -660,23 +625,23 @@
         <stmts>(
             <assign_stmt>(
                 *=(
-                    IDENTIFIER)
-
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            IDENTIFIER)
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                IDENTIFIER)
+                                            )
                                         )
                                     )
                                 )
                             )
                         )
+                    
                     )
-                
                 )
 
             DELIM_SEMCOL
@@ -685,23 +650,23 @@
         <stmts>(
             <assign_stmt>(
                 -=(
-                    IDENTIFIER)
-
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            IDENTIFIER)
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                IDENTIFIER)
+                                            )
                                         )
                                     )
                                 )
                             )
                         )
+                    
                     )
-                
                 )
 
             DELIM_SEMCOL
@@ -710,23 +675,23 @@
         <stmts>(
             <assign_stmt>(
                 |=(
-                    IDENTIFIER)
-
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            IDENTIFIER)
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                IDENTIFIER)
+                                            )
                                         )
                                     )
                                 )
                             )
                         )
+                    
                     )
-                
                 )
 
             DELIM_SEMCOL
@@ -735,23 +700,23 @@
         <stmts>(
             <assign_stmt>(
                 %=(
-                    IDENTIFIER)
-
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            IDENTIFIER)
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                IDENTIFIER)
+                                            )
                                         )
                                     )
                                 )
                             )
                         )
+                    
                     )
-                
                 )
 
             DELIM_SEMCOL
@@ -760,55 +725,109 @@
         <stmts>(
             <assign_stmt>(
                 =(
-                    IDENTIFIER)
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            /(
+                                                <primary>(
+                                                    <expr>(
+                                                        <and_expr>(
+                                                            <equality_expr>(
+                                                                <relational_expr>(
+                                                                    <addsub_expr>(
+                                                                        +(
+                                                                            <multdiv_expr>(
+                                                                                <primary>(
+                                                                                    IDENTIFIER)
+                                                                                )
 
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        /(
-                                            <primary>(
-                                                <expr>(
-                                                    <and_expr>(
-                                                        <equality_expr>(
-                                                            <relational_expr>(
-                                                                <addsub_expr>(
-                                                                    +(
-                                                                        <multdiv_expr>(
-                                                                            <primary>(
-                                                                                IDENTIFIER)
+                                                                            <multdiv_expr>(
+                                                                                <primary>(
+                                                                                    IDENTIFIER)
+                                                                                )
+                                                                            
                                                                             )
-
-                                                                        <multdiv_expr>(
-                                                                            <primary>(
-                                                                                IDENTIFIER)
-                                                                            )
-                                                                        
                                                                         )
                                                                     )
                                                                 )
                                                             )
                                                         )
                                                     )
-                                                )
 
+                                                <primary>(
+                                                    <literal>(
+                                                        <num_val>(
+                                                            CONSTANT_NUM)
+                                                        )
+                                                    )
+                                                
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    
+                    )
+                )
+
+            DELIM_SEMCOL
+            )
+
+        <stmts>(
+            <assign_stmt>(
+                =(
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                IDENTIFIER)
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    
+                    )
+                )
+
+            DELIM_SEMCOL
+            )
+
+        <stmts>(
+            <assign_stmt>(
+                =(
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
                                             <primary>(
                                                 <literal>(
                                                     <num_val>(
                                                         CONSTANT_NUM)
                                                     )
                                                 )
-                                            
                                             )
                                         )
                                     )
                                 )
                             )
                         )
+                    
                     )
-                
                 )
 
             DELIM_SEMCOL
@@ -817,76 +836,67 @@
         <stmts>(
             <assign_stmt>(
                 =(
-                    IDENTIFIER)
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                <expr>(
+                                                    <and_expr>(
+                                                        <equality_expr>(
+                                                            ==(
+                                                                <relational_expr>(
+                                                                    <addsub_expr>(
+                                                                        +(
+                                                                            <multdiv_expr>(
+                                                                                <primary>(
+                                                                                    <literal>(
+                                                                                        <num_val>(
+                                                                                            CONSTANT_NUM)
+                                                                                        )
+                                                                                    )
+                                                                                )
 
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            IDENTIFIER)
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                
-                )
+                                                                            <multdiv_expr>(
+                                                                                *(
+                                                                                    <primary>(
+                                                                                        IDENTIFIER)
 
-            DELIM_SEMCOL
-            )
+                                                                                    <primary>(
+                                                                                        <expr>(
+                                                                                            <and_expr>(
+                                                                                                <equality_expr>(
+                                                                                                    <relational_expr>(
+                                                                                                        <addsub_expr>(
+                                                                                                            <multdiv_expr>(
+                                                                                                                *(
+                                                                                                                    <primary>(
+                                                                                                                        IDENTIFIER)
 
-        <stmts>(
-            <assign_stmt>(
-                =(
-                    IDENTIFIER)
+                                                                                                                    <primary>(
+                                                                                                                        IDENTIFIER)
+                                                                                                                    
+                                                                                                                    )
+                                                                                                                )
+                                                                                                            )
+                                                                                                        )
+                                                                                                    )
+                                                                                                )
+                                                                                            )
+                                                                                        )
+                                                                                    
+                                                                                    )
+                                                                                )
+                                                                            
+                                                                            )
+                                                                        )
+                                                                    )
 
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            <literal>(
-                                                <num_val>(
-                                                    CONSTANT_NUM)
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                
-                )
-
-            DELIM_SEMCOL
-            )
-
-        <stmts>(
-            <assign_stmt>(
-                =(
-                    IDENTIFIER)
-
-                <expr>(
-                    <and_expr>(
-                        <equality_expr>(
-                            <relational_expr>(
-                                <addsub_expr>(
-                                    <multdiv_expr>(
-                                        <primary>(
-                                            <expr>(
-                                                <and_expr>(
-                                                    <equality_expr>(
-                                                        ==(
-                                                            <relational_expr>(
-                                                                <addsub_expr>(
-                                                                    +(
+                                                                <relational_expr>(
+                                                                    <addsub_expr>(
                                                                         <multdiv_expr>(
                                                                             <primary>(
                                                                                 <literal>(
@@ -895,55 +905,10 @@
                                                                                     )
                                                                                 )
                                                                             )
-
-                                                                        <multdiv_expr>(
-                                                                            *(
-                                                                                <primary>(
-                                                                                    IDENTIFIER)
-
-                                                                                <primary>(
-                                                                                    <expr>(
-                                                                                        <and_expr>(
-                                                                                            <equality_expr>(
-                                                                                                <relational_expr>(
-                                                                                                    <addsub_expr>(
-                                                                                                        <multdiv_expr>(
-                                                                                                            *(
-                                                                                                                <primary>(
-                                                                                                                    IDENTIFIER)
-
-                                                                                                                <primary>(
-                                                                                                                    IDENTIFIER)
-                                                                                                                
-                                                                                                                )
-                                                                                                            )
-                                                                                                        )
-                                                                                                    )
-                                                                                                )
-                                                                                            )
-                                                                                        )
-                                                                                    )
-                                                                                
-                                                                                )
-                                                                            )
-                                                                        
                                                                         )
                                                                     )
+                                                                
                                                                 )
-
-                                                            <relational_expr>(
-                                                                <addsub_expr>(
-                                                                    <multdiv_expr>(
-                                                                        <primary>(
-                                                                            <literal>(
-                                                                                <num_val>(
-                                                                                    CONSTANT_NUM)
-                                                                                )
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            
                                                             )
                                                         )
                                                     )
@@ -954,8 +919,8 @@
                                 )
                             )
                         )
+                    
                     )
-                
                 )
 
             DELIM_SEMCOL
@@ -1894,18 +1859,18 @@
                         <stmts>(
                             <assign_stmt>(
                                 =(
-                                    IDENTIFIER)
-
-                                <expr>(
-                                    <and_expr>(
-                                        <equality_expr>(
-                                            <relational_expr>(
-                                                <addsub_expr>(
-                                                    <multdiv_expr>(
-                                                        <primary>(
-                                                            <literal>(
-                                                                <num_val>(
-                                                                    CONSTANT_NUM)
+                                    IDENTIFIER
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                <relational_expr>(
+                                                    <addsub_expr>(
+                                                        <multdiv_expr>(
+                                                            <primary>(
+                                                                <literal>(
+                                                                    <num_val>(
+                                                                        CONSTANT_NUM)
+                                                                    )
                                                                 )
                                                             )
                                                         )
@@ -1913,8 +1878,8 @@
                                                 )
                                             )
                                         )
+                                    
                                     )
-                                
                                 )
 
                             DELIM_SEMCOL
@@ -2210,18 +2175,18 @@
                         <stmts>(
                             <assign_stmt>(
                                 =(
-                                    IDENTIFIER)
-
-                                <expr>(
-                                    <and_expr>(
-                                        <equality_expr>(
-                                            <relational_expr>(
-                                                <addsub_expr>(
-                                                    <multdiv_expr>(
-                                                        <primary>(
-                                                            <literal>(
-                                                                <num_val>(
-                                                                    CONSTANT_NUM)
+                                    IDENTIFIER
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                <relational_expr>(
+                                                    <addsub_expr>(
+                                                        <multdiv_expr>(
+                                                            <primary>(
+                                                                <literal>(
+                                                                    <num_val>(
+                                                                        CONSTANT_NUM)
+                                                                    )
                                                                 )
                                                             )
                                                         )
@@ -2229,8 +2194,8 @@
                                                 )
                                             )
                                         )
+                                    
                                     )
-                                
                                 )
 
                             DELIM_SEMCOL
@@ -2507,23 +2472,23 @@
                                                         <stmts>(
                                                             <assign_stmt>(
                                                                 =(
-                                                                    IDENTIFIER)
-
-                                                                <expr>(
-                                                                    <and_expr>(
-                                                                        <equality_expr>(
-                                                                            <relational_expr>(
-                                                                                <addsub_expr>(
-                                                                                    <multdiv_expr>(
-                                                                                        <primary>(
-                                                                                            IDENTIFIER)
+                                                                    IDENTIFIER
+                                                                    <expr>(
+                                                                        <and_expr>(
+                                                                            <equality_expr>(
+                                                                                <relational_expr>(
+                                                                                    <addsub_expr>(
+                                                                                        <multdiv_expr>(
+                                                                                            <primary>(
+                                                                                                IDENTIFIER)
+                                                                                            )
                                                                                         )
                                                                                     )
                                                                                 )
                                                                             )
                                                                         )
+                                                                    
                                                                     )
-                                                                
                                                                 )
 
                                                             DELIM_SEMCOL
@@ -2922,23 +2887,23 @@
                         <stmts>(
                             <assign_stmt>(
                                 =(
-                                    IDENTIFIER)
-
-                                <expr>(
-                                    <and_expr>(
-                                        <equality_expr>(
-                                            <relational_expr>(
-                                                <addsub_expr>(
-                                                    <multdiv_expr>(
-                                                        <primary>(
-                                                            IDENTIFIER)
+                                    IDENTIFIER
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                <relational_expr>(
+                                                    <addsub_expr>(
+                                                        <multdiv_expr>(
+                                                            <primary>(
+                                                                IDENTIFIER)
+                                                            )
                                                         )
                                                     )
                                                 )
                                             )
                                         )
+                                    
                                     )
-                                
                                 )
 
                             DELIM_SEMCOL
@@ -2978,23 +2943,23 @@
                         <stmts>(
                             <assign_stmt>(
                                 =(
-                                    IDENTIFIER)
-
-                                <expr>(
-                                    <and_expr>(
-                                        <equality_expr>(
-                                            <relational_expr>(
-                                                <addsub_expr>(
-                                                    <multdiv_expr>(
-                                                        <primary>(
-                                                            IDENTIFIER)
+                                    IDENTIFIER
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                <relational_expr>(
+                                                    <addsub_expr>(
+                                                        <multdiv_expr>(
+                                                            <primary>(
+                                                                IDENTIFIER)
+                                                            )
                                                         )
                                                     )
                                                 )
                                             )
                                         )
+                                    
                                     )
-                                
                                 )
 
                             DELIM_SEMCOL
@@ -3033,23 +2998,23 @@
                         <stmts>(
                             <assign_stmt>(
                                 =(
-                                    IDENTIFIER)
-
-                                <expr>(
-                                    <and_expr>(
-                                        <equality_expr>(
-                                            <relational_expr>(
-                                                <addsub_expr>(
-                                                    <multdiv_expr>(
-                                                        <primary>(
-                                                            IDENTIFIER)
+                                    IDENTIFIER
+                                    <expr>(
+                                        <and_expr>(
+                                            <equality_expr>(
+                                                <relational_expr>(
+                                                    <addsub_expr>(
+                                                        <multdiv_expr>(
+                                                            <primary>(
+                                                                IDENTIFIER)
+                                                            )
                                                         )
                                                     )
                                                 )
                                             )
                                         )
+                                    
                                     )
-                                
                                 )
 
                             DELIM_SEMCOL
@@ -3319,7 +3284,6 @@
 
             DELIM_SEMCOL
             )
-        
         
         
         

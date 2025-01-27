@@ -1,5 +1,5 @@
 toptier() {
-    (expression);
+    test += expression;
     this || that;
     this && that;
     this == that;
@@ -8,7 +8,6 @@ toptier() {
     this * that;
     !cap;
     i++;
-    test += expression;
 
     // Input Statements
     input("%d", &age);
