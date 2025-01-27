@@ -290,12 +290,43 @@ void printParseTree(ASTNode *node, int indent, FILE *file) {
     } 
 }
 
+void panicMode(TokenType targetToken) {
+    // Define the set of synchronization tokens
+    TokenType syncTokens[] = {
+        DELIM_C_BRACE, DELIM_SEMCOL, TOPTIER, KEYWORD, IDENTIFIER,
+        DELIM_O_PAREN, DELIM_C_PAREN, DELIM_O_BRACE, DELIM_COMMA,
+        RELATIONAL_OPE, ARITHMETIC_OPE, LOGICAL_OPE, UNARY_OPE,
+        ASSIGNMENT_OPE, CONSTANT_NUM, CONSTANT_DRIFT, CONSTANT_TEXT,
+        CONSTANT_VIBE, CONSTANT_LEGIT, CONSTANT_TXTFS, RESERVED_WORD,
+        NOISE_WORD, COMMENT
+    };
+    int syncTokenCount = sizeof(syncTokens) / sizeof(syncTokens[0]);
+
+    while (currentToken.type != INVALID) {
+        // If the current token matches the target token, recover
+        if (currentToken.type == targetToken) {
+            printf("Recovered at target: %s\n", tokenTypeToString(currentToken.type));
+            return;
+        }
+
+        // Skip the invalid token
+        printf("Skipping invalid token: %s\n", tokenTypeToString(currentToken.type));
+        nextToken();
+    }
+
+    // If end of input is reached
+    printf("Error: Unable to recover. Reached end of input.\n");
+}
 
 ASTNode* parseProgram() {
-    if (currentToken.type != TOPTIER) {
-        printf("SYNTAX ERROR LINE %d: Expected 'TOPTIER' keyword. Skipping tokens until the keyword is found.\n", currentToken.sheeshLine);
-        nextToken(); 
-        return NULL;
+    while (currentToken.type != TOPTIER) {
+        printf("SYNTAX ERROR LINE %d: Expected 'TOPTIER' keyword.\n", currentToken.sheeshLine);
+        panicMode(TOPTIER); // Recover specifically to 'TOPTIER'
+
+        if (currentToken.type != TOPTIER) {
+            printf("Error: Unable to recover to 'TOPTIER'. Aborting parse.\n");
+            return NULL;
+        }
     }
 
     ASTNode *programNode = newNode("<program>");
@@ -329,24 +360,29 @@ ASTNode* parseProgram() {
 
                     return programNode;
                 } else {
-                    printf("SYNTAX ERROR LINE %d: Expected '}'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-                    exit(1);
+                    printf("SYNTAX ERROR LINE %d: Expected '}'. Recovering...\n", currentToken.sheeshLine);
+                    panicMode(DELIM_C_BRACE); // Recover to '}'
+                    return NULL;
                 }
             } else {
-                printf("SYNTAX ERROR LINE %d: Expected '{'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-                exit(1);
+                printf("SYNTAX ERROR LINE %d: Expected '{'. Recovering...\n", currentToken.sheeshLine);
+                panicMode(DELIM_O_BRACE); // Recover to '{'
+                return NULL;
             }
         } else {
-            printf("SYNTAX ERROR LINE %d: Expected ')'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
+            printf("SYNTAX ERROR LINE %d: Expected ')'. Recovering...\n", currentToken.sheeshLine);
+            panicMode(DELIM_C_PAREN); // Recover to ')'
+            return NULL;
         }
     } else {
-        printf("SYNTAX ERROR LINE %d: Expected '('. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-        exit(1);
+        printf("SYNTAX ERROR LINE %d: Expected '('. Recovering...\n", currentToken.sheeshLine);
+        panicMode(DELIM_O_PAREN); // Recover to '('
+        return NULL;
     }
 
-    printf("SYNTAX ERROR LINE %d: Invalid program structure.\n", currentToken.sheeshLine);
-    exit(1);
+    printf("SYNTAX ERROR LINE %d: Invalid program structure. Recovering...\n", currentToken.sheeshLine);
+    panicMode(INVALID); // Recover to end of input or valid token
+    return NULL;
 }
 
 ASTNode* parseBody() {
