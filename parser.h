@@ -1154,13 +1154,14 @@ ASTNode* parseOtherStmt() {
         ASTNode *otherBody = newNode(tokenTypeToString(currentToken.type));  
         nextToken();
 
-        otherBody->left = parseBody();
+        ASTNode* bodyNode = parseBody();
+        otherBody->right = bodyNode;
 
         if (currentToken.type == DELIM_C_BRACE) {
-            otherBody->right = newNode(tokenTypeToString(currentToken.type));
+            bodyNode->right = newNode(tokenTypeToString(currentToken.type));
             nextToken();
 
-            node->right = otherBody;
+            node->left->right = otherBody;
             return node;
         }
 
