@@ -880,8 +880,9 @@ ASTNode* parseIdentExpr() {
             exit(1);
         }
 
+        node->left = exprNode;
         nextToken();
-        return exprNode;
+        return node;
     }
 
     printf("SYNTAX ERROR LINE %d: Invalid <ident_expr>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
