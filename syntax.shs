@@ -1,47 +1,112 @@
 toptier() {
-    input("%d ", &a);
-    //out("value is %d %d %d", a, b, c);
+    // Input Statements
+    input("%d", &age);
+    input("%f", &float_a);
+    input("%s", &vibe_a);
+    input("%c", &letter);
 
-     if (a > 5) {
-        out("hi");
-    }
+    // Output Statements
+    out("String");
+    out("%d", identifier);
+    out("Num: %d", integer);
 
-    num a, b;
-    num a, b = 1;
-   
-    1.5;
-    +2.77;
-    5.5;
-    10;
-    20;
-    +89;
-    nocap;
-    cap;
-    'c';
-    "cat";
-    !test;
-    (a+b);
-    (a + b);
-    (1.5);
-    ++i;
-    !test;
-    !cap;
-    !nocap;
-    !(x+y);
-    !(5+5);
-    +identifier;
-    +(89.70 * 49.51);
-    -(5 - 2);
-    integer = 10;
-    drift a;
-    legit a = nocap;
-    drift initialization = 5.5;
-    a += 1;
-    x = y + 54 - z * 5;
-    a = (8+n*(c*f) == 5);
-    a += 1;
+    out("Age: %d", age);
+    out("Float: %f", float_a);
+    out("Text: %s", text_a);
+    out("Letter: %c", letter);
+
+    // Assignment Statements
+    decimal = 89.70;
+    count += test_var;
+    count *= test_var;
+    count -= test_var;
+    count |= test_var;
+    count %= test_var;
+    average = (math_grade + science_grade + english_grade) / 3;
+
     a = b;
     a = 8; 
+    a = (8+n*(c*f) == 5);
+
+    // Conditional Statements
+    if (average >= 97.0) {
+      out("GWA is very high!");
+    }
+
+    if (average >= 1) {
+        if (average <= 5) {
+            out("%d", average);
+        }
+    }
+
+    if (win == nocap) {
+      out("You won!");
+    } other {
+        out("You lost!");
+    }
+
+    if (win == nocap) {
+        if (num_win > 10) {
+            out("You've won for more than 10 times!");
+        } other {
+            out("You have only won for 10 times!");
+        }
+    } other {
+        out("You lost!");
+    }
+
+    // Iterative Statement
+    rep (num a = 0; a < 5; a++) {
+      out("%d", a);
+    }
+
+    rep (num i = 0; i < 5; i++) {
+        out("%d", i);
+        rep (num j = 0; j < 5; j++) {
+            out("%d", j);
+        }
+    }
+
+    num i = 0;
+
+    meanwhile (i < 5) {
+        out("string test");
+        i++;
+    }
+
+    num i = 0;
+    num j;
+
+    meanwhile (i < 5) {
+        out("%d", identifier);
+        j = 0;
+        meanwhile (j < 5) {
+                out("J: %d", j);
+                j++;
+        }
+        i++;
+    }
+
+    num i = 0;
+
+    do {
+        out("Test Output");
+        i++;
+    } meanwhile (i < 5);
+
+    num i = 0;
+    num j = 0;
+
+    do {
+        out("This is an output statement");
+        j = 0;
+        do {
+                out("OUTPUT");
+                j++;
+        } meanwhile (j < 5);
+        i++;
+    } meanwhile (i < 5);
+
 
     rep (num a = 1; a > 1; a++) {
         meanwhile (i > 10) {
@@ -51,17 +116,19 @@ toptier() {
         }
     }
 
-    input("%d", &age);
-    input("%f", &float_a);
-    input("%s", &vibe_a);
-    input("%c", &letter);
+    // Declaration Statement
+    num count;
+    drift decimal = 89.70;
+    num count = number;
+    drift math_grade, science_grade, english_grade;
+    drift math_grade = 97.5, science_grade = 95.5, english_grade = math_grade;
 
-    out("String");
-    out("%d", identifier);
-    out("Num: %d", integer);
+    u++;
+    ++u;
 
-    out("Age: %d", age);
-    out("Float: %f", float_a);
-    out("Text: %s", text_a);
-    out("Letter: %c", letter);
+    if (win == nocap) {
+      out("You won!");
+    } ex (win == cap) {
+        out("You lost!");
+    }
 }
