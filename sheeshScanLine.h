@@ -263,7 +263,6 @@ void sheeshScanLine(FILE *outputSheesh, char *sheeshLine, int sheeshColumn) {
             case PLAYLIST:  token = newToken(temp, PLAYLIST, sheeshColumn); break;
             case REPEAT:    token = newToken(temp, REPEAT, sheeshColumn); break;
             case OUTPUT:    token = newToken(temp, OUTPUT, sheeshColumn); break;
-            case EXTRA:     token = newToken(temp, EXTRA, sheeshColumn); break;
             case OTHERWISE: token = newToken(temp, OTHERWISE, sheeshColumn); break;
             default:        token = newToken(temp, IDENTIFIER, sheeshColumn); break;
         }

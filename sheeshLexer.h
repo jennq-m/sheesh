@@ -143,8 +143,6 @@ Token sheeshLexer(const char *sheeshLexeme, int sheeshLine) {
                 return newToken(sheeshLexeme, REPEAT, sheeshLine);
             case OUTPUT:
                 return newToken(sheeshLexeme, OUTPUT, sheeshLine);
-            case EXTRA:
-                return newToken(sheeshLexeme, EXTRA, sheeshLine);
             case OTHERWISE:
                 return newToken(sheeshLexeme, OTHERWISE, sheeshLine);
 

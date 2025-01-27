@@ -72,7 +72,6 @@ typedef enum {
     TOP,
     TOPTIER,
     OUTPUT,
-    EXTRA,
     OTHERWISE
 } TokenType;
 
@@ -162,7 +161,7 @@ char *typeToString(TokenType type) {
         case EMPTY:     
             return "EMPTY";
         case EX:        
-            return "EXTRA";
+            return "EX";
         case FLIP:      
             return "FLIP";
         case FROZEN:    
@@ -221,8 +220,6 @@ char *typeToString(TokenType type) {
             return "REPEAT";
         case OUTPUT:    
             return "OUTPUT";
-        case EXTRA:     
-            return "EXTRA";
         case OTHERWISE:
             return "OTHER"; 
         case ALWAYS:    

@@ -111,7 +111,7 @@ TokenType mapStringToTokenType(const char* tokenStr) {
     if (strcmp(tokenStr, "DO") == 0) return DO;
     if (strcmp(tokenStr, "DRIFT") == 0) return DRIFT;
     if (strcmp(tokenStr, "EMPTY") == 0) return EMPTY;
-    if (strcmp(tokenStr, "EX") == 0) return EXTRA;
+    if (strcmp(tokenStr, "EX") == 0) return EX;
     if (strcmp(tokenStr, "FLIP") == 0) return FLIP;
     if (strcmp(tokenStr, "FROZEN") == 0) return FROZEN;
     if (strcmp(tokenStr, "GROUP") == 0) return GROUP;
@@ -145,7 +145,6 @@ TokenType mapStringToTokenType(const char* tokenStr) {
     if (strcmp(tokenStr, "REPEAT") == 0) return REPEAT;
     if (strcmp(tokenStr, "TOPTIER") == 0) return TOPTIER;
     if (strcmp(tokenStr, "TOP") == 0) return TOPTIER;
-    if (strcmp(tokenStr, "EXTRA") == 0) return EXTRA;
     if (strcmp(tokenStr, "OTHER") == 0) return OTHER;
     if (strcmp(tokenStr, "OTHERWISE") == 0) return OTHER;
     return INVALID;
@@ -219,7 +218,6 @@ const char* tokenTypeToString(TokenType type) {
         case REPEAT: return "REPEAT";
         case TOPTIER: return "TOPTIER";
         case TOP: return "TOP";
-        case EXTRA: return "EXTRA";
         case OTHERWISE: return "OTHERWISE";
         default: return "UNKNOWN";
     }
@@ -828,7 +826,7 @@ ASTNode* parseDriftVal() {
 ASTNode* parseUnaryVal() {
     if (currentToken.type == UNARY_OPE) {
         ASTNode *node = newNode("<unary_val>");
-        node->left = newNode(currentToken.value);
+        node->left = newNode(tokenTypeToString(currentToken.type));
         nextToken();
 
         if (currentToken.type == IDENTIFIER) {
@@ -1091,6 +1089,10 @@ ASTNode* parseIfStmt() {
 
     printf("SYNTAX ERROR LINE %d: Invalid <if_stmt>\n", currentToken.sheeshLine);
     exit(1);
+}
+
+ASTNode* parseOtherStmt() {
+
 }
 
 ASTNode* parseIfOtherStmt(ASTNode *node) {
