@@ -814,8 +814,8 @@ ASTNode* parseNumVal() {
 
         if (signNode) {
             ASTNode *node = newNode("<num_val>");
+            signNode->right = exprNode;
             node->left = signNode;
-            node->right = exprNode;
             return node;
         }
         return exprNode;
@@ -878,8 +878,8 @@ ASTNode* parseDriftVal() {
 
         if (signNode) {
             ASTNode *node = newNode("<drift_val>");
+            signNode->right = exprNode;
             node->left = signNode;
-            node->right = exprNode;
             return node;
         }
         return exprNode;

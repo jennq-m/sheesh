@@ -3387,37 +3387,37 @@
                                                 <num_val>(
                                                     <sign>(
                                                         -)
-                                                    )
 
-                                                <ident_expr>(
-                                                    DELIM_O_PAREN
-                                                    <expr>(
-                                                        <and_expr>(
-                                                            <equality_expr>(
-                                                                <relational_expr>(
-                                                                    <addsub_expr>(
-                                                                        +(
-                                                                            <multdiv_expr>(
-                                                                                <primary>(
-                                                                                    IDENTIFIER)
-                                                                                )
+                                                    <ident_expr>(
+                                                        DELIM_O_PAREN
+                                                        <expr>(
+                                                            <and_expr>(
+                                                                <equality_expr>(
+                                                                    <relational_expr>(
+                                                                        <addsub_expr>(
+                                                                            +(
+                                                                                <multdiv_expr>(
+                                                                                    <primary>(
+                                                                                        IDENTIFIER)
+                                                                                    )
 
-                                                                            <multdiv_expr>(
-                                                                                <primary>(
-                                                                                    IDENTIFIER)
+                                                                                <multdiv_expr>(
+                                                                                    <primary>(
+                                                                                        IDENTIFIER)
+                                                                                    )
+                                                                                
                                                                                 )
-                                                                            
                                                                             )
                                                                         )
                                                                     )
                                                                 )
                                                             )
-                                                        )
 
-                                                    DELIM_C_PAREN
+                                                        DELIM_C_PAREN
+                                                        
+                                                        )
                                                     
                                                     )
-                                                
                                                 )
                                             )
                                         )
