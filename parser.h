@@ -689,7 +689,7 @@ ASTNode* parsePrimary() {
             nextToken();
             primaryNode->left = assignNode;
             assignNode->left = identifierNode;
-            assignNode->left->left = parseExpr();
+            assignNode->left->right = parseExpr();
             return primaryNode;
         }
 
@@ -1064,7 +1064,7 @@ ASTNode* parseAssignStmt() {
 
             if (currentToken.type == DELIM_SEMCOL) {
                 ASTNode* semicolonNode = newNode(tokenTypeToString(currentToken.type));
-                node->right = semicolonNode;
+                node->left->right = semicolonNode;
                 nextToken();
                 return node;
             }

@@ -60,9 +60,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -718,9 +718,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -743,9 +743,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -768,9 +768,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -793,9 +793,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -818,9 +818,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -843,9 +843,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -904,9 +904,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -929,9 +929,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -958,9 +958,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -1059,9 +1059,9 @@
                         )
                     
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -2018,9 +2018,9 @@
                                         )
                                     
                                     )
-                                )
 
-                            DELIM_SEMCOL
+                                DELIM_SEMCOL
+                                )
                             )
 
                         <stmts>(
@@ -2334,9 +2334,9 @@
                                         )
                                     
                                     )
-                                )
 
-                            DELIM_SEMCOL
+                                DELIM_SEMCOL
+                                )
                             )
 
                         <stmts>(
@@ -2627,9 +2627,9 @@
                                                                         )
                                                                     
                                                                     )
-                                                                )
 
-                                                            DELIM_SEMCOL
+                                                                DELIM_SEMCOL
+                                                                )
                                                             )
                                                         )
 
@@ -3042,9 +3042,9 @@
                                         )
                                     
                                     )
-                                )
 
-                            DELIM_SEMCOL
+                                DELIM_SEMCOL
+                                )
                             )
                         )
 
@@ -3098,9 +3098,9 @@
                                         )
                                     
                                     )
-                                )
 
-                            DELIM_SEMCOL
+                                DELIM_SEMCOL
+                                )
                             )
                         )
 
@@ -3153,9 +3153,9 @@
                                         )
                                     
                                     )
-                                )
 
-                            DELIM_SEMCOL
+                                DELIM_SEMCOL
+                                )
                             )
                         )
 
@@ -3430,6 +3430,50 @@
 
             DELIM_SEMCOL
             )
+
+        <stmts>(
+            <assign_stmt>(
+                =(
+                    IDENTIFIER
+                    <expr>(
+                        <and_expr>(
+                            <equality_expr>(
+                                <relational_expr>(
+                                    <addsub_expr>(
+                                        <multdiv_expr>(
+                                            <primary>(
+                                                +=(
+                                                    IDENTIFIER
+                                                    <expr>(
+                                                        <and_expr>(
+                                                            <equality_expr>(
+                                                                <relational_expr>(
+                                                                    <addsub_expr>(
+                                                                        <multdiv_expr>(
+                                                                            <primary>(
+                                                                                IDENTIFIER)
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    
+                    )
+
+                DELIM_SEMCOL
+                )
+            )
+        
         
         
         
