@@ -685,4 +685,13 @@ Line 166: Lexeme: y               Token: IDENTIFIER
 Line 166: Lexeme: +=              Token: +=
 Line 166: Lexeme: z               Token: IDENTIFIER
 Line 166: Lexeme: ;               Token: DELIM_SEMCOL
-Line 167: Lexeme: }               Token: DELIM_C_BRACE
+Line 168: Lexeme: if              Token: IF             
+Line 168: Lexeme: (               Token: DELIM_O_PAREN
+Line 168: Lexeme: x               Token: IDENTIFIER
+Line 168: Lexeme: )               Token: DELIM_C_PAREN
+Line 168: Lexeme: {               Token: DELIM_O_BRACE
+Line 169: Lexeme: ++              Token: ++
+Line 169: Lexeme: y               Token: IDENTIFIER
+Line 169: Lexeme: ;               Token: DELIM_SEMCOL
+Line 170: Lexeme: }               Token: DELIM_C_BRACE
+Line 171: Lexeme: }               Token: DELIM_C_BRACE

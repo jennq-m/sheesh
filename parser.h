@@ -1282,14 +1282,13 @@ ASTNode* parseCondStmt() {
             ASTNode *ifOtherNode = newNode("<if_other_stmt>");
             node->left = ifOtherNode;
             ifOtherNode->left = ifNode;
-            return parseIfOtherStmt(ifOtherNode);
+            parseIfOtherStmt(ifOtherNode);
         }
         else if (currentToken.type == EX) {
             ASTNode *exIfNode = newNode("<ex_if_stmt>");
             node->left = exIfNode;
             exIfNode->left = ifNode;
             exIfNode->right =  parseExIfStmt();
-            return exIfNode;
         }
 
         return node; 
