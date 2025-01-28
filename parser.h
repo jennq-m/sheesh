@@ -1252,21 +1252,18 @@ ASTNode* parseIfOtherStmt(ASTNode *ifOtherNode) {
 }
 
 ASTNode* parseExIfStmt() {
-        
-    ASTNode *holderNode = newNode("");
+    
     ASTNode *exStmtNode = parseExStmt();
 
-    holderNode->left = exStmtNode;
-
     if (currentToken.type == EX) {
-        holderNode->right = parseExIfStmt();
+        exStmtNode->right = parseExIfStmt();
     }
 
     if (currentToken.type == OTHER) {
-        holderNode->right = parseOtherStmt();
+        exStmtNode->right = parseOtherStmt();
     }
 
-    return holderNode;
+    return exStmtNode;
 }
 
 ASTNode* parseCondStmt() {
@@ -1288,7 +1285,7 @@ ASTNode* parseCondStmt() {
             ASTNode *exIfNode = newNode("<ex_if_stmt>");
             node->left = exIfNode;
             exIfNode->left = ifNode;
-            exIfNode->right =  parseExIfStmt();
+            exIfNode->left->right =  parseExIfStmt();
         }
 
         return node; 
