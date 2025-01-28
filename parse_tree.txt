@@ -111,9 +111,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -150,9 +150,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -187,9 +187,9 @@
                         
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -222,9 +222,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -255,9 +255,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -286,9 +286,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -315,9 +315,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -342,9 +342,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -365,9 +365,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -392,9 +392,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -1517,6 +1517,8 @@
                         <dec_stmt>(
                             <data_type>(
                                 NUM)
+
+                            <DELIM_SEMCOL>
                             )
                         )
 
@@ -1618,6 +1620,8 @@
                         <dec_stmt>(
                             <data_type>(
                                 NUM)
+
+                            <DELIM_SEMCOL>
                             )
                         )
 
@@ -1705,6 +1709,8 @@
                                         <dec_stmt>(
                                             <data_type>(
                                                 NUM)
+
+                                            <DELIM_SEMCOL>
                                             )
                                         )
 
@@ -1816,6 +1822,8 @@
             <dec_stmt>(
                 <data_type>(
                     NUM)
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -1893,9 +1901,9 @@
                                             )
                                         )
                                     )
-                                )
 
-                            DELIM_SEMCOL
+                                DELIM_SEMCOL
+                                )
                             )
                         
                         )
@@ -1914,6 +1922,8 @@
             <dec_stmt>(
                 <data_type>(
                     NUM)
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -1921,6 +1931,8 @@
             <dec_stmt>(
                 <data_type>(
                     NUM)
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -2115,9 +2127,9 @@
                                                             )
                                                         )
                                                     )
-                                                )
 
-                                            DELIM_SEMCOL
+                                                DELIM_SEMCOL
+                                                )
                                             )
                                         
                                         )
@@ -2154,9 +2166,9 @@
                                             )
                                         )
                                     )
-                                )
 
-                            DELIM_SEMCOL
+                                DELIM_SEMCOL
+                                )
                             )
                         
                         
@@ -2177,6 +2189,8 @@
             <dec_stmt>(
                 <data_type>(
                     NUM)
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -2223,9 +2237,9 @@
                                             )
                                         )
                                     )
-                                )
 
-                            DELIM_SEMCOL
+                                DELIM_SEMCOL
+                                )
                             )
                         
                         )
@@ -2279,6 +2293,8 @@
             <dec_stmt>(
                 <data_type>(
                     NUM)
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -2286,6 +2302,8 @@
             <dec_stmt>(
                 <data_type>(
                     NUM)
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -2382,9 +2400,9 @@
                                                             )
                                                         )
                                                     )
-                                                )
 
-                                            DELIM_SEMCOL
+                                                DELIM_SEMCOL
+                                                )
                                             )
                                         
                                         )
@@ -2456,9 +2474,9 @@
                                             )
                                         )
                                     )
-                                )
 
-                            DELIM_SEMCOL
+                                DELIM_SEMCOL
+                                )
                             )
                         
                         
@@ -2519,6 +2537,8 @@
                         <dec_stmt>(
                             <data_type>(
                                 NUM)
+
+                            <DELIM_SEMCOL>
                             )
                         )
 
@@ -2707,6 +2727,8 @@
             <dec_stmt>(
                 <data_type>(
                     NUM)
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -2714,6 +2736,8 @@
             <dec_stmt>(
                 <data_type>(
                     DRIFT)
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -2721,6 +2745,8 @@
             <dec_stmt>(
                 <data_type>(
                     NUM)
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -2740,6 +2766,8 @@
                         
                         )
                     )
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -2821,6 +2849,8 @@
                         
                         )
                     )
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -2846,9 +2876,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -2871,9 +2901,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -3210,9 +3240,9 @@
                                                         )
                                                     )
                                                 )
-                                            )
 
-                                        DELIM_SEMCOL
+                                            DELIM_SEMCOL
+                                            )
                                         )
                                     )
 
@@ -3245,9 +3275,9 @@
                                                     )
                                                 )
                                             )
-                                        )
 
-                                    DELIM_SEMCOL
+                                        DELIM_SEMCOL
+                                        )
                                     )
                                 )
 
@@ -3328,6 +3358,8 @@
                         
                         )
                     )
+
+                <DELIM_SEMCOL>
                 )
             )
 
@@ -3369,9 +3401,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(
@@ -3426,9 +3458,9 @@
                             )
                         )
                     )
-                )
 
-            DELIM_SEMCOL
+                DELIM_SEMCOL
+                )
             )
 
         <stmts>(

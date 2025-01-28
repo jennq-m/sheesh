@@ -971,6 +971,8 @@ ASTNode* parseDecStmt() {
     }
 
     if (currentToken.type == DELIM_SEMCOL) {
+        ASTNode* semicolonNode = newNode("<DELIM_SEMCOL>");
+        dtNode->right = semicolonNode;
         nextToken(); 
     } else {
         printf("Syntax error: Expected ';' at the end of declaration statement\n");
@@ -1079,7 +1081,7 @@ ASTNode* parseAssignStmt() {
 
             if (currentToken.type == DELIM_SEMCOL) {
                 ASTNode* semicolonNode = newNode(tokenTypeToString(currentToken.type));
-                node->right = semicolonNode;
+                node->left->right = semicolonNode;
                 nextToken();
                 return node;
             }
@@ -1094,7 +1096,7 @@ ASTNode* parseAssignStmt() {
 
         if (currentToken.type == DELIM_SEMCOL) {
             ASTNode* semicolonNode = newNode(tokenTypeToString(currentToken.type));
-            node->right = semicolonNode;
+            node->left->right = semicolonNode;
             nextToken();
             return node;
         }
