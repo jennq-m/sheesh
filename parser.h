@@ -442,7 +442,7 @@ ASTNode* parseExpr() {
 
     if (!andNode) {
         printf("SYNTAX ERROR LINE %d: Invalid expression. Expected 'and' expression. Encountered token %s instead.\n", currentToken.sheeshLine, currentToken.value);
-        panicMode(LOGICAL_OPE);  // Try to sync to the next valid logical operator or expression.
+        panicMode(LOGICAL_OPE);  // Synchronize to the next logical operator.
         return NULL;
     }
 
@@ -451,8 +451,7 @@ ASTNode* parseExpr() {
     while (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "||") == 0) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
-
-        // Check if the next token is a valid expression after '||'
+        
         if (currentToken.type != IDENTIFIER && currentToken.type != CONSTANT_DRIFT && currentToken.type != CONSTANT_LEGIT && currentToken.type != CONSTANT_NUM 
         && currentToken.type != CONSTANT_TEXT && currentToken.type != CONSTANT_TXTFS && currentToken.type != CONSTANT_VIBE && currentToken.type != DELIM_O_PAREN 
         && currentToken.type != LOGICAL_OPE) {
@@ -465,7 +464,7 @@ ASTNode* parseExpr() {
 
         if (!newAndNode) {
             printf("SYNTAX ERROR LINE %d: Invalid expression after '||' operator. Expected right operand. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            panicMode(LOGICAL_OPE);  // Synchronize to the next logical operator.
+            panicMode(LOGICAL_OPE);  // Synchronize to the next logical operator
             return NULL;
         }
 
@@ -483,8 +482,8 @@ ASTNode* parseAndExpr() {
 
     if (!equalityNode) {
         printf("SYNTAX ERROR LINE %d: Invalid expression in 'and' expression. Expected equality expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
-        panicMode(LOGICAL_OPE);  // Synchronize to the next logical operator or expression.
-        return NULL;
+        panicMode(LOGICAL_OPE);  // Trigger panic mode to recover and try again.
+        return NULL;  // Return NULL as a placeholder, to allow further parsing.
     }
 
     node->left = equalityNode;
@@ -493,28 +492,26 @@ ASTNode* parseAndExpr() {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
 
-        // Check if the next token is a valid expression after '&&'
         if (currentToken.type != IDENTIFIER && currentToken.type != CONSTANT_DRIFT && currentToken.type != CONSTANT_LEGIT && 
             currentToken.type != CONSTANT_NUM && currentToken.type != CONSTANT_TEXT && currentToken.type != CONSTANT_TXTFS && 
             currentToken.type != CONSTANT_VIBE && currentToken.type != DELIM_O_PAREN) {
             printf("SYNTAX ERROR LINE %d: Invalid token after '&&' operator. Expected expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            panicMode(LOGICAL_OPE);  // Synchronize to the next logical operator.
-            return NULL;
+             panicMode(LOGICAL_OPE);  // Synchronize to the next logical operator.
+            return NULL;  // Return NULL to allow for error recovery.
         }
 
         ASTNode *newEqualityNode = parseEqualityExpr();
 
         if (!newEqualityNode) {
             printf("SYNTAX ERROR LINE %d: Expected equality expression after '&&'. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            panicMode(LOGICAL_OPE);  // Synchronize to the next logical operator.
-            return NULL;
+             panicMode(LOGICAL_OPE);  // Synchronize to the next logical operator.
+            return NULL;  // Return NULL to allow for error recovery.
         }
 
         node->left = opNode;
         opNode->left = equalityNode;
         equalityNode->right = newEqualityNode;
     }
-
     return node;
 }
 
@@ -524,42 +521,36 @@ ASTNode* parseEqualityExpr() {
 
     if (!relNode) {
         printf("SYNTAX ERROR LINE %d: Expected relational expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
-        panicMode(RELATIONAL_OPE);  // Synchronize to the next relational operator or valid token.
-        return NULL;
+        panicMode(RELATIONAL_OPE);  // Synchronize to the next valid relational operator.
+        return NULL;  // Return NULL to allow error recovery.
     }
 
     node->left = relNode;
 
-    // Check for equality operators
-    if (currentToken.type == RELATIONAL_OPE && 
-        (strcmp(currentToken.value, "==") == 0 || strcmp(currentToken.value, "!=") == 0)) {
+    if (currentToken.type == RELATIONAL_OPE && (strcmp(currentToken.value, "==") == 0 || strcmp(currentToken.value, "!=") == 0)) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
 
-        // Check if the next token is a valid expression after the equality operator
         if (currentToken.type != IDENTIFIER && currentToken.type != CONSTANT_DRIFT && currentToken.type != CONSTANT_LEGIT &&
             currentToken.type != CONSTANT_NUM && currentToken.type != CONSTANT_TEXT && currentToken.type != CONSTANT_TXTFS &&
             currentToken.type != CONSTANT_VIBE && currentToken.type != DELIM_O_PAREN) {
-            printf("SYNTAX ERROR LINE %d: Invalid token after '%s' operator. Expected expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value, currentToken.value);
-            panicMode(RELATIONAL_OPE);  // Synchronize to the next relational operator.
-            return NULL;
+            printf("SYNTAX ERROR LINE %d: Invalid token after '&&' operator. Expected expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            panicMode(RELATIONAL_OPE);  // Synchronize to the next valid relational operator.
+            return NULL;  // Return NULL to allow error recovery.
         }
 
-        // Parse the right-hand relational expression
         ASTNode* newRelNode = parseRelationalExpr();
 
         if (!newRelNode) {
-            printf("SYNTAX ERROR LINE %d: Expected relational expression after '%s'. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value, currentToken.value);
-            panicMode(RELATIONAL_OPE);  // Synchronize to the next relational operator.
-            return NULL;
+            printf("SYNTAX ERROR LINE %d: Expected relational expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            panicMode(RELATIONAL_OPE);  // Synchronize to the next valid relational operator.
+            return NULL;  // Return NULL to allow error recovery.
         }
-
-        // Build the equality expression tree
+        
         node->left = opNode;
         opNode->left = relNode;
         relNode->right = newRelNode;
     }
-
     return node;
 }
 
@@ -660,7 +651,8 @@ ASTNode* parseMultDivExpr() {
     
     if (!primaryNode) {
         printf("SYNTAX ERROR LINE %d: Invalid token. Expected 'primary'. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
-        exit(1);
+         panicMode(ARITHMETIC_OPE);  // Synchronize to the next valid arithmetic operator.
+        return NULL;  // Return NULL for error recovery.
     }
 
     node->left = primaryNode;
@@ -674,14 +666,16 @@ ASTNode* parseMultDivExpr() {
             currentToken.type != CONSTANT_NUM && currentToken.type != CONSTANT_TEXT && currentToken.type != CONSTANT_TXTFS && 
             currentToken.type != CONSTANT_VIBE && currentToken.type != DELIM_O_PAREN) {
             printf("SYNTAX ERROR LINE %d: Invalid token after '*', '/', '%\" or '|' operator. Expected expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
+            panicMode(ARITHMETIC_OPE);  // Synchronize to the next valid arithmetic operator.
+            return NULL;  // Return NULL for error recovery.
         }
         
         ASTNode *newPrimaryNode = parsePrimary();
 
         if (!newPrimaryNode) {
             printf("SYNTAX ERROR LINE %d: Expected primary expression. Encountered %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
+            panicMode(ARITHMETIC_OPE);  // Synchronize to the next valid arithmetic operator.
+            return NULL;  // Return NULL for error recovery.
         }
 
         node->left = opNode;
@@ -696,14 +690,15 @@ ASTNode* parsePrimary() {
     ASTNode *primaryNode = newNode("<primary>");
 
     if (currentToken.type == DELIM_SEMCOL) {
-            printf("SYNTAX ERROR LINE %d: Unexpected ';' while parsing primary expression.\n", currentToken.sheeshLine);
-        exit(1);
+        printf("SYNTAX ERROR LINE %d: Unexpected ';' while parsing primary expression.\n", currentToken.sheeshLine);
+        panicMode(ARITHMETIC_OPE);  // Synchronize to the next valid arithmetic operator or identifier.
+        return NULL;  // Return NULL for error recovery.
     }
 
     if (currentToken.type == CONSTANT_NUM || currentToken.type == CONSTANT_DRIFT 
         || currentToken.type == CONSTANT_VIBE || currentToken.type == CONSTANT_TEXT 
         || currentToken.type == CONSTANT_LEGIT || (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
-            
+        
         primaryNode->left = parseLiteral();
         return primaryNode;
     }
@@ -723,7 +718,7 @@ ASTNode* parsePrimary() {
             nextToken();
             primaryNode->left = assignNode;
             assignNode->left = identifierNode;
-            assignNode->left->left = parseExpr();
+            assignNode->left->right = parseExpr();
             return primaryNode;
         }
 
@@ -739,15 +734,15 @@ ASTNode* parsePrimary() {
 
         if (currentToken.type != DELIM_C_PAREN) {
             printf("SYNTAX ERROR LINE %d: Expected ')'. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
+            panicMode(DELIM_O_PAREN);  // Synchronize to the next closing parenthesis or valid token.
+            return NULL;  // Return NULL for error recovery.
         }
         parenNode->right->right = newNode(tokenTypeToString(currentToken.type));
         nextToken();
         primaryNode->left = parenNode;
         return primaryNode;
-        
-    }  
-    
+    }
+
     if (currentToken.type == LOGICAL_OPE && strcmp(currentToken.value, "!") == 0) {
         ASTNode *opNode = newNode(currentToken.value);
         nextToken();
@@ -765,18 +760,21 @@ ASTNode* parsePrimary() {
             return primaryNode;
         } else {
             printf("SYNTAX ERROR LINE %d: Expected identifier or CONSTANT_LEGIT. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
+            panicMode(LOGICAL_OPE);  // Synchronize to the next valid logical operator or identifier.
+            return NULL;  // Return NULL for error recovery.
         }
     }
-    
+
     if (currentToken.type == UNARY_OPE) {
         primaryNode->left = parseUnaryVal();
 
         return primaryNode;
     }
 
+    // If none of the above matches, an error occurred.
     printf("SYNTAX ERROR LINE %d: Invalid <primary_expr>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-    exit(1);
+    panicMode(IDENTIFIER);  // Synchronize to the next valid identifier or primary expression.
+    return NULL;  // Return NULL for error recovery.
 }
 
 ASTNode* parseLiteral() {
@@ -784,45 +782,49 @@ ASTNode* parseLiteral() {
     ASTNode *node = newNode("<literal>");
 
     if (currentToken.type == ARITHMETIC_OPE && (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
-            nextToken();
+        nextToken();
 
-            if (currentToken.type == CONSTANT_NUM || currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
-                previousToken();
-                node->left = parseNumVal();
+        if (currentToken.type == CONSTANT_NUM || currentToken.type == IDENTIFIER || currentToken.type == DELIM_O_PAREN) {
+            previousToken();
+            node->left = parseNumVal();
 
-                return node;
-            } 
-
-            if (currentToken.type == CONSTANT_DRIFT) {
-                previousToken();
-                node->left = parseDriftVal();
-
-                return node;
-            } 
+            return node;
         }
-    
+
+        if (currentToken.type == CONSTANT_DRIFT) {
+            previousToken();
+            node->left = parseDriftVal();
+
+            return node;
+        }
+
+        // If we reach here, it means we encountered an invalid token after the sign.
+        printf("SYNTAX ERROR LINE %d: Expected constant or identifier after '+' or '-' operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+        panicMode(CONSTANT_NUM);  // Synchronize to the next valid token (e.g., constant).
+        return NULL;  // Return NULL to indicate error recovery.
+    }
+
     if (currentToken.type == CONSTANT_NUM) {
         node->left = parseNumVal();
-
         return node;
     } else if (currentToken.type == CONSTANT_DRIFT) {
         node->left = parseDriftVal();
-            
         return node;
     } else if (currentToken.type == CONSTANT_VIBE || currentToken.type == CONSTANT_TEXT || currentToken.type == CONSTANT_LEGIT) {
         node->left = newNode(tokenTypeToString(currentToken.type));
         nextToken();
-
         return node;
     }
 
     if (currentToken.type == INVALID) {
         printf("SYNTAX ERROR LINE %d: Unexpected end of input. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
-        exit(1);
+        panicMode(ARITHMETIC_OPE);  // Synchronize to the next valid arithmetic operator.
+        return NULL;  // Return NULL for error recovery.
     }
 
     printf("SYNTAX ERROR LINE %d: Invalid <literal>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-    exit(1);
+    panicMode(CONSTANT_NUM);  // Synchronize to the next valid constant or identifier.
+    return NULL;  // Return NULL to indicate error recovery.
 }
 
 ASTNode* parseNumVal() {
@@ -852,28 +854,33 @@ ASTNode* parseNumVal() {
         }
         return exprNode;
     } else {
+        // Error recovery if the current token isn't what we expected
         printf("SYNTAX ERROR LINE %d: Expected a constant numeric value for <num_val>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
-        exit(1);
+        panicMode(CONSTANT_NUM);  // Synchronize to the next constant number.
+        return NULL;  // Return NULL to indicate error recovery.
     }
 
+    // If we reach here, something went wrong. Handle it gracefully with panic mode.
     printf("SYNTAX ERROR LINE %d: Invalid <num_val>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
-    exit(1);
+    panicMode(CONSTANT_NUM);  // Synchronize to the next valid constant number.
+    return NULL;  // Return NULL to indicate error recovery.
 }
 
-
 ASTNode* parseSign() {
-    // <sign>   		::= 	‘-’ | ‘+’
+    // <sign> ::= '+' | '-'
 
     if (currentToken.type == ARITHMETIC_OPE && 
        (strcmp(currentToken.value, "+") == 0 || strcmp(currentToken.value, "-") == 0)) {
         ASTNode *node = newNode("<sign>"); 
         node->left = newNode(currentToken.value);
         nextToken();
-
         return node;
     }
 
-    return NULL;
+    // If we encounter an invalid token, invoke panic mode and return NULL
+    printf("SYNTAX ERROR LINE %d: Expected '+' or '-'. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
+    panicMode(ARITHMETIC_OPE);  // Synchronize to the next arithmetic operator.
+    return NULL;  // Return NULL to indicate error recovery.
 }
 
 ASTNode* parseDriftVal() {
@@ -902,8 +909,9 @@ ASTNode* parseDriftVal() {
             exprNode = parseExpr();
 
             if (currentToken.type != DELIM_C_PAREN) {
-                printf("Syntax error: Missing closing parenthesis in <num_val>\n");
-                exit(1);
+                printf("SYNTAX ERROR LINE %d: Expected closing parenthesis in <drift_val>. Got '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
+                panicMode(DELIM_C_PAREN); // Synchronize to a closing parenthesis
+                return NULL; // Return NULL to indicate recovery
             }
             nextToken();
         }
@@ -914,11 +922,14 @@ ASTNode* parseDriftVal() {
             node->right = exprNode;
             return node;
         }
+
         return exprNode;
     }
 
+    // If no valid token matches, we handle the error using panic mode
     printf("SYNTAX ERROR LINE %d: Invalid <drift_val>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
-    exit(1);
+    panicMode(CONSTANT_DRIFT);  // Attempt to recover by synchronizing to the next valid constant drift token
+    return NULL;  // Return NULL after error recovery
 }
 
 ASTNode* parseUnaryVal() {
@@ -932,8 +943,9 @@ ASTNode* parseUnaryVal() {
             nextToken();
             return node;
         } else {
-            printf("SYNTAX ERROR LINE %d: Expected identifier after unary operator Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
+            printf("SYNTAX ERROR LINE %d: Expected identifier after unary operator. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
+            panicMode(IDENTIFIER);  // Attempt recovery by synchronizing to the IDENTIFIER token
+            return NULL;  // Return NULL after panic mode for error recovery
         }
     } else if (currentToken.type == IDENTIFIER) {
         ASTNode *identifierNode = newNode(tokenTypeToString(currentToken.type));
@@ -951,8 +963,10 @@ ASTNode* parseUnaryVal() {
         return identifierNode;
     }
 
+    // Error case when neither unary operator nor identifier is found
     printf("SYNTAX ERROR LINE %d: Invalid <unary_val>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
-    exit(1);
+    panicMode(IDENTIFIER);  // Attempt recovery by synchronizing to the IDENTIFIER token
+    return NULL;  // Return NULL after panic mode for error recovery
 }
 
 ASTNode* parseIdentExpr() {
@@ -969,8 +983,8 @@ ASTNode* parseIdentExpr() {
         parenNode->right = exprNode;
 
         if (currentToken.type != DELIM_C_PAREN) {
-            printf("SYNTAX ERROR LINE %d: Expected ')' in <ident_expr>. Got %s instead.\n", currentToken.sheeshLine, currentToken.value);
-            exit(1);
+            panicMode(DELIM_C_PAREN);  // Attempt recovery by synchronizing to the closing parenthesis
+            return NULL;  // Return NULL after panic mode for error recovery
         }
 
         parenNode->right->right = newNode(tokenTypeToString(currentToken.type));
@@ -980,15 +994,9 @@ ASTNode* parseIdentExpr() {
     }
 
     printf("SYNTAX ERROR LINE %d: Invalid <ident_expr>. Encountered '%s' instead.\n", currentToken.sheeshLine, currentToken.value);
-    exit(1);
+    panicMode(IDENTIFIER);  // Attempt recovery by synchronizing to the IDENTIFIER token
+    return NULL;  // Return NULL after panic mode for error recovery
 }
-
-
-
-
-
-
-
 
 ASTNode* parseDecStmt() {
     // <dec_stmt> ::= <data_type> ( <initialization> | IDENTIFIER <var_list> | <initialization> <var_list>) DELIM_SEMCOL
