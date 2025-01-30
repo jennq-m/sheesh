@@ -2,13 +2,13 @@ toptier() {
     // Input Statements
     input("%d", &age);
     input("%f", &float_a);
-    input("%s", &vibe_a);
+    input("%s", &);
     input("%c", &letter);
 
     // Output Statements
     out("String");
     out("%d", identifier);
-    out("Num: %d", integer);
+    out("Num: ", integer);
 
     out("Age: %d", age);
     out("Float: %f", float_a);
@@ -22,7 +22,7 @@ toptier() {
     count -= test_var;
     count |= test_var;
     count %= test_var;
-    average = (math_grade + science_grade + english_grade) / 3;
+    average = ( math_grade + science_grade + english_grade) / 3;
 
     a = b;
     a = 8; 
